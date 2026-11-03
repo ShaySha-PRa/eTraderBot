@@ -1,32 +1,18 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import sharp from "sharp";
-import { darkTokens } from "../src/index.ts";
-
 const root = new URL("../../../", import.meta.url);
 const path = (name: string) => fileURLToPath(new URL(name, root));
-const source = path("packages/ui-tokens/assets/Rakazo.icon/Assets/orange-bot.png");
+const source = path("packages/ui-tokens/assets/etraderbot-logo.png");
 
-// Match the Icon Composer portrait: the character sits 90 points below center.
-const portrait = await sharp(source).resize(1024, 1024).png().toBuffer();
-async function framed(background: string) {
-  return sharp({ create: { width: 1024, height: 1114, channels: 4, background } })
-    .composite([{ input: portrait, top: 90, left: 0 }])
-    .extract({ left: 0, top: 0, width: 1024, height: 1024 })
-    .png()
-    .toBuffer();
-}
-const mask = Buffer.from(
-  '<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024"><rect width="1024" height="1024" rx="200" fill="white"/></svg>',
+// The supplied brand artwork already includes its background and rounded corners.
+const square = await sharp(source).resize(1024, 1024).png().toBuffer();
+const rounded = square;
+await mkdir(path("packages/ui-tokens/assets/eTraderBot.icon/Assets"), { recursive: true });
+await writeFile(
+  path("packages/ui-tokens/assets/eTraderBot.icon/Assets/etraderbot-logo.png"),
+  square,
 );
-async function roundedCorners(input: Buffer) {
-  return sharp(input)
-    .composite([{ input: mask, blend: "dest-in" }])
-    .png()
-    .toBuffer();
-}
-const square = await framed(darkTokens.background);
-const rounded = await roundedCorners(square);
 
 async function png(input: Buffer, name: string, size: number) {
   await sharp(input).resize(size, size).png().toFile(path(name));
@@ -65,11 +51,15 @@ await mkdir(path("apps/www/public/brand"), { recursive: true });
 await png(rounded, "apps/www/public/brand/rakazo-mark.png", 256);
 await png(rounded, "apps/mobile/assets/favicon.png", 128);
 await png(square, "apps/desktop/assets/icon.png", 1024);
+await png(square, "apps/desktop/assets/icon-macos.png", 1024);
+await png(square, "apps/mobile/assets/icon.png", 1024);
+await png(square, "apps/mobile/assets/adaptive-icon.png", 1024);
+await png(square, "apps/web/public/brand-logo.png", 512);
 await ico(rounded, "apps/desktop/assets/icon.ico", [16, 32, 48, 64, 128, 256]);
 
-// The splash shows the character alone, with no plate, so it sits on either splash colour.
+// Keep the supplied artwork on the splash screen.
 // Keep the existing transparent padding so its visual size stays stable.
-await sharp(await roundedCorners(await framed("transparent")))
+await sharp(square)
   .resize(620, 620)
   .extend({ top: 202, bottom: 202, left: 202, right: 202, background: "transparent" })
   .png()

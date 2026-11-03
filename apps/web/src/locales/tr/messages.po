@@ -691,6 +691,10 @@ msgstr "İzin ver"
 msgid "Allow cross-space bot communication"
 msgstr ""
 
+#: src/lib/dictation.ts
+msgid "Allow eTraderBot to use Speech Recognition and the microphone in System Settings."
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Allow in this space"
 msgstr ""
@@ -698,10 +702,6 @@ msgstr ""
 #: src/components/AskCard.tsx
 msgid "Allow once"
 msgstr "Bir kez izin ver"
-
-#: src/lib/dictation.ts
-msgid "Allow Rakazo to use Speech Recognition and the microphone in System Settings."
-msgstr ""
 
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Allow writing"
@@ -748,8 +748,8 @@ msgid "An API key is stored for this provider, not a subscription sign-in."
 msgstr "Bu sağlayıcı için abonelik girişi değil, bir API anahtarı saklanıyor."
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
-msgid "An existing Honcho peer to read from. Rakazo never writes to it."
-msgstr "Verilerin okunacağı mevcut bir Honcho eşi. Rakazo bu eşe asla veri yazmaz."
+msgid "An existing Honcho peer to read from. eTraderBot never writes to it."
+msgstr "Verilerin okunacağı mevcut bir Honcho eşi. eTraderBot bu eşe asla veri yazmaz."
 
 #: src/lib/agent-import-errors.ts
 msgid "An imported API key could not be checked. Try again."
@@ -1341,7 +1341,7 @@ msgstr "Klasör seç"
 
 #: src/components/ModelCredits.tsx
 #: src/components/SubscriptionGate.tsx
-msgid "Choose how to use Rakazo"
+msgid "Choose how to use eTraderBot"
 msgstr ""
 
 #: src/lib/localized-provider-hint.ts
@@ -1642,8 +1642,8 @@ msgstr "Önce bu modelin sağlayıcısını bağla."
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
-msgid "Connect your own API key in Models or choose Rakazo credits in Billing."
-msgstr "Modeller bölümünde kendi API anahtarınızı bağlayın veya Faturalandırma'da Rakazo kredilerini seçin."
+msgid "Connect your own API key in Models or choose eTraderBot credits in Billing."
+msgstr "Modeller bölümünde kendi API anahtarınızı bağlayın veya Faturalandırma'dan eTraderBot kredilerini seçin."
 
 #: src/components/ComputerDeviceSettings.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -2340,8 +2340,8 @@ msgid "Create space"
 msgstr ""
 
 #: src/pages/Auth.tsx
-msgid "Create your Rakazo"
-msgstr "Rakazo hesabını oluştur"
+msgid "Create your eTraderBot"
+msgstr "eTraderBot hesabını oluştur"
 
 #: src/components/AskCard.tsx
 msgid "Created"
@@ -2774,7 +2774,7 @@ msgid "Engage when... Ignore..."
 msgstr ""
 
 #: src/components/GitHubStarPrompt.tsx
-msgid "Enjoying Rakazo?"
+msgid "Enjoying eTraderBot?"
 msgstr ""
 
 #: src/lib/user-error.ts
@@ -2815,6 +2815,15 @@ msgstr "Ortam değişkenleri: {names}"
 #: src/lib/roster-status.ts
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Error"
+msgstr ""
+
+#: src/pages/shell/avatar-studio-popover.tsx
+msgid "eTraderBot"
+msgstr "eTraderBot"
+
+#: src/components/ModelCredits.tsx
+#: src/pages/Onboarding.tsx
+msgid "eTraderBot credits"
 msgstr ""
 
 #: src/lib/cron.ts
@@ -3226,7 +3235,7 @@ msgid "How to check"
 msgstr "Nasıl kontrol edilir"
 
 #: src/components/SignupSurvey.tsx
-msgid "How will you use Rakazo?"
+msgid "How will you use eTraderBot?"
 msgstr ""
 
 #: src/pages/shell/computer-release-actions.tsx
@@ -4183,8 +4192,8 @@ msgid "Not imported"
 msgstr "İçe aktarılmadı"
 
 #: src/pages/shell/import-status.ts
-msgid "Not in Rakazo's catalog"
-msgstr "Rakazo kataloğunda yok"
+msgid "Not in eTraderBot's catalog"
+msgstr "eTraderBot kataloğunda yok"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Not in the plugin catalog"
@@ -4197,12 +4206,12 @@ msgstr "Şimdi değil"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
-msgid "Not supported in Rakazo"
-msgstr "Rakazo'da desteklenmiyor"
+msgid "Not supported in eTraderBot"
+msgstr "eTraderBot'da desteklenmiyor"
 
 #: src/pages/shell/agent-import.tsx
-msgid "Not used by Rakazo"
-msgstr "Rakazo tarafından kullanılmıyor"
+msgid "Not used by eTraderBot"
+msgstr "eTraderBot tarafından kullanılmıyor"
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Not working"
@@ -4446,8 +4455,8 @@ msgid "Paste a replacement key"
 msgstr "Yeni bir anahtar yapıştır"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
-msgid "Paste the OpenAI-compatible address from your server. Rakazo adds /v1 if needed."
-msgstr "Sunucundaki OpenAI uyumlu adresi yapıştır. Gerekirse Rakazo /v1 ekler."
+msgid "Paste the OpenAI-compatible address from your server. eTraderBot adds /v1 if needed."
+msgstr "Sunucundaki OpenAI uyumlu adresi yapıştır. Gerekirse eTraderBot /v1 ekler."
 
 #: src/pages/shell/agent-import.tsx
 msgid "Paste the reply"
@@ -4622,17 +4631,8 @@ msgstr "Çekme isteği"
 msgid "Queued"
 msgstr "Kuyrukta"
 
-#: src/pages/shell/avatar-studio-popover.tsx
-msgid "Rakazo"
-msgstr "Rakazo"
-
-#: src/components/ModelCredits.tsx
-#: src/pages/Onboarding.tsx
-msgid "Rakazo credits"
-msgstr ""
-
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
-msgid "rakazo-shared and IDs starting with bot- are reserved for Rakazo."
+msgid "rakazo-shared and IDs starting with bot- are reserved for eTraderBot."
 msgstr ""
 
 #: src/pages/shell/message-hover-actions.tsx
@@ -5038,8 +5038,8 @@ msgstr ""
 
 #: src/pages/McpOAuthCallback.tsx
 #: src/pages/SlackInstallCallback.tsx
-msgid "Return to Rakazo"
-msgstr "Rakazo'ya dön"
+msgid "Return to eTraderBot"
+msgstr "eTraderBot'ya dön"
 
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
@@ -5478,8 +5478,8 @@ msgid "Sign in at <0>{0}</0>, then paste the code here."
 msgstr "<0>{0}</0> adresinde oturum açın, ardından kodu buraya yapıştırın."
 
 #: src/pages/Auth.tsx
-msgid "Sign in to Rakazo"
-msgstr "Rakazo'da oturum aç"
+msgid "Sign in to eTraderBot"
+msgstr "eTraderBot'da oturum aç"
 
 #: src/lib/user-error.ts
 msgid "Sign in to your existing account to link SSO"
@@ -5743,8 +5743,8 @@ msgid "Subscribe for {price} / month"
 msgstr "Aylık {price} ile abone ol"
 
 #: src/components/ModelCredits.tsx
-msgid "Subscribe to Rakazo credits"
-msgstr "Rakazo kredilerine abone ol"
+msgid "Subscribe to eTraderBot credits"
+msgstr "eTraderBot kredilerine abone ol"
 
 #: src/components/ModelCredits.tsx
 msgid "Subscribe with your own AI"
@@ -6042,8 +6042,8 @@ msgid "This server's tool result does not fit the model. Turn off Keep tool resu
 msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx
-msgid "This subscription sign-in is not available in Rakazo yet. Use a deployment credential or choose another provider."
-msgstr "Bu abonelik girişi Rakazo'da henüz kullanılamıyor. Bir dağıtım kimlik bilgisi kullan veya başka bir sağlayıcı seç."
+msgid "This subscription sign-in is not available in eTraderBot yet. Use a deployment credential or choose another provider."
+msgstr "Bu abonelik girişi eTraderBot'da henüz kullanılamıyor. Bir dağıtım kimlik bilgisi kullan veya başka bir sağlayıcı seç."
 
 #: src/pages/Artifacts.tsx
 msgid "This week"
@@ -6324,6 +6324,10 @@ msgstr "Varsayılanlarını kullan"
 msgid "Use defaults for {label}"
 msgstr "{label}: varsayılanlarını kullan"
 
+#: src/components/ModelCredits.tsx
+msgid "Use eTraderBot credits"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr ""
@@ -6334,10 +6338,6 @@ msgstr ""
 
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Use Protected input for passwords."
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Use Rakazo credits"
 msgstr ""
 
 #: src/pages/model-settings/space-bots-model.tsx
@@ -6474,7 +6474,7 @@ msgid "Weekends"
 msgstr "Hafta sonları"
 
 #: src/components/SignupSurvey.tsx
-msgid "Welcome to Rakazo"
+msgid "Welcome to eTraderBot"
 msgstr ""
 
 #: src/pages/shell/dialogs.tsx
@@ -6486,7 +6486,7 @@ msgid "What can this space use?"
 msgstr ""
 
 #: src/components/SignupSurvey.tsx
-msgid "What do you most want Rakazo to help with?"
+msgid "What do you most want eTraderBot to help with?"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx

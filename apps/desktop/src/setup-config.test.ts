@@ -63,7 +63,7 @@ describe("server address normalization", () => {
   });
 
   it.each(["", "   ", "not a url", "ftp://example.com", "file:///etc/passwd", "http://"])(
-    "rejects an address that cannot reach a Rakazo server (%s)",
+    "rejects an address that cannot reach an eTraderBot server (%s)",
     (value) => {
       expect(normalizeServerUrl(value)).toBeNull();
     },
@@ -164,7 +164,7 @@ describe("server request headers", () => {
     ).toEqual({ mode: "existing", serverUrl: "https://rakazo.example.com" });
   });
 
-  it("refuses headers Rakazo owns and headers for a new local instance", () => {
+  it("refuses headers eTraderBot owns and headers for a new local instance", () => {
     expect(parseSetupInput({ ...setup, headers: { Cookie: "a=b" } })).toBeNull();
     expect(parseSetupInput({ ...setup, headers: "x: y" })).toBeNull();
     expect(
@@ -265,7 +265,7 @@ describe("remote-content isolation", () => {
   });
 });
 
-describe("Rakazo health response", () => {
+describe("eTraderBot health response", () => {
   it("requires the public RPC health contract", () => {
     expect(isRakazoHealth({ json: { ok: true, version: "0.1.0" } })).toBe(true);
     expect(isRakazoHealth({ json: { ok: true } })).toBe(false);

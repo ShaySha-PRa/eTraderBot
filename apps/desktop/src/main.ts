@@ -165,6 +165,9 @@ markOnce("rk:main:module-evaluated");
 if (PERFORMANCE_USER_DATA) {
   app.setPath("userData", PERFORMANCE_USER_DATA);
   app.setPath("sessionData", path.join(PERFORMANCE_USER_DATA, "session"));
+} else if (app.isPackaged) {
+  // Keep existing sessions and local stacks when the display name changes.
+  app.setPath("userData", path.join(app.getPath("appData"), "Rakazo"));
 }
 app.once("will-finish-launching", () => markOnce("rk:main:will-finish-launching"));
 app.once("ready", () => markOnce("rk:main:ready"));
@@ -684,7 +687,7 @@ async function runMenuUpdateCheck() {
       : dialog.showMessageBox(options);
   if (state.phase === "ready") {
     const { response } = await alert({
-      message: t("Rakazo {version} is ready to install.", {
+      message: t("eTraderBot {version} is ready to install.", {
         version: state.availableVersion ?? "",
       }),
       buttons: [t("Restart"), t("Later")],
@@ -710,7 +713,7 @@ async function runMenuUpdateCheck() {
     });
   } else if (state.phase === "idle") {
     await alert({
-      message: t("Rakazo is up to date."),
+      message: t("eTraderBot is up to date."),
       detail: t("Version {version}", { version: state.currentVersion }),
     });
   }
@@ -756,7 +759,7 @@ function installApplicationMenu() {
   };
   const changeServer: Electron.MenuItemConstructorOptions = {
     id: "change-rakazo-server",
-    label: t("Change Rakazo Server…"),
+    label: t("Change eTraderBot Server…"),
     accelerator: "CmdOrCtrl+Shift+K",
     click: () => showSetupWindow(),
   };
@@ -953,7 +956,7 @@ async function probeServer(
         ok: false,
         status: response.status,
         url,
-        error: t("That address redirects elsewhere. Enter the final Rakazo server address."),
+        error: t("That address redirects elsewhere. Enter the final eTraderBot server address."),
       };
     }
     if (!response.ok) {
@@ -970,7 +973,7 @@ async function probeServer(
         ok: false,
         status: response.status,
         url,
-        error: t("That address did not respond like a Rakazo server."),
+        error: t("That address did not respond like an eTraderBot server."),
       };
     }
     return {
@@ -1674,7 +1677,7 @@ app.whenReady().then(async () => {
         if (managedUrl === null || !(await localStack.matchesDesiredStack())) {
           return {
             ok: false,
-            error: t("The app-managed Rakazo services are not ready. Retry setup."),
+            error: t("The app-managed eTraderBot services are not ready. Retry setup."),
           };
         }
         openSetup = { mode: "new", serverUrl: managedUrl };

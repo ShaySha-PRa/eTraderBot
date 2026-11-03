@@ -225,7 +225,7 @@ describe("setup", () => {
     currentCheck.resolve({ ok: true, url: "https://two.example" });
     await flush();
     expect(field.value).toBe("https://two.example");
-    expect(element("status").textContent).toBe("Rakazo answered at https://two.example.");
+    expect(element("status").textContent).toBe("eTraderBot answered at https://two.example.");
     expect(element("status").getAttribute("data-tone")).toBe("ok");
     expect(element<HTMLButtonElement>("check").disabled).toBe(false);
     expect(element<HTMLButtonElement>("continue").disabled).toBe(false);
@@ -282,7 +282,7 @@ describe("setup", () => {
     await flush();
 
     expect(element("stack").hidden).toBe(false);
-    expect(element("stack-phase").textContent).toBe("Downloading Rakazo…");
+    expect(element("stack-phase").textContent).toBe("Downloading eTraderBot…");
   });
 
   it("locks the address while it is being saved and unlocks it when the save fails", async () => {
@@ -337,7 +337,7 @@ describe("setup", () => {
     await flush();
 
     expect(element<HTMLInputElement>("server-url").value).toBe("https://one.example");
-    expect(element("status").textContent).toBe("Rakazo answered at https://one.example.");
+    expect(element("status").textContent).toBe("eTraderBot answered at https://one.example.");
     expect(element("status").getAttribute("data-tone")).toBe("ok");
     expect(element<HTMLButtonElement>("check").disabled).toBe(false);
   });
@@ -388,7 +388,7 @@ describe("setup", () => {
     ui.startResult.resolve(stackState("pulling"));
     await flush();
     expect(element("stack").hidden).toBe(false);
-    expect(element("stack-phase").textContent).toBe("Downloading Rakazo…");
+    expect(element("stack-phase").textContent).toBe("Downloading eTraderBot…");
     expect(element<HTMLButtonElement>("continue").disabled).toBe(true);
 
     ui.resolveStackState(stackState("ready"));
@@ -398,7 +398,7 @@ describe("setup", () => {
     ui.resolveSave({ ok: true });
     await flush();
 
-    expect(element("stack-phase").textContent).toBe("Rakazo is ready.");
+    expect(element("stack-phase").textContent).toBe("eTraderBot is ready.");
     expect(element("stack-phase").getAttribute("data-tone")).toBe("ok");
     expect(ui.saves).toEqual([{ mode: "new", serverUrl: DEFAULT_LOCAL_URL }]);
     expect(element<HTMLButtonElement>("continue").disabled).toBe(false);
@@ -407,7 +407,7 @@ describe("setup", () => {
   it("renders the page and its messages in the app's language", async () => {
     const ui = await boot(null, { lang: "es", messages: ES_MESSAGES });
     expect(document.documentElement.lang).toBe("es");
-    expect(document.querySelector("h1")?.textContent).toBe("Te damos la bienvenida a Rakazo");
+    expect(document.querySelector("h1")?.textContent).toBe("Te damos la bienvenida a eTraderBot");
     expect(document.querySelector('label[for="mode-new"]')?.textContent?.trim()).toBe(
       "Esta computadora",
     );
@@ -415,7 +415,7 @@ describe("setup", () => {
       "Rakazo Cloud",
     );
     expect(element("quit").textContent).toBe("Salir");
-    expect(element("quit").title).toBe("Salir de Rakazo");
+    expect(element("quit").title).toBe("Salir de eTraderBot");
     expect(element("stack-details").getAttribute("aria-label")).toBe("Detalles técnicos");
     expect(element<HTMLTextAreaElement>("server-headers").placeholder).toBe("Nombre: valor");
     expect(element("continue").textContent).toBe("Continuar");
@@ -428,13 +428,13 @@ describe("setup", () => {
     expect(element("status").textContent).toBe("Comprobando…");
     ui.resolveCheck({ ok: true, url: "https://one.example" });
     await flush();
-    expect(element("status").textContent).toBe("Rakazo respondió en https://one.example.");
+    expect(element("status").textContent).toBe("eTraderBot respondió en https://one.example.");
 
     selectMode("new");
     submitForm();
     ui.startResult.resolve({ ...stackState("pulling"), layerBytes: { layer: 2.5e6 } });
     await flush();
-    expect(element("stack-phase").textContent).toBe("Descargando Rakazo…");
+    expect(element("stack-phase").textContent).toBe("Descargando eTraderBot…");
     expect(element("stack-detail").textContent).toBe("3 MB descargados");
   });
 });

@@ -25,6 +25,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import type { PreviewServer, ViteDevServer } from "vite";
 import { defineConfig, loadEnv } from "vite";
+import { localProductDoc } from "../../packages/adapters/src/local-product-docs.ts";
+import { RAKAZO_DOCS_URLS } from "../../packages/adapters/src/product-doc-index.ts";
 import { resolveScreenProxySecret } from "../../packages/core/src/secrets-guard.ts";
 import { createServiceLogger } from "../../packages/logging/src/env.ts";
 import { apiProxy } from "./src/api-proxy.js";
@@ -516,6 +518,28 @@ export default defineConfig(({ command, mode }) => {
     },
     define: { "import.meta.env.RAKAZO_BUILD": JSON.stringify(buildId) },
     plugins: [
+      {
+        name: "etraderbot-local-docs",
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            if (req.method !== "GET" && req.method !== "HEAD") return next();
+            const url = `http://localhost:5173${req.url}`;
+            const document = localProductDoc(url);
+            if (document === undefined) return next();
+            res.setHeader("Content-Type", "text/markdown; charset=utf-8");
+            res.end(req.method === "HEAD" ? undefined : document);
+          });
+        },
+        generateBundle() {
+          for (const url of RAKAZO_DOCS_URLS) {
+            this.emitFile({
+              type: "asset",
+              fileName: new URL(url).pathname.slice(1),
+              source: localProductDoc(url)!,
+            });
+          }
+        },
+      },
       {
         // The API reads this to name the deployed build, and a tab fetches it to confirm the
         // server already serves a newer build before it reloads.

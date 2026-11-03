@@ -8,6 +8,7 @@ import type {
   WebSearchRequest,
 } from "@rakazo/adapter-kit";
 import { JSDOM } from "jsdom";
+import { localProductDoc } from "./local-product-docs.js";
 import { clampMaxChars, clampMaxResults, clampOffset, pageWindow } from "./web-limits.js";
 import type { ResolveHostname } from "./web-ssrf.js";
 import { fetchSafeWebText } from "./web-ssrf.js";
@@ -103,6 +104,14 @@ export class KeylessHttpWebProvider implements WebProvider {
   async fetch(request: WebFetchRequest, context: AdapterContext): Promise<WebFetchResult> {
     const maxChars = clampMaxChars(request.maxChars);
     const offset = clampOffset(request.offset);
+    const document = localProductDoc(request.url);
+    if (document !== undefined) {
+      return {
+        url: request.url,
+        title: document.match(/^# (.+)/m)?.[1] ?? "eTraderBot documentation",
+        ...pageWindow(document.slice(offset), maxChars, offset),
+      };
+    }
     const { url, body, contentType } = await fetchSafeWebText(request.url, {
       fetch: this.fetchImpl,
       resolveHostname: this.resolveHostname,

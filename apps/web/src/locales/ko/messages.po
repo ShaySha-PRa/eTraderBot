@@ -691,6 +691,10 @@ msgstr "허용"
 msgid "Allow cross-space bot communication"
 msgstr ""
 
+#: src/lib/dictation.ts
+msgid "Allow eTraderBot to use Speech Recognition and the microphone in System Settings."
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Allow in this space"
 msgstr ""
@@ -698,10 +702,6 @@ msgstr ""
 #: src/components/AskCard.tsx
 msgid "Allow once"
 msgstr "한 번 허용"
-
-#: src/lib/dictation.ts
-msgid "Allow Rakazo to use Speech Recognition and the microphone in System Settings."
-msgstr ""
 
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Allow writing"
@@ -748,8 +748,8 @@ msgid "An API key is stored for this provider, not a subscription sign-in."
 msgstr "이 서비스에는 구독 로그인이 아니라 API 키가 저장되어 있습니다."
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
-msgid "An existing Honcho peer to read from. Rakazo never writes to it."
-msgstr "데이터를 읽어올 기존 Honcho 피어입니다. Rakazo는 이 피어에 데이터를 쓰지 않습니다."
+msgid "An existing Honcho peer to read from. eTraderBot never writes to it."
+msgstr "데이터를 읽어올 기존 Honcho 피어입니다. eTraderBot는 이 피어에 데이터를 쓰지 않습니다."
 
 #: src/lib/agent-import-errors.ts
 msgid "An imported API key could not be checked. Try again."
@@ -1341,7 +1341,7 @@ msgstr "폴더 선택"
 
 #: src/components/ModelCredits.tsx
 #: src/components/SubscriptionGate.tsx
-msgid "Choose how to use Rakazo"
+msgid "Choose how to use eTraderBot"
 msgstr ""
 
 #: src/lib/localized-provider-hint.ts
@@ -1642,8 +1642,8 @@ msgstr "먼저 이 모델의 제공자를 연결하세요."
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
-msgid "Connect your own API key in Models or choose Rakazo credits in Billing."
-msgstr "AI 모델에서 자체 API 키를 연결하거나 결제에서 Rakazo 크레딧을 선택하세요."
+msgid "Connect your own API key in Models or choose eTraderBot credits in Billing."
+msgstr "AI 모델에서 자체 API 키를 연결하거나 결제에서 eTraderBot 크레딧을 선택하세요."
 
 #: src/components/ComputerDeviceSettings.tsx
 #: src/components/integrations/IntegrationSetup.tsx
@@ -2340,8 +2340,8 @@ msgid "Create space"
 msgstr "스페이스 만들기"
 
 #: src/pages/Auth.tsx
-msgid "Create your Rakazo"
-msgstr "Rakazo 계정 만들기"
+msgid "Create your eTraderBot"
+msgstr "eTraderBot 계정 만들기"
 
 #: src/components/AskCard.tsx
 msgid "Created"
@@ -2774,7 +2774,7 @@ msgid "Engage when... Ignore..."
 msgstr ""
 
 #: src/components/GitHubStarPrompt.tsx
-msgid "Enjoying Rakazo?"
+msgid "Enjoying eTraderBot?"
 msgstr ""
 
 #: src/lib/user-error.ts
@@ -2815,6 +2815,15 @@ msgstr "환경 변수: {names}"
 #: src/lib/roster-status.ts
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Error"
+msgstr ""
+
+#: src/pages/shell/avatar-studio-popover.tsx
+msgid "eTraderBot"
+msgstr "eTraderBot"
+
+#: src/components/ModelCredits.tsx
+#: src/pages/Onboarding.tsx
+msgid "eTraderBot credits"
 msgstr ""
 
 #: src/lib/cron.ts
@@ -3226,7 +3235,7 @@ msgid "How to check"
 msgstr "완료 확인 방법"
 
 #: src/components/SignupSurvey.tsx
-msgid "How will you use Rakazo?"
+msgid "How will you use eTraderBot?"
 msgstr ""
 
 #: src/pages/shell/computer-release-actions.tsx
@@ -4183,8 +4192,8 @@ msgid "Not imported"
 msgstr "가져오지 않음"
 
 #: src/pages/shell/import-status.ts
-msgid "Not in Rakazo's catalog"
-msgstr "Rakazo 카탈로그에 없음"
+msgid "Not in eTraderBot's catalog"
+msgstr "eTraderBot 카탈로그에 없음"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Not in the plugin catalog"
@@ -4197,12 +4206,12 @@ msgstr "나중에"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
-msgid "Not supported in Rakazo"
-msgstr "Rakazo에서 지원하지 않음"
+msgid "Not supported in eTraderBot"
+msgstr "eTraderBot에서 지원하지 않음"
 
 #: src/pages/shell/agent-import.tsx
-msgid "Not used by Rakazo"
-msgstr "Rakazo에서 사용하지 않음"
+msgid "Not used by eTraderBot"
+msgstr "eTraderBot에서 사용하지 않음"
 
 #: src/components/McpServerHealthLine.tsx
 msgid "Not working"
@@ -4446,8 +4455,8 @@ msgid "Paste a replacement key"
 msgstr "새 API 키를 붙여넣으세요"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
-msgid "Paste the OpenAI-compatible address from your server. Rakazo adds /v1 if needed."
-msgstr "서버의 OpenAI 호환 주소를 붙여넣으세요. 필요하면 Rakazo가 /v1을 추가합니다."
+msgid "Paste the OpenAI-compatible address from your server. eTraderBot adds /v1 if needed."
+msgstr "서버의 OpenAI 호환 주소를 붙여넣으세요. 필요하면 eTraderBot가 /v1을 추가합니다."
 
 #: src/pages/shell/agent-import.tsx
 msgid "Paste the reply"
@@ -4622,17 +4631,8 @@ msgstr "풀 리퀘스트"
 msgid "Queued"
 msgstr "대기 중"
 
-#: src/pages/shell/avatar-studio-popover.tsx
-msgid "Rakazo"
-msgstr "Rakazo"
-
-#: src/components/ModelCredits.tsx
-#: src/pages/Onboarding.tsx
-msgid "Rakazo credits"
-msgstr ""
-
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
-msgid "rakazo-shared and IDs starting with bot- are reserved for Rakazo."
+msgid "rakazo-shared and IDs starting with bot- are reserved for eTraderBot."
 msgstr ""
 
 #: src/pages/shell/message-hover-actions.tsx
@@ -5038,8 +5038,8 @@ msgstr ""
 
 #: src/pages/McpOAuthCallback.tsx
 #: src/pages/SlackInstallCallback.tsx
-msgid "Return to Rakazo"
-msgstr "Rakazo로 돌아가기"
+msgid "Return to eTraderBot"
+msgstr "eTraderBot로 돌아가기"
 
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
@@ -5478,8 +5478,8 @@ msgid "Sign in at <0>{0}</0>, then paste the code here."
 msgstr "<0>{0}</0>에서 로그인한 다음 코드를 여기에 붙여넣으세요."
 
 #: src/pages/Auth.tsx
-msgid "Sign in to Rakazo"
-msgstr "Rakazo 로그인"
+msgid "Sign in to eTraderBot"
+msgstr "eTraderBot 로그인"
 
 #: src/lib/user-error.ts
 msgid "Sign in to your existing account to link SSO"
@@ -5743,8 +5743,8 @@ msgid "Subscribe for {price} / month"
 msgstr "월 {price}에 구독"
 
 #: src/components/ModelCredits.tsx
-msgid "Subscribe to Rakazo credits"
-msgstr "Rakazo 크레딧 구독"
+msgid "Subscribe to eTraderBot credits"
+msgstr "eTraderBot 크레딧 구독"
 
 #: src/components/ModelCredits.tsx
 msgid "Subscribe with your own AI"
@@ -6042,8 +6042,8 @@ msgid "This server's tool result does not fit the model. Turn off Keep tool resu
 msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx
-msgid "This subscription sign-in is not available in Rakazo yet. Use a deployment credential or choose another provider."
-msgstr "이 구독 로그인 방식은 아직 Rakazo에서 지원되지 않습니다. 서버에 설정된 인증 정보를 사용하거나 다른 서비스를 선택하세요."
+msgid "This subscription sign-in is not available in eTraderBot yet. Use a deployment credential or choose another provider."
+msgstr "이 구독 로그인 방식은 아직 eTraderBot에서 지원되지 않습니다. 서버에 설정된 인증 정보를 사용하거나 다른 서비스를 선택하세요."
 
 #: src/pages/Artifacts.tsx
 msgid "This week"
@@ -6324,6 +6324,10 @@ msgstr "기본값 사용"
 msgid "Use defaults for {label}"
 msgstr "{label}에 기본값 사용"
 
+#: src/components/ModelCredits.tsx
+msgid "Use eTraderBot credits"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr ""
@@ -6334,10 +6338,6 @@ msgstr ""
 
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Use Protected input for passwords."
-msgstr ""
-
-#: src/components/ModelCredits.tsx
-msgid "Use Rakazo credits"
 msgstr ""
 
 #: src/pages/model-settings/space-bots-model.tsx
@@ -6474,7 +6474,7 @@ msgid "Weekends"
 msgstr "주말"
 
 #: src/components/SignupSurvey.tsx
-msgid "Welcome to Rakazo"
+msgid "Welcome to eTraderBot"
 msgstr ""
 
 #: src/pages/shell/dialogs.tsx
@@ -6486,7 +6486,7 @@ msgid "What can this space use?"
 msgstr ""
 
 #: src/components/SignupSurvey.tsx
-msgid "What do you most want Rakazo to help with?"
+msgid "What do you most want eTraderBot to help with?"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx

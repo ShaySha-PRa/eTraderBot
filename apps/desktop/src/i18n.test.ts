@@ -20,7 +20,7 @@ import { readUiLocale, writeUiLocale } from "./setup-store.js";
 const srcDir = import.meta.dirname;
 /** Product and vendor names the setup page shows as they are. */
 const UNTRANSLATED = new Set([
-  "Rakazo",
+  "eTraderBot",
   "Rakazo Cloud",
   "Docker Desktop",
   "OrbStack",
@@ -77,8 +77,8 @@ describe("desktop language", () => {
   it("starts in the saved language, ignoring a saved value that is not a language tag", () => {
     expect(startDesktopLocale("es-MX", "en-US")).toBe("es");
     expect(t("Check for Updates…")).toBe("Buscar actualizaciones…");
-    expect(t("Rakazo {version} is ready to install.", { version: "1.2.0" })).toBe(
-      "Rakazo 1.2.0 está listo para instalarse.",
+    expect(t("eTraderBot {version} is ready to install.", { version: "1.2.0" })).toBe(
+      "eTraderBot 1.2.0 está listo para instalarse.",
     );
     expect(desktopMessages()).toBe(ES_MESSAGES);
 

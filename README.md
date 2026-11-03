@@ -1,4 +1,6 @@
-# Rakazo
+# eTraderBot
+
+eTraderBot is a branded derivative of [Rakazo](https://github.com/elie222/rakazo), licensed under Apache-2.0. This checkout changes the application display name and user-facing text to eTraderBot; internal identifiers remain compatible with Rakazo. The upstream documentation and service links below retain their original attribution.
 
 [English](./README.md) | [简体中文](./README.zh-CN.md) | [日本語](./README.ja.md)
 

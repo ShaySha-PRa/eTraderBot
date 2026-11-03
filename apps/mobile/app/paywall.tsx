@@ -259,7 +259,7 @@ export default function Paywall() {
         </View>
         <View style={styles.footer}>
           <NativeActionButton
-            label={started === "byok" ? t("Connect your AI") : t("Start using Rakazo")}
+            label={started === "byok" ? t("Connect your AI") : t("Start using eTraderBot")}
             onPress={() => {
               router.back();
               if (started === "byok") router.push("/models");
@@ -421,7 +421,7 @@ export default function Paywall() {
             <PlanCard
               selected={plan === "credits"}
               onPress={() => setPlan("credits")}
-              title={t("Rakazo credits")}
+              title={t("eTraderBot credits")}
               badge={subscribed === "credits" ? t("Current plan") : undefined}
               price={
                 <MenuView

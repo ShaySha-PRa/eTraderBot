@@ -14,9 +14,9 @@ describe("Rakazo skill", () => {
     expect(urls).toEqual(RAKAZO_DOCS_URLS);
     for (const url of urls) {
       const slug =
-        url === "https://rakazo.com/docs.md"
+        url === "http://localhost:5173/docs.md"
           ? publishedSlugs[0]
-          : /^https:\/\/rakazo\.com\/docs\/([\w-]+)\.md$/.exec(url)?.[1];
+          : /^http:\/\/localhost:5173\/docs\/([\w-]+)\.md$/.exec(url)?.[1];
       expect(publishedSlugs, url).toContain(slug);
       expect(existsSync(repoFile(`docs/${slug}.md`)), url).toBe(true);
     }

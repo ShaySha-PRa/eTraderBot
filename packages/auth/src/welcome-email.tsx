@@ -21,10 +21,10 @@ export function welcomeEmail(
   return message(
     user.email,
     locale,
-    say("Welcome to Rakazo"),
+    say("Welcome to eTraderBot"),
     <>
       <Text>{greeting(say, user.name)}</Text>
-      <Text>{say("Thanks for signing up for Rakazo.")}</Text>
+      <Text>{say("Thanks for signing up for eTraderBot.")}</Text>
       <Text>
         {say("Rakazo also has apps for")}{" "}
         {/* The language's own list ("A, B, and C", "A, B y C"), with each app a link. */}
