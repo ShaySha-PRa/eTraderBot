@@ -508,6 +508,10 @@ msgstr "业务范围操作"
 msgid "Active"
 msgstr "启用"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Active runs"
+msgstr "运行中任务"
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Activity"
 msgstr "动态"
@@ -1255,6 +1259,11 @@ msgstr "浏览 MCP 服务器"
 msgid "Built-in"
 msgstr "内置"
 
+#: src/pages/BusinessSupervisor.tsx
+#: src/pages/Shell.tsx
+msgid "Business overview"
+msgstr "业务总览"
+
 #: src/lib/identity-display.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/bot-business-labels.tsx
@@ -1269,6 +1278,10 @@ msgstr "业务范围默认值"
 #: src/pages/SettingsOverlay.tsx
 msgid "Business scopes"
 msgstr "业务范围"
+
+#: src/pages/Shell.tsx
+msgid "Business supervisor"
+msgstr "业务主管"
 
 #: src/pages/Trading.tsx
 msgid "Buy"
@@ -1714,6 +1727,10 @@ msgstr "完成"
 #: src/pages/TradingLearning.tsx
 msgid "Completed"
 msgstr "已完成"
+
+#: src/pages/BusinessSupervisor.tsx
+msgid "Completed tasks"
+msgstr "已完成任务"
 
 #: src/pages/settings-nav.ts
 #: src/pages/shell/bot-panel.tsx
@@ -3292,6 +3309,10 @@ msgstr "失败"
 msgid "Failed"
 msgstr "失败"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Failed runs (history)"
+msgstr "历史失败运行"
+
 #: src/pages/shell/use-composer-actions.ts
 msgid "Failed to send message"
 msgstr "发送消息失败"
@@ -4038,6 +4059,7 @@ msgstr "正在加载语音提供方…"
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/BusinessSupervisor.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
@@ -6726,6 +6748,10 @@ msgstr "接管控制权"
 msgid "Target scope"
 msgstr "目标业务范围"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Task completion"
+msgstr "任务完成率"
+
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Teach a task"
 msgstr "示范任务"
@@ -6737,6 +6763,10 @@ msgstr "正在示范，发送新消息前请先停止示范。"
 #: src/pages/shell/bot-panel.tsx
 msgid "Team"
 msgstr "团队"
+
+#: src/pages/BusinessSupervisor.tsx
+msgid "Team and recent results"
+msgstr "团队与最近结果"
 
 #: src/pages/shell/computer-view.tsx
 msgid "Team Computer"

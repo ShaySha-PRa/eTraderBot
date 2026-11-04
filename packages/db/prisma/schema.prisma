@@ -693,6 +693,7 @@ model SpaceVoicePreference {
 }
 
 model Bot {
+  businessSupervisor Boolean @default(false)
   tradingRole String?
   tradingBindings TradingBotBinding[]
   screenGeneration Int @default(0)

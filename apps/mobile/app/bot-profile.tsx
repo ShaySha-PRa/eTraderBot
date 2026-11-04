@@ -168,6 +168,13 @@ export default function BotProfile() {
         </SettingsGroup>
       ) : null}
       <SettingsGroup>
+        {bot?.businessSupervisor ? (
+          <SettingsRow
+            title={t("Business overview")}
+            chevron="right"
+            onPress={() => router.push("/business-supervisor")}
+          />
+        ) : null}
         {bot?.tradingRole ? (
           <SettingsRow
             title={t("Trading and learning")}

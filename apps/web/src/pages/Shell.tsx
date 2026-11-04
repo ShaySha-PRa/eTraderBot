@@ -125,6 +125,9 @@ const BusinessInterfaces = lazyComponent(() =>
 const TradingApprovals = lazyComponent(() =>
   import("./Trading").then((module) => module.TradingApprovals),
 );
+const BusinessSupervisor = lazyComponent(() =>
+  import("./BusinessSupervisor").then((module) => module.BusinessSupervisor),
+);
 const TradingPage = lazyComponent(() => import("./Trading").then((module) => module.TradingPage));
 
 export function ShellPage() {
@@ -344,7 +347,8 @@ function SpaceShell() {
       : (scopedBots.find((b) => b.id === (botId ?? routeChat?.botId)) ?? scopedBots[0]);
   const tradingTemplates = useTradingBotTemplates();
   const workspace =
-    active?.tradingRole && ["trading", "learning"].includes(searchParams.get("workspace") ?? "")
+    (active?.tradingRole || active?.businessSupervisor) &&
+    ["trading", "learning"].includes(searchParams.get("workspace") ?? "")
       ? (searchParams.get("workspace") as "trading" | "learning")
       : "chat";
   function openWorkspace(next: string) {
@@ -1154,43 +1158,55 @@ function SpaceShell() {
                 callBot(bot);
               }}
             />
-            {active?.tradingRole ? (
+            {active?.tradingRole || active?.businessSupervisor ? (
               <nav
                 aria-label={t`Bot workspace`}
                 className="mt-16 flex flex-wrap items-center gap-1 border-b px-4 pb-2"
               >
                 <span className="me-3 text-xs text-muted-foreground">
-                  {tradingTemplates[active.tradingRole].name}
+                  {active.businessSupervisor
+                    ? t`Business supervisor`
+                    : active.tradingRole
+                      ? tradingTemplates[active.tradingRole].name
+                      : ""}
                 </span>
                 {(
                   [
                     ["chat", t`Chat`],
                     [
                       "trading",
-                      active.tradingRole === "risk"
-                        ? t`Risk review`
-                        : active.tradingRole === "review"
-                          ? t`Trading review`
-                          : t`Trading`,
+                      active.businessSupervisor
+                        ? t`Business overview`
+                        : active.tradingRole === "risk"
+                          ? t`Risk review`
+                          : active.tradingRole === "review"
+                            ? t`Trading review`
+                            : t`Trading`,
                     ],
                     ["learning", t`Learning`],
                   ] as const
-                ).map(([value, label]) => (
-                  <Button
-                    key={value}
-                    size="sm"
-                    variant={workspace === value ? "secondary" : "ghost"}
-                    aria-current={workspace === value ? "page" : undefined}
-                    onClick={() => openWorkspace(value)}
-                  >
-                    {label}
-                  </Button>
-                ))}
+                )
+                  .filter(([value]) => !active.businessSupervisor || value !== "learning")
+                  .map(([value, label]) => (
+                    <Button
+                      key={value}
+                      size="sm"
+                      variant={workspace === value ? "secondary" : "ghost"}
+                      aria-current={workspace === value ? "page" : undefined}
+                      onClick={() => openWorkspace(value)}
+                    >
+                      {label}
+                    </Button>
+                  ))}
               </nav>
             ) : null}
             {businessScope && businessScope.ownerUserId !== userId ? (
               <Suspense fallback={<PageLoading />}>
                 <TradingApprovals key={businessScope.id} businessScope={businessScope} />
+              </Suspense>
+            ) : active?.businessSupervisor && workspace !== "chat" ? (
+              <Suspense fallback={<PageLoading />}>
+                <BusinessSupervisor key={active.spaceId} />
               </Suspense>
             ) : active?.tradingRole && workspace !== "chat" ? (
               <Suspense fallback={<PageLoading />}>

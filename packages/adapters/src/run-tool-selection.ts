@@ -13,6 +13,7 @@ import { filterBuiltinToolsForRun, filterBuiltinToolsForThread } from "./schedul
 
 export const READ_ONLY_AGENT_TOOLS = new Set([
   "read_trading_material",
+  "business_overview",
   "computer_observe",
   "list_files",
   "list_fleet",
@@ -55,6 +56,7 @@ const CREATED_RUN_TOOL_NAMES = new Set(["ask_user", "update_bot"]);
 
 export function selectBuiltinToolsForRun(options: {
   tradingEnabled?: boolean;
+  businessSupervisor?: boolean;
   ticketBoardEnabled?: boolean;
   phoneCallsEnabled?: boolean;
   historyRetrievalEnabled?: boolean;
@@ -106,6 +108,7 @@ export function selectBuiltinToolsForRun(options: {
     (tool) =>
       !disabled.has(tool.name) &&
       (options.tradingEnabled || tool.name !== "trading") &&
+      (options.businessSupervisor || tool.name !== "business_overview") &&
       (options.trigger !== "created" || CREATED_RUN_TOOL_NAMES.has(tool.name)) &&
       (!FLEET_TOOL_NAMES_SET.has(tool.name) ||
         (Boolean(options.fleetManagement) && ownerStartedRun)) &&

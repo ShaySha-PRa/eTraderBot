@@ -34,7 +34,7 @@ import { useTicketStatusLabels } from "../lib/ticket-status";
 import { errorText } from "../lib/user-error";
 import { WindowChrome } from "./WindowChrome";
 
-export function BoardPage() {
+export function BoardPage({ embedded = false }: { embedded?: boolean } = {}) {
   const { t } = useLingui();
   const statuses = useTicketStatusLabels();
   const queries = useSpaceQueries();
@@ -107,15 +107,17 @@ export function BoardPage() {
 
   return (
     <div className="flex h-full min-w-0 flex-col overflow-hidden bg-background text-foreground">
-      <WindowChrome />
+      {!embedded && <WindowChrome />}
       <header className="flex items-center gap-3 border-b px-4 py-3">
-        <Link
-          to="/app"
-          className={buttonVariants({ variant: "ghost", size: "icon" })}
-          aria-label={t`Back`}
-        >
-          <ChevronLeft />
-        </Link>
+        {!embedded && (
+          <Link
+            to="/app"
+            className={buttonVariants({ variant: "ghost", size: "icon" })}
+            aria-label={t`Back`}
+          >
+            <ChevronLeft />
+          </Link>
+        )}
         <h1 className="flex-1 font-medium">
           <Trans>Board</Trans>
         </h1>

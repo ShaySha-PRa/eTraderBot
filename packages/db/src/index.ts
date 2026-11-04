@@ -9,6 +9,7 @@ export * from "./board-live.js";
 export * from "./bootstrap-user.js";
 export * from "./bot-instructions.js";
 export * from "./bot-update.js";
+export * from "./business-supervisor.js";
 export * from "./cancel-runs.js";
 export * from "./client.js";
 export * from "./computer-runs.js";
@@ -59,5 +60,4 @@ export * from "./usage.js";
 export * from "./voice-credentials.js";
 export * from "./workspace-access.js";
 export * from "./workspace-isolation.js";
-
 export * from "./workspace-migration.js";

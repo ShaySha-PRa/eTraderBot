@@ -78,6 +78,7 @@
 | 知识层计划文档 | 选型未定；账本／Registry／RAG／Ontology 边界已写 | `eTraderBot-knowledge-layer-plan.md` |
 | 本速览页（done-todo） | 原计划 / 后加分列 | 本文件 |
 | 交易／通用工作区隔离及最小只读授权 | 后端、工具、迁移和多端入口已实现；原生设备与真实模型／接口未验收 | [V1.1 实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md) |
+| 每条业务线的主管 Bot | 固定协调身份、任务分配、结果与进度；真实模型效果未验收 | [主管说明](../implementation/eTraderBot-business-supervisor.md) |
 
 ### B2 待办／想做（后加）
 

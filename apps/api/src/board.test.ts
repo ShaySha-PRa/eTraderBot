@@ -13,13 +13,27 @@ const actor: Actor = {
 
 describe("disabled ticket board", () => {
   it.each([undefined, false])(
-    "refuses every route and stream before accessing the database (%s)",
+    "refuses every route and stream in a general workspace before querying tickets (%s)",
     async (enabled) => {
       const query = vi.fn(() => {
         throw new Error("Unexpected database access");
       });
       const follow = vi.fn();
-      const prisma = new Proxy({}, { get: () => query });
+      const prisma = new Proxy(
+        {},
+        {
+          get: (_target, key) =>
+            key === "space"
+              ? {
+                  findUnique: async () => ({
+                    kind: "general",
+                    isolationPending: false,
+                    deletingAt: null,
+                  }),
+                }
+              : query,
+        },
+      );
       const client = createRouterClient(
         createRouter({
           prisma,

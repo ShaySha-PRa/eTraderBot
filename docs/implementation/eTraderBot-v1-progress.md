@@ -195,3 +195,22 @@ pnpm exec tsx packages/core/scripts/validate-trading-fixtures.ts
 本批没有运行全仓 CI、Electron E2E、iOS/Android 原生设备、真实模型或真实公司接口验证。外部记忆的历史自定义共享命名空间会被拒绝运行，需独立确认归属后迁移；未搬运远端历史。下一批为 ADR 0005 的固定版本经验交接，之后统一算法调用接口、真实数据影子验证；独立训练／论文复现／实盘继续暂缓。
 
 本地开发服务已恢复；浏览器确认迁移后两类工作区及各自 Bot 可见，聊天切换使用对应工作区上下文，未观察到页面脚本异常。
+
+## 追加：每条业务线的主管 Bot（2026-11-04）
+
+按使用者要求，先于经验交接加入业务协调入口。每个已配置交易工作区固定一位主管，四类专业模板保持不变；通用 Chief 的归属不变。主管复用现有任务看板、Task/Run 和队列分派工作，读取任务结果、阻塞、活动及历史失败运行。新增“聊天／业务总览”与移动总览／原生看板入口。详见[业务主管说明](eTraderBot-business-supervisor.md)。
+
+- 后端及数据库保持主管唯一、身份不可升级、不可跨业务或单独复制／归档。主管没有交易角色或绑定，不能调用交易操作；任务分派不继承审批和执行权限。
+- 完成率由全量持久化任务聚合：只有 `done` 算完成；`closed` 表示“不做”，单列而不算完成。最近 30 条结果只影响展示，不影响全量统计。模型运行结束不自动改任务完成状态。
+- 增量迁移先验证隔离数据库及已有数据副本，交易证据指纹保持一致。本地补建 1 位主管，保留原 6 个 Bot 的完整行内容和 20 张交易表的完整指纹；既有数据库备份保留，主管补建前另做完整备份。
+- Spec、领域术语、架构及 ADR 0004 补充说明已同步。固定版本经验交接继续下一批；真实天气公开源仍仅完成连通性调研，没有在本批接入。
+
+验证（分批命令均最终通过）：
+
+- `pnpm test:integration --spec=business-supervisor`：2 项 PostgreSQL 场景，覆盖并发唯一创建、不可复制／归档／升级、交易操作拒绝、真实任务入队、评论结果、跨区拒绝及超过展示窗口的全量统计。
+- `pnpm test:integration --spec=trading`：87 项回归通过；`pnpm test:integration --spec=workspace-isolation`：5 项隔离与迁移回归通过。
+- `pnpm exec vitest run packages/adapters/src/executor packages/adapters/src/run-tools packages/adapters/src/ticket apps/api/src/board.test.ts apps/web/src/pages/Board.test.tsx`：30 文件、902 项通过。
+- Chromium 分批通过主管、四模板、工作区隔离、交易、天气共 5 个不同场景；主管最终再次验证中英、390px、派单、结果与完成率更新，截图见[英文](../demo/etraderbot-business-supervisor-en.png)、[中文窄屏](../demo/etraderbot-business-supervisor-narrow-zh.png)。
+- contracts/core/db/adapters/API/worker/Web 七包类型检查、mobile 离线类型／依赖检查通过；Web 生产构建通过，仍有既有大 chunk 提示。
+
+没有运行全仓 CI、Electron E2E、原生设备或真实模型的任务拆解／汇总质量验证。数据库入队与脚本化浏览器场景不等于真实模型完成了业务任务；现有模型配置未在本批替换。

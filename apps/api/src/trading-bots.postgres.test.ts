@@ -239,7 +239,7 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
     expect(created.spaceId).not.toBe(actor.spaceId);
     expect(await client().trading.createBusinessScope(input)).toEqual(created);
     const next = client({ ...actor, spaceId: created.spaceId });
-    expect(await next.bots.list()).toEqual([]);
+    expect(await next.bots.list()).toMatchObject([{ businessSupervisor: true, tradingRole: null }]);
     expect(await next.trading.desks({})).toEqual([]);
     expect(await next.trading.interfaces({ workspaceId: created.id })).toEqual([]);
     expect((await client().trading.workspaces({})).map((row) => row.id)).toEqual([configured.id]);
@@ -265,7 +265,8 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
       ),
     );
     const saved = (await client().trading.workspaces({})).find((row) => row.id === scope.id)!;
-    expect(new Set(saved.botIds)).toEqual(new Set(bots.map((bot) => bot.id)));
+    expect(saved.botIds).toEqual(expect.arrayContaining(bots.map((bot) => bot.id)));
+    expect(saved.botIds).toHaveLength(bots.length + 1);
     expect(saved.deskIds).toHaveLength(4);
     for (const [index, bot] of bots.entries()) {
       const desks = await client().trading.desks({ botId: bot.id });
@@ -293,7 +294,8 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
     expect(cloned.id).not.toBe(bots[0]!.id);
     expect(cloned.spaceId).toBe(other.spaceId);
     const linked = (await otherClient.trading.workspaces({}))[0]!;
-    expect(linked.botIds).toEqual([cloned.id]);
+    expect(linked.botIds).toContain(cloned.id);
+    expect(linked.botIds).toHaveLength(2);
     expect(linked.deskIds.every((id) => !saved.deskIds.includes(id))).toBe(true);
     await client().trading.connectWorkspaceBot({ workspaceId: scope.id, botId: bots[0]!.id });
     expect(
@@ -326,7 +328,7 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
     ).rejects.toThrow();
     expect(
       (await client().trading.workspaces({})).find((row) => row.id === scope.id)!.botIds,
-    ).toEqual([]);
+    ).toHaveLength(1);
   });
   it("stores multiple data APIs per scope with encrypted credentials and revision checks", async () => {
     const scope = await workspace(),

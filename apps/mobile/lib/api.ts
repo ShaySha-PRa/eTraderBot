@@ -1086,6 +1086,7 @@ async function request(
 export type MobileBot = Pick<
   Bot,
   | "tradingRole"
+  | "businessSupervisor"
   | "id"
   | "name"
   | "preview"

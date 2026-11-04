@@ -43,6 +43,7 @@ import {
   VaultRevealed,
   VaultRevealInput,
 } from "./bot-secrets.js";
+import { businessSupervisorContract } from "./business-supervisor.js";
 import {
   AccessGrantInputSchema,
   AccessGrantSchema,
@@ -338,6 +339,7 @@ export const appContract = {
     adoptTimezone: oc.input(z.object({ timezone: TimeZoneSchema })).output(MeSchema),
   },
   workspaceAccess: workspaceAccessContract,
+  businessSupervisor: businessSupervisorContract,
   spaces: {
     list: oc.output(SpaceNavigationSchema),
     create: oc

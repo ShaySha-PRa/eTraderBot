@@ -98,6 +98,7 @@ export const InstructionVersionSchema = z.object({
 });
 
 export const BotSchema = z.object({
+  businessSupervisor: z.boolean().optional(),
   tradingRole: TradingBotRoleSchema.nullable().optional(),
   id: Id,
   spaceId: Id,
@@ -248,6 +249,7 @@ export type BotSection = z.infer<typeof BotSectionSchema>;
  * those bots access to the currently active space.
  */
 export const SpaceBotSchema = BotSchema.pick({
+  businessSupervisor: true,
   id: true,
   spaceId: true,
   name: true,

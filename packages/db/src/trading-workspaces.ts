@@ -9,6 +9,7 @@ import {
 } from "@rakazo/contracts";
 import { tradingAssert } from "@rakazo/core";
 import { availableInSpace } from "./availability.js";
+import { ensureBusinessSupervisor } from "./business-supervisor.js";
 import type { Prisma, PrismaClient } from "./client.js";
 import { createSpaceForMember, lockSpaceForContentCreation } from "./spaces.js";
 import { tradingCanonical } from "./trading-engine.js";
@@ -18,7 +19,14 @@ import { requireWorkspaceKind } from "./workspace-isolation.js";
 
 type Tx = Prisma.TransactionClient;
 const include = {
-  space: { select: { name: true, bots: { where: { archivedAt: null }, select: { id: true } } } },
+  space: {
+    select: {
+      name: true,
+      isolationPending: true,
+      deletingAt: true,
+      bots: { where: { archivedAt: null }, select: { id: true } },
+    },
+  },
   desks: { include: { desk: { include: { bindings: true } } } },
 } as const;
 type Row = Prisma.TradingWorkspaceGetPayload<{ include: typeof include }>;
@@ -177,6 +185,7 @@ export async function groupTradingDesk(tx: Tx, desk: Prisma.TradingDeskGetPayloa
     });
   }
   await tx.tradingWorkspaceDesk.create({ data: { workspaceId: row.id, deskId: desk.id } });
+  await ensureBusinessSupervisor(tx, desk.spaceId);
 }
 
 async function configure(
@@ -220,7 +229,10 @@ async function configure(
       "SCOPE_MISMATCH",
       "This business scope is already configured; create a new business scope for another account",
     );
-    return dto(existing);
+    await ensureBusinessSupervisor(tx, actor.spaceId);
+    return dto(
+      await tx.tradingWorkspace.findUniqueOrThrow({ where: { id: existing.id }, include }),
+    );
   }
   // The Space name is canonical; settings cannot rename an existing business implicitly.
   await requireWorkspaceKind(tx, actor.spaceId, "trading");
@@ -236,7 +248,8 @@ async function configure(
     },
     include,
   });
-  return dto(row);
+  await ensureBusinessSupervisor(tx, actor.spaceId);
+  return dto(await tx.tradingWorkspace.findUniqueOrThrow({ where: { id: row.id }, include }));
 }
 
 export function createTradingWorkspaceService(prisma: PrismaClient, clock = () => new Date()) {
@@ -263,6 +276,14 @@ export function createTradingWorkspaceService(prisma: PrismaClient, clock = () =
         include,
         orderBy: [{ createdAt: "asc" }, { id: "asc" }],
       });
+      for (const row of rows) {
+        if (
+          row.ownerUserId === actor.userId &&
+          !row.space.isolationPending &&
+          !row.space.deletingAt
+        )
+          await prisma.$transaction((tx) => ensureBusinessSupervisor(tx, row.spaceId));
+      }
       return rows.map(dto);
     },
     create(actor: Actor, input: RpcInput<"trading/createWorkspace">) {

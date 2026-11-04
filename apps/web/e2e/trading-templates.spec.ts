@@ -72,7 +72,8 @@ test("four Bot templates keep trading and learning in their own workspace", asyn
   const grouped = (await rpc<TradingWorkspace[]>(page, "trading/workspaces", {})).find(
     (row) => row.id === scope.id,
   )!;
-  expect(new Set(grouped.botIds)).toEqual(new Set(createdIds));
+  expect(grouped.botIds).toEqual(expect.arrayContaining(createdIds));
+  expect(grouped.botIds).toHaveLength(createdIds.length + 1);
   expect(grouped.deskIds).toHaveLength(4);
   const sidebar = page.getByTestId("bots-sidebar");
   for (const id of createdIds)
@@ -106,9 +107,7 @@ test("four Bot templates keep trading and learning in their own workspace", asyn
   await expect(page.getByTestId("business-interface")).toHaveCount(2);
   await captureScreenshot(page, testInfo, "business-interfaces-en");
   const other = await createBusinessScope(page, "Synthetic Shanghai business");
-  await expect(
-    page.getByText("No bots in this business scope yet.", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByText("Business supervisor", { exact: true })).toBeVisible();
   for (const id of createdIds)
     await expect(sidebar.locator(`[data-roster-bot-id="${id}"]`)).toHaveCount(0);
   await page.getByRole("button", { name: "Interface settings", exact: true }).click();

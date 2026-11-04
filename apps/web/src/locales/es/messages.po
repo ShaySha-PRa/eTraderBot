@@ -508,6 +508,10 @@ msgstr ""
 msgid "Active"
 msgstr "Activo"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Active runs"
+msgstr ""
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Activity"
 msgstr "Actividad"
@@ -1255,6 +1259,11 @@ msgstr "Explorar servidores MCP"
 msgid "Built-in"
 msgstr "Integrado"
 
+#: src/pages/BusinessSupervisor.tsx
+#: src/pages/Shell.tsx
+msgid "Business overview"
+msgstr ""
+
 #: src/lib/identity-display.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/bot-business-labels.tsx
@@ -1268,6 +1277,10 @@ msgstr ""
 
 #: src/pages/SettingsOverlay.tsx
 msgid "Business scopes"
+msgstr ""
+
+#: src/pages/Shell.tsx
+msgid "Business supervisor"
 msgstr ""
 
 #: src/pages/Trading.tsx
@@ -1714,6 +1727,10 @@ msgstr "Completado"
 #: src/pages/TradingLearning.tsx
 msgid "Completed"
 msgstr "Completado"
+
+#: src/pages/BusinessSupervisor.tsx
+msgid "Completed tasks"
+msgstr ""
 
 #: src/pages/settings-nav.ts
 #: src/pages/shell/bot-panel.tsx
@@ -3292,6 +3309,10 @@ msgstr "fallido"
 msgid "Failed"
 msgstr "Falló"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Failed runs (history)"
+msgstr ""
+
 #: src/pages/shell/use-composer-actions.ts
 msgid "Failed to send message"
 msgstr "No se pudo enviar el mensaje"
@@ -4038,6 +4059,7 @@ msgstr "Cargando proveedores de voz…"
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/BusinessSupervisor.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
@@ -6726,6 +6748,10 @@ msgstr "Tomar el control"
 msgid "Target scope"
 msgstr ""
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Task completion"
+msgstr ""
+
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Teach a task"
 msgstr "Enseñar una tarea"
@@ -6737,6 +6763,10 @@ msgstr "Enseñanza en curso: detén la enseñanza antes de enviar un nuevo mensa
 #: src/pages/shell/bot-panel.tsx
 msgid "Team"
 msgstr "Equipo"
+
+#: src/pages/BusinessSupervisor.tsx
+msgid "Team and recent results"
+msgstr ""
 
 #: src/pages/shell/computer-view.tsx
 msgid "Team Computer"

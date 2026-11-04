@@ -778,12 +778,16 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
                 spaceId: run.spaceId,
                 botId: bot.id,
               }),
-          messagingChannelRun || !deps.ticketBoardEnabled
+          messagingChannelRun ||
+          !(deps.ticketBoardEnabled || bot.tradingRole || bot.businessSupervisor)
             ? Promise.resolve(undefined)
-            : loadAgentTicketContext(deps, {
-                spaceId: run.spaceId,
-                text: task.prompt,
-              }),
+            : loadAgentTicketContext(
+                { ...deps, ticketBoardEnabled: true },
+                {
+                  spaceId: run.spaceId,
+                  text: task.prompt,
+                },
+              ),
           recallPromise,
         ]);
         const semanticMemoryEnabled = Boolean(semanticMemory) && !messagingChannelRun;
@@ -1163,7 +1167,10 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
               spaceId: run.spaceId,
               botId: bot.id,
             }),
-            ticketBoardEnabled: deps.ticketBoardEnabled,
+            ticketBoardEnabled: Boolean(
+              deps.ticketBoardEnabled || bot.tradingRole || bot.businessSupervisor,
+            ),
+            businessSupervisor: bot.businessSupervisor,
             phoneCallsEnabled: deps.phoneCallsEnabled,
             historyRetrievalEnabled: contextStrategy !== "current",
             graphicalToolsAllowed,

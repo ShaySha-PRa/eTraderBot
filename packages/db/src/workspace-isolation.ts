@@ -29,8 +29,9 @@ export async function requireBotWorkspace(
   db: Db,
   spaceId: string,
   role?: TradingBotRole | string | null,
+  businessSupervisor = false,
 ) {
-  return requireWorkspaceKind(db, spaceId, role ? "trading" : "general");
+  return requireWorkspaceKind(db, spaceId, role || businessSupervisor ? "trading" : "general");
 }
 /** Recheck persisted identity at run and tool boundaries; model arguments never supply a role. */
 export async function requireIsolatedBot(
@@ -48,7 +49,7 @@ export async function requireIsolatedBot(
     include: { computer: { select: { spaceId: true, userId: true, kind: true } } },
   });
   tradingAssert(bot, "FORBIDDEN", "Bot is unavailable in this workspace");
-  await requireBotWorkspace(db, bot.spaceId, bot.tradingRole);
+  await requireBotWorkspace(db, bot.spaceId, bot.tradingRole, bot.businessSupervisor);
   tradingAssert(
     !bot.computer ||
       (bot.computer.spaceId === identity.spaceId && bot.computer.userId === identity.userId),

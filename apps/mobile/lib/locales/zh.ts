@@ -1,4 +1,7 @@
 export const ZH_MESSAGES: Record<string, string> = {
+  "Business overview": "业务总览",
+  "Business supervisor": "业务主管",
+  "Completed tasks": "已完成任务",
   "Access audit": "访问审计",
   "Analysis": "分析",
   "Could not load material access": "无法加载资料授权",

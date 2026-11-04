@@ -307,6 +307,10 @@ export function botsRoutes(ctx: RouterContext) {
       ),
       duplicate: authed.bots.duplicate.handler(async ({ context, input }) => {
         const source = await repos.getBot(context.actor, input.botId);
+        if (source.businessSupervisor)
+          throw new ORPCError("BAD_REQUEST", {
+            message: "Each business has one supervisor; it cannot be copied",
+          });
         const duplicate = await repos
           .createBot(context.actor, {
             name: duplicateBotName(source.name),
@@ -525,6 +529,11 @@ export function botsRoutes(ctx: RouterContext) {
         }
       }),
       archive: authed.bots.archive.handler(async ({ context, input }) => {
+        const target = await repos.getBot(context.actor, input.botId);
+        if (target.businessSupervisor)
+          throw new ORPCError("BAD_REQUEST", {
+            message: "The supervisor stays with its business workspace",
+          });
         const bot = await repos.getBot(context.actor, input.botId, { includeArchived: true });
         await archiveBot(
           {

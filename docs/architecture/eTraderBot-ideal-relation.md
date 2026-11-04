@@ -9,12 +9,15 @@ flowchart TB
   User[使用者] --> Platform[eTraderBot 平台 / Rakazo]
   Platform --> Trading[交易工作区 · 一个业务范围]
   Platform --> General[通用工作区]
-  Trading --> Roles[中长期 / 现货 / 风控 / 复盘 Bot]
+  Trading --> Supervisor[业务主管 Bot · 派单 / 汇总 / 进度]
+  Supervisor -->|本业务任务| Roles[中长期 / 现货 / 风控 / 复盘 Bot]
   Trading --> Evidence[交易资料、记忆与 Skill]
   General --> Assistants[普通 Bot · 提效及其他非交易任务]
   Assistants --> GeneralResources[通用资料、记忆与 Skill]
   Evidence -.->|明确授权只读| Assistants
 ```
+
+每条交易业务线固定一位主管，协调任务但不持有交易批准或执行权。
 
 两个工作区并列，通用工作区不包裹交易工作区。地区用于组织具体业务；不同主体、账户或资产的资料与授权仍按业务范围管理。“全部 Bots”只汇总导航，不合并权限。
 

@@ -90,6 +90,7 @@ function mapBot(
     description: string;
     instructions: string;
     tradingRole?: string | null;
+    businessSupervisor?: boolean;
     instructionHistory?: unknown;
     color: string;
     avatarSet?: string;
@@ -133,6 +134,7 @@ function mapBot(
     description: bot.description,
     instructions: bot.instructions,
     tradingRole: TradingBotRoleSchema.nullable().parse(bot.tradingRole ?? null),
+    businessSupervisor: bot.businessSupervisor ?? false,
     instructionHistory: InstructionVersionSchema.array().parse(bot.instructionHistory ?? []),
     color: bot.color,
     avatarSet: resolveBotAvatarSet(bot.avatarSet),
@@ -199,6 +201,7 @@ export function createRepos(
         archivedAt: null,
       },
       select: {
+        businessSupervisor: true,
         id: true,
         spaceId: true,
         name: true,
@@ -224,6 +227,7 @@ export function createRepos(
       if (!bot.thread) throw new IsolationError("Bot is missing its thread");
       const activeRun = primaryActiveRun(bot.runs);
       return {
+        businessSupervisor: bot.businessSupervisor,
         id: bot.id,
         spaceId: bot.spaceId,
         name: bot.name,

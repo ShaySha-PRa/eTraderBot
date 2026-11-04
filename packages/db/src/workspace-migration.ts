@@ -27,6 +27,7 @@ async function inventory(db: Db, choice: WorkspaceMigrationChoice) {
       spaceId: source.id,
       userId: choice.userId,
       tradingRole: null,
+      businessSupervisor: false,
     },
     orderBy: { id: "asc" },
     include: { computer: true },
@@ -357,7 +358,7 @@ export async function migrateWorkspaceOwnership(
             data: { spaceId: choice.targetSpaceId },
           });
           const remaining = await tx.bot.count({
-            where: { spaceId: choice.sourceSpaceId, tradingRole: null },
+            where: { spaceId: choice.sourceSpaceId, tradingRole: null, businessSupervisor: false },
           });
           await tx.space.update({
             where: { id: choice.sourceSpaceId },

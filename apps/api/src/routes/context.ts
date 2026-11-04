@@ -36,7 +36,13 @@ import {
   modelSupportsRole,
   OPENAI_COMPATIBLE_PROVIDER_ID,
 } from "@rakazo/contracts";
-import { createGroupRepos, createRepos, recordSecurityEvent, runAsTenant } from "@rakazo/db";
+import {
+  createGroupRepos,
+  createRepos,
+  recordSecurityEvent,
+  runAsTenant,
+  ticketBoardAvailable,
+} from "@rakazo/db";
 import { createAgentImportServices } from "../agent-import-services.js";
 import { createAgentSkillsService } from "../agent-skills.js";
 import { createBotRemoval } from "../bot-removal.js";
@@ -359,8 +365,15 @@ export function createRouterContext(deps: RouterDeps) {
   });
 
   const boardEnabled = os
-    .use(async ({ next }) => {
-      if (!deps.env?.ticketBoardEnabled) throw new ORPCError("NOT_FOUND");
+    .use(async ({ context, next }) => {
+      if (
+        !deps.env?.ticketBoardEnabled &&
+        (!context.actor ||
+          !(await runAsTenant(context.actor, () =>
+            ticketBoardAvailable(deps.prisma, context.actor!.spaceId),
+          )))
+      )
+        throw new ORPCError("NOT_FOUND");
       return next();
     })
     .use(async ({ context, next }) => {

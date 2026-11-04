@@ -51,7 +51,7 @@ test("trading and general workspaces isolate templates and explicit read grants"
   await expect(dialog.getByRole("radio", { name: "General bot", exact: true })).toHaveCount(0);
   await dialog.getByRole("button", { name: "Create", exact: true }).click();
   await expect(dialog).toBeHidden();
-  const trader = (await rpc<Bot[]>(page, "bots/list", {}))[0]!;
+  const trader = (await rpc<Bot[]>(page, "bots/list", {})).find((bot) => bot.tradingRole)!;
   await page.getByRole("button", { name: "Interface settings", exact: true }).click();
   const access = page.getByTestId("workspace-material-access");
   await access.getByLabel("Recipient Bot", { exact: true }).selectOption(reader.id);

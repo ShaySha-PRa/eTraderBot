@@ -508,6 +508,10 @@ msgstr "Actions for business scope"
 msgid "Active"
 msgstr "Active"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Active runs"
+msgstr "Active runs"
+
 #: src/pages/shell/sidebar-header.tsx
 msgid "Activity"
 msgstr "Activity"
@@ -1255,6 +1259,11 @@ msgstr "Browse MCP servers"
 msgid "Built-in"
 msgstr "Built-in"
 
+#: src/pages/BusinessSupervisor.tsx
+#: src/pages/Shell.tsx
+msgid "Business overview"
+msgstr "Business overview"
+
 #: src/lib/identity-display.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/bot-business-labels.tsx
@@ -1269,6 +1278,10 @@ msgstr "Business scope default"
 #: src/pages/SettingsOverlay.tsx
 msgid "Business scopes"
 msgstr "Business scopes"
+
+#: src/pages/Shell.tsx
+msgid "Business supervisor"
+msgstr "Business supervisor"
 
 #: src/pages/Trading.tsx
 msgid "Buy"
@@ -1714,6 +1727,10 @@ msgstr "Complete"
 #: src/pages/TradingLearning.tsx
 msgid "Completed"
 msgstr "Completed"
+
+#: src/pages/BusinessSupervisor.tsx
+msgid "Completed tasks"
+msgstr "Completed tasks"
 
 #: src/pages/settings-nav.ts
 #: src/pages/shell/bot-panel.tsx
@@ -3292,6 +3309,10 @@ msgstr "failed"
 msgid "Failed"
 msgstr "Failed"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Failed runs (history)"
+msgstr "Failed runs (history)"
+
 #: src/pages/shell/use-composer-actions.ts
 msgid "Failed to send message"
 msgstr "Failed to send message"
@@ -4038,6 +4059,7 @@ msgstr "Loading voice providers…"
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/BusinessSupervisor.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
@@ -6726,6 +6748,10 @@ msgstr "Take control"
 msgid "Target scope"
 msgstr "Target scope"
 
+#: src/pages/BusinessSupervisor.tsx
+msgid "Task completion"
+msgstr "Task completion"
+
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Teach a task"
 msgstr "Teach a task"
@@ -6737,6 +6763,10 @@ msgstr "Teaching in progress. Stop teaching before sending a new message."
 #: src/pages/shell/bot-panel.tsx
 msgid "Team"
 msgstr "Team"
+
+#: src/pages/BusinessSupervisor.tsx
+msgid "Team and recent results"
+msgstr "Team and recent results"
 
 #: src/pages/shell/computer-view.tsx
 msgid "Team Computer"
