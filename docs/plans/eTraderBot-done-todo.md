@@ -61,11 +61,15 @@
 
 > 与 v1 主交付分开跟踪。长文：`eTraderBot-knowledge-layer-plan.md`。
 
+工作区隔离决议见 [ADR 0004](../adr/0004-trading-general-workspace-isolation.md)，目标关系见[架构图](../architecture/eTraderBot-ideal-relation.md)。V1.1 首批隔离及最小只读授权已实施，范围与验证见[实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md)；固定版本经验交接仍待下一批。
+
 ### B0 已定口径（后加）
 
 | 日期 | 决议 |
 |---|---|
 | 2026-11-03 | 经验沉淀：记忆／文档／Skill；交易决策数字：只调用已训练并批准的算法版本（agentic RL 在版本侧，不新挂智能体） |
+| 2026-11-04 | 先采用独立通用工作区：普通 Bot 与四类交易模板分开归属，按明确授权只读指定交易资料；细则见 ADR 0004，首批实现见 B1 |
+| 2026-11-04 | 经验交接固定版本导入，目标 Bot 独立积累，不自动跟随源修改或继承交易权限；见 [ADR 0005](../adr/0005-versioned-experience-handoff.md)，实施待办见 B2 |
 
 ### B1 已完成（后加）
 
@@ -73,11 +77,13 @@
 |---|---|---|
 | 知识层计划文档 | 选型未定；账本／Registry／RAG／Ontology 边界已写 | `eTraderBot-knowledge-layer-plan.md` |
 | 本速览页（done-todo） | 原计划 / 后加分列 | 本文件 |
+| 交易／通用工作区隔离及最小只读授权 | 后端、工具、迁移和多端入口已实现；原生设备与真实模型／接口未验收 | [V1.1 实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md) |
 
 ### B2 待办／想做（后加）
 
 | 优先级 | 项 | 状态 | 备注 |
 |---|---|---|---|
+| P1 | 固定版本经验交接包与独立导入 | todo | ADR 0005 已确认；补授权选取、包版本及来源、目标副本、导入记录与更新冲突处理，权限不继承 |
 | P0 | 拍板知识层：RAG / Ontology / 并行；内置 vs MCP | todo | K0；填 knowledge-layer §8 |
 | P0 | `RuleRegistry` 最小契约（可空配置） | todo | K2；执行不认 RAG 片段 |
 | P1 | 说明文档检索 MVP（若选 RAG） | todo | K3；无放行效力 |
@@ -102,3 +108,8 @@
 - 做完改 `done`；新想法先丢进对应区，不写长文。
 
 *不构成合规认定；不授权未审批实盘。*
+
+
+### 天气数据接入增补（2026-11-04）
+
+`done`：业务范围内天气 HTTP 主动拉取、外部令牌推送、校验与不可变存储、绑定 Bot 查询、中英界面，以及公司内部天气模型接口模拟服务。详见[天气接入](../integration/eTraderBot-weather-api.md)和[实施记录](../implementation/eTraderBot-v1-progress.md)。其余交易接口仍待适配；真实天气推理、天气到出力／负荷映射与效果验证不包含在该完成项内。

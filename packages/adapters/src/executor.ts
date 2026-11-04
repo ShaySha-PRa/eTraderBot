@@ -43,6 +43,7 @@ import {
   RunHistoryWriteError,
   readRunTimingFields,
   recordUsage,
+  requireIsolatedBot,
   settleReleasedTakeoverCards,
   spaceHasModelAccess,
 } from "@rakazo/db";
@@ -487,6 +488,11 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
       const runSecrets = [...deps.secrets];
       let dispatchHandedOff = false;
       try {
+        await requireIsolatedBot(deps.prisma, {
+          spaceId: run.spaceId,
+          userId: run.userId,
+          botId: run.botId,
+        });
         // Durable run ownership and its heartbeat now carry recovery. Model,
         // integration and computer setup must not occupy a queue dispatch slot.
         onRunStarted?.();

@@ -15,12 +15,15 @@ import { useId, useState } from "react";
 import { useQueryUserId, useSpaceQueries } from "../lib/query";
 import { useTradingActions } from "../lib/trading-actions";
 import { errorText } from "../lib/user-error";
+import { WeatherInterface } from "./WeatherInterface";
+import { WorkspaceMaterialAccess } from "./WorkspaceMaterialAccess";
 
 function usePurposes() {
   const { t } = useLingui();
   return {
     market_data: t`Market data`,
     forecasts: t`Forecasts`,
+    weather_forecast: t`Weather forecasts`,
     positions: t`Positions and assets`,
     rules: t`Market rules`,
     execution: t`Trade execution`,
@@ -83,6 +86,7 @@ export function BusinessInterfaces({
             </p>
           ) : (
             <>
+              <WorkspaceMaterialAccess />
               <p className="text-sm text-muted-foreground">
                 <Trans>
                   Connect HTTP data APIs or select MCP connections for this business scope. Saving a
@@ -98,6 +102,7 @@ export function BusinessInterfaces({
                 <InterfaceEditor
                   key={editing === "new" ? "new" : `${editing.id}:${editing.revision}`}
                   workspaceId={workspace.id}
+                  workspaceRegion={workspace.scope.region}
                   entry={editing === "new" ? undefined : editing}
                   onClose={() => setEditing(null)}
                 />
@@ -123,8 +128,15 @@ export function BusinessInterfaces({
                       <h2 className="font-medium">{entry.name}</h2>
                       <p className="mt-1 text-xs text-muted-foreground">
                         {purposes[entry.purpose]} ·{" "}
-                        {entry.config.transport === "http" ? "HTTP API" : "MCP"} ·{" "}
-                        <Trans>Configured · not verified</Trans>
+                        {entry.config.transport === "http"
+                          ? "HTTP API"
+                          : entry.config.transport === "push"
+                            ? t`External push`
+                            : "MCP"}{" "}
+                        ·{" "}
+                        {entry.purpose === "weather_forecast" ? null : (
+                          <Trans>Configured · not verified</Trans>
+                        )}
                       </p>
                     </div>
                     <Button variant="outline" size="sm" onClick={() => setEditing(entry)}>
@@ -135,11 +147,14 @@ export function BusinessInterfaces({
                     <p className="break-all text-sm">
                       {entry.config.method} {entry.config.url}
                     </p>
-                  ) : (
+                  ) : entry.config.transport === "mcp" ? (
                     <p className="text-sm text-muted-foreground">
                       <Trans>MCP tool approval remains separate for each bot.</Trans>
                     </p>
-                  )}
+                  ) : null}
+                  {entry.purpose === "weather_forecast" ? (
+                    <WeatherInterface key={`${entry.id}:${entry.revision}`} entry={entry} />
+                  ) : null}
                   {entry.hasSecret ? (
                     <p className="text-xs text-muted-foreground">
                       <Trans>Credential saved securely</Trans>
@@ -181,10 +196,12 @@ export function BusinessInterfaces({
 }
 function InterfaceEditor({
   workspaceId,
+  workspaceRegion,
   entry,
   onClose,
 }: {
   workspaceId: string;
+  workspaceRegion: string;
   entry?: TradingInterface;
   onClose: () => void;
 }) {
@@ -233,15 +250,17 @@ function InterfaceEditor({
             const config = TradingInterfaceConfigSchema.parse(
               transport === "mcp"
                 ? { transport, serverId }
-                : {
-                    transport,
-                    url,
-                    method,
-                    query: parameters,
-                    body: method === "GET" ? "" : body,
-                    auth,
-                    authName,
-                  },
+                : transport === "push"
+                  ? { transport }
+                  : {
+                      transport,
+                      url,
+                      method,
+                      query: parameters,
+                      body: method === "GET" ? "" : body,
+                      auth,
+                      authName,
+                    },
             );
             await api.trading.saveInterface({
               workspaceId,
@@ -260,6 +279,22 @@ function InterfaceEditor({
         }}
       >
         <SectionHeading>{entry ? t`Edit interface` : t`Add interface`}</SectionHeading>
+        {purpose === "weather_forecast" && transport === "http" ? (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              setName(t`Internal weather model (simulation)`);
+              setUrl("http://127.0.0.1:8096/v1/weather/forecast");
+              setQuery(JSON.stringify({ region: workspaceRegion }, null, 2));
+              setMethod("GET");
+              setAuth("none");
+              setSecret("");
+            }}
+          >
+            <Trans>Use local weather simulator</Trans>
+          </Button>
+        ) : null}
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="grid gap-1.5 text-sm">
             <label htmlFor={`${fieldId}-field1`}>
@@ -280,7 +315,11 @@ function InterfaceEditor({
             <NativeSelect
               id={`${fieldId}-purpose`}
               value={purpose}
-              onChange={(event) => setPurpose(event.target.value as TradingInterface["purpose"])}
+              onChange={(event) => {
+                setPurpose(event.target.value as TradingInterface["purpose"]);
+                if (transport === "push" && event.target.value !== "weather_forecast")
+                  setTransport("http");
+              }}
             >
               {Object.entries(purposes).map(([key, label]) => (
                 <NativeSelectOption key={key} value={key}>
@@ -296,10 +335,13 @@ function InterfaceEditor({
             <NativeSelect
               id={`${fieldId}-field3`}
               value={transport}
-              onChange={(event) => setTransport(event.target.value as "http" | "mcp")}
+              onChange={(event) => setTransport(event.target.value as typeof transport)}
             >
               <NativeSelectOption value="http">HTTP API</NativeSelectOption>
               <NativeSelectOption value="mcp">MCP</NativeSelectOption>
+              {purpose === "weather_forecast" ? (
+                <NativeSelectOption value="push">{t`External push`}</NativeSelectOption>
+              ) : null}
             </NativeSelect>
           </div>
         </div>
@@ -419,7 +461,7 @@ function InterfaceEditor({
               </div>
             </details>
           </>
-        ) : (
+        ) : transport === "mcp" ? (
           <div className="grid gap-1.5 text-sm">
             <label htmlFor={`${fieldId}-field11`}>
               <Trans>MCP connection</Trans>
@@ -445,7 +487,7 @@ function InterfaceEditor({
               </span>
             ) : null}
           </div>
-        )}
+        ) : null}
         {error ? (
           <p role="alert" className="text-sm text-destructive">
             {error}

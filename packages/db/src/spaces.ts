@@ -72,6 +72,7 @@ type SpaceClient = Pick<
 >;
 
 interface CreateSpaceInput {
+  kind: "general" | "trading";
   spaceId: string;
   spaceMembershipId: string;
   organizationId: string;
@@ -84,6 +85,7 @@ async function createSpace(prisma: SpaceClient, input: CreateSpaceInput): Promis
   await prisma.space.create({
     data: {
       id: input.spaceId,
+      kind: input.kind,
       organizationId: input.organizationId,
       name: input.name,
       createdByUserId: input.userId,
@@ -136,6 +138,7 @@ export async function createSpaceForMember(
     currentSpaceId: string;
     userId: string;
     name: string;
+    kind?: "general" | "trading";
     id?: string;
     initialize?: (
       tx: Prisma.TransactionClient,
@@ -169,6 +172,7 @@ export async function createSpaceForMember(
               existing.organizationId !== currentMembership.organizationId ||
               existing.createdByUserId !== input.userId ||
               existing.name !== name ||
+              existing.kind !== (input.kind ?? "general") ||
               existing.deletingAt
             )
               throw new IsolationError();
@@ -183,6 +187,7 @@ export async function createSpaceForMember(
           });
           if (count >= MAX_SPACES_PER_MEMBER) throw new SpaceLimitError();
           await createSpace(tx, {
+            kind: input.kind ?? "general",
             spaceId,
             spaceMembershipId,
             organizationId: currentMembership.organizationId,

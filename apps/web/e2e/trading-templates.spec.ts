@@ -125,9 +125,7 @@ test("four Bot templates keep trading and learning in their own workspace", asyn
   const otherBotId = new URL(page.url()).pathname.split("/").at(-1)!;
   expect(createdIds).not.toContain(otherBotId);
   expect((await rpc<Bot>(page, "bots/get", { botId: otherBotId })).spaceId).toBe(other.spaceId);
-  const picker = page
-    .getByTestId("business-scope-picker")
-    .getByLabel("Business scope", { exact: true });
+  const picker = page.getByTestId("business-scope-picker").getByLabel("Workspace", { exact: true });
   await picker.selectOption("");
   const firstLabels = sidebar
     .locator(`[data-roster-bot-id="${createdIds[0]}"]`)
@@ -154,7 +152,7 @@ test("four Bot templates keep trading and learning in their own workspace", asyn
     .click();
   await expect(page.locator("html")).toHaveAttribute("lang", "zh-CN");
   await expect(
-    page.getByTestId("business-scope-picker").getByLabel("业务范围", { exact: true }),
+    page.getByTestId("business-scope-picker").getByLabel("工作区", { exact: true }),
   ).toBeVisible();
   await expect(firstLabels).toHaveText(scope.name);
   await captureScreenshot(page, testInfo, "bot-business-labels-zh");
@@ -169,7 +167,7 @@ test("four Bot templates keep trading and learning in their own workspace", asyn
     .click();
   await page
     .getByTestId("business-scope-picker")
-    .getByLabel("Business scope", { exact: true })
+    .getByLabel("Workspace", { exact: true })
     .selectOption(scope.spaceId);
   await page.getByRole("button", { name: "Interface settings", exact: true }).click();
   await expect(page.getByTestId("business-interface")).toHaveCount(2);

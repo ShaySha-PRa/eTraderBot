@@ -1,7 +1,23 @@
+import { WorkspaceReadCommandSchema } from "@rakazo/contracts";
 import { TradingError } from "@rakazo/core";
+import { createWorkspaceAccessService } from "@rakazo/db";
 import type { ToolHandlers } from "./run-tool-gate.js";
 
 export const tradingTools = {
+  async read_trading_material(ctx, call) {
+    const input = WorkspaceReadCommandSchema.parse(call.args);
+    const service = createWorkspaceAccessService(ctx.deps.prisma);
+    const identity = { spaceId: ctx.run.spaceId, userId: ctx.run.userId, botId: ctx.bot.id };
+    try {
+      return call.finish(
+        input.operation === "list"
+          ? await service.received(identity)
+          : await service.read(identity, input.grantId),
+      );
+    } catch (error) {
+      return { error: error instanceof TradingError ? error.message : "Material read failed" };
+    }
+  },
   async trading(ctx, call) {
     if (!ctx.deps.trading) return { error: "Trading is unavailable" };
     try {

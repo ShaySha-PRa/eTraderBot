@@ -41,6 +41,7 @@ import {
 } from "./thread-listing.js";
 import { connectTradingWorkspaceBot } from "./trading-workspaces.js";
 import { withTransactionRetry } from "./transaction-retry.js";
+import { requireBotWorkspace } from "./workspace-isolation.js";
 
 /** Newest messages loaded for sidebar preview; enough to skip a short peer-run tail. */
 const SIDEBAR_PREVIEW_MESSAGE_WINDOW = 16;
@@ -549,6 +550,7 @@ export function createRepos(
         isolationLevel?: Prisma.TransactionIsolationLevel;
       },
     ): Promise<Bot> {
+      await requireBotWorkspace(prisma, actor.spaceId, input.tradingRole);
       // A reserved preview identity is also an idempotency key if the response is lost.
       const spawnKey = input.spawnKey ?? input.id;
       let modelProvider = input.modelProvider ?? null;
@@ -587,6 +589,7 @@ export function createRepos(
             spaceId: actor.spaceId,
             userId: actor.userId,
           });
+          await requireBotWorkspace(tx, actor.spaceId, input.tradingRole);
           const positions = await tx.bot.aggregate({
             where: { spaceId: actor.spaceId, userId: actor.userId },
             _max: { position: true },

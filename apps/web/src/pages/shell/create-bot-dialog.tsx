@@ -54,17 +54,23 @@ export function CreateBotDialog({
   onCancel,
   onCreate,
   businessScope,
+  workspaceKind = "general",
+  isolationPending = false,
   onChooseScope,
 }: {
   businessScope?: { id: string; name: string };
+  workspaceKind?: "general" | "trading";
+  isolationPending?: boolean;
   onChooseScope?: () => void;
   onCancel: () => void;
   onCreate: (input: CreateBotDialogInput) => Promise<void>;
 }) {
   const { t } = useLingui();
   const templates = useTradingBotTemplates();
-  const [role, setRole] = useState<TradingBotRole | null>(businessScope ? "spot" : null);
-  const [name, setName] = useState(businessScope ? templates.spot.name : "");
+  const [role, setRole] = useState<TradingBotRole | null>(
+    workspaceKind === "trading" ? "spot" : null,
+  );
+  const [name, setName] = useState(workspaceKind === "trading" ? templates.spot.name : "");
   const [previewId] = useState(() => {
     let id: string;
     do {
@@ -82,7 +88,7 @@ export function CreateBotDialog({
   const trimmed = name.trim();
 
   async function create() {
-    if (!trimmed || submitting || (role && !businessScope)) return;
+    if (isolationPending || !trimmed || submitting || (role && !businessScope)) return;
     setError(null);
     setSubmitting(true);
     const organic = avatarSet === "organic" && parseBotAvatar(look.value).shapeIndex === undefined;
@@ -160,12 +166,17 @@ export function CreateBotDialog({
               ) : null}
             </div>
           ) : null}
-          <fieldset disabled={submitting} className="grid gap-2">
+          {isolationPending ? (
+            <p role="alert">
+              <Trans>Migration required</Trans>
+            </p>
+          ) : null}
+          <fieldset disabled={submitting || isolationPending} className="grid gap-2">
             <legend className="mb-2 text-sm font-medium">
               <Trans>Bot template</Trans>
             </legend>
             <div className="grid gap-2 sm:grid-cols-2">
-              {TradingBotRoleSchema.options.map((value) => (
+              {(workspaceKind === "trading" ? TradingBotRoleSchema.options : []).map((value) => (
                 <label
                   key={value}
                   className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 ${role === value ? "border-primary bg-muted" : "hover:bg-muted/50"}`}
@@ -191,7 +202,7 @@ export function CreateBotDialog({
                 </label>
               ))}
             </div>
-            {
+            {workspaceKind === "general" ? (
               <label className="flex cursor-pointer items-center gap-3 rounded-xl border p-3 text-sm">
                 <input
                   type="radio"
@@ -206,7 +217,7 @@ export function CreateBotDialog({
                 />
                 <Trans>General bot</Trans>
               </label>
-            }
+            ) : null}
           </fieldset>
           <div className="flex justify-center py-2">
             <BotAvatar

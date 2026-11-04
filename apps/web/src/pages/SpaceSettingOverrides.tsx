@@ -125,7 +125,7 @@ export function SpaceSettingOverrides({
     <div className="space-y-3">
       <SettingsGroup data-testid="space-setting-overrides">
         {settings.map(({ id, label, panel, resetConfirmation, busy }) => {
-          const custom = customized.includes(id);
+          const custom = id === "credentials" || customized.includes(id);
           return (
             <div key={id} data-testid={`space-setting-${id}`}>
               <SettingsRow
@@ -138,20 +138,22 @@ export function SpaceSettingOverrides({
                   </>
                 }
                 control={
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="rounded-full"
-                    aria-label={custom ? t`Use defaults for ${label}` : t`Customize ${label}`}
-                    disabled={pending !== null || busy}
-                    onClick={() =>
-                      custom && resetConfirmation
-                        ? setConfirmingReset(id)
-                        : void setOverride(id, !custom)
-                    }
-                  >
-                    {custom ? t`Use defaults` : t`Customize`}
-                  </Button>
+                  id === "credentials" ? null : (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="rounded-full"
+                      aria-label={custom ? t`Use defaults for ${label}` : t`Customize ${label}`}
+                      disabled={pending !== null || busy}
+                      onClick={() =>
+                        custom && resetConfirmation
+                          ? setConfirmingReset(id)
+                          : void setOverride(id, !custom)
+                      }
+                    >
+                      {custom ? t`Use defaults` : t`Customize`}
+                    </Button>
+                  )
                 }
               >
                 {custom ? <div className="pt-3">{panel()}</div> : null}

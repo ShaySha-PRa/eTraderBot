@@ -2,8 +2,8 @@ import type { ComputerRef } from "@rakazo/adapter-kit";
 import { encodeLoginSecret } from "@rakazo/contracts";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";
-import { createRunExecutor } from "./executor.js";
 import { EncryptedSecretStore } from "./secrets.js";
+import { createRunExecutor } from "./testing/workspace-executor.js";
 
 const COMPUTER: ComputerRef = {
   id: "sandbox-1",

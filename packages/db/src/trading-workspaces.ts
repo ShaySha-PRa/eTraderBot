@@ -8,11 +8,13 @@ import {
   TradingWorkspaceScopeSchema,
 } from "@rakazo/contracts";
 import { tradingAssert } from "@rakazo/core";
+import { availableInSpace } from "./availability.js";
 import type { Prisma, PrismaClient } from "./client.js";
 import { createSpaceForMember, lockSpaceForContentCreation } from "./spaces.js";
 import { tradingCanonical } from "./trading-engine.js";
 import { ensureTradingLearningPlan } from "./trading-learning.js";
 import { withTransactionRetry } from "./transaction-retry.js";
+import { requireWorkspaceKind } from "./workspace-isolation.js";
 
 type Tx = Prisma.TransactionClient;
 const include = {
@@ -30,12 +32,17 @@ function dto(row: Row): TradingWorkspace {
     botIds: space.bots.map((bot) => bot.id),
   });
 }
-function interfaceDto(row: Prisma.TradingWorkspaceInterfaceGetPayload<object>) {
-  const { secretId, ...record } = row;
+function interfaceDto(
+  row: Prisma.TradingWorkspaceInterfaceGetPayload<{
+    include: { weatherIngress: { select: { interfaceId: true } } };
+  }>,
+) {
+  const { secretId, weatherIngress, ...record } = row;
   return TradingInterfaceSchema.parse({
     ...record,
     updatedAt: row.updatedAt.toISOString(),
     hasSecret: Boolean(secretId),
+    hasPushToken: Boolean(weatherIngress),
     status: "configured",
   });
 }
@@ -216,6 +223,7 @@ async function configure(
     return dto(existing);
   }
   // The Space name is canonical; settings cannot rename an existing business implicitly.
+  await requireWorkspaceKind(tx, actor.spaceId, "trading");
   const space = await tx.space.findUniqueOrThrow({ where: { id: actor.spaceId } });
   const row = await tx.tradingWorkspace.create({
     data: {
@@ -272,6 +280,7 @@ export function createTradingWorkspaceService(prisma: PrismaClient, clock = () =
       );
       let result: TradingWorkspace | undefined;
       await createSpaceForMember(prisma, {
+        kind: "trading",
         currentSpaceId: actor.spaceId,
         userId: actor.userId,
         name: input.name,
@@ -298,6 +307,7 @@ export function createTradingWorkspaceService(prisma: PrismaClient, clock = () =
       await access(prisma, actor, workspaceId, true);
       const rows = await prisma.tradingWorkspaceInterface.findMany({
         where: { workspaceId },
+        include: { weatherIngress: { select: { interfaceId: true } } },
         orderBy: [{ name: "asc" }, { id: "asc" }],
       });
       return rows.map(interfaceDto);
@@ -307,6 +317,11 @@ export function createTradingWorkspaceService(prisma: PrismaClient, clock = () =
     },
     saveInterface(actor: Actor, input: RpcInput<"trading/saveInterface">, stored?: SecretRecord) {
       return change(actor, input.workspaceId, async (tx) => {
+        tradingAssert(
+          input.config.transport !== "push" || input.purpose === "weather_forecast",
+          "INVALID_INPUT",
+          "Push transport requires weather forecasts",
+        );
         const existing = await tx.tradingWorkspaceInterface.findUnique({ where: { id: input.id } });
         tradingAssert(
           !existing || existing.workspaceId === input.workspaceId,
@@ -322,12 +337,7 @@ export function createTradingWorkspaceService(prisma: PrismaClient, clock = () =
           const server = await tx.mcpServer.findFirst({
             where: {
               id: input.config.serverId,
-              userId: actor.userId,
-              OR: [
-                { spaceId: actor.spaceId },
-                { allSpaces: true },
-                { availableIn: { some: { spaceId: actor.spaceId } } },
-              ],
+              ...availableInSpace(actor),
             },
           });
           tradingAssert(server, "NOT_FOUND", "MCP connection not found");
@@ -353,7 +363,10 @@ export function createTradingWorkspaceService(prisma: PrismaClient, clock = () =
           revision: input.expectedRevision + 1,
           updatedAt: clock(),
         };
+        if (input.purpose !== "weather_forecast" || input.config.transport === "mcp")
+          await tx.tradingWeatherIngress.deleteMany({ where: { interfaceId: input.id } });
         const row = await tx.tradingWorkspaceInterface.upsert({
+          include: { weatherIngress: { select: { interfaceId: true } } },
           where: { id: input.id },
           create: { id: input.id, workspaceId: input.workspaceId, ...fields },
           update: fields,

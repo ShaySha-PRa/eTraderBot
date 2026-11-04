@@ -1,9 +1,11 @@
 import { ORPCError } from "@orpc/server";
 import { routineWakeupJob, runContinueJob } from "@rakazo/adapter-kit";
+import { pullWeatherForecast } from "@rakazo/adapters";
 import type { Actor } from "@rakazo/contracts";
 import { TradingError } from "@rakazo/core";
 import {
   createTradingLearningService,
+  createTradingWeatherService,
   createTradingWorkspaceService,
   InvalidSpaceNameError,
   IsolationError,
@@ -43,6 +45,7 @@ export function tradingRoutes(ctx: RouterContext) {
   const service = createTradingAnalysisService(ctx.deps.prisma, ctx.deps.tradingClock);
   const control = createTradingControlService(ctx.deps.prisma, ctx.deps.tradingClock);
   const learning = createTradingLearningService(ctx.deps.prisma, ctx.deps.tradingClock);
+  const weather = createTradingWeatherService(ctx.deps.prisma, ctx.deps.tradingClock);
   const workspaces = createTradingWorkspaceService(ctx.deps.prisma, ctx.deps.tradingClock);
   async function wake(actor: Actor, deskId: string, botId: string) {
     const routine = await learning.schedule(actor, deskId, botId);
@@ -60,6 +63,33 @@ export function tradingRoutes(ctx: RouterContext) {
   }
   return {
     trading: {
+      weatherForecasts: ctx.authed.trading.weatherForecasts.handler(({ context, input }) =>
+        tradingResult(() => weather.forecasts(context.actor, input)),
+      ),
+      rotateWeatherPushToken: ctx.authed.trading.rotateWeatherPushToken.handler(
+        ({ context, input }) => human(context, () => weather.rotateToken(context.actor, input)),
+      ),
+      revokeWeatherPushToken: ctx.authed.trading.revokeWeatherPushToken.handler(
+        ({ context, input }) => human(context, () => weather.revokeToken(context.actor, input)),
+      ),
+      pullWeather: ctx.authed.trading.pullWeather.handler(({ context, input }) =>
+        tradingResult(async () => {
+          const source = await weather.pullSource(context.actor, input);
+          const credential = source.secret
+            ? await ctx.deps.secrets.load(source.secret.ciphertext, {
+                recordId: source.secret.id,
+                signal: context.signal,
+              })
+            : undefined;
+          const forecast = await pullWeatherForecast(
+            source.config,
+            credential,
+            { allowPrivateEndpoint: ctx.deps.env.mcpAllowPrivateEndpoint },
+            context.signal,
+          );
+          return weather.acceptPull(context.actor, input, source.revision, forecast);
+        }),
+      ),
       workspaces: ctx.authed.trading.workspaces.handler(({ context }) =>
         tradingResult(() => workspaces.list(context.actor)),
       ),

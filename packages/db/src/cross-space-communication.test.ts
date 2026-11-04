@@ -7,16 +7,23 @@ const sender = {
   spaceId: "space-a",
   crossSpaceCommunication: true,
   archivedAt: null,
+  workspaceKind: "general",
 };
 const recipient = {
   id: "recipient",
   spaceId: "space-b",
   crossSpaceCommunication: true,
   archivedAt: null,
+  workspaceKind: "general",
 };
 
 describe("cross-space bot communication", () => {
   it.each([
+    {
+      name: "trading target blocks cross-space delegation",
+      bots: [sender, { ...recipient, workspaceKind: "trading" }],
+      allowed: false,
+    },
     { name: "both opted in", bots: [sender, recipient], allowed: true },
     {
       name: "sender off",

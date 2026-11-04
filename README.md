@@ -46,7 +46,9 @@ Permissions come from server-side roles and scope bindings. Changing a bot's nam
 - **Interface configuration:** HTTP data API settings and references to available MCP connections, grouped by purpose within each business scope. Secrets are stored separately from visible configuration.
 - **Chinese / English UI:** shared Web and Electron workflows; mobile supports scope navigation, receipt history, approvals, reconciliation, and human cancellation. Detailed scope, interface, scenario, and authorization configuration is currently on Web.
 
-Saving an interface configuration does **not** establish connectivity or feed that API into the trading baseline. External reading, response mapping, and execution adapters remain follow-up work. Choosing Shanghai, Jiangsu/Suzhou, or Shandong records the business location; it does not certify local market rules.
+**Weather forecasts support HTTP pull and authenticated external push**, with a simulator for an internal weather model interface. Start `pnpm weather:simulator` and follow the [weather integration guide](./docs/integration/eTraderBot-weather-api.md). Bound bots can query persisted forecasts with explicit synthetic provenance.
+
+Saving other interface configurations does **not** establish connectivity. Weather does not automatically feed the trading baseline; other company data mapping and execution adapters remain follow-up work. Choosing Shanghai, Jiangsu/Suzhou, or Shandong records the business location; it does not certify local market rules.
 
 ## Run from source
 

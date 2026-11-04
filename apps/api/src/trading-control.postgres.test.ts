@@ -123,6 +123,7 @@ describe.skipIf(!enabled).sequential("trading approval and execution API (Postgr
       });
       await db.prisma.space.create({
         data: {
+          kind: "trading",
           id: spaceId,
           organizationId: orgId,
           name: "Trading test",
@@ -156,6 +157,7 @@ describe.skipIf(!enabled).sequential("trading approval and execution API (Postgr
       spaceId = randomUUID();
       await db.prisma.space.create({
         data: {
+          kind: "trading",
           id: spaceId,
           organizationId: orgId,
           name: "Synthetic business",

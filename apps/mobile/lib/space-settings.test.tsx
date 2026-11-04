@@ -172,9 +172,9 @@ afterEach(() => {
 
 it("follows the account until a setting is customized, then opens the same screen for the Space", async () => {
   expect(state.rpc).toHaveBeenCalledWith("spaceSettings/overrides", undefined, spaceContext);
-  for (const name of ["Models", "Voice", "Approvals", "Vault"])
+  for (const name of ["Models", "Voice", "Approvals"])
     expect(control(`Customize ${name}`)?.checked).toBe(false);
-  expect(container.querySelector("button")).toBeNull();
+  expect(control("Customize Vault")).toBeNull();
 
   await act(async () => control("Customize Models")!.click());
   expect(state.rpc).toHaveBeenCalledWith(
@@ -189,7 +189,11 @@ it("follows the account until a setting is customized, then opens the same scree
   expect(control("Customize Models")?.checked).toBe(true);
 
   state.push.mockReset();
-  await act(async () => container.querySelector("button")!.click());
+  await act(async () =>
+    [...container.querySelectorAll("button")]
+      .find((button) => button.textContent?.includes("Models"))!
+      .click(),
+  );
   expect(state.push).toHaveBeenCalledWith({
     pathname: "/models",
     params: { spaceId: "space-other" },
@@ -229,7 +233,11 @@ it("shows the Space's approval mode and rules right here once approvals are cust
     "Rules: 1",
   ]);
 
-  await act(async () => container.querySelector<HTMLElement>("button:not([data-menu])")!.click());
+  await act(async () =>
+    [...container.querySelectorAll<HTMLElement>("button:not([data-menu])")]
+      .find((button) => button.textContent?.includes("Rules"))!
+      .click(),
+  );
   expect(state.push).toHaveBeenCalledWith({
     pathname: "/approvals",
     params: { spaceId: "space-other" },
@@ -266,42 +274,17 @@ it("holds the Approvals switch while the Space's mode is saving", async () => {
   expect(control("Customize Approvals")?.disabled).toBe(false);
 });
 
-type AlertButton = { text: string; style?: string; onPress?: () => void };
-const alertButton = (text: string) =>
-  (state.alert.mock.lastCall![2] as AlertButton[]).find((button) => button.text === text)!;
-
-it("opens the Vault for the Space, and deletes its credentials only once confirmed", async () => {
-  await act(async () => control("Customize Vault")!.click());
-  expect(state.rpc).toHaveBeenCalledWith(
-    "spaceSettings/setOverride",
-    { setting: "credentials", enabled: true },
-    spaceContext,
+it("always opens a workspace vault without a shared-default switch", async () => {
+  expect(control("Customize Vault")).toBeNull();
+  const vault = [...container.querySelectorAll("button")].find((button) =>
+    button.textContent?.includes("Vault"),
   );
+  await act(async () => vault!.click());
   expect(state.push).toHaveBeenCalledWith({
     pathname: "/vault",
     params: { spaceId: "space-other" },
   });
-  state.rpc.mockClear();
-
-  await act(async () => control("Customize Vault")!.click());
-  expect(state.alert).toHaveBeenCalledWith(
-    "Delete this Space's credentials?",
-    undefined,
-    expect.any(Array),
-  );
-  expect(alertButton("Delete").style).toBe("destructive");
-  await act(async () => alertButton("Cancel").onPress?.());
-  expect(state.rpc).not.toHaveBeenCalled();
-  expect(control("Customize Vault")?.checked).toBe(true);
-
-  await act(async () => control("Customize Vault")!.click());
-  await act(async () => alertButton("Delete").onPress?.());
-  expect(state.rpc).toHaveBeenCalledWith(
-    "spaceSettings/setOverride",
-    { setting: "credentials", enabled: false },
-    spaceContext,
-  );
-  expect(control("Customize Vault")?.checked).toBe(false);
+  expect(state.alert).not.toHaveBeenCalled();
 });
 
 it("turns other settings off without asking", async () => {

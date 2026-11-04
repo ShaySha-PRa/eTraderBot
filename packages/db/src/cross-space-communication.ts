@@ -12,16 +12,17 @@ export async function crossSpaceCommunicationAllowed(
       spaceId: string;
       crossSpaceCommunication: boolean;
       archivedAt: Date | null;
+      workspaceKind: string;
     }>
   >`
-    SELECT id, "spaceId", "crossSpaceCommunication", "archivedAt" FROM bots
-    WHERE id = ${senderBotId} OR id = ${targetBotId}
-    ORDER BY id FOR NO KEY UPDATE
+    SELECT b.id, b."spaceId", b."crossSpaceCommunication", b."archivedAt", s.kind AS "workspaceKind" FROM bots b JOIN spaces s ON s.id=b."spaceId"
+    WHERE b.id = ${senderBotId} OR b.id = ${targetBotId}
+    ORDER BY b.id FOR NO KEY UPDATE OF b
   `;
   if (bots.length !== 2 || bots.some((bot) => bot.archivedAt)) return false;
   return (
     bots[0]!.spaceId === bots[1]!.spaceId ||
-    bots.every((bot) => bot.crossSpaceCommunication === true)
+    bots.every((bot) => bot.workspaceKind === "general" && bot.crossSpaceCommunication === true)
   );
 }
 

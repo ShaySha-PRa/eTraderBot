@@ -6,20 +6,18 @@ import { rpc } from "./helpers";
 export async function createBusinessScope(page: Page, name = "Synthetic Shandong business") {
   await page
     .getByTestId("business-scope-picker")
-    .getByRole("button", { name: "New business scope", exact: true })
+    .getByRole("button", { name: "New workspace", exact: true })
     .click();
   const dialog = page.getByTestId("business-scope-dialog");
   await dialog.getByLabel("Name", { exact: true }).fill(name);
-  await submitBusinessScope(page, "Create business scope");
-  const picker = page
-    .getByTestId("business-scope-picker")
-    .getByLabel("Business scope", { exact: true });
-  await expect(picker.locator("option:checked")).toHaveText(name);
+  await submitBusinessScope(page, "Create workspace");
+  const picker = page.getByTestId("business-scope-picker").getByLabel("Workspace", { exact: true });
+  await expect(picker.locator("option:checked")).toHaveText(`${name} · Trading`);
   const scope = (await rpc<TradingWorkspace[]>(page, "trading/workspaces", {})).find(
     (row) => row.name === name,
   )!;
   await expect(
-    page.getByTestId("business-scope-picker").getByLabel("Business scope", { exact: true }),
+    page.getByTestId("business-scope-picker").getByLabel("Workspace", { exact: true }),
   ).toHaveValue(scope.spaceId);
   return scope;
 }

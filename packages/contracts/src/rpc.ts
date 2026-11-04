@@ -168,6 +168,7 @@ import { SearchQueryOutputSchema } from "./search.js";
 import { SecurityEventListInputSchema, SecurityEventSchema } from "./security-events.js";
 import { SettingsScopeSchema, SpaceSettingSchema, settingsScopeInput } from "./settings-scope.js";
 import { tradingContract } from "./trading-rpc.js";
+import { workspaceAccessContract } from "./workspace-access.js";
 
 const botId = z.object({ botId: Id });
 const groupId = z.object({ groupId: Id });
@@ -336,9 +337,12 @@ export const appContract = {
     /** Saves a detected timezone only while none is saved, so it never replaces a choice. */
     adoptTimezone: oc.input(z.object({ timezone: TimeZoneSchema })).output(MeSchema),
   },
+  workspaceAccess: workspaceAccessContract,
   spaces: {
     list: oc.output(SpaceNavigationSchema),
-    create: oc.input(z.object({ name: spaceName })).output(SpaceSchema),
+    create: oc
+      .input(z.object({ name: spaceName, kind: z.enum(["general", "trading"]).optional() }))
+      .output(SpaceSchema),
     rename: oc
       .input(z.object({ spaceId: Id, name: spaceName }))
       .output(z.object({ id: Id, name: z.string() })),

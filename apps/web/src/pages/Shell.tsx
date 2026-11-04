@@ -524,6 +524,8 @@ function SpaceShell() {
           ? [
               {
                 id: bootstrapMe.spaceId,
+                kind: "general" as const,
+                isolationPending: false,
                 name: t`Default business scope`,
                 isDefault: true,
                 hasContent: true,
@@ -1423,10 +1425,7 @@ function SpaceShell() {
               rememberBusinessView(false);
               setPanel(null);
               if (scope.spaceId === bootstrapMe?.spaceId) {
-                queryClient.setQueryData(
-                  queries.trading.workspaces.queryOptions({ input: {} }).queryKey,
-                  [scope],
-                );
+                void queryClient.invalidateQueries({ queryKey: queries.trading.workspaces.key() });
                 showInterfaces(true);
               } else openSpaceChat(scope.spaceId, "/app");
             }}
@@ -1447,6 +1446,10 @@ function SpaceShell() {
           closeMobileSidebar={() => setMobileSidebarOpen(false)}
           createBot={createBot}
           businessScope={businessScope}
+          workspaceKind={sidebarSpaces.find((space) => space.id === bootstrapMe?.spaceId)?.kind}
+          isolationPending={
+            sidebarSpaces.find((space) => space.id === bootstrapMe?.spaceId)?.isolationPending
+          }
           onChooseScope={focusBusinessScope}
           clearOpenThread={() => {
             thread.resetHistory();

@@ -305,7 +305,7 @@ export function createMcpServers(
     actor: Actor,
     input: McpServerConfigInput,
     stored: Awaited<ReturnType<typeof prepareMcpServer>>,
-    // What the user adds reaches all their spaces and agents; an import stays with its agent.
+    // User-added connections reach all Bots in their own workspace; imports start assigned only.
     options: { everywhere?: boolean } = {},
   ) => {
     if (options.everywhere)
@@ -321,7 +321,7 @@ export function createMcpServers(
         data: {
           id: stored.id,
           userId: actor.userId,
-          spaceId: options.everywhere ? null : actor.spaceId,
+          spaceId: actor.spaceId,
           kind: "mcp",
           ciphertext: stored.ciphertext,
         },
@@ -331,7 +331,7 @@ export function createMcpServers(
       data: {
         spaceId: actor.spaceId,
         userId: actor.userId,
-        allSpaces: options.everywhere ?? false,
+        allSpaces: false,
         allBots: options.everywhere ?? false,
         slug: input.slug,
         name: input.name,

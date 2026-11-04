@@ -51,9 +51,13 @@ export * from "./trading-bots.js";
 export * from "./trading-control.js";
 export * from "./trading-engine.js";
 export { createTradingLearningService } from "./trading-learning.js";
+export * from "./trading-weather.js";
+export { createTradingWorkspaceService } from "./trading-workspaces.js";
 export * from "./transaction-retry.js";
 export * from "./unread-inbox-chats.js";
 export * from "./usage.js";
 export * from "./voice-credentials.js";
+export * from "./workspace-access.js";
+export * from "./workspace-isolation.js";
 
-export { createTradingWorkspaceService } from "./trading-workspaces.js";
+export * from "./workspace-migration.js";

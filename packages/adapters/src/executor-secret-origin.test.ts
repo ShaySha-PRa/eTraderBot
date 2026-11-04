@@ -2,9 +2,9 @@ import type { ComputerRef } from "@rakazo/adapter-kit";
 import * as Logging from "@rakazo/logging";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";
-import { createRunExecutor } from "./executor.js";
 import { prepareRequestSecretArguments } from "./pi-runtime-tools.js";
 import { EncryptedSecretStore } from "./secrets.js";
+import { createRunExecutor } from "./testing/workspace-executor.js";
 
 const COMPUTER: ComputerRef = {
   id: "sandbox-1",

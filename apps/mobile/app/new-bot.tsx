@@ -19,6 +19,8 @@ export default function NewBot() {
   const router = useRouter();
   const tokens = useMobileTokens();
   const insets = useSideInsets();
+  const [kind, setKind] = useState<"general" | "trading">();
+  const [isolationPending, setIsolationPending] = useState(false);
   const [scopes, setScopes] = useState<TradingWorkspace[]>([]);
   const workspaceId = scopes[0]?.id ?? "";
   const [businessName, setBusinessName] = useState("");
@@ -29,6 +31,9 @@ export default function NewBot() {
         .then(([rows, navigation]) => {
           if (alive) {
             setScopes(rows);
+            setKind(navigation.current.kind);
+            setIsolationPending(navigation.current.isolationPending);
+            setRole(navigation.current.kind === "trading" ? "spot" : undefined);
             setBusinessName(
               navigation.current.name === "Personal"
                 ? t("Default business scope")
@@ -57,7 +62,7 @@ export default function NewBot() {
     { role: undefined, name: t("General bot") },
   ] as const;
   async function create() {
-    if (pending || !name.trim() || (role && !workspaceId)) return;
+    if (!kind || isolationPending || pending || !name.trim() || (role && !workspaceId)) return;
     setPending(true);
     setError("");
     try {
@@ -88,26 +93,29 @@ export default function NewBot() {
         <SettingsGroup label={t("Business scope")}>
           <SettingsRow title={businessName || t("Business scope")} />
         </SettingsGroup>
-        {!workspaceId ? (
+        {kind === "trading" && !workspaceId ? (
           <Text style={{ color: tokens.mutedForeground }}>
             {t(
               "Configure this business scope and its data APIs on the web before creating trading bots.",
             )}
           </Text>
         ) : null}
+        {isolationPending ? <Text accessibilityRole="alert">{t("Migration required")}</Text> : null}
         <SettingsGroup label={t("Bot template")}>
-          {templates.map((template) => (
-            <SettingsRow
-              key={template.role ?? "general"}
-              title={template.name}
-              value={role === template.role ? t("Selected") : undefined}
-              disabled={pending}
-              onPress={() => {
-                if (!name || templates.some((item) => item.name === name)) setName(template.name);
-                setRole(template.role);
-              }}
-            />
-          ))}
+          {templates
+            .filter((template) => (kind === "trading" ? Boolean(template.role) : !template.role))
+            .map((template) => (
+              <SettingsRow
+                key={template.role ?? "general"}
+                title={template.name}
+                value={role === template.role ? t("Selected") : undefined}
+                disabled={pending}
+                onPress={() => {
+                  if (!name || templates.some((item) => item.name === name)) setName(template.name);
+                  setRole(template.role);
+                }}
+              />
+            ))}
         </SettingsGroup>
         <TextInput
           accessibilityLabel={t("Name")}
@@ -132,7 +140,9 @@ export default function NewBot() {
         ) : null}
         <NativeActionButton
           label={t("Create")}
-          disabled={pending || !name.trim() || Boolean(role && !workspaceId)}
+          disabled={
+            !kind || isolationPending || pending || !name.trim() || Boolean(role && !workspaceId)
+          }
           onPress={() => void create()}
         />
       </ScrollView>

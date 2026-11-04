@@ -59,6 +59,11 @@ import {
 
 /** Surface a Space deletion race as a retryable conflict instead of a generic failure. */
 function mapSpaceLifecycleError(error: unknown): unknown {
+  if (error instanceof TradingError)
+    return new ORPCError(error.code === "NOT_FOUND" ? "NOT_FOUND" : "BAD_REQUEST", {
+      message: error.message,
+      data: { reason: error.code },
+    });
   if (error instanceof SpaceDeletionInProgressError) {
     return new ORPCError("CONFLICT", { message: error.message });
   }
@@ -276,9 +281,17 @@ export function botsRoutes(ctx: RouterContext) {
           });
         return bot;
       }),
-      importPreview: authed.bots.importPreview.handler(async ({ context, input }) =>
-        previewAgentImport(agentImportServices as AgentImportServices, context.actor, input),
-      ),
+      importPreview: authed.bots.importPreview.handler(async ({ context, input }) => {
+        try {
+          return await previewAgentImport(
+            agentImportServices as AgentImportServices,
+            context.actor,
+            input,
+          );
+        } catch (error) {
+          throw mapSpaceLifecycleError(error);
+        }
+      }),
       importCreate: authed.bots.importCreate.handler(async ({ context, input }) => {
         let bot: Bot;
         try {

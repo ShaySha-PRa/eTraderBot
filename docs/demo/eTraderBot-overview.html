@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="eTraderBot 自动化 AI 交易员平台：学习交易员经验，以强大模型驱动 Bot 协作，在授权范围内自主工作。7 页产品定位与内部模拟演示。">
+  <title>eTraderBot · 自动化 AI 交易员平台</title>
+  <!-- Shared semantic palette is embedded below for a portable, offline document. -->
+  <style id="shared-palette">/* Light palette excerpt from packages/ui-tokens/src/tokens.css. */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+  --background: #ffffff;
+  --dialog: #ffffff;
+  --foreground: #1c1c1c;
+  --card: #f2f2f2;
+  --card-foreground: #1c1c1c;
+  --popover: #ffffff;
+  --popover-foreground: #1c1c1c;
+  --glass-fill: #ffffff;
+  --glass-stroke: #14141416;
+  --primary: #1c1c1c;
+  --primary-foreground: #fcfcfc;
+  --secondary: #1c1c1c0f;
+  --secondary-foreground: #1c1c1c;
+  --chat-user: #1c1c1c;
+  --chat-user-foreground: #ffffff;
+  --muted: #f2f2f2;
+  --muted-foreground: #1c1c1cad;
+  --faint-foreground: #1c1c1c8f;
+  --accent: #1c1c1c0f;
+  --accent-foreground: #1c1c1c;
+  --destructive: #cd2834;
+  --destructive-fill: #e72e3b;
+  --destructive-foreground: #ffffff;
+  --border: #1c1c1c1f;
+  --input: #1c1c1c3d;
+  --ring: #1e86fc;
+  --sidebar: #f5f5f5;
+  --sidebar-foreground: #1c1c1c;
+  --sidebar-border: #1c1c1c1f;
+  --sidebar-accent: #1c1c1c14;
+  --sidebar-accent-foreground: #1c1c1c;
+  --link: #0b6dd3;
+  --favicon-plate: #ffffff;
+  --success: #00854a;
+  --warning: #aa6300;
+  --status-working: #0b6dd3;
+  --unread: #0b6dd3;
+  --working-dot: #10ab61;
+  --overlay: #00000080;
+  --scrollbar: #1c1c1c3d;
+  --scrollbar-hover: #1c1c1c85;
+  --primary-hover: #363636;
+  --primary-disabled: #1c1c1c26;
+  --radius: 0.75rem;
+}
+</style>
+  <style>
+* { box-sizing: border-box; }
+:root { --deck-scale: 1; --font: "Noto Sans CJK SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif; --mono: "SFMono-Regular", Consolas, monospace; }
+body { margin: 0; font-family: var(--font); color: var(--foreground); background: var(--background); -webkit-font-smoothing: antialiased; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; cursor: pointer; }
+button:disabled { cursor: default; opacity: .35; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--ring); outline-offset: 5px; }
+button, a { touch-action: manipulation; }
+a { color: var(--link); text-underline-offset: 4px; }
+[hidden] { display: none !important; }
+.viewport { height: calc(100dvh - 76px); display: grid; place-items: center; overflow: hidden; padding: 18px 24px 4px; }
+.frame { width: calc(1440px * var(--deck-scale)); height: calc(810px * var(--deck-scale)); }
+.deck { width: 1440px; height: 810px; transform: scale(var(--deck-scale)); transform-origin: top left; }
+.slide { width: 1440px; height: 810px; padding: 40px 68px 30px; background: var(--background); color: var(--foreground); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.slide.is-active .content { animation: slide-enter .42s cubic-bezier(.22, .68, .2, 1) both; }
+.slide-head, .slide-foot { display: flex; align-items: center; justify-content: space-between; flex: none; gap: 24px; }
+.slide-head { font-size: 14px; letter-spacing: .06em; }
+.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 20px; letter-spacing: -.03em; }
+.brand-mark { width: 24px; height: 24px; display: grid; grid-template-columns: repeat(3, 4px); gap: 3px; align-items: end; }
+.brand-mark i { background: currentColor; display: block; height: 10px; transform: skewY(-25deg); }
+.brand-mark i:nth-child(2) { height: 21px; }.brand-mark i:nth-child(3) { height: 16px; }
+.chapter { color: var(--muted-foreground); font-size: 13px; }
+.content { flex: 1; min-height: 0; padding-top: 44px; }
+.slide-foot { margin-top: 25px; border-top: 1px solid var(--border); padding-top: 15px; color: var(--muted-foreground); font-size: 13px; }
+.page { font-family: var(--mono); font-size: 14px; letter-spacing: .08em; white-space: nowrap; }
+.eyebrow { font-family: var(--mono); font-size: 13px; letter-spacing: .16em; color: var(--muted-foreground); margin: 0 0 17px; text-transform: uppercase; }
+h1, h2, h3, h4, p { margin: 0; }
+h1 { font-size: 73px; line-height: 1.2; font-weight: 650; letter-spacing: -.05em; }
+h2 { font-size: 46px; line-height: 1.25; letter-spacing: -.04em; font-weight: 650; }
+h3 { font-size: 25px; line-height: 1.4; font-weight: 600; }
+h4 { font-size: 20px; line-height: 1.5; font-weight: 600; }
+.lede { font-size: 20px; line-height: 1.7; color: var(--muted-foreground); margin-top: 16px; }
+.muted { color: var(--muted-foreground); }.mono { font-family: var(--mono); }
+.badge { display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--border); padding: 6px 11px; border-radius: 5px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.badge.good { color: var(--success); border-color: currentColor; }.badge.pending { color: var(--warning); border-color: currentColor; }
+.rule-note { border-left: 3px solid var(--foreground); padding: 4px 0 4px 20px; font-size: 19px; line-height: 1.65; }
+.grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+.print-only { display: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 65px; align-items: center; height: 100%; padding-bottom: 20px; }
+.hero-title-small { display: block; font-size: 28px; font-weight: 400; letter-spacing: .02em; margin: 25px 0; }
+.hero-copy { font-size: 18px; line-height: 1.75; max-width: 580px; color: var(--muted-foreground); }
+.hero-copy + .hero-copy { margin-top: 14px; }
+.hero-meta { display: flex; align-items: center; gap: 16px; margin-top: 28px; font-size: 12px; color: var(--muted-foreground); }
+.hero-art { position: relative; min-height: 430px; display: grid; align-content: center; gap: 24px; }
+.evolution-model { padding-bottom: 18px; border-bottom: 1px solid var(--input); font-size: 19px; font-weight: 600; }
+.evolution-model span { display: block; margin-top: 8px; font-size: 14px; line-height: 1.7; font-weight: 400; }
+.evolution-label { font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+.evolution-path { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; }
+.evolution-step { position: relative; display: grid; place-items: center; min-height: 72px; padding: 12px 8px; border: 1px solid var(--input); background: var(--background); font-size: 17px; line-height: 1.5; text-align: center; }
+.evolution-step:nth-child(2) { --phase-delay: .6s; }
+.evolution-step:nth-child(3) { --phase-delay: .9s; border-color: var(--foreground); }
+.evolution-step:not(:last-child)::after { content: "→"; position: absolute; left: calc(100% + 3px); width: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; font-weight: 400; }
+.evolution-boundary { padding-top: 16px; border-top: 1px solid var(--input); font-size: 14px; line-height: 1.7; }
+.value-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px; margin-top: 38px; }
+.value-card { border-top: 2px solid var(--foreground); padding: 24px 8px 26px 0; }
+.value-card h3 { font-size: 34px; line-height: 1.4; }
+.value-promise { margin-top: 10px; font-size: 22px; line-height: 1.5; font-weight: 500; }
+.value-copy { margin-top: 18px; font-size: 18px; line-height: 1.8; }
+.value-foundation { display: flex; align-items: center; gap: 26px; border-top: 1px solid var(--input); margin-top: 24px; padding-top: 22px; font-size: 17px; line-height: 1.7; }
+.value-foundation strong { margin-right: 12px; }
+.problem-list { margin-top: 38px; }
+.problem-row { display: grid; grid-template-columns: 70px 1fr 44px 1fr; align-items: center; gap: 24px; padding: 26px 0; border-top: 1px solid var(--border); }
+.problem-row .number { font-size: 16px; color: var(--faint-foreground); font-family: var(--mono); }
+.problem-row p { font-size: 17px; color: var(--muted-foreground); margin-top: 8px; }
+.problem-row .arrow { color: var(--faint-foreground); font-size: 28px; }
+.insight-map { width: 100%; border-collapse: collapse; table-layout: fixed; margin-top: 16px; }
+.insight-map thead th { text-align: left; font-size: 13px; font-weight: 500; padding: 0 18px 12px 0; }
+.insight-map thead th:nth-child(1) { width: 31%; }
+.insight-map thead th:nth-child(2) { width: 43%; }
+.insight-map thead th:nth-child(3) { width: 26%; }
+.insight-map tbody th, .insight-map td { border-top: 1px solid var(--border); padding: 10px 24px 10px 0; text-align: left; vertical-align: middle; }
+.insight-map tbody th { font-size: 20px; line-height: 1.5; font-weight: 600; }
+.insight-map td { font-size: 15px; line-height: 1.5; }
+.insight-map td strong { display: block; font-size: 17px; line-height: 1.4; font-weight: 600; }
+.insight-map td p { margin-top: 6px; }
+.insight-map th:last-child, .insight-map td:last-child { padding-right: 0; }
+.trace-strip { margin-top: 16px; padding-top: 16px; border-top: 2px solid var(--foreground); }
+.trace-heading { display: flex; align-items: baseline; gap: 20px; }
+.trace-heading h3 { font-size: 20px; }
+.trace-heading p { font-size: 16px; }
+.trace-chain { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 22px; list-style: none; padding: 0; margin: 14px 0 0; }
+.trace-chain li { position: relative; font-size: 14px; line-height: 1.5; }
+.trace-chain li:not(:last-child)::after { content: "→"; position: absolute; right: -16px; }
+    @media screen and (max-width: 799px) {
+.value-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 28px; }.value-card { padding: 20px 0 24px; }.value-card h3 { font-size: 28px; }.value-promise { font-size: 19px; margin-top: 8px; }.value-copy { font-size: 16px; margin-top: 12px; }.value-foundation { flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 12px; font-size: 15px; }
+.insight-map, .insight-map tbody { display: block; }
+.insight-map thead { display: none; }
+.insight-map .insight-row { display: block; padding: 20px 0; border-top: 1px solid var(--border); }
+.insight-map tbody th, .insight-map td { display: block; border: 0; padding: 0; width: 100%; }
+.insight-map tbody th { font-size: 20px; margin-bottom: 14px; }
+.insight-map td { font-size: 15px; margin-top: 12px; }
+.insight-map td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 600; margin-bottom: 4px; }
+    }
+/* Fixed-order diagrams: ownership, learning lanes, and experience handoff. */
+.architecture { margin-top: 18px; }
+.platform-bar { display: flex; align-items: center; gap: 20px; padding: 14px 18px; border-block: 1px solid var(--foreground); font-size: 15px; }
+.platform-bar strong { font-size: 20px; }
+.platform-bar .badge { margin-left: auto; }
+.workspace-split { display: grid; grid-template-columns: 1.7fr 110px 1fr; align-items: stretch; margin-top: 20px; }
+.workspace-card { min-width: 0; padding: 18px; border: 1px solid var(--input); }
+.workspace-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.workspace-heading h3 { font-size: 23px; }
+.workspace-heading span, .workspace-scope { font-size: 13px; line-height: 1.7; }
+.workspace-scope { margin-top: 6px; }
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.bot-node { padding: 10px 14px; background: var(--background); }
+.bot-node h4 { font-size: 18px; }
+.bot-node p { margin-top: 4px; font-size: 13px; line-height: 1.7; }
+.workspace-resources { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 13px; line-height: 1.7; }
+.workspace-bridge { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; font-size: 12px; }
+.workspace-bridge strong { font-size: 14px; }
+.bridge-arrow { font-size: 32px; line-height: 1; }
+.general-bot { margin-top: 18px; padding: 16px 0; border-block: 1px solid var(--border); }
+.general-bot h4 { font-size: 20px; }
+.general-bot p { margin-top: 8px; font-size: 14px; line-height: 1.8; }
+.general-workspace .workspace-resources { border: 0; padding-top: 0; }
+.architecture-foundation { display: flex; align-items: center; gap: 24px; margin-top: 18px; padding: 15px 18px; border-left: 3px solid var(--foreground); font-size: 15px; line-height: 1.7; }
+.architecture-foundation strong { flex: none; }
+.case-header { display: flex; justify-content: space-between; align-items: start; gap: 20px; }
+.case-header h2 { font-size: 42px; }
+.case-header .eyebrow { margin-bottom: 12px; }
+.approval-rail { display: flex; gap: 22px; align-items: center; margin-top: 14px; padding: 9px 14px; border-left: 2px solid var(--foreground); font-size: 14px; line-height: 1.5; }
+.case-controls { display: flex; align-items: center; gap: 12px; margin: 12px 0; }
+.case-controls button { min-height: 44px; padding: 9px 16px; background: var(--background); color: var(--foreground); border: 1px solid var(--input); font-size: 14px; }
+.case-controls #case-next { border-color: var(--foreground); font-weight: 600; }
+.case-status { margin-left: auto; font-size: 13px; }
+.case-steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; margin: 0; padding: 0; list-style: none; }
+.case-node { position: relative; min-width: 0; }
+.case-step { display: flex; flex-direction: column; width: 100%; height: 100%; min-height: 128px; padding: 14px; text-align: left; border: 1px solid var(--input); background: var(--background); color: var(--foreground); }
+.case-node.is-shown .case-step { border-color: var(--foreground); }
+.case-step[aria-pressed="true"] { box-shadow: inset 0 -3px var(--foreground); }
+.case-step-meta { display: flex; justify-content: space-between; width: 100%; font-family: var(--mono); font-size: 11px; letter-spacing: .03em; margin-bottom: 9px; }
+.case-step-title { font-size: 20px; font-weight: 600; }
+.case-step-summary { margin-top: 8px; font-size: 13px; line-height: 1.65; }
+.case-link { position: absolute; left: 100%; top: 50%; width: 28px; height: 2px; background: var(--border); pointer-events: none; }
+.case-link::before { content: ""; position: absolute; inset: 0; background: var(--foreground); transform: scaleX(0); transform-origin: left; transition: transform .45s ease-out; }
+.case-link::after { content: ""; position: absolute; right: 3px; top: -3px; width: 6px; height: 6px; border-top: 2px solid var(--input); border-right: 2px solid var(--input); transform: rotate(45deg); }
+.case-link.is-shown::before { transform: scaleX(1); }
+.case-link.is-shown::after { border-color: var(--foreground); }
+.case-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 38px; margin-top: 14px; padding: 16px 22px; background: var(--card); min-height: 184px; }
+.case-detail .eyebrow { font-size: 12px; margin: 0; }
+.case-detail h3 { margin: 8px 0; font-size: 23px; }
+.case-detail p { font-size: 16px; line-height: 1.7; color: var(--foreground); }
+.evidence-table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.6; }
+.evidence-table caption { text-align: left; font-size: 12px; margin-bottom: 4px; }
+.evidence-table th, .evidence-table td { padding: 8px 0; border-bottom: 1px solid var(--border); text-align: left; }
+.evidence-table th { font-weight: 400; width: 31%; padding-right: 12px; }
+.case-bottom { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin-top: 10px; font-size: 14px; line-height: 1.7; }
+.case-bottom strong { margin-right: 14px; }
+.ledger { padding: 28px; background: var(--card); border: 1px solid var(--border); }.ledger-title { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 15px; }.ledger-label { margin-top: 24px; color: var(--muted-foreground); font-size: 13px; }.ledger-amount { font-size: 46px; margin-top: 5px; font-family: var(--mono); letter-spacing: -.07em; }.ledger-amount small { font: 14px var(--font); color: var(--muted-foreground); }.ledger-bar { height: 16px; display: flex; margin: 20px 0 14px; background: var(--border); }.ledger-used { background: var(--foreground); width: 40%; transition: width .65s cubic-bezier(.22, .68, .2, 1); }.ledger-reserved { background: repeating-linear-gradient(135deg, var(--background) 0 4px, var(--input) 4px 6px); width: 60%; border-block: 1px solid var(--input); transition: width .65s cubic-bezier(.22, .68, .2, 1); }.ledger-values { display: flex; justify-content: space-between; font-size: 14px; gap: 12px; }.ledger-values b { font-family: var(--mono); }.ledger-used-label { color: var(--success); }.ledger-reserved-label { color: var(--warning); }.ledger-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 26px; }.ledger-options button { padding: 10px 4px; font-size: 11px; color: var(--muted-foreground); background: none; border: 1px solid var(--border); }.ledger-options button[aria-pressed="true"] { color: var(--foreground); border-color: var(--foreground); }.ledger-note { font-size: 13px; line-height: 1.7; color: var(--muted-foreground); margin-top: 17px; min-height: 45px; }
+.learning-lanes { display: grid; gap: 16px; margin-top: 24px; }
+.learning-lane { display: grid; grid-template-columns: 230px 1fr; gap: 28px; align-items: center; border: 1px solid var(--input); padding: 21px 24px; }
+.lane-label { border-right: 1px solid var(--border); padding-right: 20px; }
+.lane-label .eyebrow { display: block; margin-bottom: 8px; font-size: 11px; }
+.lane-label h3 { font-size: 21px; }
+.lane-label p { margin-top: 8px; font-size: 12px; line-height: 1.7; }
+.process-path { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin: 0; padding: 0; list-style: none; }
+.process-path > li { position: relative; min-width: 0; }
+.process-path > li:not(:last-child)::after { content: "→"; position: absolute; right: -23px; top: 50%; transform: translateY(-50%); font-size: 20px; }
+.process-path h4 { font-size: 18px; }
+.process-path p { margin-top: 8px; font-size: 14px; line-height: 1.7; }
+.algorithm-path { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.learning-boundary { margin-top: 20px; padding: 16px 0 0; border-top: 2px solid var(--foreground); font-size: 16px; line-height: 1.7; }
+.learning-boundary p { margin-top: 6px; font-size: 14px; }
+.handoff-path { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 34px; }
+.handoff-node { min-height: 176px; padding: 22px 18px; border: 1px solid var(--input); }
+.handoff-node .eyebrow { display: block; font-size: 11px; margin-bottom: 16px; }
+.handoff-node h3 { font-size: 21px; }
+.handoff-node p { font-size: 14px; }
+.handoff-principles { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; margin-top: 30px; }
+.handoff-principles > div { border-top: 1px solid var(--input); padding-top: 18px; }
+.handoff-principles h3 { font-size: 21px; }
+.handoff-principles p { margin-top: 10px; font-size: 16px; line-height: 1.8; }
+.handoff-takeaway { margin-top: 28px; padding-left: 18px; border-left: 3px solid var(--foreground); font-size: 20px; line-height: 1.7; }
+.handoff-takeaway span { display: block; font-size: 14px; margin-top: 4px; }
+.detail-button { min-height: 44px; padding: 10px 14px; border: 1px solid var(--input); background: var(--background); color: var(--foreground); font-size: 13px; white-space: nowrap; }
+.ledger-context { margin-top: 18px; font-size: 13px; line-height: 1.8; }
+
+.toolbar { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 30px; }.toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 8px; }.toolbar button { color: var(--foreground); background: none; border: 1px solid transparent; border-radius: 5px; padding: 9px 12px; font-size: 12px; min-height: 38px; }.toolbar button:hover:not(:disabled) { background: var(--background); border-color: var(--border); }.toolbar .nav-arrow { font-size: 21px; width: 42px; padding: 4px; }.counter { font-family: var(--mono); font-size: 13px; padding: 0 10px; }.keyboard-hint { font-size: 11px; color: var(--muted-foreground); }.progress { position: fixed; height: 2px; bottom: 0; left: 0; width: 14.2857%; background: var(--foreground); transition: width .5s cubic-bezier(.22, .68, .2, 1); }
+dialog { width: min(820px, calc(100vw - 36px)); max-height: 80dvh; border: 1px solid var(--border); border-radius: 10px; padding: 30px; font-family: var(--font); background: var(--background); color: var(--foreground); }dialog::backdrop { background: var(--overlay); }.dialog-heading { display: flex; justify-content: space-between; gap: 20px; align-items: center; margin-bottom: 24px; }.dialog-heading h2 { font-size: 25px; }.close-dialog { border: 1px solid var(--border); border-radius: 4px; background: none; color: var(--foreground); padding: 8px 12px; }.toc { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }.toc button { padding: 20px; display: flex; align-items: center; gap: 15px; text-align: left; border: 1px solid var(--border); color: var(--foreground); background: var(--background); font-size: 15px; }.toc button span { font-family: var(--mono); color: var(--muted-foreground); font-size: 12px; }.toc button[aria-current="page"] { border-color: var(--foreground); background: var(--card); }.toast { position: fixed; bottom: 82px; left: 50%; transform: translateX(-50%); background: var(--background); color: var(--foreground); border: 1px solid var(--foreground); padding: 12px 20px; border-radius: 6px; font-size: 13px; z-index: 10; max-width: 90vw; }
+    /* Presentation-specific monochrome aliases; source palette stays in ui-tokens. */
+:root[data-theme="light"] {
+      --card: var(--background);
+      --sidebar: var(--background);
+      --muted-foreground: var(--foreground);
+      --faint-foreground: var(--foreground);
+      --success: var(--foreground);
+      --warning: var(--foreground);
+      --link: var(--foreground);
+      --ring: var(--foreground);
+    }
+.bot-node, .case-detail { border: 1px solid var(--border); }
+.badge.pending { border-style: dashed; }
+.ledger-used-label::before, .ledger-reserved-label::before { content: ""; display: inline-block; width: 9px; height: 9px; margin-right: 7px; background: var(--foreground); }
+.ledger-reserved-label::before { background: repeating-linear-gradient(135deg, var(--background) 0 2px, var(--foreground) 2px 3px); border: 1px solid var(--foreground); }
+button { transition: border-color .2s, box-shadow .2s, transform .2s; }
+    @media (hover: hover) {
+.case-step:hover, .ledger-options button:hover, .toc button:hover { border-color: var(--foreground); transform: translateY(-2px); }
+.toolbar button:hover:not(:disabled) { transform: translateY(-2px); }
+    }
+.slide.is-active .motion-item { animation: item-enter .52s cubic-bezier(.22, .68, .2, 1) var(--reveal-delay, 0ms) both; }
+.slide.is-active .evolution-step { animation: node-enter .5s ease-out var(--phase-delay, .3s) both; }
+.slide.is-active .evolution-step::after { animation: link-enter .35s ease-out calc(var(--phase-delay, .3s) + .2s) both; }
+.slide.is-active .is-changing, dialog[open] .is-changing { animation: panel-enter .32s ease-out both; }
+dialog[open] { animation: panel-enter .22s ease-out; }
+    @keyframes slide-enter {from { opacity: .3; transform: translateX(var(--enter-x, 24px)); }to { opacity: 1; transform: translateX(0); } }
+    @keyframes item-enter {from { opacity: 0; transform: translateY(14px); }to { opacity: 1; transform: translateY(0); } }
+    @keyframes panel-enter {from { opacity: .35; transform: translateY(8px); }to { opacity: 1; transform: translateY(0); } }
+    @keyframes link-enter {from { opacity: 0; }to { opacity: 1; } }
+    @keyframes node-enter {from { opacity: 0; transform: scale(.9); }to { opacity: 1; transform: scale(1); } }
+    @media (prefers-reduced-motion: reduce) {*, *::before, *::after { animation: none !important; transition: none !important; } }
+    @media screen and (max-width: 799px) {
+.viewport { display: block; padding: 0; height: calc(100dvh - 68px); overflow-y: auto; }.frame, .deck { width: 100%; height: auto; transform: none; }.slide { width: 100%; height: auto; min-height: calc(100dvh - 68px); padding: 25px 24px; overflow: visible; }.content { padding-top: 36px; }.slide-head { gap: 10px; }.brand { font-size: 17px; }.chapter { font-size: 10px; }.slide-foot { font-size: 10px; line-height: 1.7; margin-top: 34px; align-items: end; }.page { font-size: 11px; }h1 { font-size: clamp(40px, 11vw, 65px); }h2 { font-size: 32px; }h3 { font-size: 23px; }.lede { font-size: 16px; }.hero-grid { grid-template-columns: 1fr; gap: 24px; padding-bottom: 0; }.hero-title-small { font-size: 23px; margin: 22px 0; }.hero-copy { font-size: 16px; }.hero-art { min-height: 0; gap: 22px; }.evolution-model { font-size: 17px; }.evolution-model span, .evolution-boundary { font-size: 12px; }.evolution-label { font-size: 15px; }.evolution-path { gap: 18px; }.evolution-step { min-height: 66px; padding: 10px 5px; font-size: 13px; }.evolution-step:not(:last-child)::after { left: calc(100% + 2px); width: 14px; font-size: 15px; }.hero-meta { margin-top: 24px; gap: 10px; font-size: 10px; }.eyebrow { font-size: 11px; }.problem-row { grid-template-columns: 30px 1fr; gap: 14px; padding: 24px 0; align-items: start; }.problem-row .arrow { display: none; }.problem-row .outcome { grid-column: 2; }.problem-row p { font-size: 15px; }.problem-row h3 { font-size: 21px; }.problem-row .outcome h3 { font-size: 17px; }.scope-box { padding: 18px; }.scope-title { display: block; font-size: 15px; }.scope-title small { display: block; margin-top: 8px; line-height: 1.7; font-size: 12px; }.bots-line { grid-template-columns: 1fr; gap: 10px; }.bot-node { padding: 14px; }.bot-role-title h3 { font-size: 17px; }.bot-node p { font-size: 14px; }.bot-node small { font-size: 11px; }.bot-symbol { width: 25px; height: 25px; }.arch-caption { font-size: 11px; }.arch-services { grid-template-columns: 1fr; gap: 12px; }.arch-base { line-height: 1.8; font-size: 13px; }.case-header { display: block; }.case-header > .badge { margin-top: 14px; }.case-header h2 { font-size: 32px; }.case-controls { flex-wrap: wrap; gap: 10px; }.case-status { width: 100%; margin-left: 0; }.case-steps { grid-template-columns: 1fr; gap: 28px; }.case-step { min-height: 0; padding: 16px 18px; }.case-step-title { font-size: 20px; }.case-link { left: 50%; top: 100%; width: 2px; height: 28px; }.case-link::before { transform: scaleY(0); transform-origin: top; }.case-link.is-shown::before { transform: scaleY(1); }.case-link::after { top: auto; right: -3px; bottom: 3px; transform: rotate(135deg); }.case-detail { grid-template-columns: 1fr; gap: 18px; padding: 22px; }.case-detail h3 { font-size: 23px; }.case-detail p { font-size: 15px; }.evidence-table { font-size: 14px; }.case-bottom { font-size: 14px; line-height: 1.8; }.case-bottom strong { display: block; }.trace-heading { display: block; }.trace-heading p { margin-top: 8px; font-size: 14px; line-height: 1.7; }.trace-chain { grid-template-columns: 1fr; gap: 22px; margin-top: 18px; }.trace-chain li:not(:last-child)::after { content: "↓"; left: 4px; right: auto; top: 100%; }.control-layout, .learning-layout { grid-template-columns: 1fr; gap: 28px; }.control-principles h3 { font-size: 21px; }.control-principles p { font-size: 15px; }.ledger { padding: 22px; }.ledger-options { grid-template-columns: 1fr 1fr; }.ledger-options button { font-size: 12px; min-height: 40px; }.ledger-values { font-size: 12px; }.learning-path { gap: 0 20px; }.learning-step h4 { font-size: 18px; }.learning-step p { font-size: 14px; }.learning-bottom { display: block; line-height: 1.8; font-size: 16px; }.learning-bottom span { display: block; font-size: 13px; }.toolbar { height: 68px; padding: 0 12px; gap: 4px; }.toolbar-left, .toolbar-right { gap: 1px; }.toolbar button { font-size: 11px; padding: 9px 8px; }.toolbar .nav-arrow { width: 30px; }.counter { padding: 0 5px; font-size: 11px; }.keyboard-hint, #print-button { display: none; }.toc { grid-template-columns: 1fr; }.toc button { padding: 15px; }dialog { padding: 24px; }
+
+.platform-bar { flex-wrap: wrap; gap: 10px; padding: 14px 0; }.platform-bar > span { width: 100%; font-size: 13px; line-height: 1.7; }.platform-bar .badge { width: auto; margin-left: 0; font-size: 11px; }
+.workspace-split { grid-template-columns: 1fr; }.workspace-card { padding: 18px; }.workspace-heading { display: block; }.workspace-heading span { display: block; margin-top: 6px; }.role-grid { grid-template-columns: 1fr; }.workspace-bridge { padding: 16px 0; gap: 4px; }.bridge-arrow { transform: rotate(90deg); }.architecture-foundation { display: block; padding: 8px 14px; font-size: 13px; }.architecture-foundation span { display: block; margin-top: 8px; }
+.approval-rail { display: block; font-size: 13px; line-height: 1.8; }.approval-rail span { display: block; margin-top: 4px; }.case-bottom { display: block; }.case-bottom .detail-button { margin-top: 12px; }
+.learning-lane { grid-template-columns: 1fr; gap: 20px; padding: 20px; }.lane-label { border-right: 0; border-bottom: 1px solid var(--border); padding: 0 0 16px; }.process-path, .algorithm-path, .handoff-path { grid-template-columns: 1fr; gap: 30px; }.process-path > li:not(:last-child)::after { content: "↓"; top: auto; bottom: -27px; left: 8px; right: auto; transform: none; }.learning-boundary { font-size: 15px; }.handoff-node { min-height: 0; }.handoff-principles { grid-template-columns: 1fr; gap: 24px; }.handoff-takeaway { font-size: 18px; }.handoff-takeaway span { font-size: 13px; }
+#ledger-dialog .dialog-heading h2 { font-size: 21px; }#ledger-dialog .ledger-title { flex-wrap: wrap; gap: 12px; }#ledger-dialog .ledger { padding: 16px; }#ledger-dialog .ledger-values { flex-wrap: wrap; gap: 10px; }
+    }
+    @media print {
+@page { size: 15in 8.4375in; margin: 0; }
+*, *::before, *::after { animation: none !important; transition: none !important; }
+html, body { margin: 0; background: var(--background); -webkit-print-color-adjust: exact; print-color-adjust: exact; }.viewport, .frame, .deck { display: block; width: 1440px; height: auto; padding: 0; overflow: visible; transform: none; }.slide, .slide[hidden] { display: flex !important; width: 1440px; height: 810px; min-height: 810px; break-after: page; break-inside: avoid; }.slide:last-child { break-after: auto; }.toolbar, .progress, dialog, .toast, .interactive-only { display: none !important; }.print-only { display: block; }.slide .content { animation: none; }.case-detail, .ledger { break-inside: avoid; }.case-steps { margin-top: 28px; }.case-step { border-color: var(--foreground); box-shadow: none !important; }.case-node-state, #case-detail { display: none; }.case-link::before { transform: none; }.case-link::after { border-color: var(--foreground); }.case-print { margin-top: 24px; padding: 22px; border: 1px solid var(--border); background: var(--card); font-size: 17px; line-height: 1.9; }.ledger-print { font-size: 13px; color: var(--muted-foreground); margin-top: 16px; line-height: 1.8; }
+    }
+  </style>
+</head>
+<body>
+  <main class="viewport" id="viewport" aria-label="eTraderBot 项目演示">
+    <div class="frame"><div class="deck" id="deck">
+      <section class="slide is-active" id="slide-1" data-title="自动化 AI 交易员平台" aria-labelledby="title-1">
+        <header class="slide-head"><div class="brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>eTraderBot</div><span class="chapter">PROJECT PRESENTATION / 2026.11</span></header>
+        <div class="content hero-grid">
+          <div>
+            <p class="eyebrow">Automated AI trading · Learn, validate, operate</p>
+            <h1 id="title-1">自动化 AI<br>交易员平台</h1>
+            <span class="hero-title-small">从交易员带教，到 AI 自主开展交易工作</span>
+            <p class="hero-copy">交易员的带教沉淀为记忆、经验与 Skill。强大模型驱动各 Bot 理解业务、调用工具与协作，独立算法生成交易候选，再经门禁校验，在授权范围内自主工作。</p>
+            <p class="hero-copy">随着能力得到验证，人类交易员逐渐从<strong>带教与纠偏</strong>，转向<strong>审核、批准与监督</strong>。</p>
+            <div class="hero-meta"><span class="badge">V1.1 首批 · 内部模拟</span><span>7 页 / 配合现场演示</span></div>
+          </div>
+          <div class="hero-art" role="group" aria-label="AI 交易员与人类交易员的并行演进路径">
+            <p class="evolution-model">强大模型驱动各 Bot 分工协作<span>记忆与 Skill 积累经验 · 独立算法计算量价</span></p>
+            <div role="group" aria-labelledby="ai-evolution-label"><p class="evolution-label" id="ai-evolution-label">AI 交易员</p><ol class="evolution-path"><li class="evolution-step">跟学积累</li><li class="evolution-step">验证能力</li><li class="evolution-step">授权下自主工作</li></ol></div>
+            <div role="group" aria-labelledby="human-evolution-label"><p class="evolution-label" id="human-evolution-label">人类交易员</p><ol class="evolution-path"><li class="evolution-step">带教纠偏</li><li class="evolution-step">评估审核</li><li class="evolution-step">批准监督</li></ol></div>
+            <p class="evolution-boundary">规则 · 约束 · 门禁：全程保障执行边界</p>
+          </div>
+        </div>
+        <footer class="slide-foot"><span>经验沉淀 · 模型驱动 · 独立算法 · 授权执行</span><span class="page">01 / 07</span></footer>
+      </section>
+
+      <section class="slide" id="slide-2" data-title="让交易员的经验，成为可持续积累的 AI 交易能力" aria-labelledby="title-2" hidden>
+        <header class="slide-head"><div class="brand">eTraderBot</div><span class="chapter">01 / 核心价值</span></header>
+        <div class="content">
+          <p class="eyebrow">Learn from people · Work with permission · Pass experience on</p>
+          <h2 id="title-2">让交易员的经验，<br>成为可持续积累的 AI 交易能力</h2>
+          <div class="value-grid">
+            <div class="value-card"><h3>可带教</h3><p class="value-promise">把经验留下来</p><p class="value-copy">将交易员的判断、纠偏与复盘，沉淀为记忆、经验与 Skill。</p></div>
+            <div class="value-card"><h3>可自主</h3><p class="value-promise">把工作交出去</p><p class="value-copy">AI 在明确授权范围内完成工作，交易员逐渐转向审核、批准与监督。</p></div>
+            <div class="value-card"><h3>可传承</h3><p class="value-promise">把经验延续下去</p><p class="value-copy">将获授权的经验按固定版本交给新 Bot，在新业务中验证并继续积累。</p></div>
+          </div>
+          <div class="value-foundation"><strong>共同支撑</strong><span>独立算法计算</span><span>执行门禁控制</span><span>全链路证据追溯</span></div>
+        </div>
+        <footer class="slide-foot"><span>产品目标；当前以内部模拟验证为主，完整经验交接待实施。</span><span class="page">02 / 07</span></footer>
+      </section>
+
+      <section class="slide" id="slide-3" data-title="从交易员经验，到受控的 AI 决策" aria-labelledby="title-3" hidden>
+        <header class="slide-head"><div class="brand">eTraderBot</div><span class="chapter">02 / 项目核心思路</span></header>
+        <div class="content">
+          <p class="eyebrow">Learn from traders · Put experience to work · Control execution</p><h2 id="title-3">从交易员经验，到受控的 AI 决策</h2>
+          <p class="lede">交易员教会 AI 怎么判断，大模型与 Agent 架构把这些经验用于实际工作，规则和门禁保障执行边界。</p>
+          <table class="insight-map" aria-label="交易员经验、模型与 Agent 协作、执行边界三条主线">
+            <thead><tr><th scope="col">核心主线</th><th scope="col">如何落地 · 产品设计与演进方向</th><th scope="col">回应的难题</th></tr></thead>
+            <tbody>
+              <tr class="insight-row"><th scope="row">交易员教会 AI<br>怎么判断</th><td data-label="如何落地"><strong>经验沉淀为记忆与 Skill</strong><p>记录场景、因果判断与停止条件；用极端案例、压力测试和留出验证检查适用边界。</p></td><td data-label="回应的难题">极端样本少<br>相关与因果容易混淆<br>不懂何时停止交易</td></tr>
+              <tr class="insight-row"><th scope="row">大模型与 Agent 架构<br>把经验用于实际工作</th><td data-label="如何落地"><strong>模型组织协作，独立算法计算</strong><p>模型结合经验筛选信号、调用工具；获准算法生成量价候选，Bot 关联证据解释操作。</p></td><td data-label="回应的难题">有效信号少、噪声多<br>操作理由难以解释</td></tr>
+              <tr class="insight-row"><th scope="row">规则和门禁<br>保障执行边界</th><td data-label="如何落地"><strong>明确约束，按授权受控执行</strong><p>校验物理约束、规则版本、授权与额度；先模拟验证，再按条件执行、拒绝或交还人工。</p></td><td data-label="回应的难题">物理约束硬<br>规则变化快<br>犯错成本高</td></tr>
+            </tbody>
+          </table>
+          <div class="trace-strip" aria-labelledby="trace-title">
+            <div class="trace-heading"><h3 id="trace-title">全链路可追溯</h3><p>让 AI 的交易操作有据可查、过程可审计。</p></div>
+            <ol class="trace-chain" aria-label="贯穿三条主线的业务证据链"><li>数据来源与快照</li><li>经验来源与版本</li><li>规则／算法版本</li><li>候选决策</li><li>批准授权</li><li>执行回执</li><li>复盘学习</li></ol>
+          </div>
+        </div>
+        <footer class="slide-foot"><span>本页呈现产品设计与演进方向；现阶段已验证内部模拟流程，真实交易效果待验证</span><span class="page">03 / 07</span></footer>
+      </section>
+
+      <section class="slide" id="slide-4" data-title="按业务组织 Bot，按权限开展协作" aria-labelledby="title-4" hidden>
+        <header class="slide-head"><div class="brand">eTraderBot</div><span class="chapter">03 / 工作区与权限</span></header>
+        <div class="content">
+          <p class="eyebrow">Business workspaces · Scoped collaboration</p><h2 id="title-4">按业务组织 Bot，按权限开展协作</h2>
+          <div class="architecture">
+            <div class="platform-bar"><strong>eTraderBot 平台</strong><span>参考 grokbot 的 Bot、会话、记忆、Skill 与任务机制</span><span class="badge">V1.1 首批已实现</span></div>
+            <div class="workspace-split" role="group" aria-label="并列的交易与通用工作区，同一使用者名下按指定 Bot 和单条资料只读授权">
+              <section class="workspace-card" aria-labelledby="trading-workspace-title"><div class="workspace-heading"><h3 id="trading-workspace-title">交易工作区</h3><span>一个工作区，对应一个业务范围</span></div><p class="workspace-scope">固定主体、账户／资产、地区、市场与环境</p>
+                <div class="role-grid"><div class="bot-node"><h4>中长期 Bot</h4><p>合同与净敞口 · 调用获准算法</p></div><div class="bot-node"><h4>现货 Bot</h4><p>日前／日内／实时 · 按授权执行</p></div><div class="bot-node"><h4>风控 Bot</h4><p>检查与解释 · 无下单、撤单权</p></div><div class="bot-node"><h4>复盘 Bot</h4><p>复盘与总结 · 无下单、撤单权</p></div></div>
+                <p class="workspace-resources">本区资料、记忆与 Skill · API／MCP · 天气拉取／推送</p>
+              </section>
+              <div class="workspace-bridge" aria-label="交易区所有者向同一使用者名下的指定通用 Bot 授权单条资料只读访问"><span>指定 Bot</span><strong>授权只读</strong><span>单条资料</span><span class="bridge-arrow" aria-hidden="true">→</span></div>
+              <section class="workspace-card general-workspace" aria-labelledby="general-workspace-title"><div class="workspace-heading"><h3 id="general-workspace-title">通用工作区</h3></div><p class="workspace-scope">提效及其他非交易工作</p><div class="general-bot"><h4>普通 Bot</h4><p>使用本区资料、记忆与 Skill<br>读取获授权记录的当前内容</p></div><p class="workspace-resources">建议留在通用区，进入交易业务时另行接纳；无交易区写权限。</p></section>
+            </div>
+            <div class="architecture-foundation"><strong>交易执行由后端控制</strong><span>模板权限上限 → 获准算法版本 → 规则、授权与额度校验 → 执行与回执</span></div>
+          </div>
+        </div>
+        <footer class="slide-foot"><span>只读授权限同一使用者名下的指定 Bot、单条分析／天气／记忆／Skill；支持撤销与审计。</span><span class="page">04 / 07</span></footer>
+      </section>
+
+      <section class="slide" id="slide-5" data-title="一笔交易，如何在授权下完成" aria-labelledby="title-5" hidden>
+        <header class="slide-head"><div class="brand">eTraderBot</div><span class="chapter">04 / 交易流程 · 内部模拟</span></header>
+        <div class="content">
+          <div class="case-header"><div><p class="eyebrow">Versioned decisions · Authorized execution</p><h2 id="title-5">一笔交易，如何在授权下完成</h2></div><span class="badge">示例售电业务 / 日前 / 合成数据</span></div>
+          <div class="approval-rail"><strong>算法发布入口</strong><span>独立验证 → <b>人工启用批准</b> → 固定版本供 Bot 调用</span></div>
+          <div class="case-controls interactive-only"><button type="button" id="case-next" aria-controls="case-flow case-detail">逐步演示 →</button><button type="button" id="case-reset" aria-controls="case-flow case-detail">重新开始</button><p class="case-status" id="case-status" role="status">步骤 1 / 5 · 固定数据</p></div>
+          <ol class="case-steps" id="case-flow" aria-label="交易执行的五步流程，可点击查看证据">
+            <li class="case-node is-shown"><button type="button" class="case-step" data-case="0" aria-pressed="true" aria-current="step" aria-controls="case-detail"><span class="case-step-meta"><span>01</span><span class="case-node-state">当前步骤</span></span><span class="case-step-title">固定数据</span><span class="case-step-summary">来源、快照与规则<br>核查适用性和时效</span></button><span class="case-link" aria-hidden="true"></span></li>
+            <li class="case-node"><button type="button" class="case-step" data-case="1" aria-pressed="false" aria-controls="case-detail"><span class="case-step-meta"><span>02</span><span class="case-node-state">待展示</span></span><span class="case-step-title">调用获准算法</span><span class="case-step-summary">Bot 组织任务与工具<br>独立算法计算量价</span></button><span class="case-link" aria-hidden="true"></span></li>
+            <li class="case-node"><button type="button" class="case-step" data-case="2" aria-pressed="false" aria-controls="case-detail"><span class="case-step-meta"><span>03</span><span class="case-node-state">待展示</span></span><span class="case-step-title">结构化候选</span><span class="case-step-summary">固定量价与交易意图<br>关联版本和计算依据</span></button><span class="case-link" aria-hidden="true"></span></li>
+            <li class="case-node"><button type="button" class="case-step" data-case="3" aria-pressed="false" aria-controls="case-detail"><span class="case-step-meta"><span>04</span><span class="case-node-state">待展示</span></span><span class="case-step-title">执行门禁</span><span class="case-step-summary">逐笔批准／范围授权<br>后端核验规则与额度</span></button><span class="case-link" aria-hidden="true"></span></li>
+            <li class="case-node"><button type="button" class="case-step" data-case="4" aria-pressed="false" aria-controls="case-detail"><span class="case-step-meta"><span>05</span><span class="case-node-state">待展示</span></span><span class="case-step-title">模拟执行</span><span class="case-step-summary">提交、占用与回执<br>持续核对并进入复盘</span></button></li>
+          </ol>
+          <div class="case-detail" id="case-detail" aria-live="polite" aria-atomic="true"><div><p class="eyebrow" id="case-kicker">01 / 固定输入</p><h3 id="case-title">先明确“依据是什么”</h3><p id="case-description">读取同一业务范围内的合成快照，关联来源、观察时间和适用规则。必填数据缺失或过期时，停止生成候选。</p></div><table class="evidence-table"><caption>本步骤留下的关联证据 · 教学示意</caption><tbody id="case-evidence"><tr><th scope="row">数据来源</th><td>示例售电业务 · 合成数据</td></tr><tr><th scope="row">数据快照</th><td>固定输入与观察时间</td></tr><tr><th scope="row">规则依据</th><td>关联适用规则及版本</td></tr></tbody></table></div>
+          <div class="case-bottom"><p><strong>算法启用与交易授权分别管理。</strong>每一步保留关联证据。</p><button type="button" class="detail-button interactive-only" id="ledger-open" aria-haspopup="dialog" aria-controls="ledger-dialog">查看额度变化 ↗</button></div>
+          <div class="print-only case-print">固定数据 → 调用获准算法 → 结构化候选 → 交易授权与后端校验 → 模拟执行与回执。<br>额度示例（已核销／仍占用）：提交 0／4,000 → 部分成交 1,600／2,400 → 核对超时 1,600／2,400 → 确认全成 4,000／0 元。</div>
+        </div>
+        <footer class="slide-foot"><span>算法启用位于版本发布环节；具体交易逐次核验授权条件。教学数值不代表真实报价或收益。</span><span class="page">05 / 07</span></footer>
+      </section>
+
+      <section class="slide" id="slide-6" data-title="经验持续积累，算法经过验证再启用" aria-labelledby="title-6" hidden>
+        <header class="slide-head"><div class="brand">eTraderBot</div><span class="chapter">05 / 两种学习路径</span></header>
+        <div class="content">
+          <p class="eyebrow">Learn the business · Validate the algorithm</p><h2 id="title-6">经验持续积累，算法经过验证再启用</h2>
+          <p class="lede">交易员的带教与纠偏、授权资料和执行复盘，共同为两条学习路径提供依据。</p>
+          <div class="learning-lanes">
+            <section class="learning-lane" aria-labelledby="experience-lane-title"><div class="lane-label"><span class="eyebrow">01 / 业务经验学习</span><h3 id="experience-lane-title">让 Bot 更懂业务</h3><p>保留来源、适用条件与局限</p></div><ol class="process-path"><li><h4>经验提炼</h4><p>整理判断理由<br>复盘场景与停止条件</p></li><li><h4>记忆与 Skill</h4><p>沉淀业务知识<br>形成可复用工作方法</p></li><li><h4>使用与纠错</h4><p>在授权业务中应用<br>持续核查和修正</p></li></ol></section>
+            <section class="learning-lane" aria-labelledby="algorithm-lane-title"><div class="lane-label"><span class="eyebrow">02 / 独立算法改进</span><h3 id="algorithm-lane-title">让计算有验证依据</h3><p>当前以固定算法参数候选为主</p></div><ol class="process-path algorithm-path"><li><h4>改进候选</h4><p>固定假设<br>记录变化与来源</p></li><li><h4>训练与验证</h4><p>留出检验、约束检查<br>目标包含影子运行</p></li><li><h4>人工启用</h4><p>审核证据<br>发布固定版本</p></li><li><h4>授权后使用</h4><p>按新版本<br>重新取得交易授权</p></li></ol></section>
+          </div>
+          <div class="learning-boundary"><strong>影响交易量价、约束或风险预算的 Skill 改动，也进入受控版本流程。</strong><p>业务经验积累不等于模型权重自动更新；新算法版本不继承旧交易授权。</p></div>
+        </div>
+        <footer class="slide-foot"><span>已有记忆／Skill 基础及参数候选流程；独立强化学习与完整算法插件发布仍待实施。</span><span class="page">06 / 07</span></footer>
+      </section>
+
+      <section class="slide" id="slide-7" data-title="让经验在新业务中继续积累" aria-labelledby="title-7" hidden>
+        <header class="slide-head"><div class="brand">eTraderBot</div><span class="chapter">06 / 经验交接 · 已确认待实施</span></header>
+        <div class="content">
+          <p class="eyebrow">Versioned experience · Independent growth</p><h2 id="title-7">让经验在新业务中继续积累</h2>
+          <p class="lede">旧业务积累的经验，经明确授权与固定版本交接，成为新 Bot 的起点。</p>
+          <ol class="handoff-path process-path" aria-label="固定版本经验交接的四步目标流程">
+            <li class="handoff-node"><span class="eyebrow">01 / 选择与授权</span><h3>选定可交接经验</h3><p>从记忆、经验与 Skill 中<br>选取获准导出和使用的内容</p></li>
+            <li class="handoff-node"><span class="eyebrow">02 / 固定版本</span><h3>形成经验交接包</h3><p>保留来源、版本、适用条件<br>以及已知局限</p></li>
+            <li class="handoff-node"><span class="eyebrow">03 / 独立导入</span><h3>新 Bot 接纳副本</h3><p>按目标业务重新配置权限<br>保留导入记录与原包</p></li>
+            <li class="handoff-node"><span class="eyebrow">04 / 验证与积累</span><h3>在新业务中成长</h3><p>核查适用性、纠错与复盘<br>继续积累自己的经验</p></li>
+          </ol>
+          <div class="handoff-principles"><div><h3>后续更新，由目标明确接纳</h3><p>源 Bot 或 Skill 更新形成新包；目标独立积累，源修改不自动覆盖目标内容。</p></div><div><h3>经验可交接，权限分别管理</h3><p>凭据、角色权限、算法启用批准、交易授权与额度，都不随经验导入继承。</p></div></div>
+          <p class="handoff-takeaway">业务可以结束，获授权的经验可以继续使用。<span>原始交易证据仍归属原业务。</span></p>
+        </div>
+        <footer class="slide-foot"><span>V1.1 已支持逐条资料只读授权；固定版本交接包、独立导入与追溯闭环仍待实施。</span><span class="page">07 / 07</span></footer>
+      </section>
+
+    </div></div>
+  </main>
+  <nav class="toolbar" aria-label="演示控制">
+    <div class="toolbar-left"><button type="button" class="nav-arrow" id="previous" aria-label="上一页">←</button><span class="counter" id="counter" aria-live="polite" aria-atomic="true">01 / 07</span><button type="button" class="nav-arrow" id="next" aria-label="下一页">→</button></div>
+    <span class="keyboard-hint">← → 翻页 &nbsp; · &nbsp; F 全屏 &nbsp; · &nbsp; O 目录</span>
+    <div class="toolbar-right"><button type="button" id="contents-button" aria-haspopup="dialog">目录</button><button type="button" id="fullscreen-button" aria-pressed="false">全屏</button><button type="button" id="print-button">打印 / PDF</button></div>
+  </nav>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <dialog id="presentation-dialog" aria-labelledby="dialog-title"><div class="dialog-heading"><h2 id="dialog-title">演示目录</h2><button type="button" class="close-dialog" id="close-dialog" autofocus>关闭</button></div><div id="dialog-content"></div></dialog>
+  <dialog id="ledger-dialog" aria-labelledby="ledger-dialog-title"><div class="dialog-heading"><h2 id="ledger-dialog-title">状态未确定，额度就继续占用</h2><button type="button" class="close-dialog" id="ledger-close" autofocus>关闭</button></div>
+    <div class="ledger"><div class="ledger-title"><strong>模拟订单 · 10 MWh × 400 元/MWh</strong><span class="badge" id="ledger-state">部分成交</span></div><div aria-live="polite" aria-atomic="true"><p class="ledger-label">该订单计入额度的总额</p><div class="ledger-amount">4,000 <small>元</small></div><div class="ledger-bar" aria-hidden="true"><span class="ledger-used" id="ledger-used"></span><span class="ledger-reserved" id="ledger-reserved"></span></div><div class="ledger-values"><span class="ledger-used-label">已核销 <b id="used-value">1,600</b> 元</span><span class="ledger-reserved-label">仍占用 <b id="reserved-value">2,400</b> 元</span></div><p class="ledger-note" id="ledger-note">已确认成交 4 MWh；剩余 6 MWh 仍占用额度。</p></div>
+              <div class="ledger-options interactive-only" role="group" aria-label="选择订单状态示意"><button type="button" data-ledger="0" aria-pressed="false">提交登记</button><button type="button" data-ledger="1" aria-pressed="true">部分成交</button><button type="button" data-ledger="2" aria-pressed="false">核对超时</button><button type="button" data-ledger="3" aria-pressed="false">核对完成</button></div>
+              <p class="print-only ledger-print">状态演进（已核销 / 占用）：<br>提交登记 0 / 4,000 → 部分成交 1,600 / 2,400<br>→ 核对超时 1,600 / 2,400 → 确认全成 4,000 / 0</p>
+            </div>
+    <p class="ledger-context">合成数据教学示例，额度按毛名义金额计量，不代表现金余额或收益。真实交易通道尚未接入。</p>
+  </dialog>
+  <p class="toast" id="toast" role="status" hidden></p>
+  <noscript><p style="position:fixed;bottom:80px;padding:16px;background:var(--background)">请启用 JavaScript 使用翻页与交互演示；也可通过浏览器打印查看全部页面。</p></noscript>
+  <script>
+    (() => {
+      'use strict';
+      const slides = [...document.querySelectorAll('.slide')];
+      const byId = (id) => document.getElementById(id);
+      const dialog = byId('presentation-dialog');
+      const ledgerDialog = byId('ledger-dialog');
+      const viewport = byId('viewport');
+      let current = 0;
+      let toastTimer;
+
+      const revealTargets = [
+        '.content > .eyebrow', '.content > h2', '.content > .lede',
+        '.hero-grid > div:first-child > *', '.hero-art', '.problem-row', '.insight-row', '.trace-strip',
+        '.value-card', '.value-foundation',
+        '.platform-bar', '.workspace-card', '.workspace-bridge', '.bot-node', '.architecture-foundation',
+        '.case-header', '.approval-rail', '.case-controls', '.case-steps', '.case-detail', '.case-bottom',
+        '.lane-label', '.process-path > li', '.learning-boundary', '.handoff-principles > div', '.handoff-takeaway',
+      ].join(', ');
+      slides.forEach((slide) => {
+        slide.querySelectorAll(revealTargets).forEach((element, index) => {
+          element.classList.add('motion-item');
+          element.style.setProperty('--reveal-delay', `${Math.min(index * 65, 520)}ms`);
+        });
+      });
+
+      function animateChange(element) {
+        element.classList.remove('is-changing');
+        void element.offsetWidth; // Restart the short CSS transition after replacing the content.
+        element.classList.add('is-changing');
+      }
+
+      function resize() {
+        const scale = Math.min((window.innerWidth - 48) / 1440, (window.innerHeight - 98) / 810);
+        document.documentElement.style.setProperty('--deck-scale', Math.max(0.1, scale));
+      }
+
+      function showSlide(index, updateHash = true) {
+        const next = Math.max(0, Math.min(slides.length - 1, index));
+        slides[next].style.setProperty('--enter-x', next < current ? '-24px' : '24px');
+        if (next !== current) {
+          slides[current].querySelectorAll('.is-changing').forEach((element) => element.classList.remove('is-changing'));
+        }
+        current = next;
+        slides.forEach((slide, i) => {
+          slide.hidden = i !== current;
+          slide.classList.toggle('is-active', i === current);
+        });
+        byId('counter').textContent = `${String(current + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+        byId('previous').disabled = current === 0;
+        byId('next').disabled = current === slides.length - 1;
+        byId('progress').style.width = `${(current + 1) / slides.length * 100}%`;
+        document.title = `eTraderBot · ${slides[current].dataset.title}`;
+        viewport.scrollTop = 0;
+        if (updateHash) {
+          try { history.replaceState(null, '', `#${slides[current].id}`); }
+          catch { window.location.hash = slides[current].id; }
+        }
+      }
+
+      function readHash() {
+        const index = slides.findIndex((slide) => `#${slide.id}` === window.location.hash);
+        showSlide(index < 0 ? 0 : index, false);
+      }
+
+      function openContents() {
+        const content = byId('dialog-content');
+        content.replaceChildren();
+        content.className = 'toc';
+        slides.forEach((slide, i) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          const number = document.createElement('span');
+          number.textContent = String(i + 1).padStart(2, '0');
+          button.append(number, document.createTextNode(slide.dataset.title));
+          if (i === current) button.setAttribute('aria-current', 'page');
+          button.addEventListener('click', () => { dialog.close(); showSlide(i); });
+          content.append(button);
+        });
+        dialog.showModal();
+        dialog.scrollTop = 0;
+      }
+
+      function toast(message) {
+        clearTimeout(toastTimer);
+        byId('toast').textContent = message;
+        byId('toast').hidden = false;
+        toastTimer = setTimeout(() => { byId('toast').hidden = true; }, 4500);
+      }
+
+      async function toggleFullscreen() {
+        try {
+          if (document.fullscreenElement) await document.exitFullscreen();
+          else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+          else toast('当前浏览器不支持页面全屏，可使用浏览器的全屏或横屏模式。');
+        } catch { toast('浏览器未允许进入全屏，可使用浏览器菜单的全屏功能。'); }
+      }
+
+      byId('previous').addEventListener('click', () => showSlide(current - 1));
+      byId('next').addEventListener('click', () => showSlide(current + 1));
+      byId('contents-button').addEventListener('click', openContents);
+      byId('close-dialog').addEventListener('click', () => dialog.close());
+      byId('ledger-open').addEventListener('click', () => ledgerDialog.showModal());
+      byId('ledger-close').addEventListener('click', () => ledgerDialog.close());
+      byId('fullscreen-button').addEventListener('click', toggleFullscreen);
+      byId('print-button').addEventListener('click', () => window.print());
+      document.addEventListener('fullscreenchange', () => {
+        const active = Boolean(document.fullscreenElement);
+        byId('fullscreen-button').setAttribute('aria-pressed', String(active));
+        byId('fullscreen-button').textContent = active ? '退出全屏' : '全屏';
+        resize();
+      });
+      window.addEventListener('resize', resize);
+      window.addEventListener('hashchange', readHash);
+      document.addEventListener('keydown', (event) => {
+        if (event.defaultPrevented || event.ctrlKey || event.metaKey || event.altKey || dialog.open || ledgerDialog.open) return;
+        if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        if (event.key === ' ' && event.target.closest('button, a, summary')) return;
+        const key = event.key.toLowerCase();
+        if (['arrowright', 'arrowdown', 'pagedown', ' '].includes(key)) {
+          event.preventDefault(); showSlide(current + (key === ' ' && event.shiftKey ? -1 : 1));
+        } else if (['arrowleft', 'arrowup', 'pageup'].includes(key)) {
+          event.preventDefault(); showSlide(current - 1);
+        } else if (key === 'home' || key === 'end') {
+          event.preventDefault(); showSlide(key === 'home' ? 0 : slides.length - 1);
+        } else if (key === 'f') { event.preventDefault(); void toggleFullscreen(); }
+        else if (key === 'o') { event.preventDefault(); openContents(); }
+      });
+
+      let touchStart;
+      viewport.addEventListener('touchstart', (event) => {
+        touchStart = event.touches.length === 1 && !event.target.closest('button, a, input, dialog')
+          ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
+      }, { passive: true });
+      viewport.addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
+      viewport.addEventListener('touchend', (event) => {
+        if (!touchStart || dialog.open || ledgerDialog.open || !event.changedTouches.length) return;
+        const dx = event.changedTouches[0].clientX - touchStart.x;
+        const dy = event.changedTouches[0].clientY - touchStart.y;
+        touchStart = null;
+        if (Math.abs(dx) > 65 && Math.abs(dx) > Math.abs(dy) * 1.5) showSlide(current + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+
+      // These are authored teaching examples, never API responses or runtime trade actions.
+      const caseSteps = [
+        { label: '固定数据', kicker: '01 / 固定输入', title: '先明确“依据是什么”', description: '读取同一业务范围内的合成快照，关联来源、观察时间和适用规则。必填数据缺失或过期时，停止生成候选。', rows: [['数据来源', '示例售电业务 · 合成数据'], ['数据快照', '固定输入与观察时间'], ['规则依据', '关联适用规则及版本']] },
+        { label: '调用获准算法', kicker: '02 / 获准版本', title: 'Bot 组织任务，算法计算量价', description: 'Bot 按权限调用已验证、经人工启用的固定算法版本，传入本业务数据。版本发布入口保留启用证据，调用权限与交易授权分别管理。', rows: [['版本来源', '验证报告与人工启用批准'], ['调用依据', 'Bot 权限、算法版本与参数'], ['输入关联', '本业务数据与规则快照']] },
+        { label: '结构化候选', kicker: '03 / 固定交易意图', title: '把候选与计算依据绑定', description: '独立算法输出结构化候选，固定量价与约束依据，Bot 引用记录解释操作。教学示例为 10 MWh × 400 元/MWh，毛名义额度 4,000 元。', rows: [['候选内容', '电量、限价与适用场景'], ['计算依据', '输入、算法版本与参数'], ['当前状态', '候选待授权，不代表已提交']] },
+        { label: '执行门禁', kicker: '04 / 独立交易授权', title: '具体交易仍需满足授权条件', description: '后端重新核验逐笔批准或范围授权，并检查身份、业务范围、算法版本、规则、时效及额度。任一条件不满足即阻止执行，风控意见不替代批准。', rows: [['交易资格', '逐笔批准／范围授权记录'], ['后端检查', '版本、规则、期限与额度'], ['版本变化', '新版本不继承旧交易授权']] },
+        { label: '模拟执行', kicker: '05 / 回执与复盘', title: '执行结果沿证据链持续回流', description: '登记提交与额度占用，保存模拟回执和核对结果。结果未确定时继续占用额度，确定后核销或释放；关联记录进入复盘，形成经验或算法改进提案。', rows: [['提交记录', '请求键与批准／授权关联'], ['额度占用', '初始占用 4,000 元（示意）'], ['后续证据', '模拟回执、核对与复盘关联']] },
+      ];
+      const caseButtons = [...document.querySelectorAll('[data-case]')];
+      let caseIndex = 0;
+      function setCaseStep(index) {
+        caseIndex = Math.max(0, Math.min(caseSteps.length - 1, index));
+        const step = caseSteps[caseIndex];
+        caseButtons.forEach((button, i) => {
+          const selected = i === caseIndex;
+          button.setAttribute('aria-pressed', String(selected));
+          if (selected) button.setAttribute('aria-current', 'step');
+          else button.removeAttribute('aria-current');
+          button.querySelector('.case-node-state').textContent = selected ? '当前步骤' : i < caseIndex ? '已展示' : '待展示';
+          button.closest('.case-node').classList.toggle('is-shown', i <= caseIndex);
+          const link = button.nextElementSibling;
+          if (link) link.classList.toggle('is-shown', i < caseIndex);
+        });
+        byId('case-kicker').textContent = step.kicker;
+        byId('case-title').textContent = step.title;
+        byId('case-description').textContent = step.description;
+        const rows = step.rows.map(([label, value]) => {
+          const row = document.createElement('tr');
+          const heading = document.createElement('th'); heading.scope = 'row'; heading.textContent = label;
+          const cell = document.createElement('td'); cell.textContent = value;
+          row.append(heading, cell); return row;
+        });
+        byId('case-evidence').replaceChildren(...rows);
+        byId('case-status').textContent = `步骤 ${caseIndex + 1} / ${caseSteps.length} · ${step.label}`;
+        const last = caseIndex === caseSteps.length - 1;
+        byId('case-next').disabled = last;
+        byId('case-next').textContent = last ? '演示完成' : '逐步演示 →';
+        animateChange(byId('case-detail'));
+      }
+      caseButtons.forEach((button) => {
+        button.addEventListener('click', () => setCaseStep(Number(button.dataset.case)));
+      });
+      byId('case-next').addEventListener('click', () => setCaseStep(caseIndex + 1));
+      byId('case-reset').addEventListener('click', () => setCaseStep(0));
+
+      const ledgerStates = [
+        { label: '待回执', used: 0, note: '提交已登记，尚无确定成交回执；4,000 元全部占用。' },
+        { label: '部分成交', used: 1600, note: '已确认成交 4 MWh；剩余 6 MWh 仍占用额度。' },
+        { label: '待核对', used: 1600, note: '本次核对超时，没有新的确定回执；2,400 元继续占用。' },
+        { label: '确认全成', used: 4000, note: '在本示例中，后续回执确认全部成交；累计核销 4,000 元，占用归零。' },
+      ];
+      document.querySelectorAll('[data-ledger]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const state = ledgerStates[Number(button.dataset.ledger)];
+          document.querySelectorAll('[data-ledger]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          byId('ledger-state').textContent = state.label;
+          byId('used-value').textContent = state.used.toLocaleString('en-US');
+          byId('reserved-value').textContent = (4000 - state.used).toLocaleString('en-US');
+          byId('ledger-used').style.width = `${state.used / 40}%`;
+          byId('ledger-reserved').style.width = `${100 - state.used / 40}%`;
+          byId('ledger-note').textContent = state.note;
+          animateChange(byId('ledger-state'));
+          animateChange(document.querySelector('.ledger-values'));
+          animateChange(byId('ledger-note'));
+        });
+      });
+
+      resize();
+      readHash();
+    })();
+  </script>
+</body>
+</html>

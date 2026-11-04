@@ -70,6 +70,7 @@ export function spacesRoutes(ctx: RouterContext) {
               currentSpaceId: context.actor.spaceId,
               userId: context.actor.userId,
               name: input.name,
+              kind: input.kind ?? "general",
             });
           } catch (error) {
             if (error instanceof SpaceLimitError || error instanceof InvalidSpaceNameError) {
@@ -86,6 +87,8 @@ export function spacesRoutes(ctx: RouterContext) {
           return {
             id: space.id,
             name: space.name,
+            kind: input.kind ?? "general",
+            isolationPending: false,
             isDefault: false,
             hasContent: false,
             canRename: true,
@@ -241,7 +244,15 @@ async function memberSpaceNavigation(
     select: {
       spaceId: true,
       role: true,
-      space: { select: { name: true, isDefault: true, deletingAt: true } },
+      space: {
+        select: {
+          name: true,
+          kind: true,
+          isolationPending: true,
+          isDefault: true,
+          deletingAt: true,
+        },
+      },
     },
     orderBy: { createdAt: "asc" },
   });
@@ -295,6 +306,8 @@ async function memberSpaceNavigation(
   return {
     current: {
       id: actor.spaceId,
+      kind: currentMembership.space.kind as "general" | "trading",
+      isolationPending: currentMembership.space.isolationPending,
       name: currentMembership.space.name,
       bots: currentBots,
       groups: currentGroups,
@@ -308,6 +321,8 @@ async function memberSpaceNavigation(
       const spaceGroups = groupsFor(membership.spaceId);
       return {
         id: membership.spaceId,
+        kind: membership.space.kind as "general" | "trading",
+        isolationPending: membership.space.isolationPending,
         name: membership.space.name,
         isDefault: membership.space.isDefault,
         hasContent: spacesWithContent.has(membership.spaceId),

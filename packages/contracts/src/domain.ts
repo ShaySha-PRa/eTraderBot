@@ -345,7 +345,10 @@ export const ExternalConversationSchema = z.object({
 });
 export type ExternalConversation = z.infer<typeof ExternalConversationSchema>;
 
+export const WorkspaceKindSchema = z.enum(["general", "trading"]);
 export const SpaceSchema = z.object({
+  kind: WorkspaceKindSchema.default("general"),
+  isolationPending: z.boolean().default(false),
   id: Id,
   name: z.string(),
   isDefault: z.boolean(),
@@ -366,6 +369,8 @@ export type Space = z.infer<typeof SpaceSchema>;
 
 export const SpaceNavigationSchema = z.object({
   current: z.object({
+    kind: WorkspaceKindSchema.default("general"),
+    isolationPending: z.boolean().default(false),
     id: Id,
     name: z.string(),
     bots: z.array(BotSchema),

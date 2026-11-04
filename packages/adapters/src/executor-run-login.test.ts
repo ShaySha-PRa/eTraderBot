@@ -5,8 +5,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { encodeRunLogin } from "./bot-secrets.js";
 import { builtinAgentTools } from "./builtin-tools.js";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";
-import { createRunExecutor } from "./executor.js";
 import { EncryptedSecretStore } from "./secrets.js";
+import { createRunExecutor } from "./testing/workspace-executor.js";
 
 const COMPUTER: ComputerRef = {
   id: "sandbox-1",

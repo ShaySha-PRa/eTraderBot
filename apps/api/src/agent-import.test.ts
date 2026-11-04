@@ -25,6 +25,13 @@ function fakeDb(): never {
         get:
           (_, method: string) =>
           async (args?: { data?: Record<string, unknown>; where?: { id?: unknown } }) => {
+            if (name === "space" && method === "findUnique")
+              return {
+                id: args?.where?.id,
+                kind: "general",
+                isolationPending: false,
+                deletingAt: null,
+              };
             if (method === "findMany") return [];
             if (method === "findFirst" && typeof args?.where?.id === "string") {
               return rows.get(args.where.id) ?? null;

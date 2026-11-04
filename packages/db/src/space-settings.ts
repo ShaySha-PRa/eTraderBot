@@ -29,7 +29,7 @@ export async function spaceSettingOverrides(
     where: { spaceId: scope.spaceId, userId: scope.userId },
     select: { setting: true },
   });
-  const saved = new Set(rows.map((row) => row.setting));
+  const saved = new Set(["credentials", ...rows.map((row) => row.setting)]);
   return SpaceSettingSchema.options.filter((setting) => saved.has(setting));
 }
 
@@ -44,6 +44,8 @@ export async function settingsTarget(
   requested?: SettingsScope,
 ): Promise<SettingsScope> {
   if (requested) return requested;
+  // Bot credentials never inherit account-wide secrets across workspace boundaries.
+  if (setting === "credentials") return "space";
   const row = await prisma.spaceSettingOverride.findUnique({
     where: { spaceId_userId_setting: { spaceId: scope.spaceId, userId: scope.userId, setting } },
     select: { setting: true },
@@ -78,6 +80,10 @@ export async function setSpaceSettingOverride(
   setting: SpaceSetting,
   enabled: boolean,
 ): Promise<SpaceSetting[]> {
+  if (setting === "credentials") {
+    if (!enabled) throw new Error("Workspace credential isolation cannot be disabled");
+    return spaceSettingOverrides(prisma, scope);
+  }
   return withTransactionRetry(() =>
     prisma.$transaction(
       async (tx) => {

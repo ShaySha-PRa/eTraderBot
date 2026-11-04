@@ -458,6 +458,10 @@ msgstr "关于{label}"
 msgid "Accepted"
 msgstr "已受理"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Access audit"
+msgstr "访问审计"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Access token (optional)"
 msgstr "访问令牌（可选）"
@@ -802,6 +806,10 @@ msgstr "无法使用导入的 API 密钥。取消勾选后重试。"
 msgid "An integration tool"
 msgstr "集成工具"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Analysis"
+msgstr "分析"
+
 #: src/lib/activity-list-filters.ts
 msgid "Another agent"
 msgstr "其他 Agent"
@@ -1119,6 +1127,10 @@ msgstr "基本认证"
 msgid "Basic auth ({username})"
 msgstr "基本认证（{username}）"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Batch"
+msgstr "批次"
+
 #: src/components/VaultSettings.tsx
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -1246,7 +1258,6 @@ msgstr "内置"
 #: src/lib/identity-display.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/bot-business-labels.tsx
-#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "Business scope"
 msgstr "业务范围"
@@ -1626,6 +1637,10 @@ msgstr "关闭语音设置"
 msgid "Cloud"
 msgstr "云端"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Cloud (%)"
+msgstr "云量（%）"
+
 #: src/components/AskCard.tsx
 #: src/components/ConfirmIdentityDialog.tsx
 msgid "Code"
@@ -1686,6 +1701,10 @@ msgstr "沟通"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Compact"
 msgstr "紧凑"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Company data"
+msgstr "公司数据"
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Complete"
@@ -1969,6 +1988,10 @@ msgstr "复制图表源代码"
 msgid "Copy prompt"
 msgstr "复制提示词"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Copy push token"
+msgstr "复制推送令牌"
+
 #: src/components/markdown-copy.tsx
 msgid "Copy rows"
 msgstr "复制行"
@@ -2219,6 +2242,10 @@ msgstr "无法加载集成"
 #: src/pages/TradingLearning.tsx
 msgid "Could not load learning records"
 msgstr "无法加载学习记录"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Could not load material access"
+msgstr "无法加载资料授权"
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -2549,7 +2576,6 @@ msgid "Create authorization"
 msgstr "创建授权"
 
 #: src/components/AskCard.tsx
-#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "Create business scope"
 msgstr "创建业务范围"
@@ -2558,9 +2584,17 @@ msgstr "创建业务范围"
 msgid "Create group"
 msgstr "创建群组"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Create push token"
+msgstr "创建推送令牌"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Create Routine"
 msgstr "新建例行任务"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Create workspace"
+msgstr "创建工作区"
 
 #: src/pages/Auth.tsx
 msgid "Create your eTraderBot"
@@ -2619,6 +2653,10 @@ msgstr "Cron 表达式"
 #: src/pages/Trading.tsx
 msgid "Cumulative limit (CNY)"
 msgstr "累计限额（元）"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Current forecast"
+msgstr "预测有效"
 
 #: src/components/AccountAccess.tsx
 #: src/pages/AccountSettingsOverlay.tsx
@@ -3203,6 +3241,10 @@ msgstr "已过期"
 msgid "Expired"
 msgstr "已过期"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Expired forecast"
+msgstr "预测已过期"
+
 #: src/components/AccountDataSettings.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Export"
@@ -3224,6 +3266,11 @@ msgstr "敞口、限额与审批依据"
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "External conversation"
 msgstr "外部对话"
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/WeatherInterface.tsx
+msgid "External push"
+msgstr "外部推送"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3344,6 +3391,14 @@ msgstr "正在完成 MCP 连接…"
 msgid "For example: Shandong retail trading"
 msgstr "例如：山东售电业务"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Forecast details"
+msgstr "预测详情"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Forecast received"
+msgstr "已接收预测"
+
 #: src/pages/BusinessInterfaces.tsx
 msgid "Forecasts"
 msgstr "预测数据"
@@ -3398,12 +3453,17 @@ msgstr "网关 ID"
 
 #: src/pages/settings-nav.ts
 #: src/pages/SettingsOverlay.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "General"
 msgstr "通用"
 
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "General bot"
 msgstr "通用 Bot"
+
+#: src/pages/shell/business-scope.tsx
+msgid "General workspace"
+msgstr "通用工作区"
 
 #: src/pages/shell/business-scope.tsx
 #: src/pages/Trading.tsx
@@ -3433,6 +3493,14 @@ msgstr "返回首页"
 #: src/pages/AdminAccessPage.tsx
 msgid "Grant"
 msgstr "授权"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Grant read access"
+msgstr "授予读取权限"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Granted"
+msgstr "已授权"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Granting…"
@@ -3587,6 +3655,10 @@ msgstr "人工审批"
 msgid "Human cancellation only"
 msgstr "仅人工可撤单"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Humidity (%)"
+msgstr "湿度（%）"
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "我做完了"
@@ -3737,6 +3809,10 @@ msgstr "接口配置"
 msgid "Interface settings"
 msgstr "接口设置"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Internal weather model (simulation)"
+msgstr "内部天气大模型（模拟）"
+
 #: src/pages/RoutineEditor.tsx
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval"
@@ -3775,6 +3851,10 @@ msgstr "隔离"
 #: src/pages/Artifacts.tsx
 msgid "Isolated preview — no access to your account"
 msgstr "隔离预览，访问不了你的账户"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Issued"
+msgstr "签发时间"
 
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Its bots and groups are kept and leave the section."
@@ -3964,6 +4044,7 @@ msgstr "正在加载语音提供方…"
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/transcript.tsx
 #: src/pages/Trading.tsx
+#: src/pages/WeatherInterface.tsx
 msgid "Loading…"
 msgstr "加载中…"
 
@@ -4080,6 +4161,10 @@ msgstr "市场规则"
 msgid "Marketing"
 msgstr "营销"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Material"
+msgstr "资料"
+
 #: src/pages/TradingLearning.tsx
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr "资料仅用于当前业务范围。请明确添加聊天反馈；支持上传不超过 64 KB 的文本、Markdown、CSV 或 JSON 文件。"
@@ -4153,6 +4238,7 @@ msgstr "成员（{0}）"
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/settings-nav.ts
 #: src/pages/shell/agent-import.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Memory"
 msgstr "记忆"
 
@@ -4239,6 +4325,11 @@ msgstr "中长期"
 #: src/lib/trading-bot-templates.ts
 msgid "Mid / long term bot"
 msgstr "中长期交易 Bot"
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Migration required"
+msgstr "需要迁移"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -4467,7 +4558,6 @@ msgstr "新建 Bot"
 
 #: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
-#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "New business scope"
 msgstr "新建业务范围"
@@ -4510,6 +4600,10 @@ msgstr "新建技能"
 #: src/pages/Board.tsx
 msgid "New ticket"
 msgstr "新建工单"
+
+#: src/pages/shell/business-scope.tsx
+msgid "New workspace"
+msgstr "新建工作区"
 
 #: src/pages/TradingLearning.tsx
 msgid "Next learning run"
@@ -4657,6 +4751,10 @@ msgstr "尚未配置交易阶段。"
 #: src/pages/RoutineEditor.tsx
 msgid "No trigger"
 msgstr "无触发器"
+
+#: src/pages/WeatherInterface.tsx
+msgid "No weather forecast received"
+msgstr "尚未收到天气预测"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "None"
@@ -5008,6 +5106,10 @@ msgstr "挂单待成交"
 msgid "Per trade approval"
 msgstr "逐笔批准"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Period"
+msgstr "时段"
+
 #: src/pages/shell/bot-panel.tsx
 msgid "Permissions"
 msgstr "权限"
@@ -5162,13 +5264,29 @@ msgstr "提供方"
 msgid "Providers"
 msgstr "提供方"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Pull forecast"
+msgstr "拉取预测"
+
 #: src/components/CloudAgentCard.tsx
 msgid "Pull request"
 msgstr "拉取请求"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Pulled"
+msgstr "主动拉取"
+
 #: src/pages/BusinessInterfaces.tsx
 msgid "Purpose"
 msgstr "用途"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Push token — shown once"
+msgstr "推送令牌（仅展示一次）"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Pushed"
+msgstr "外部推送"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "Query parameters (JSON)"
@@ -5183,6 +5301,10 @@ msgstr "查询参数必须是 JSON 对象"
 msgid "Queued"
 msgstr "排队中"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Rain (mm)"
+msgstr "降水（mm）"
+
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "rakazo-shared and IDs starting with bot- are reserved for eTraderBot."
 msgstr "rakazo-shared 和以 bot- 开头的 ID 保留给 eTraderBot 使用。"
@@ -5195,9 +5317,21 @@ msgstr "回应"
 msgid "Reactions"
 msgstr "表情回应"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Read"
+msgstr "已读取"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Read denied"
+msgstr "读取被拒绝"
+
 #: src/pages/shell/bot-panel.tsx
 msgid "Read replies aloud"
 msgstr "朗读回复"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Read-only material access"
+msgstr "资料只读授权"
 
 #: src/pages/shell/import-status.ts
 msgid "Ready"
@@ -5233,12 +5367,21 @@ msgid "Receipts"
 msgstr "回执"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/WeatherInterface.tsx
 msgid "Received"
 msgstr "已接收"
 
 #: src/pages/ActivityList.tsx
 msgid "Recent"
 msgstr "最近"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Recent forecasts"
+msgstr "近期预测批次"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Recipient Bot"
+msgstr "接收 Bot"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Recommended"
@@ -5494,6 +5637,10 @@ msgstr "替换 API 密钥"
 msgid "Replace key"
 msgstr "替换密钥"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Replace push token"
+msgstr "更换推送令牌"
+
 #: src/components/VaultSettings.tsx
 msgid "Replace value"
 msgstr "替换值"
@@ -5674,11 +5821,17 @@ msgstr "请检查提供方设置并重新测试。"
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoke"
 msgstr "撤销"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Revoke push token"
+msgstr "撤销推送令牌"
+
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Trading.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoked"
 msgstr "已撤销"
 
@@ -5958,6 +6111,10 @@ msgstr "安全与运维"
 msgid "Select a bot"
 msgstr "选择 Bot"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Select a Bot"
+msgstr "选择 Bot"
+
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/Trading.tsx
 msgid "Select a business scope in the sidebar first."
@@ -5966,6 +6123,10 @@ msgstr "请先在左侧选择业务范围。"
 #: src/pages/BusinessInterfaces.tsx
 msgid "Select a connection"
 msgstr "选择连接"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Select material"
+msgstr "选择资料"
 
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Self-hosted"
@@ -6010,6 +6171,10 @@ msgstr "发送录音"
 #: src/pages/Auth.tsx
 msgid "Send reset link"
 msgstr "发送重置链接"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Send the forecast JSON with an Authorization: Bearer token header."
+msgstr "发送预测 JSON，并在 Authorization 请求头中携带 Bearer 令牌。"
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Send with Enter"
@@ -6103,6 +6268,10 @@ msgstr "共享经验"
 #: src/pages/TradingLearning.tsx
 msgid "Share selected experience"
 msgstr "共享这条经验"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Share selected records with a general Bot. Revoking access stops future reads; it cannot recall content already read."
+msgstr "将指定资料授权给普通 Bot 只读。撤销后停止后续读取，已读取的内容无法收回。"
 
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
@@ -6209,6 +6378,10 @@ msgstr "注册"
 msgid "Sign-in cancelled. Try again."
 msgstr "登录已取消。请重试。"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Simulated data"
+msgstr "模拟数据"
+
 #: src/pages/shell/business-scope.tsx
 msgid "Simulation · bots and interfaces are configured within this business scope."
 msgstr "模拟环境 · Bots 和接口按此业务范围配置。"
@@ -6232,6 +6405,10 @@ msgstr "单笔意图限额（元）"
 #: src/components/VaultSettings.tsx
 msgid "Site"
 msgstr "网站"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Skill"
+msgstr "技能"
 
 #. placeholder {0}: skill.name
 #: src/pages/shell/composer.tsx
@@ -6282,6 +6459,10 @@ msgstr "未启用 Slack"
 #: src/components/composer/HoldToTalk.tsx
 msgid "Slide up to lock"
 msgstr "上滑锁定"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Solar (W/m²)"
+msgstr "辐照度（W/m²）"
 
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -6569,6 +6750,10 @@ msgstr "Teams 消息"
 msgid "Teams not enabled"
 msgstr "未启用 Teams"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Temperature (°C)"
+msgstr "气温（°C）"
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Test"
 msgstr "测试"
@@ -6729,6 +6914,10 @@ msgstr "会删除这个产物的全部 {0} 个版本，而且无法撤销。"
 #: src/components/ArtifactFileCard.tsx
 msgid "This file is not valid UTF-8 text."
 msgstr "这个文件不是有效的 UTF-8 文本。"
+
+#: src/pages/WeatherInterface.tsx
+msgid "This forecast was already received"
+msgstr "该批预测已接收，无需重复存储"
 
 #: src/lib/agent-import-errors.ts
 msgid "This import was already used. Choose the files again."
@@ -6897,6 +7086,7 @@ msgid "Trader feedback"
 msgstr "交易员反馈"
 
 #: src/pages/Shell.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Trading"
 msgstr "交易"
 
@@ -6908,6 +7098,10 @@ msgstr "交易复盘"
 #: src/pages/Trading.tsx
 msgid "Trading stage"
 msgstr "交易阶段"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Trading workspace"
+msgstr "交易工作区"
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Transcribing…"
@@ -7137,6 +7331,10 @@ msgstr "使用 eTraderBot 额度"
 msgid "Use in this bot"
 msgstr "用于此 Bot"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Use local weather simulator"
+msgstr "使用本地天气模拟服务"
+
 #: src/components/ModelCredits.tsx
 msgid "Use my subscription or API key"
 msgstr "使用我的订阅或 API 密钥"
@@ -7156,6 +7354,10 @@ msgstr "密钥和令牌请填写在 API 密钥字段中。"
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
 msgstr "最多 512 个字母、数字、_ 或 -。"
+
+#: src/pages/WeatherInterface.tsx
+msgid "User data"
+msgstr "用户数据"
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "User peer"
@@ -7191,6 +7393,7 @@ msgid "Valid for 24 hours"
 msgstr "有效期为 24 小时"
 
 #: src/pages/Trading.tsx
+#: src/pages/WeatherInterface.tsx
 msgid "Valid until"
 msgstr "有效至"
 
@@ -7275,6 +7478,11 @@ msgstr "唤醒"
 #: src/pages/settings-nav.ts
 msgid "Wallet"
 msgstr "钱包"
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Weather forecasts"
+msgstr "天气预测"
 
 #: src/components/ModelCredits.tsx
 msgid "Web, desktop and mobile"
@@ -7374,6 +7582,10 @@ msgstr "何时使用"
 msgid "Where should bots run?"
 msgstr "Bot 应在哪里运行？"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Wind (m/s)"
+msgstr "风速（m/s）"
+
 #: src/lib/ticket-status.ts
 msgid "Won't do"
 msgstr "不做"
@@ -7398,8 +7610,13 @@ msgid "Works with your ChatGPT or Claude plan."
 msgstr "可使用你的 ChatGPT 或 Claude 套餐。"
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Workspace"
 msgstr "工作区"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Workspace type"
+msgstr "工作区类型"
 
 #: src/lib/billing.ts
 msgid "year"

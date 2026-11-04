@@ -382,6 +382,8 @@ model Member {
 }
 
 model Space {
+  kind String @default("general")
+  isolationPending Boolean @default(false)
   tradingWorkspaces TradingWorkspace[]
   tradingDesks TradingDesk[]
   tradingAnalyses TradingAnalysis[]
@@ -2487,6 +2489,7 @@ model TradingLearningRequest {
 }
 
 model TradingWorkspace {
+  weatherForecasts TradingWeatherForecast[]
   id String @id
   name String
   spaceId String
@@ -2514,6 +2517,7 @@ model TradingWorkspaceDesk {
 }
 
 model TradingWorkspaceInterface {
+  weatherIngress TradingWeatherIngress?
   id String @id
   workspaceId String
   workspace TradingWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
@@ -2546,4 +2550,58 @@ model TradingExecutionEvent {
   @@unique([executionId, sequence])
   @@unique([executionId, clientRequestId])
   @@map("trading_execution_events")
+}
+
+model TradingWeatherIngress {
+  interfaceId String @id
+  interface TradingWorkspaceInterface @relation(fields: [interfaceId], references: [id], onDelete: Cascade)
+  tokenHash String
+  updatedAt DateTime @updatedAt
+  @@map("trading_weather_ingress")
+}
+
+model TradingWeatherForecast {
+  id String @id
+  workspaceId String
+  workspace TradingWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  // Historical source identity survives removal of an interface.
+  interfaceId String
+  interfaceName String
+  batchId String
+  siteId String
+  issuedAt DateTime
+  receivedAt DateTime @default(now())
+  transport String
+  contentHash String
+  forecast Json
+  @@unique([interfaceId, batchId])
+  @@index([workspaceId, issuedAt], map: "trading_weather_forecasts_workspaceid_issuedat_idx")
+  @@map("trading_weather_forecasts")
+}
+
+
+model WorkspaceReadGrant {
+  id String @id
+  sourceSpaceId String
+  recipientSpaceId String
+  recipientBotId String
+  createdByUserId String
+  kind String
+  resourceId String
+  createdAt DateTime @default(now())
+  revokedAt DateTime?
+  @@index([sourceSpaceId])
+  @@index([recipientSpaceId, recipientBotId])
+  @@map("workspace_read_grants")
+}
+model WorkspaceAccessAudit {
+  id String @id
+  grantId String
+  sourceSpaceId String
+  actorUserId String
+  actorBotId String?
+  action String
+  createdAt DateTime @default(now())
+  @@index([sourceSpaceId, createdAt])
+  @@map("workspace_access_audit")
 }

@@ -107,7 +107,7 @@ async function runLoop(
   vi.stubEnv("RAKAZO_LOCAL_MODELS_URL", `http://127.0.0.1:${address.port}/v1`);
   vi.resetModules();
   const { PiAgentRuntime } = await import("./pi-runtime.js");
-  const { createRunExecutor } = await import("./executor.js");
+  const { createRunExecutor } = await import("./testing/workspace-executor.js");
 
   const run = {
     id: "run-1",

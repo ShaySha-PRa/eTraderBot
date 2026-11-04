@@ -12,8 +12,8 @@ import {
 import { describe, expect, it, vi } from "vitest";
 import type * as AutoReviewModule from "./auto-review.js";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";
-import { createRunExecutor } from "./executor.js";
 import { FakeMediaGenerationProvider } from "./media-generation-provider.js";
+import { createRunExecutor } from "./testing/workspace-executor.js";
 
 vi.mock("./computer-lifecycle.js", async (importOriginal) => ({
   ...(await importOriginal<typeof ComputerLifecycleModule>()),

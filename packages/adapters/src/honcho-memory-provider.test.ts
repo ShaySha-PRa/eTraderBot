@@ -264,7 +264,7 @@ describe("HonchoMemoryProvider", () => {
   });
 
   it.each([true, false])(
-    "shares facts across Spaces only with an explicit shared workspace (configured: %s)",
+    "rejects legacy shared namespaces and isolates default namespaces (configured: %s)",
     async (configured) => {
       const workspaces = configured ? ["team-notes"] : ["rakazo-space-1", "rakazo-space-2"];
       const fetch = honchoFetch(undefined, workspaces);
@@ -272,6 +272,27 @@ describe("HonchoMemoryProvider", () => {
       const spaceA = provider(fetch, settings);
       const spaceB = provider(fetch, settings);
       const otherSpace = { ...context, spaceId: "space-2", userId: "user-2", botId: "bot-2" };
+      if (configured) {
+        expect(
+          await spaceA.save(
+            {
+              content: "shared fact",
+              scope: "shared",
+              botId: "bot-1",
+              source: { kind: "durable" },
+            },
+            context,
+          ),
+        ).toMatchObject({ ok: false, error: expect.stringContaining("not isolated") });
+        expect(
+          await spaceB.recall(
+            { query: "facts?", scope: "shared", botId: "bot-2", limit: 5 },
+            otherSpace,
+          ),
+        ).toMatchObject({ ok: false });
+        expect(fetch).not.toHaveBeenCalled();
+        return;
+      }
       for (const scope of ["shared", "isolated"] as const) {
         expect(
           await spaceA.save(
@@ -365,7 +386,7 @@ describe("HonchoMemoryProvider", () => {
 });
 
 describe("existing Honcho user peer", () => {
-  const settings = { workspaceId: "existing-app", userPeerId: "user-alex" };
+  const settings = { workspaceId: "rakazo-space-1", userPeerId: "user-alex" };
 
   it.each(["shared", "isolated"] as const)(
     "recalls what Honcho already knows about the user in %s scope",
@@ -376,7 +397,7 @@ describe("existing Honcho user peer", () => {
           "bot-bot-1": "NO_RELEVANT_MEMORY",
           "user-alex": "Prefers short morning briefings.",
         },
-        ["existing-app"],
+        ["rakazo-space-1"],
         ["user-alex"],
       );
       const recalled = await provider(fetchMock, settings).recall(
@@ -396,7 +417,7 @@ describe("existing Honcho user peer", () => {
         ],
       });
       const userChat = calls(fetchMock).find((call) => call.path.endsWith("/user-alex/chat"));
-      expect(userChat?.path).toBe("/v3/workspaces/existing-app/peers/user-alex/chat");
+      expect(userChat?.path).toBe("/v3/workspaces/rakazo-space-1/peers/user-alex/chat");
       expect(userChat?.body.target).toBeUndefined();
       expect(userChat?.body.query).toContain("what you know about the user");
       // Its facts belong to another app, so they are never cited for forget_memory.
@@ -409,7 +430,7 @@ describe("existing Honcho user peer", () => {
   );
 
   it("refuses to forget the user peer's facts", async () => {
-    const fetchMock = honchoFetch({}, ["existing-app"], ["user-alex"]);
+    const fetchMock = honchoFetch({}, ["rakazo-space-1"], ["user-alex"]);
     await expect(
       provider(fetchMock, settings).forget(
         { id: "conclusion-1", entity: "user-alex", scope: "shared", botId: "bot-1" },
@@ -420,7 +441,7 @@ describe("existing Honcho user peer", () => {
   });
 
   it("never creates or writes to the user peer", async () => {
-    const fetchMock = honchoFetch({ "user-alex": "A fact" }, ["existing-app"], ["user-alex"]);
+    const fetchMock = honchoFetch({ "user-alex": "A fact" }, ["rakazo-space-1"], ["user-alex"]);
     const memory = provider(fetchMock, settings);
     await memory.save(
       { content: "Bot fact", scope: "shared", botId: "bot-1", source: { kind: "durable" } },
@@ -440,7 +461,7 @@ describe("existing Honcho user peer", () => {
   });
 
   it("keeps the Space's own memory when the user peer cannot be read", async () => {
-    const normal = honchoFetch({ "bot-bot-1": "A bot fact" }, ["existing-app"], ["user-alex"]);
+    const normal = honchoFetch({ "bot-bot-1": "A bot fact" }, ["rakazo-space-1"], ["user-alex"]);
     const fetch = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
       if (String(url).endsWith("/user-alex/chat")) return new Response("", { status: 404 });
       return normal(url, init);

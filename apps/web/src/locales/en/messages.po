@@ -458,6 +458,10 @@ msgstr "About {label}"
 msgid "Accepted"
 msgstr "Accepted"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Access audit"
+msgstr "Access audit"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Access token (optional)"
 msgstr "Access token (optional)"
@@ -802,6 +806,10 @@ msgstr "An imported API key could not be used. Untick it and try again."
 msgid "An integration tool"
 msgstr "An integration tool"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Analysis"
+msgstr "Analysis"
+
 #: src/lib/activity-list-filters.ts
 msgid "Another agent"
 msgstr "Another agent"
@@ -1119,6 +1127,10 @@ msgstr "Basic auth"
 msgid "Basic auth ({username})"
 msgstr "Basic auth ({username})"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Batch"
+msgstr "Batch"
+
 #: src/components/VaultSettings.tsx
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -1246,7 +1258,6 @@ msgstr "Built-in"
 #: src/lib/identity-display.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/bot-business-labels.tsx
-#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "Business scope"
 msgstr "Business scope"
@@ -1626,6 +1637,10 @@ msgstr "Close voice settings"
 msgid "Cloud"
 msgstr "Cloud"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Cloud (%)"
+msgstr "Cloud (%)"
+
 #: src/components/AskCard.tsx
 #: src/components/ConfirmIdentityDialog.tsx
 msgid "Code"
@@ -1686,6 +1701,10 @@ msgstr "Communication"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Compact"
 msgstr "Compact"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Company data"
+msgstr "Company data"
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Complete"
@@ -1969,6 +1988,10 @@ msgstr "Copy diagram source"
 msgid "Copy prompt"
 msgstr "Copy prompt"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Copy push token"
+msgstr "Copy push token"
+
 #: src/components/markdown-copy.tsx
 msgid "Copy rows"
 msgstr "Copy rows"
@@ -2219,6 +2242,10 @@ msgstr "Could not load integrations"
 #: src/pages/TradingLearning.tsx
 msgid "Could not load learning records"
 msgstr "Could not load learning records"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Could not load material access"
+msgstr "Could not load material access"
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -2549,7 +2576,6 @@ msgid "Create authorization"
 msgstr "Create authorization"
 
 #: src/components/AskCard.tsx
-#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "Create business scope"
 msgstr "Create business scope"
@@ -2558,9 +2584,17 @@ msgstr "Create business scope"
 msgid "Create group"
 msgstr "Create group"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Create push token"
+msgstr "Create push token"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Create Routine"
 msgstr "Create Routine"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Create workspace"
+msgstr "Create workspace"
 
 #: src/pages/Auth.tsx
 msgid "Create your eTraderBot"
@@ -2619,6 +2653,10 @@ msgstr "Cron expression"
 #: src/pages/Trading.tsx
 msgid "Cumulative limit (CNY)"
 msgstr "Cumulative limit (CNY)"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Current forecast"
+msgstr "Current forecast"
 
 #: src/components/AccountAccess.tsx
 #: src/pages/AccountSettingsOverlay.tsx
@@ -3203,6 +3241,10 @@ msgstr "expired"
 msgid "Expired"
 msgstr "Expired"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Expired forecast"
+msgstr "Expired forecast"
+
 #: src/components/AccountDataSettings.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Export"
@@ -3224,6 +3266,11 @@ msgstr "Exposure, limits and approval evidence"
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "External conversation"
 msgstr "External conversation"
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/WeatherInterface.tsx
+msgid "External push"
+msgstr "External push"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3344,6 +3391,14 @@ msgstr "Finishing MCP connection…"
 msgid "For example: Shandong retail trading"
 msgstr "For example: Shandong retail trading"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Forecast details"
+msgstr "Forecast details"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Forecast received"
+msgstr "Forecast received"
+
 #: src/pages/BusinessInterfaces.tsx
 msgid "Forecasts"
 msgstr "Forecasts"
@@ -3398,12 +3453,17 @@ msgstr "Gateway ID"
 
 #: src/pages/settings-nav.ts
 #: src/pages/SettingsOverlay.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "General"
 msgstr "General"
 
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "General bot"
 msgstr "General bot"
+
+#: src/pages/shell/business-scope.tsx
+msgid "General workspace"
+msgstr "General workspace"
 
 #: src/pages/shell/business-scope.tsx
 #: src/pages/Trading.tsx
@@ -3433,6 +3493,14 @@ msgstr "Go home"
 #: src/pages/AdminAccessPage.tsx
 msgid "Grant"
 msgstr "Grant"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Grant read access"
+msgstr "Grant read access"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Granted"
+msgstr "Granted"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Granting…"
@@ -3587,6 +3655,10 @@ msgstr "Human approvals"
 msgid "Human cancellation only"
 msgstr "Human cancellation only"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Humidity (%)"
+msgstr "Humidity (%)"
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "I’m done"
@@ -3737,6 +3809,10 @@ msgstr "Interface configuration"
 msgid "Interface settings"
 msgstr "Interface settings"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Internal weather model (simulation)"
+msgstr "Internal weather model (simulation)"
+
 #: src/pages/RoutineEditor.tsx
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval"
@@ -3775,6 +3851,10 @@ msgstr "Isolated"
 #: src/pages/Artifacts.tsx
 msgid "Isolated preview — no access to your account"
 msgstr "Isolated preview — no access to your account"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Issued"
+msgstr "Issued"
 
 #: src/pages/shell/shell-dialogs.tsx
 msgid "Its bots and groups are kept and leave the section."
@@ -3964,6 +4044,7 @@ msgstr "Loading voice providers…"
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/transcript.tsx
 #: src/pages/Trading.tsx
+#: src/pages/WeatherInterface.tsx
 msgid "Loading…"
 msgstr "Loading…"
 
@@ -4080,6 +4161,10 @@ msgstr "Market rules"
 msgid "Marketing"
 msgstr "Marketing"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Material"
+msgstr "Material"
+
 #: src/pages/TradingLearning.tsx
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
@@ -4153,6 +4238,7 @@ msgstr "Members ({0})"
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/settings-nav.ts
 #: src/pages/shell/agent-import.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Memory"
 msgstr "Memory"
 
@@ -4239,6 +4325,11 @@ msgstr "Mid / long term"
 #: src/lib/trading-bot-templates.ts
 msgid "Mid / long term bot"
 msgstr "Mid / long term bot"
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Migration required"
+msgstr "Migration required"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -4467,7 +4558,6 @@ msgstr "New bot"
 
 #: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
-#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/dialogs.tsx
 msgid "New business scope"
 msgstr "New business scope"
@@ -4510,6 +4600,10 @@ msgstr "New skill"
 #: src/pages/Board.tsx
 msgid "New ticket"
 msgstr "New ticket"
+
+#: src/pages/shell/business-scope.tsx
+msgid "New workspace"
+msgstr "New workspace"
 
 #: src/pages/TradingLearning.tsx
 msgid "Next learning run"
@@ -4657,6 +4751,10 @@ msgstr "No trading stages configured yet."
 #: src/pages/RoutineEditor.tsx
 msgid "No trigger"
 msgstr "No trigger"
+
+#: src/pages/WeatherInterface.tsx
+msgid "No weather forecast received"
+msgstr "No weather forecast received"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "None"
@@ -5008,6 +5106,10 @@ msgstr "Pending order"
 msgid "Per trade approval"
 msgstr "Per trade approval"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Period"
+msgstr "Period"
+
 #: src/pages/shell/bot-panel.tsx
 msgid "Permissions"
 msgstr "Permissions"
@@ -5162,13 +5264,29 @@ msgstr "Provider"
 msgid "Providers"
 msgstr "Providers"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Pull forecast"
+msgstr "Pull forecast"
+
 #: src/components/CloudAgentCard.tsx
 msgid "Pull request"
 msgstr "Pull request"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Pulled"
+msgstr "Pulled"
+
 #: src/pages/BusinessInterfaces.tsx
 msgid "Purpose"
 msgstr "Purpose"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Push token — shown once"
+msgstr "Push token — shown once"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Pushed"
+msgstr "Pushed"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "Query parameters (JSON)"
@@ -5183,6 +5301,10 @@ msgstr "Query parameters must be a JSON object"
 msgid "Queued"
 msgstr "Queued"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Rain (mm)"
+msgstr "Rain (mm)"
+
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "rakazo-shared and IDs starting with bot- are reserved for eTraderBot."
 msgstr "rakazo-shared and IDs starting with bot- are reserved for eTraderBot."
@@ -5195,9 +5317,21 @@ msgstr "React"
 msgid "Reactions"
 msgstr "Reactions"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Read"
+msgstr "Read"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Read denied"
+msgstr "Read denied"
+
 #: src/pages/shell/bot-panel.tsx
 msgid "Read replies aloud"
 msgstr "Read replies aloud"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Read-only material access"
+msgstr "Read-only material access"
 
 #: src/pages/shell/import-status.ts
 msgid "Ready"
@@ -5233,12 +5367,21 @@ msgid "Receipts"
 msgstr "Receipts"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/WeatherInterface.tsx
 msgid "Received"
 msgstr "Received"
 
 #: src/pages/ActivityList.tsx
 msgid "Recent"
 msgstr "Recent"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Recent forecasts"
+msgstr "Recent forecasts"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Recipient Bot"
+msgstr "Recipient Bot"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Recommended"
@@ -5494,6 +5637,10 @@ msgstr "Replace API key"
 msgid "Replace key"
 msgstr "Replace key"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Replace push token"
+msgstr "Replace push token"
+
 #: src/components/VaultSettings.tsx
 msgid "Replace value"
 msgstr "Replace value"
@@ -5674,11 +5821,17 @@ msgstr "Review provider settings and test again."
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoke"
 msgstr "Revoke"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Revoke push token"
+msgstr "Revoke push token"
+
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Trading.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoked"
 msgstr "Revoked"
 
@@ -5958,6 +6111,10 @@ msgstr "Security & Ops"
 msgid "Select a bot"
 msgstr "Select a bot"
 
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Select a Bot"
+msgstr "Select a Bot"
+
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/Trading.tsx
 msgid "Select a business scope in the sidebar first."
@@ -5966,6 +6123,10 @@ msgstr "Select a business scope in the sidebar first."
 #: src/pages/BusinessInterfaces.tsx
 msgid "Select a connection"
 msgstr "Select a connection"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Select material"
+msgstr "Select material"
 
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Self-hosted"
@@ -6010,6 +6171,10 @@ msgstr "Send recording"
 #: src/pages/Auth.tsx
 msgid "Send reset link"
 msgstr "Send reset link"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Send the forecast JSON with an Authorization: Bearer token header."
+msgstr "Send the forecast JSON with an Authorization: Bearer token header."
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Send with Enter"
@@ -6103,6 +6268,10 @@ msgstr "Share experience"
 #: src/pages/TradingLearning.tsx
 msgid "Share selected experience"
 msgstr "Share selected experience"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Share selected records with a general Bot. Revoking access stops future reads; it cannot recall content already read."
+msgstr "Share selected records with a general Bot. Revoking access stops future reads; it cannot recall content already read."
 
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
@@ -6209,6 +6378,10 @@ msgstr "Sign up"
 msgid "Sign-in cancelled. Try again."
 msgstr "Sign-in cancelled. Try again."
 
+#: src/pages/WeatherInterface.tsx
+msgid "Simulated data"
+msgstr "Simulated data"
+
 #: src/pages/shell/business-scope.tsx
 msgid "Simulation · bots and interfaces are configured within this business scope."
 msgstr "Simulation · bots and interfaces are configured within this business scope."
@@ -6232,6 +6405,10 @@ msgstr "Single intent limit (CNY)"
 #: src/components/VaultSettings.tsx
 msgid "Site"
 msgstr "Site"
+
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Skill"
+msgstr "Skill"
 
 #. placeholder {0}: skill.name
 #: src/pages/shell/composer.tsx
@@ -6282,6 +6459,10 @@ msgstr "Slack not enabled"
 #: src/components/composer/HoldToTalk.tsx
 msgid "Slide up to lock"
 msgstr "Slide up to lock"
+
+#: src/pages/WeatherInterface.tsx
+msgid "Solar (W/m²)"
+msgstr "Solar (W/m²)"
 
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -6569,6 +6750,10 @@ msgstr "Teams message"
 msgid "Teams not enabled"
 msgstr "Teams not enabled"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Temperature (°C)"
+msgstr "Temperature (°C)"
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Test"
 msgstr "Test"
@@ -6729,6 +6914,10 @@ msgstr "This deletes all {0} versions of this artifact. This can't be undone."
 #: src/components/ArtifactFileCard.tsx
 msgid "This file is not valid UTF-8 text."
 msgstr "This file is not valid UTF-8 text."
+
+#: src/pages/WeatherInterface.tsx
+msgid "This forecast was already received"
+msgstr "This forecast was already received"
 
 #: src/lib/agent-import-errors.ts
 msgid "This import was already used. Choose the files again."
@@ -6897,6 +7086,7 @@ msgid "Trader feedback"
 msgstr "Trader feedback"
 
 #: src/pages/Shell.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Trading"
 msgstr "Trading"
 
@@ -6908,6 +7098,10 @@ msgstr "Trading review"
 #: src/pages/Trading.tsx
 msgid "Trading stage"
 msgstr "Trading stage"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Trading workspace"
+msgstr "Trading workspace"
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Transcribing…"
@@ -7137,6 +7331,10 @@ msgstr "Use eTraderBot credits"
 msgid "Use in this bot"
 msgstr "Use in this bot"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Use local weather simulator"
+msgstr "Use local weather simulator"
+
 #: src/components/ModelCredits.tsx
 msgid "Use my subscription or API key"
 msgstr "Use my subscription or API key"
@@ -7156,6 +7354,10 @@ msgstr "Use the credential field for keys and tokens."
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
 msgstr "Use up to 512 letters, digits, _ or -."
+
+#: src/pages/WeatherInterface.tsx
+msgid "User data"
+msgstr "User data"
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "User peer"
@@ -7191,6 +7393,7 @@ msgid "Valid for 24 hours"
 msgstr "Valid for 24 hours"
 
 #: src/pages/Trading.tsx
+#: src/pages/WeatherInterface.tsx
 msgid "Valid until"
 msgstr "Valid until"
 
@@ -7275,6 +7478,11 @@ msgstr "Wake"
 #: src/pages/settings-nav.ts
 msgid "Wallet"
 msgstr "Wallet"
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/WorkspaceMaterialAccess.tsx
+msgid "Weather forecasts"
+msgstr "Weather forecasts"
 
 #: src/components/ModelCredits.tsx
 msgid "Web, desktop and mobile"
@@ -7374,6 +7582,10 @@ msgstr "When to use"
 msgid "Where should bots run?"
 msgstr "Where should bots run?"
 
+#: src/pages/WeatherInterface.tsx
+msgid "Wind (m/s)"
+msgstr "Wind (m/s)"
+
 #: src/lib/ticket-status.ts
 msgid "Won't do"
 msgstr "Won't do"
@@ -7398,8 +7610,13 @@ msgid "Works with your ChatGPT or Claude plan."
 msgstr "Works with your ChatGPT or Claude plan."
 
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Workspace"
 msgstr "Workspace"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Workspace type"
+msgstr "Workspace type"
 
 #: src/lib/billing.ts
 msgid "year"

@@ -29,7 +29,7 @@ export function BusinessScopePicker({
   onInterfaces,
   onExpand,
 }: {
-  scopes: { id: string; name: string }[];
+  scopes: { id: string; name: string; kind: string; isolationPending: boolean }[];
   selected: string;
   pending: boolean;
   mini: boolean;
@@ -42,26 +42,21 @@ export function BusinessScopePicker({
   const id = useId();
   if (mini)
     return (
-      <Button variant="ghost" size="icon" aria-label={t`Business scope`} onClick={onExpand}>
+      <Button variant="ghost" size="icon" aria-label={t`Workspace`} onClick={onExpand}>
         <Layers size={18} />
       </Button>
     );
   return (
     <section
-      aria-label={t`Business scope`}
+      aria-label={t`Workspace`}
       className="mx-2.5 mb-3 grid gap-2 rounded-xl border bg-card p-3"
       data-testid="business-scope-picker"
     >
       <div className="flex items-center justify-between gap-2">
         <label htmlFor={id} className="text-xs font-medium text-muted-foreground">
-          <Trans>Business scope</Trans>
+          <Trans>Workspace</Trans>
         </label>
-        <Button
-          size="icon-xs"
-          variant="ghost"
-          aria-label={t`New business scope`}
-          onClick={onCreate}
-        >
+        <Button size="icon-xs" variant="ghost" aria-label={t`New workspace`} onClick={onCreate}>
           <Plus size={14} />
         </Button>
       </div>
@@ -75,11 +70,12 @@ export function BusinessScopePicker({
         <NativeSelectOption value="">{t`All bots`}</NativeSelectOption>
         {scopes.map((scope) => (
           <NativeSelectOption key={scope.id} value={scope.id}>
-            {scope.name}
+            {scope.name} · {scope.kind === "trading" ? t`Trading` : t`General`}
+            {scope.isolationPending ? ` · ${t`Migration required`}` : ""}
           </NativeSelectOption>
         ))}
       </NativeSelect>
-      {selected ? (
+      {scopes.find((scope) => scope.id === selected)?.kind === "trading" ? (
         <Button variant="ghost" size="sm" className="justify-start" onClick={onInterfaces}>
           <Settings2 size={14} />
           <Trans>Interface settings</Trans>
@@ -96,7 +92,7 @@ export function BusinessScopeDialog({
 }: {
   configure?: { name: string };
   onClose: () => void;
-  onCreated: (scope: TradingWorkspace) => void;
+  onCreated: (scope: { spaceId: string; id: string }) => void;
 }) {
   const { t } = useLingui();
   const userId = useQueryUserId();
@@ -105,6 +101,7 @@ export function BusinessScopeDialog({
   const { api, act, pending, error, identityDialog } = useTradingActions();
   const [id] = useState(() => crypto.randomUUID());
   const [name, setName] = useState(configure?.name ?? "");
+  const [kind, setKind] = useState<"general" | "trading">("trading");
   const fieldId = useId();
   return (
     <>
@@ -131,6 +128,11 @@ export function BusinessScopeDialog({
               event.preventDefault();
               const values = new FormData(event.currentTarget);
               void act(async () => {
+                if (kind === "general") {
+                  const saved = await api.spaces.create({ name, kind });
+                  onCreated({ id: saved.id, spaceId: saved.id });
+                  return;
+                }
                 const scope = TradingWorkspaceScopeSchema.parse({
                   subjectId: values.get("subjectId"),
                   subjectKind: values.get("subjectKind"),
@@ -151,14 +153,29 @@ export function BusinessScopeDialog({
                   tradeApproverUserId: String(values.get("tradeApproverUserId")),
                 });
                 onCreated(saved);
-              }, true);
+              }, kind === "trading");
             }}
           >
             <DialogHeader>
               <DialogTitle>
-                {configure ? t`Configure business scope` : t`New business scope`}
+                {configure ? t`Configure business scope` : t`New workspace`}
               </DialogTitle>
             </DialogHeader>
+            {!configure ? (
+              <div className="grid gap-1.5 text-sm">
+                <label htmlFor={`${fieldId}-kind`}>
+                  <Trans>Workspace type</Trans>
+                </label>
+                <NativeSelect
+                  id={`${fieldId}-kind`}
+                  value={kind}
+                  onChange={(event) => setKind(event.target.value as "general" | "trading")}
+                >
+                  <NativeSelectOption value="trading">{t`Trading workspace`}</NativeSelectOption>
+                  <NativeSelectOption value="general">{t`General workspace`}</NativeSelectOption>
+                </NativeSelect>
+              </div>
+            ) : null}
             <div className="grid gap-1.5 text-sm">
               <label htmlFor={`${fieldId}-field1`}>
                 <Trans>Name</Trans>
@@ -173,72 +190,80 @@ export function BusinessScopeDialog({
                 readOnly={Boolean(configure)}
               />
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="grid gap-1.5 text-sm">
-                <label htmlFor={`${fieldId}-field2`}>
-                  <Trans>Subject type</Trans>
-                </label>
-                <NativeSelect id={`${fieldId}-field2`} name="subjectKind" defaultValue="retailer">
-                  <NativeSelectOption value="retailer">{t`Retailer`}</NativeSelectOption>
-                  <NativeSelectOption value="generator">{t`Generator`}</NativeSelectOption>
-                  <NativeSelectOption value="storage">{t`Storage`}</NativeSelectOption>
-                </NativeSelect>
-              </div>
-              <div className="grid gap-1.5 text-sm">
-                <label htmlFor={`${fieldId}-field3`}>
-                  <Trans>Region</Trans>
-                </label>
-                <NativeSelect id={`${fieldId}-field3`} name="region" defaultValue="CN-SD">
-                  <NativeSelectOption value="CN-SH">{t`Shanghai`}</NativeSelectOption>
-                  <NativeSelectOption value="CN-JS">{t`Jiangsu · Suzhou`}</NativeSelectOption>
-                  <NativeSelectOption value="CN-SD">{t`Shandong`}</NativeSelectOption>
-                </NativeSelect>
-              </div>
-              {[
-                ["subjectId", t`Subject ID`, "demo-subject"],
-                ["accountId", t`Account ID`, "demo-account"],
-                ["assetId", t`Asset ID`, "demo-asset"],
-                ["marketId", t`Market ID`, "simulation-energy"],
-              ].map(([key, label, value]) => (
-                <div key={key} className="grid gap-1.5 text-sm">
-                  <label htmlFor={`${fieldId}-${key}`}>{label}</label>
-                  <Input
-                    id={`${fieldId}-${key}`}
-                    name={key}
-                    defaultValue={value}
-                    required
-                    maxLength={128}
-                  />
+            {kind === "trading" ? (
+              <>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-1.5 text-sm">
+                    <label htmlFor={`${fieldId}-field2`}>
+                      <Trans>Subject type</Trans>
+                    </label>
+                    <NativeSelect
+                      id={`${fieldId}-field2`}
+                      name="subjectKind"
+                      defaultValue="retailer"
+                    >
+                      <NativeSelectOption value="retailer">{t`Retailer`}</NativeSelectOption>
+                      <NativeSelectOption value="generator">{t`Generator`}</NativeSelectOption>
+                      <NativeSelectOption value="storage">{t`Storage`}</NativeSelectOption>
+                    </NativeSelect>
+                  </div>
+                  <div className="grid gap-1.5 text-sm">
+                    <label htmlFor={`${fieldId}-field3`}>
+                      <Trans>Region</Trans>
+                    </label>
+                    <NativeSelect id={`${fieldId}-field3`} name="region" defaultValue="CN-SD">
+                      <NativeSelectOption value="CN-SH">{t`Shanghai`}</NativeSelectOption>
+                      <NativeSelectOption value="CN-JS">{t`Jiangsu · Suzhou`}</NativeSelectOption>
+                      <NativeSelectOption value="CN-SD">{t`Shandong`}</NativeSelectOption>
+                    </NativeSelect>
+                  </div>
+                  {[
+                    ["subjectId", t`Subject ID`, "demo-subject"],
+                    ["accountId", t`Account ID`, "demo-account"],
+                    ["assetId", t`Asset ID`, "demo-asset"],
+                    ["marketId", t`Market ID`, "simulation-energy"],
+                  ].map(([key, label, value]) => (
+                    <div key={key} className="grid gap-1.5 text-sm">
+                      <label htmlFor={`${fieldId}-${key}`}>{label}</label>
+                      <Input
+                        id={`${fieldId}-${key}`}
+                        name={key}
+                        defaultValue={value}
+                        required
+                        maxLength={128}
+                      />
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <SectionHeading>
-              <Trans>Human approvals</Trans>
-            </SectionHeading>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {[
-                ["algorithmApproverUserId", t`Algorithm approver`],
-                ["tradeApproverUserId", t`Trade authorizer`],
-              ].map(([key, label]) => (
-                <div key={key} className="grid gap-1.5 text-sm">
-                  <label htmlFor={`${fieldId}-${key}`}>{label}</label>
-                  <NativeSelect id={`${fieldId}-${key}`} name={key} defaultValue={userId ?? ""}>
-                    {people.data
-                      ?.filter((member) => configure || member.id === userId)
-                      .map((member) => (
-                        <NativeSelectOption key={member.id} value={member.id}>
-                          {member.name}
-                        </NativeSelectOption>
-                      ))}
-                  </NativeSelect>
+                <SectionHeading>
+                  <Trans>Human approvals</Trans>
+                </SectionHeading>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {[
+                    ["algorithmApproverUserId", t`Algorithm approver`],
+                    ["tradeApproverUserId", t`Trade authorizer`],
+                  ].map(([key, label]) => (
+                    <div key={key} className="grid gap-1.5 text-sm">
+                      <label htmlFor={`${fieldId}-${key}`}>{label}</label>
+                      <NativeSelect id={`${fieldId}-${key}`} name={key} defaultValue={userId ?? ""}>
+                        {people.data
+                          ?.filter((member) => configure || member.id === userId)
+                          .map((member) => (
+                            <NativeSelectOption key={member.id} value={member.id}>
+                              {member.name}
+                            </NativeSelectOption>
+                          ))}
+                      </NativeSelect>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <p className="text-xs text-muted-foreground">
-              <Trans>
-                Simulation · bots and interfaces are configured within this business scope.
-              </Trans>
-            </p>
+                <p className="text-xs text-muted-foreground">
+                  <Trans>
+                    Simulation · bots and interfaces are configured within this business scope.
+                  </Trans>
+                </p>
+              </>
+            ) : null}
             {error ? (
               <p role="alert" className="text-sm text-destructive">
                 {error}
@@ -248,8 +273,11 @@ export function BusinessScopeDialog({
               <Button type="button" variant="outline" disabled={pending} onClick={onClose}>
                 <Trans>Cancel</Trans>
               </Button>
-              <Button type="submit" disabled={pending || !name.trim() || !people.data?.length}>
-                {configure ? t`Save configuration` : t`Create business scope`}
+              <Button
+                type="submit"
+                disabled={pending || !name.trim() || (kind === "trading" && !people.data?.length)}
+              >
+                {configure ? t`Save configuration` : t`Create workspace`}
               </Button>
             </DialogFooter>
           </form>

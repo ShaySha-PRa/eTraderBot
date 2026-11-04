@@ -93,6 +93,8 @@ export function ShellDialogs({
   closeMobileSidebar,
   createBot,
   businessScope,
+  workspaceKind,
+  isolationPending,
   onChooseScope,
   clearOpenThread,
   deleteRoutineDialogProps,
@@ -112,6 +114,8 @@ export function ShellDialogs({
   closeMobileSidebar: () => void;
   createBot: (input: CreateBotDialogInput) => Promise<void>;
   businessScope?: { id: string; name: string };
+  workspaceKind?: "general" | "trading";
+  isolationPending?: boolean;
   onChooseScope?: () => void;
   clearOpenThread: () => void;
   deleteRoutineDialogProps: ComponentProps<typeof DeleteItemDialog> | null;
@@ -307,6 +311,8 @@ export function ShellDialogs({
       {createBotOpen ? (
         <CreateBotDialog
           businessScope={businessScope}
+          workspaceKind={workspaceKind}
+          isolationPending={isolationPending}
           onChooseScope={onChooseScope}
           onCancel={() => setCreateBotOpen(false)}
           onCreate={createBot}

@@ -2,7 +2,7 @@ import type { AgentRunRequest } from "@rakazo/adapter-kit";
 import type { MessageBlock } from "@rakazo/contracts";
 import { describe, expect, it, vi } from "vitest";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";
-import { createRunExecutor } from "./executor.js";
+import { createRunExecutor } from "./testing/workspace-executor.js";
 
 const lifecycleMocks = vi.hoisted(() => ({
   renewComputerExecutionLease: vi.fn(async () => true),

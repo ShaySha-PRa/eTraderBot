@@ -42,6 +42,7 @@ import {
   appendEventInTransaction,
   availableInSpace,
   createThreadMessageInTransaction,
+  requireWorkspaceKind,
 } from "@rakazo/db";
 import { getLogger } from "@rakazo/logging";
 
@@ -270,6 +271,7 @@ export async function previewAgentImport(
   actor: Actor,
   input: { files: AgentImportFile[]; includeSecrets: boolean; skillFiles: SkillFiles },
 ): Promise<AgentImportPlan> {
+  await requireWorkspaceKind(services.prisma, actor.spaceId, "general");
   return (await buildPlan(services, actor, input)).plan;
 }
 
@@ -302,6 +304,7 @@ export async function createImportedBot<PreparedKey>(
   input: AgentImportCreateInput,
   signal?: AbortSignal,
 ): Promise<Bot> {
+  await requireWorkspaceKind(services.prisma, actor.spaceId, "general");
   const owner = { spaceId: actor.spaceId, userId: actor.userId };
   const { importKey, ...request } = input;
   const digest = requestDigest(request);

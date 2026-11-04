@@ -2,6 +2,7 @@ import { Stack, useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, ScrollView, Text, TextInput } from "react-native";
 import { NativeActionButton } from "../components/native-action-button";
+import { SettingsGroup, SettingsRow } from "../components/settings-group";
 import { cancelHeaderOptions } from "../components/sheet-header";
 import { rpc, selectSpace } from "../lib/api";
 import { useI18n } from "../lib/i18n";
@@ -14,6 +15,7 @@ export default function NewSpace() {
   const { t } = useI18n();
   const tokens = useMobileTokens();
   const router = useRouter();
+  const [kind, setKind] = useState<"general" | "trading">("trading");
   const [name, setName] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +26,7 @@ export default function NewSpace() {
     setPending(true);
     setError(null);
     try {
-      const space = await rpc("spaces/create", { name: trimmed });
+      const space = await rpc("spaces/create", { name: trimmed, kind });
       if (!(await selectSpace(space.id))) {
         Alert.alert(
           t("Business scope created"),
@@ -51,6 +53,17 @@ export default function NewSpace() {
         contentContainerStyle={{ padding: 24 }}
         keyboardShouldPersistTaps="handled"
       >
+        <SettingsGroup label={t("Workspace type")}>
+          {(["trading", "general"] as const).map((value) => (
+            <SettingsRow
+              key={value}
+              title={value === "trading" ? t("Trading workspace") : t("General workspace")}
+              value={kind === value ? t("Selected") : undefined}
+              onPress={() => setKind(value)}
+              disabled={pending}
+            />
+          ))}
+        </SettingsGroup>
         <Text style={{ color: tokens.mutedForeground, fontSize: 14 }}>{t("Name")}</Text>
         <TextInput
           autoFocus
@@ -58,7 +71,7 @@ export default function NewSpace() {
           maxLength={60}
           onChangeText={setName}
           onSubmitEditing={() => void create()}
-          placeholder={t("Business scope name")}
+          placeholder={t("Workspace name")}
           placeholderTextColor={tokens.mutedForeground}
           returnKeyType="done"
           style={{
@@ -70,15 +83,17 @@ export default function NewSpace() {
             fontSize: 16,
           }}
         />
-        <Text style={{ color: tokens.mutedForeground, marginTop: 14 }}>
-          {t(
-            "Configure this business scope and its data APIs on the web before creating trading bots.",
-          )}
-        </Text>
+        {kind === "trading" ? (
+          <Text style={{ color: tokens.mutedForeground, marginTop: 14 }}>
+            {t(
+              "Configure this business scope and its data APIs on the web before creating trading bots.",
+            )}
+          </Text>
+        ) : null}
         {error ? <Text style={{ color: tokens.destructive, marginTop: 14 }}>{error}</Text> : null}
         <NativeActionButton
           disabled={!name.trim() || pending}
-          label={pending ? t("Creating…") : t("Create business scope")}
+          label={pending ? t("Creating…") : t("Create workspace")}
           onPress={() => void create()}
           style={{ marginTop: 20 }}
         />

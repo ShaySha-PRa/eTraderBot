@@ -209,7 +209,7 @@ export function createAgentSkillsService(prisma: PrismaClient) {
               description: resolved.description,
               content: resolved.content,
               source: "user",
-              allSpaces: true,
+              allSpaces: false,
             },
           });
         });

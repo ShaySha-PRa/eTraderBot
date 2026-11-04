@@ -8,7 +8,7 @@
 | `createWorkspace` | 可选重试 `id`、`name`、不含阶段的 `scope`、两类审批人 ID | 经确认身份配置当前 Space；仅业务所有者可操作，审批人必须是该 Space 成员，已有不同配置拒绝 |
 | `createBusinessScope` | 与 `createWorkspace` 相同 | 原子新建隔离 Space 及配置；初始审批人只能为创建者，重试 ID 同时作为新 Space／配置 ID |
 | `connectWorkspaceBot` | `workspaceId`、`botId` | 所有者给本 Space 内的已有模板 Bot 补齐场景绑定；跨 Space 拒绝；原子创建／复用适用场景、绑定、学习计划 |
-| `interfaces` | `workspaceId` | 仅范围所有者；返回配置与 `hasSecret`，不返回密钥或密钥引用 |
+| `interfaces` | `workspaceId` | 仅范围所有者；返回配置与 `hasSecret`、`hasPushToken`，不返回密钥或密钥引用 |
 | `saveInterface` | `id`、`workspaceId`、`name`、`purpose`、`config`、可选 `secret`、`expectedRevision` | 所有者经身份确认保存；创建修订为 0，修改使用读取的修订号 |
 | `removeInterface` | `workspaceId`、`id`、`expectedRevision` | 所有者经身份确认删除；过期修订拒绝，密钥持久记录随之清理 |
 
@@ -20,7 +20,7 @@
 
 迁移 `business_spaces` 对 `TradingWorkspace.spaceId` 建立唯一约束，保持全部既有证据 ID 与加密内容；多套旧配置共用一个 Space 时拒绝迁移，须另行明确历史归属后再执行，禁止直接删配置或改证据绕过检查。
 
-`purpose` 为 `market_data | forecasts | positions | rules | execution | receipts | other`。
+`purpose` 为 `market_data | forecasts | weather_forecast | positions | rules | execution | receipts | other`。
 
 HTTP 配置（虚构地址，凭据单独传入，不放入 URL、查询参数或请求体）：
 
@@ -40,4 +40,6 @@ HTTP 配置（虚构地址，凭据单独传入，不放入 URL、查询参数�
 
 MCP 配置为 `{ "transport": "mcp", "serverId": "synthetic-connection-id" }`。引用必须属于当前用户，并可用于当前 Space；不复制 MCP 密钥、不自动扩大 Bot 工具分配。
 
-当前 `status` 固定为 `configured`，界面显示“已配置 · 未验证连通”。这些接口只管理配置，不发出外部 HTTP 请求、不替换当前合成快照、不实现任意 JSON 到交易契约的自动映射。下一接入阶段须通过既有外部契约对接快照、规则和执行状态，补连通测试、来源时效、读取权限和失败反馈；保存条目不代表完成该阶段。
+天气用途另支持 `{ "transport": "push" }`。HTTP 天气接口可主动拉取，HTTP／推送天气接口可接收独立令牌认证的外部预测，详见[天气接入](../integration/eTraderBot-weather-api.md)。
+
+通用配置的 `status` 固定为 `configured`，界面显示“已配置 · 未验证连通”。除天气用途的显式拉取／推送外，这些接口只管理配置，不发出外部 HTTP 请求、不替换当前合成快照、不实现任意 JSON 到交易契约的自动映射。下一接入阶段须通过既有外部契约对接快照、规则和执行状态，补连通测试、来源时效、读取权限和失败反馈；保存条目不代表完成该阶段。

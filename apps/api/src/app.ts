@@ -192,6 +192,7 @@ import {
   TEAM_CHAT_STARTUP_SHUTDOWN_MS,
   TeamChatStartupRetries,
 } from "./team-chat-startup.js";
+import { mountTradingWeatherHttpRoutes } from "./trading-weather-http.js";
 import { mountUserDeviceRoutes } from "./user-devices.js";
 import { mountVoiceHttpRoutes, transcribeInboundVoice, voiceAccountErrorStatus } from "./voice.js";
 import { mountWebhookHttpRoutes } from "./webhook.js";
@@ -1001,6 +1002,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     sessionActor,
   );
   mountWebhookHttpRoutes(app, { prisma, secrets, events, jobs });
+  mountTradingWeatherHttpRoutes(app, { prisma });
   if (billing && billingProvider) {
     mountBillingRoutes(app, {
       billing,

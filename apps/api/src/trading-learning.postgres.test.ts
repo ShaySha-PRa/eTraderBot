@@ -85,6 +85,7 @@ describe.skipIf(!enabled).sequential("scoped trading learning (PostgreSQL)", () 
           spaceId: actor.spaceId,
           userId: actor.userId,
           name: "Learning QA",
+          tradingRole: "spot",
           color: "blue",
         },
       });
@@ -155,6 +156,7 @@ describe.skipIf(!enabled).sequential("scoped trading learning (PostgreSQL)", () 
       });
       await db.prisma.space.create({
         data: {
+          kind: "trading",
           id: actor.spaceId,
           organizationId,
           name: "Learning",
@@ -186,6 +188,7 @@ describe.skipIf(!enabled).sequential("scoped trading learning (PostgreSQL)", () 
       actor.spaceId = randomUUID();
       await db.prisma.space.create({
         data: {
+          kind: "trading",
           id: actor.spaceId,
           organizationId,
           name: "Synthetic business",

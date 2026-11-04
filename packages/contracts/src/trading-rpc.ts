@@ -8,6 +8,7 @@ import {
 } from "./trading.js";
 import { tradingControlContract } from "./trading-control.js";
 import { tradingLearningContract } from "./trading-learning.js";
+import { tradingWeatherContract } from "./trading-weather.js";
 import { tradingWorkspaceContract } from "./trading-workspace.js";
 
 const amount = z.string().regex(/^(?:0|[1-9]\d{0,29})(?:\.\d{1,6})?$/);
@@ -38,6 +39,7 @@ export const tradingContract = {
   ...tradingControlContract,
   ...tradingLearningContract,
   ...tradingWorkspaceContract,
+  ...tradingWeatherContract,
   simulate: oc.input(TradingSimulationInputSchema).output(TradingAnalysisSchema),
   get: oc.input(z.strictObject({ id: z.string().min(1) })).output(TradingAnalysisSchema),
   replay: oc.input(z.strictObject({ id: z.string().min(1) })).output(

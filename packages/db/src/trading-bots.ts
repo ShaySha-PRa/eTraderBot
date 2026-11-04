@@ -7,6 +7,8 @@ import { createTradingAnalysisService } from "./trading.js";
 import { checkTradingBot } from "./trading-bot-access.js";
 import { createTradingControlService } from "./trading-control.js";
 import { createTradingLearningService } from "./trading-learning.js";
+import { createTradingWeatherService } from "./trading-weather.js";
+import { requireIsolatedBot } from "./workspace-isolation.js";
 
 export function createTradingBotService(
   prisma: PrismaClient,
@@ -37,13 +39,25 @@ export function createTradingBotService(
         await prisma.tradingBotBinding.findFirst({
           where: {
             botId: identity.botId,
-            bot: { spaceId: identity.spaceId, userId: identity.userId, archivedAt: null },
+            bot: {
+              spaceId: identity.spaceId,
+              userId: identity.userId,
+              archivedAt: null,
+              tradingRole: { not: null },
+              space: { kind: "trading", isolationPending: false },
+            },
             desk: { spaceId: identity.spaceId, ownerUserId: identity.userId },
           },
         }),
       );
     },
     async call(identity, raw) {
+      const persisted = await requireIsolatedBot(prisma, identity);
+      tradingAssert(
+        persisted.tradingRole,
+        "FORBIDDEN",
+        "General Bots cannot use trading operations",
+      );
       const parsed = TradingBotCommandSchema.safeParse(raw);
       tradingAssert(parsed.success, "INVALID_INPUT", "Invalid trading operation or arguments");
       const input = parsed.data;
@@ -78,7 +92,13 @@ export function createTradingBotService(
           where: {
             ...(learningDeskId ? { deskId: learningDeskId } : {}),
             botId: identity.botId,
-            bot: { spaceId: identity.spaceId, userId: identity.userId, archivedAt: null },
+            bot: {
+              spaceId: identity.spaceId,
+              userId: identity.userId,
+              archivedAt: null,
+              tradingRole: { not: null },
+              space: { kind: "trading", isolationPending: false },
+            },
             desk: { spaceId: identity.spaceId, ownerUserId: identity.userId },
           },
           select: { deskId: true, role: true, desk: { select: { scope: true } } },
@@ -124,6 +144,17 @@ export function createTradingBotService(
         });
         await jobs?.enqueue(runContinueJob(result.runId));
         return result;
+      }
+      if (input.operation === "weather") {
+        const link = await prisma.tradingWorkspaceDesk.findUnique({
+          where: { deskId: input.deskId },
+        });
+        tradingAssert(link, "NOT_FOUND", "Business scope not found");
+        return createTradingWeatherService(prisma, clock).forecasts(actor, {
+          workspaceId: link.workspaceId,
+          siteId: input.siteId,
+          limit: 1,
+        });
       }
       if (input.operation === "context") {
         const state = await control.desk(actor, input);

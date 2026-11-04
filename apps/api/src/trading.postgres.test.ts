@@ -50,6 +50,7 @@ describe.skipIf(!enabled).sequential("trading analysis API (PostgreSQL)", () => 
       });
       const space = await db.prisma.space.create({
         data: {
+          kind: "trading",
           id: `trading-space-${suffix}`,
           name: "Trading",
           organizationId: orgId,
@@ -58,6 +59,7 @@ describe.skipIf(!enabled).sequential("trading analysis API (PostgreSQL)", () => 
       });
       const otherSpace = await db.prisma.space.create({
         data: {
+          kind: "trading",
           id: `trading-other-${suffix}`,
           name: "Other",
           organizationId: orgId,

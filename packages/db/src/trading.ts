@@ -11,6 +11,7 @@ import {
 } from "@rakazo/core";
 import type { PrismaClient } from "./client.js";
 import { tradingAlgorithmIdentity } from "./trading-engine.js";
+import { requireWorkspaceKind } from "./workspace-isolation.js";
 
 function analysisDto(row: {
   id: string;
@@ -44,6 +45,7 @@ export function createTradingAnalysisService(
   }
   return {
     async simulate(actor: Actor, raw: unknown) {
+      await requireWorkspaceKind(prisma, actor.spaceId, "trading");
       const input = TradingSimulationInputSchema.parse(raw);
       const parameters = { margin: tradingDecimalString(tradingDecimal(input.parameters.margin)) };
       const now = clock();

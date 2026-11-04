@@ -21,6 +21,7 @@ export const TradingWorkspaceSchema = z.strictObject({
 const purpose = z.enum([
   "market_data",
   "forecasts",
+  "weather_forecast",
   "positions",
   "rules",
   "execution",
@@ -66,6 +67,7 @@ const http = z
   });
 export const TradingInterfaceConfigSchema = z.discriminatedUnion("transport", [
   http,
+  z.strictObject({ transport: z.literal("push") }),
   z.strictObject({ transport: z.literal("mcp"), serverId: id }),
 ]);
 export const TradingInterfaceSchema = z.strictObject({
@@ -75,6 +77,7 @@ export const TradingInterfaceSchema = z.strictObject({
   purpose,
   config: TradingInterfaceConfigSchema,
   hasSecret: z.boolean(),
+  hasPushToken: z.boolean().default(false),
   revision: z.number().int().positive(),
   updatedAt: z.string(),
   // Saving metadata is not a live connectivity test or permission to execute.

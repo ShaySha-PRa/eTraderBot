@@ -15,7 +15,12 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { DENIED_ACTION_ERROR, isApprovalPausedResult } from "./approval-effect.js";
 import { MAX_SHARED_MEMORY_CHARS } from "./builtin-tools.js";
 import type * as ComputerLifecycleModule from "./computer-lifecycle.js";
-import { createRunExecutor } from "./executor.js";
+import { createRunExecutor as createWorkspaceExecutor } from "./testing/workspace-executor.js";
+
+// Host-device approval coverage applies to trading Bots; ordinary Bots cannot reach the host.
+const createRunExecutor = (deps: Parameters<typeof createWorkspaceExecutor>[0]) =>
+  createWorkspaceExecutor(deps, "trading");
+
 import { FakeWebProvider } from "./fake-web.js";
 import type * as FleetToolsModule from "./fleet-tools.js";
 import type { HostComputerRequest } from "./host-computer-protocol.js";

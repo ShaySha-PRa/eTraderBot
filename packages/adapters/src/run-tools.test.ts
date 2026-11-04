@@ -34,6 +34,18 @@ function dispatchContext(tainted: boolean) {
   return {
     deps: {
       prisma: {
+        bot: {
+          findFirst: async () => ({
+            id: "bot-1",
+            spaceId: "space-1",
+            userId: "user-1",
+            tradingRole: null,
+            computer: null,
+          }),
+        },
+        space: {
+          findUnique: async () => ({ kind: "general", isolationPending: false, deletingAt: null }),
+        },
         user: {
           findUniqueOrThrow: async () => ({
             timezone: "UTC" as string | null,
@@ -42,7 +54,8 @@ function dispatchContext(tainted: boolean) {
         },
       },
     },
-    run: { userId: "user-1" },
+    run: { userId: "user-1", spaceId: "space-1" },
+    bot: { id: "bot-1" },
     source: { ownerStartedRun: true },
     runId: "run-1",
     state: { tainted, handedOff: false, ownerSettingsRefused: false },

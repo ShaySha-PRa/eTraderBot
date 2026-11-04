@@ -38,6 +38,7 @@ import {
 import { ensureTradingLearningPlan } from "./trading-learning.js";
 import { groupTradingDesk } from "./trading-workspaces.js";
 import { withTransactionRetry } from "./transaction-retry.js";
+import { requireWorkspaceKind } from "./workspace-isolation.js";
 
 type Inputs = TradingControlInputs;
 type Tx = Prisma.TransactionClient;
@@ -306,7 +307,7 @@ export function createTradingControlService(
         });
         tradingAssert(bot, "NOT_FOUND", "Bot not found");
         tradingAssert(
-          !bot.tradingRole || bot.tradingRole === input.role,
+          bot.tradingRole === input.role,
           "SCOPE_MISMATCH",
           "Bot template role cannot be changed by a binding",
         );
@@ -349,6 +350,7 @@ export function createTradingControlService(
       });
     },
     async createDesk(actor: Actor, input: Inputs["createDesk"]) {
+      await requireWorkspaceKind(prisma, actor.spaceId, "trading");
       tradingAssert(
         input.scope.environment === "simulation",
         "ENVIRONMENT_MISMATCH",

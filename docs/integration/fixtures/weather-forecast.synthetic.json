@@ -1,0 +1,259 @@
+{
+  "schemaVersion": "1",
+  "batchId": "sim-CN-SH-1793750400000-24",
+  "source": {
+    "sourceId": "internal-weather-simulator",
+    "kind": "synthetic",
+    "modelVersion": "weather-simulator-v1"
+  },
+  "issuedAt": "2026-11-04T00:00:00.000Z",
+  "validUntil": "2026-11-04T03:00:00.000Z",
+  "location": {
+    "siteId": "demo-CN-SH",
+    "name": "Simulated site CN-SH",
+    "region": "CN-SH",
+    "timezone": "Asia/Shanghai"
+  },
+  "periods": [
+    {
+      "start": "2026-11-04T00:00:00.000Z",
+      "end": "2026-11-04T01:00:00.000Z",
+      "temperatureC": "19.00",
+      "windSpeedMps": "4.50",
+      "relativeHumidityPct": "65.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "325.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T01:00:00.000Z",
+      "end": "2026-11-04T02:00:00.000Z",
+      "temperatureC": "20.66",
+      "windSpeedMps": "4.00",
+      "relativeHumidityPct": "60.86",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "459.62",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T02:00:00.000Z",
+      "end": "2026-11-04T03:00:00.000Z",
+      "temperatureC": "21.93",
+      "windSpeedMps": "3.50",
+      "relativeHumidityPct": "57.68",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "562.92",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T03:00:00.000Z",
+      "end": "2026-11-04T04:00:00.000Z",
+      "temperatureC": "22.73",
+      "windSpeedMps": "3.13",
+      "relativeHumidityPct": "55.68",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "627.85",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T04:00:00.000Z",
+      "end": "2026-11-04T05:00:00.000Z",
+      "temperatureC": "23.00",
+      "windSpeedMps": "3.00",
+      "relativeHumidityPct": "55.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "650.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T05:00:00.000Z",
+      "end": "2026-11-04T06:00:00.000Z",
+      "temperatureC": "22.73",
+      "windSpeedMps": "3.13",
+      "relativeHumidityPct": "55.68",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "627.85",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T06:00:00.000Z",
+      "end": "2026-11-04T07:00:00.000Z",
+      "temperatureC": "21.93",
+      "windSpeedMps": "3.50",
+      "relativeHumidityPct": "57.68",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "562.92",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T07:00:00.000Z",
+      "end": "2026-11-04T08:00:00.000Z",
+      "temperatureC": "20.66",
+      "windSpeedMps": "4.00",
+      "relativeHumidityPct": "60.86",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "459.62",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T08:00:00.000Z",
+      "end": "2026-11-04T09:00:00.000Z",
+      "temperatureC": "19.00",
+      "windSpeedMps": "4.50",
+      "relativeHumidityPct": "65.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "325.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T09:00:00.000Z",
+      "end": "2026-11-04T10:00:00.000Z",
+      "temperatureC": "17.07",
+      "windSpeedMps": "4.87",
+      "relativeHumidityPct": "69.82",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "168.23",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T10:00:00.000Z",
+      "end": "2026-11-04T11:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "5.00",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.40",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T11:00:00.000Z",
+      "end": "2026-11-04T12:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "4.87",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T12:00:00.000Z",
+      "end": "2026-11-04T13:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "4.50",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T13:00:00.000Z",
+      "end": "2026-11-04T14:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "4.00",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T14:00:00.000Z",
+      "end": "2026-11-04T15:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "3.50",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T15:00:00.000Z",
+      "end": "2026-11-04T16:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "3.13",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T16:00:00.000Z",
+      "end": "2026-11-04T17:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "3.00",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T17:00:00.000Z",
+      "end": "2026-11-04T18:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "3.13",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T18:00:00.000Z",
+      "end": "2026-11-04T19:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "3.50",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T19:00:00.000Z",
+      "end": "2026-11-04T20:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "4.00",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T20:00:00.000Z",
+      "end": "2026-11-04T21:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "4.50",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T21:00:00.000Z",
+      "end": "2026-11-04T22:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "4.87",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T22:00:00.000Z",
+      "end": "2026-11-04T23:00:00.000Z",
+      "temperatureC": "15.00",
+      "windSpeedMps": "5.00",
+      "relativeHumidityPct": "75.00",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "0.00",
+      "cloudCoverPct": "30.00"
+    },
+    {
+      "start": "2026-11-04T23:00:00.000Z",
+      "end": "2026-11-05T00:00:00.000Z",
+      "temperatureC": "17.07",
+      "windSpeedMps": "4.87",
+      "relativeHumidityPct": "69.82",
+      "precipitationMm": "0.00",
+      "solarIrradianceWm2": "168.23",
+      "cloudCoverPct": "30.00"
+    }
+  ]
+}

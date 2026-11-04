@@ -235,6 +235,7 @@ export const TradingBotCommandSchema = z.discriminatedUnion("operation", [
     executionId: id,
     clientRequestId: id,
   }),
+  z.strictObject({ operation: z.literal("weather"), deskId: id, siteId: id.optional() }),
   z.strictObject({ operation: z.literal("scopes") }),
   z.strictObject({ operation: z.literal("context"), deskId: id }),
   z.strictObject({

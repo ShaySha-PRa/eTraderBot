@@ -103,6 +103,7 @@ export * from "./trading/decimal.js";
 export * from "./trading/display.js";
 export * from "./trading/execution.js";
 export * from "./trading/simulation.js";
+export * from "./trading/weather.js";
 export * from "./translate.js";
 export * from "./ui-locale.js";
 export * from "./unread-divider.js";

@@ -73,7 +73,14 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
       const id = randomUUID();
       await runAsSystem("synthetic trading Bot fixture", () =>
         db.prisma.bot.create({
-          data: { id, spaceId: actor.spaceId, userId: actor.userId, name: role, color: "blue" },
+          data: {
+            id,
+            spaceId: actor.spaceId,
+            userId: actor.userId,
+            name: role,
+            color: "blue",
+            tradingRole: role,
+          },
         }),
       );
       await client().trading.bindBot({ deskId: desk.id, botId: id, role });
@@ -128,7 +135,13 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
         },
       });
       await db.prisma.space.create({
-        data: { id: actor.spaceId, organizationId, name: "Trading", createdByUserId: actor.userId },
+        data: {
+          kind: "trading",
+          id: actor.spaceId,
+          organizationId,
+          name: "Trading",
+          createdByUserId: actor.userId,
+        },
       });
       await db.prisma.member.create({
         data: {
@@ -155,6 +168,7 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
       actor.spaceId = randomUUID();
       await db.prisma.space.create({
         data: {
+          kind: "trading",
           id: actor.spaceId,
           organizationId,
           name: "Synthetic business",
@@ -297,13 +311,22 @@ describe.skipIf(!enabled).sequential("bound Bot trading tools (PostgreSQL)", () 
     ).rejects.toThrow();
     expect(await client().bots.list()).toHaveLength(before.length);
     const scope = await workspace();
-    const general = await client().bots.create({ name: "General" });
+    await expect(client().bots.create({ name: "General" })).rejects.toThrow(
+      "General Bots require a general workspace",
+    );
+    const generalSpace = await client().spaces.create({
+      name: "Synthetic general",
+      kind: "general",
+    });
+    const general = await client({ ...actor, spaceId: generalSpace.id }).bots.create({
+      name: "General",
+    });
     await expect(
       client().trading.connectWorkspaceBot({ workspaceId: scope.id, botId: general.id }),
     ).rejects.toThrow();
     expect(
       (await client().trading.workspaces({})).find((row) => row.id === scope.id)!.botIds,
-    ).toEqual([general.id]);
+    ).toEqual([]);
   });
   it("stores multiple data APIs per scope with encrypted credentials and revision checks", async () => {
     const scope = await workspace(),

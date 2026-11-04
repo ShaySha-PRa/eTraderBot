@@ -16,7 +16,7 @@
 | V08 学习触发 | 结构行为通过 | 每日默认／时区／工具改计划、手动启动、并发合并、遗漏窗口恢复。真实模型对自然语言日程的理解未评价。 |
 | V09 四类入口 | 当前授权资料流程通过 | 聊天、文件、操作、历史可追溯；追加回执进入新资料，旧会话输入固定。原生录制及复杂文档解析未验收。 |
 | V10 学习与版本演进 | 部分通过 | 三类参数候选、训练／留出、约束失败／不足处理、人工启用及再审批通过；实际改进效果未建立，论文算法搁置。 |
-| V11 隔离与共享 | 部分通过 | Space／账户／绑定、原始与派生资料隔离、显式指定范围共享通过；跨使用者共享交付未完成。 |
+| V11 隔离与共享 | V1.1 首批通过，交接待实施 | 交易／通用工作区后端与运行时隔离、按 Bot/记录只读授权、撤销及审计通过；跨使用者共享与固定版本经验交接未完成。 |
 | V12 评价可靠性 | 部分通过 | 数据切分和约束证据完整，语义未评价／收益未建立明确保留；真实模型 rubric 校准及真实效果未执行。 |
 | V13 模拟与真实隔离 | 当前边界通过 | 仅 simulation，synthetic 来源保留；不存在已接通公司交易或真实成交的结论。 |
 | V14 角色与平台 | 部分通过 | 四模板、阶段与工具授权；Web 中英文及窄屏、共享桌面界面、移动组件与类型检查通过。未运行 Electron E2E 或原生设备验收。 |
@@ -40,3 +40,31 @@
 - [定点核销](../../packages/core/src/trading/execution.test.ts)
 - [浏览器交易流程](../../apps/web/e2e/trading.spec.ts)
 - [移动界面操作](../../apps/mobile/lib/trading-screen.test.tsx)
+
+
+## V1.1 第一批增量验收（2026-11-04）
+
+本节为当前最新隔离验收，上述 V1 命令与计数保留为历史记录。天气接入改动一并保留。详细行为及离线迁移步骤见[工作区隔离说明](eTraderBot-v1.1-workspace-isolation.md)。
+
+| 验收点 | 结果与证据 |
+| --- | --- |
+| 类型与角色 | 后端创建、复制、导入和数据库触发器限制工作区类型；角色不可原地提升。浏览器只呈现当前类型的模板。 |
+| 普通 Bot 写入隔离 | 每次运行/工具复核身份、Space 与电脑；真实 PostgreSQL 测试覆盖交易工具、文件、共享记忆、MCP、Skill/HTTP 安装 RLS、跨 Bot 通信及凭据库边界。宿主电脑与 stdio MCP 对普通 Bot 关闭。 |
+| 最小只读授权 | 默认拒绝，精确接收 Bot/源区/资料；错业务、错 Bot、撤销、源成员资格丢失均拒绝。撤销与读取通过行锁协调，拒绝记录留存；复制不继承资料授权。已经交付的文字不能收回。 |
+| 模拟流程回归 | 分析、双审批、范围授权、部分成交、超时核对、撤单、回执、学习和天气接入共 87 项 PostgreSQL 回归通过。 |
+| 迁移证据 | 隔离副本先验证；备份后本地迁移普通 Bot 的 1 段聊天、7 条消息、33 条事件、1 份记忆、3 次运行。ID/关联与解密内容一致，20 张交易表共 23 条记录完整行指纹不变。共享记忆、原电脑保留在交易区。 |
+| 多端与导航 | 共享 Web/Electron UI 和移动类型/模板入口已同步，全部 Bots 切换实际上下文；复杂配置在 Web 安全降级。原生设备和 Electron E2E 未运行。 |
+
+可复核命令：
+
+- `pnpm test:integration --spec=trading`：6 文件、87 项通过。
+- `pnpm test:integration --spec=workspace-isolation`：1 文件、5 项通过，含原始 SQL、工具旁路、授权/撤销、加密迁移与歧义/陈旧指纹拒绝。
+- `pnpm test:integration --spec=row-security.postgres`：17 项通过。
+- `pnpm exec vitest run packages/adapters/src/executor packages/adapters/src/run-tools apps/web/src/pages/SpaceSettingOverrides.test.tsx apps/mobile/lib/space-settings.test.tsx`：27 文件、854 项通过。
+- `pnpm exec vitest run apps/api/src/agent-import.test.ts packages/adapters/src/honcho-memory-provider.test.ts packages/adapters/src/mcp-connector.test.ts packages/db/src/cross-space-communication.test.ts apps/mobile/lib/space-settings.test.tsx`：5 文件、202 项通过（与上一组有组件重叠）。
+- `LOCAL_AUTO_LOGIN_EMAIL='' pnpm test:e2e '--spec=(workspace-isolation|trading|trading-templates|trading-weather|ui-locale)\.spec\.ts'`：7 项 Chromium 通过；已查看中英及窄屏合成数据截图。
+- `pnpm --filter @rakazo/contracts --filter @rakazo/core --filter @rakazo/db --filter @rakazo/adapters --filter @rakazo/api --filter @rakazo/worker --filter @rakazo/web check`、`EXPO_OFFLINE=1 pnpm --filter @rakazo/mobile check`、`pnpm --filter @rakazo/web build` 通过。离线依赖检查不代表联网核验；构建仍有既有大 chunk 提示。
+
+新增测试入口：[隔离与迁移集成](../../apps/api/src/workspace-isolation.postgres.test.ts)、[工作区浏览器流程](../../apps/web/e2e/workspace-isolation.spec.ts)。未运行全仓 CI、真实模型语义/成本/效果、公司内接口或原生设备测试；这些不是本批通过的结论。ADR 0005 经验交接仍待下一批，独立强化学习、论文算法和实盘继续暂缓。
+
+本地开发服务已恢复；浏览器确认迁移后两类工作区及各自 Bot 可见，聊天切换使用对应工作区上下文，未观察到页面脚本异常。

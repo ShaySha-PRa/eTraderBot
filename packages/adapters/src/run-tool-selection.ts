@@ -12,6 +12,7 @@ import { USER_COMPUTER_SCREEN_TOOLS } from "./run-tools-user-computer.js";
 import { filterBuiltinToolsForRun, filterBuiltinToolsForThread } from "./schedule-tools.js";
 
 export const READ_ONLY_AGENT_TOOLS = new Set([
+  "read_trading_material",
   "computer_observe",
   "list_files",
   "list_fleet",

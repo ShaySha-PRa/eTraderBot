@@ -1,0 +1,314 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "eTraderBot weather forecast ingestion",
+    "version": "1.0.0",
+    "description": "Synthetic model output and company forecast integration. Temporal validation and batch immutability are enforced in addition to this schema. See eTraderBot-weather-api.md."
+  },
+  "components": {
+    "securitySchemes": {
+      "weatherPushToken": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "WeatherForecast": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+          "schemaVersion": {
+            "type": "string",
+            "const": "1"
+          },
+          "batchId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "source": {
+            "type": "object",
+            "properties": {
+              "sourceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "synthetic",
+                  "company",
+                  "user"
+                ]
+              },
+              "modelVersion": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              }
+            },
+            "required": [
+              "sourceId",
+              "kind",
+              "modelVersion"
+            ],
+            "additionalProperties": false
+          },
+          "issuedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "siteId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 200
+              },
+              "region": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              },
+              "timezone": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 80
+              }
+            },
+            "required": [
+              "siteId",
+              "name",
+              "region",
+              "timezone"
+            ],
+            "additionalProperties": false
+          },
+          "periods": {
+            "minItems": 1,
+            "maxItems": 168,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "end": {
+                  "type": "string",
+                  "format": "date-time",
+                  "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                },
+                "temperatureC": {
+                  "type": "string",
+                  "pattern": "^-?(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,6})?$"
+                },
+                "windSpeedMps": {
+                  "type": "string",
+                  "pattern": "^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,6})?$"
+                },
+                "relativeHumidityPct": {
+                  "type": "string",
+                  "pattern": "^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,6})?$"
+                },
+                "precipitationMm": {
+                  "type": "string",
+                  "pattern": "^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,6})?$"
+                },
+                "solarIrradianceWm2": {
+                  "type": "string",
+                  "pattern": "^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,6})?$"
+                },
+                "cloudCoverPct": {
+                  "type": "string",
+                  "pattern": "^(?:0|[1-9]\\d{0,11})(?:\\.\\d{1,6})?$"
+                }
+              },
+              "required": [
+                "start",
+                "end",
+                "temperatureC",
+                "windSpeedMps",
+                "relativeHumidityPct",
+                "precipitationMm",
+                "solarIrradianceWm2",
+                "cloudCoverPct"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "schemaVersion",
+          "batchId",
+          "source",
+          "issuedAt",
+          "validUntil",
+          "location",
+          "periods"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "paths": {
+    "/v1/weather/forecast": {
+      "get": {
+        "operationId": "simulateWeatherForecast",
+        "servers": [
+          {
+            "url": "http://127.0.0.1:8096"
+          }
+        ],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "CN-SH",
+                "CN-JS",
+                "CN-SD"
+              ],
+              "default": "CN-SH"
+            }
+          },
+          {
+            "name": "hours",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 168,
+              "default": 24
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deterministic synthetic forecast; no real model inference",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherForecast"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid simulation parameters"
+          }
+        }
+      }
+    },
+    "/api/v1/trading/weather/{interfaceId}": {
+      "post": {
+        "operationId": "pushWeatherForecast",
+        "servers": [
+          {
+            "url": "http://localhost:3100"
+          }
+        ],
+        "security": [
+          {
+            "weatherPushToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "interfaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeatherForecast"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Stored or identical retry",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "batchId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "duplicate": {
+                      "type": "boolean"
+                    },
+                    "receivedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "batchId",
+                    "duplicate",
+                    "receivedAt"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid JSON"
+          },
+          "401": {
+            "description": "Missing, invalid or revoked scoped credential"
+          },
+          "409": {
+            "description": "Batch ID already has different content"
+          },
+          "413": {
+            "description": "Payload exceeds 256 KiB"
+          },
+          "422": {
+            "description": "Invalid schema, expired or future-issued forecast"
+          },
+          "500": {
+            "description": "Storage unavailable; retry same batch"
+          }
+        }
+      }
+    }
+  }
+}

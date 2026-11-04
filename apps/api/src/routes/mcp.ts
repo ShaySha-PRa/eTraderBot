@@ -283,7 +283,7 @@ export function mcpRoutes(ctx: RouterContext) {
             await tx.secret.create({
               data: {
                 id: stored.id,
-                spaceId: null,
+                spaceId: context.actor.spaceId,
                 userId: context.actor.userId,
                 kind: "connector",
                 ciphertext: stored.ciphertext,
@@ -294,7 +294,7 @@ export function mcpRoutes(ctx: RouterContext) {
             data: {
               spaceId: context.actor.spaceId,
               userId: context.actor.userId,
-              allSpaces: true,
+              allSpaces: false,
               kind: input.kind,
               name: input.name.trim(),
               source,

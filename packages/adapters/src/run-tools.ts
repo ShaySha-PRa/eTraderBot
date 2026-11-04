@@ -1,5 +1,6 @@
 import type { AgentToolExecutionObserver } from "@rakazo/adapter-kit";
 import { toolResultTaintsRun } from "@rakazo/core";
+import { requireIsolatedBot } from "@rakazo/db";
 import { isTerminatingReplyResult } from "./approval-effect.js";
 import { IMAGE_RETURNING_COMPUTER_TOOLS, MODEL_CANNOT_SEE_MESSAGE } from "./model-vision.js";
 import type { RunContext } from "./run-context.js";
@@ -80,6 +81,25 @@ async function dispatchTool(
   observer: AgentToolExecutionObserver | undefined,
 ) {
   ctx.context.signal.throwIfAborted();
+  const persisted = await requireIsolatedBot(ctx.deps.prisma, {
+    spaceId: ctx.run.spaceId,
+    userId: ctx.run.userId,
+    botId: ctx.bot.id,
+  });
+  // A host desktop can carry another workspace's files and authenticated browser sessions.
+  // General Bots use the workspace's isolated computer, never the user's host session.
+  if (
+    !persisted.tradingRole &&
+    ([USER_COMPUTER_SHELL_TOOL, USER_COMPUTER_OBSERVE_TOOL, USER_COMPUTER_ACT_TOOL].includes(
+      name,
+    ) ||
+      persisted.computer?.kind === "desktop")
+  )
+    return {
+      error:
+        "General Bots require a workspace-isolated computer; host computer access is unavailable",
+      code: "WORKSPACE_ISOLATION",
+    };
   if (ctx.state.handedOff) {
     return {
       error: "This stage was handed off. End the turn without more tool calls.",

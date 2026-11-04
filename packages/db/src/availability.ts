@@ -9,8 +9,15 @@ export function availableInSpace(scope: { spaceId: string; userId: string }) {
     userId: scope.userId,
     OR: [
       { spaceId: scope.spaceId },
-      { allSpaces: true },
-      { availableIn: { some: { spaceId: scope.spaceId } } },
+      {
+        // Global availability is only for general workspaces. Trading resources never
+        // become writable dependencies of a general Bot, or visible across businesses.
+        space: {
+          kind: "general",
+          organization: { spaces: { some: { id: scope.spaceId, kind: "general" } } },
+        },
+        OR: [{ allSpaces: true }, { availableIn: { some: { spaceId: scope.spaceId } } }],
+      },
     ],
   };
 }
@@ -37,5 +44,14 @@ export function spaceAvailability(row: {
       row.spaceId,
       ...(row.availableIn ?? []).map((entry) => entry.spaceId).filter((id) => id !== row.spaceId),
     ],
+  };
+}
+
+/** Host stdio processes have no workspace filesystem boundary; general Bots cannot use them. */
+export function mcpAvailableToBot(scope: { spaceId: string; userId: string }) {
+  return {
+    enabled: true,
+    ...availableInSpace(scope),
+    AND: [{ OR: [{ transport: { not: "stdio" } }, { space: { kind: "trading" } }] }],
   };
 }

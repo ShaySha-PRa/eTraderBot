@@ -14,9 +14,9 @@ export function lockOwner(tx: Prisma.TransactionClient, userId: string, scope: s
   return tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtextextended(${`${scope}:${userId}`}, 0))`;
 }
 
-/** What a user adds themselves follows them into every space; see VISION.md. */
+/** New connections and skills start in their own workspace. Sharing is explicit. */
 export function userAddedAvailability(actor: Pick<Actor, "spaceId">): SpaceAvailability {
-  return { allSpaces: true, spaceIds: [actor.spaceId] };
+  return { allSpaces: false, spaceIds: [actor.spaceId] };
 }
 
 function overlaps(a: SpaceAvailability, b: SpaceAvailability): boolean {
@@ -232,6 +232,18 @@ export async function setAvailability(
           ? await tx.mcpServer.findFirst({ where: { ...visible, installId: null } })
           : await tx.capabilityInstall.findFirst({ where: visible });
     if (!item) throw new ORPCError("NOT_FOUND");
+    const involved = await tx.space.findMany({
+      where: { id: { in: [...new Set([item.spaceId, ...input.spaceIds])] } },
+      select: { id: true, kind: true },
+    });
+    if (
+      involved.some((space) => space.kind === "trading") &&
+      (input.allSpaces || input.spaceIds.some((id) => id !== item.spaceId))
+    )
+      throw new ORPCError("FORBIDDEN", {
+        message:
+          "Trading workspace resources cannot be shared or moved through availability; grant read-only access to selected material instead",
+      });
     return place(tx, actor, input.kind, item, input);
   });
 }

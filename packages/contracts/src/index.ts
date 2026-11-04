@@ -46,6 +46,8 @@ export * from "./trading-bot-template.js";
 export * from "./trading-control.js";
 export * from "./trading-learning.js";
 export * from "./trading-rpc.js";
+export * from "./trading-weather.js";
 export * from "./trading-workspace.js";
 export * from "./user-devices.js";
 export * from "./voice-errors.js";
+export * from "./workspace-access.js";

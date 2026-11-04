@@ -221,7 +221,16 @@ export class HonchoMemoryProvider implements SemanticMemoryProvider {
   }
 
   /** Local hosts are checked and pinned before the first request, then reused. */
-  private async connectionForRequest(): Promise<SemanticMemoryResponse<HonchoConnectionConfig>> {
+  private async connectionForRequest(
+    context: AdapterContext,
+  ): Promise<SemanticMemoryResponse<HonchoConnectionConfig>> {
+    const configured = this.settings.workspaceId?.trim();
+    if (configured && configured !== honchoWorkspaceId({}, context.spaceId))
+      return {
+        ok: false,
+        error:
+          "External memory namespace is not isolated to this workspace. Review legacy ownership before reconnecting.",
+      };
     if (!this.localHost) return { ok: true, value: this.connection };
     const blocked = await this.localHost.block();
     if (blocked) return { ok: false, error: blocked };
@@ -268,7 +277,7 @@ export class HonchoMemoryProvider implements SemanticMemoryProvider {
     request: SemanticMemoryRecallRequest,
     context: AdapterContext,
   ): Promise<SemanticMemoryResponse<SemanticMemoryResult[]>> {
-    const connection = await this.connectionForRequest();
+    const connection = await this.connectionForRequest(context);
     if (!connection.ok) return connection;
     const workspaceId = honchoWorkspaceId(this.settings, context.spaceId);
     const bot = honchoBotPeerId(request.botId);
@@ -378,7 +387,7 @@ export class HonchoMemoryProvider implements SemanticMemoryProvider {
     }
     const content = truncateUtf8(request.content.trim(), MAX_HONCHO_CONCLUSION_BYTES);
     if (!content) return { ok: false, error: "Honcho save skipped: memory content is empty." };
-    const connection = await this.connectionForRequest();
+    const connection = await this.connectionForRequest(context);
     if (!connection.ok) return connection;
     const workspaceId = honchoWorkspaceId(this.settings, context.spaceId);
     const bot = honchoBotPeerId(request.botId);
@@ -406,7 +415,7 @@ export class HonchoMemoryProvider implements SemanticMemoryProvider {
     if (request.entity && !observers.includes(request.entity)) {
       return { ok: false, error: "That memory belongs to another bot or Space." };
     }
-    const connection = await this.connectionForRequest();
+    const connection = await this.connectionForRequest(context);
     if (!connection.ok) return connection;
     const workspaceId = honchoWorkspaceId(this.settings, context.spaceId);
     const found = await getHonchoConclusion(connection.value, workspaceId, id, context.signal);

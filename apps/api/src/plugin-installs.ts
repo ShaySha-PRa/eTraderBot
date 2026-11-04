@@ -308,12 +308,12 @@ export async function installPlugin(
         if (installed) {
           throw new ORPCError("CONFLICT", { message: "This plugin is already installed" });
         }
-        const everywhere = { spaceId: actor.spaceId, allSpaces: true, availableIn: [] };
+        const everywhere = { spaceId: actor.spaceId, allSpaces: false, availableIn: [] };
         if (parts.includes("skills")) await assertSkillNamesFree(tx, actor, plugin, everywhere);
         const install = await tx.capabilityInstall.create({
           data: {
             ...scope,
-            allSpaces: true,
+            allSpaces: false,
             kind: "plugin",
             name: input.name.trim() || plugin.name,
             source,

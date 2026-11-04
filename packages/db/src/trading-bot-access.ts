@@ -2,6 +2,7 @@ import type { TradingBotIdentity } from "@rakazo/adapter-kit";
 import { TradingDeskSchema } from "@rakazo/contracts";
 import { tradingAssert } from "@rakazo/core";
 import type { Prisma, PrismaClient } from "./client.js";
+import { requireIsolatedBot } from "./workspace-isolation.js";
 
 export async function checkTradingBot(
   db: Prisma.TransactionClient | PrismaClient,
@@ -9,6 +10,7 @@ export async function checkTradingBot(
   deskId: string,
   write = false,
 ) {
+  await requireIsolatedBot(db, identity);
   const desk = await db.tradingDesk.findFirst({
     where: { id: deskId, spaceId: identity.spaceId, ownerUserId: identity.userId },
   });
@@ -23,7 +25,11 @@ export async function checkTradingBot(
   const binding = await db.tradingBotBinding.findFirst({
     where: { deskId, botId: identity.botId },
   });
-  tradingAssert(desk && bot && binding, "FORBIDDEN", "Bot is not assigned to this trading scope");
+  tradingAssert(
+    desk && bot?.tradingRole && binding && binding.role === bot.tradingRole,
+    "FORBIDDEN",
+    "Bot is not assigned to this trading scope",
+  );
   const scope = TradingDeskSchema.shape.scope.parse(desk.scope);
   if (write)
     tradingAssert(

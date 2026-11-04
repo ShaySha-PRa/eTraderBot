@@ -163,9 +163,9 @@ it("follows the account until a setting is customized, then edits the Space's ow
   await vi.waitFor(() => expect(button("Customize Models")).not.toBeNull());
   expect(button("Customize Voice")?.textContent).toBe("Customize");
   expect(button("Customize Approvals")).not.toBeNull();
-  expect(button("Customize Vault")).not.toBeNull();
-  expect(container.textContent?.match(/Your defaults/g)).toHaveLength(4);
-  expect(panels).toEqual([]);
+  expect(button("Customize Vault")).toBeNull();
+  expect(container.textContent?.match(/Your defaults/g)).toHaveLength(3);
+  expect(new Set(panels)).toEqual(new Set(["credentials:space"]));
   // The calls go to the space these settings are bound to, not the selected one.
   expect(rpcForSpace).toHaveBeenCalledWith("space-a");
 
@@ -174,9 +174,9 @@ it("follows the account until a setting is customized, then edits the Space's ow
   await vi.waitFor(() =>
     expect(container.querySelector('[data-testid="voice-panel"]')).not.toBeNull(),
   );
-  expect(new Set(panels)).toEqual(new Set(["voice:space"]));
+  expect(new Set(panels)).toEqual(new Set(["voice:space", "credentials:space"]));
   expect(button("Use defaults for Voice")?.textContent).toBe("Use defaults");
-  expect(container.textContent?.match(/Your defaults/g)).toHaveLength(3);
+  expect(container.textContent?.match(/Your defaults/g)).toHaveLength(2);
 
   await click("Use defaults for Voice");
   expect(spaceSettings.setOverride).toHaveBeenLastCalledWith({ setting: "voice", enabled: false });
@@ -192,49 +192,22 @@ it("opens the panels a Space already customizes", async () => {
   );
   expect(container.querySelector('[data-testid="confirmations-panel"]')).not.toBeNull();
   expect(container.querySelector('[data-testid="voice-panel"]')).toBeNull();
-  expect(new Set(panels)).toEqual(new Set(["models:space", "confirmations:space"]));
+  expect(new Set(panels)).toEqual(
+    new Set(["models:space", "confirmations:space", "credentials:space"]),
+  );
 });
 
-it("asks before going back to the defaults deletes the Space's own vault", async () => {
-  spaceSettings.overrides.mockResolvedValue(["credentials"]);
-  spaceSettings.setOverride.mockResolvedValue([]);
+it("keeps the workspace vault isolated without an account-default reset", async () => {
+  spaceSettings.overrides.mockResolvedValue([]);
   await render();
   await vi.waitFor(() =>
     expect(container.querySelector('[data-testid="credentials-panel"]')).not.toBeNull(),
   );
-  expect(new Set(panels)).toEqual(new Set(["credentials:space"]));
-  const dialog = () => container.querySelector('[data-testid="confirm-dialog"]');
-
-  // A credential still saving would land in the vault being deleted, so the reset waits for it.
+  expect(button("Customize Vault")).toBeNull();
+  expect(button("Use defaults for Vault")).toBeNull();
   await click("Start saving");
-  expect(button("Use defaults for Vault")?.disabled).toBe(true);
   await click("Finish saving");
-  expect(button("Use defaults for Vault")?.disabled).toBe(false);
-
-  await click("Use defaults for Vault");
   expect(spaceSettings.setOverride).not.toHaveBeenCalled();
-  expect(dialog()?.textContent).toContain("Delete this Space's credentials?");
-  const cancel = [...(dialog()?.querySelectorAll("button") ?? [])].find(
-    (item) => item.textContent === "Cancel",
-  );
-  await act(async () => cancel?.click());
-  expect(dialog()).toBeNull();
-  expect(spaceSettings.setOverride).not.toHaveBeenCalled();
-
-  await click("Use defaults for Vault");
-  const confirm = [...(dialog()?.querySelectorAll("button") ?? [])].find(
-    (item) => item.textContent === "Delete",
-  );
-  await act(async () => confirm?.click());
-  expect(spaceSettings.setOverride).toHaveBeenCalledWith({
-    setting: "credentials",
-    enabled: false,
-  });
-  await vi.waitFor(() =>
-    expect(container.querySelector('[data-testid="credentials-panel"]')).toBeNull(),
-  );
-  expect(dialog()).toBeNull();
-  expect(button("Customize Vault")).not.toBeNull();
 });
 
 it("keeps the row as it was when customizing fails", async () => {
@@ -245,5 +218,5 @@ it("keeps the row as it was when customizing fails", async () => {
   await click("Customize Models");
   await vi.waitFor(() => expect(container.textContent).toContain("Space is unavailable"));
   expect(button("Customize Models")).not.toBeNull();
-  expect(panels).toEqual([]);
+  expect(new Set(panels)).toEqual(new Set(["credentials:space"]));
 });

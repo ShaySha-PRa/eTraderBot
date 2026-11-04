@@ -50,6 +50,7 @@ import { routinesRoutes } from "./routes/routines.js";
 import { spacesRoutes } from "./routes/spaces.js";
 import { threadsRoutes } from "./routes/threads.js";
 import { tradingRoutes } from "./routes/trading.js";
+import { workspaceAccessRoutes } from "./routes/workspace-access.js";
 import type { VoiceDeps } from "./voice.js";
 
 export { nextConnectionLabel } from "./model-credentials.js";
@@ -164,5 +165,6 @@ export function createRouter(deps: RouterDeps) {
     ...contentRoutes(ctx),
     ...paymentWalletRoutes(ctx),
     ...tradingRoutes(ctx),
+    ...workspaceAccessRoutes(ctx),
   });
 }

@@ -13,7 +13,6 @@ import { RunHistoryWriteError } from "@rakazo/db";
 import { createLogger, createTestSink, installLogger } from "@rakazo/logging";
 import { describe, expect, it, vi } from "vitest";
 import { builtinAgentTools } from "./builtin-tools.js";
-import { createRunExecutor as createExecutor } from "./executor.js";
 import { UnavailableModelForAuthError, validateConnectedModelChoice } from "./model-selection.js";
 import {
   filterImageReturningComputerTools,
@@ -44,6 +43,7 @@ import {
   withRecentTurnImages,
 } from "./run-turn-images.js";
 import { mainRole, withModelRoles } from "./testing/model-roles.js";
+import { createRunExecutor as createExecutor } from "./testing/workspace-executor.js";
 import {
   appendToolCompletionAudit,
   toolCompletionAuditPayload,

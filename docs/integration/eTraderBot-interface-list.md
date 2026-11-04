@@ -86,3 +86,7 @@ pnpm exec tsx packages/core/scripts/validate-trading-fixtures.ts docs/integratio
 ```
 
 校验以数据与规则均已被观察到的最早时刻重放，保留原资料，不重写时间或来源；存在失败时退出码为 1。JSON 结构通过不代表可计算：数据与规则必须有重叠的有效期，成本段必须覆盖可发能力，可执行买卖报价须符合规则步长。价格预测可保留估计精度，储能基线生成报价时按方向取保守合法步长。公开历史资料的来源真实性与是否含未来信息仍需提供方另外核实。
+
+## 天气预测扩展
+
+已增加独立于交易快照的天气数据接入，支持主动拉取与外部推送；公司内部模型的输出由本地确定性模拟服务替代。见[天气接入说明](./eTraderBot-weather-api.md)、[天气 OpenAPI](./eTraderBot-weather-api.openapi.json)及[合成预测样例](./fixtures/weather-forecast.synthetic.json)。天气不会自动变为负荷、出力或交易信号。
