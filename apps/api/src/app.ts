@@ -116,6 +116,7 @@ import {
   createPool,
   createSecurityEventPruner,
   createThreadEvents,
+  createTradingBotService,
   describeRowSecurity,
   IsolationError,
   installAuditEventStore,
@@ -518,6 +519,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
       accessToken: env.expoAccessToken,
     });
   const auth = createAuth(prisma, {
+    localAutoLoginEmail: env.localAutoLoginEmail,
     analytics,
     passwordAuth: env.passwordAuth,
     breachedPasswordCheck: env.breachedPasswordCheck,
@@ -617,6 +619,7 @@ async function buildApp(overrides: CreateAppOverrides): Promise<AppHandles> {
     ? new UserDevices({ prisma, forwardSecret: userDeviceSecret, hub: userDeviceHub })
     : undefined;
   const executor = createRunExecutor({
+    trading: createTradingBotService(prisma, undefined, jobs),
     billingEnabled: modelCreditsEnabled,
     maxUploadSizeBytes: env.maxUploadSizeBytes,
     contextStrategy,

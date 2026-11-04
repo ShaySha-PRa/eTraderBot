@@ -1,0 +1,31 @@
+{
+  "clientRequestId": "req-batch2-open",
+  "intent": {
+    "intentId": "intent-batch2-open",
+    "intentHash": "6c5e4e11046489286c3ca0b6863653545bedfe04146b1a67ef44fcf047d4dd9e",
+    "scope": {
+      "subjectId": "sto-sh-bess-05",
+      "subjectKind": "storage",
+      "accountId": "acct-sto-sh-02",
+      "assetId": "asset-bess-sh-05",
+      "region": "CN-SH",
+      "marketId": "mkt-sh-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation"
+    },
+    "algorithmVersionId": "algo-storage-shadow-v0",
+    "snapshotId": "snap-sto-shbess5-20250320",
+    "ruleVersion": "2025.03.sim.batch2",
+    "lines": [
+      {
+        "start": "2025-03-20T19:00:00+08:00",
+        "end": "2025-03-20T20:00:00+08:00",
+        "side": "sell",
+        "energyMwh": "3",
+        "limitPrice": "480"
+      }
+    ],
+    "expiresAt": "2025-03-20T17:00:00+08:00"
+  }
+}

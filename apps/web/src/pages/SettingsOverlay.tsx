@@ -186,7 +186,7 @@ export function SettingsOverlay({
 
   const sectionTitle =
     section === "space"
-      ? (space?.name ?? t`Space`)
+      ? (space?.name ?? t`Business scope`)
       : (navItems.find((item) => item.id === section)?.label ??
         (section === "general" ? t`General` : t`Settings`));
 
@@ -353,7 +353,7 @@ export function SettingsOverlay({
                       />
                       {/* One space is just the app, so there is nothing to tell apart or manage. */}
                       {spaces.length > 1 && onOpenSpace ? (
-                        <SettingsGroup title={t`Spaces`} data-testid="settings-spaces">
+                        <SettingsGroup title={t`Business scopes`} data-testid="settings-spaces">
                           {spaces.map((option) => (
                             <SettingsRow
                               key={option.id}

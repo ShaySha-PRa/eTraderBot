@@ -43,5 +43,15 @@
     "id": "settings",
     "title": "Settings",
     "flow": "flows/settings.yaml"
+  },
+  {
+    "id": "trading",
+    "title": "Trading",
+    "flow": "flows/trading.yaml"
+  },
+  {
+    "id": "bot-templates",
+    "title": "Bot templates",
+    "flow": "flows/bot-templates.yaml"
   }
 ]

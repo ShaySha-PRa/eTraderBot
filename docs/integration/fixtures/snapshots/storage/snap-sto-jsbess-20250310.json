@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1",
+  "snapshotId": "snap-sto-jsbess-20250310",
+  "scope": {
+    "subjectId": "sto-js-bess-03",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-js-01",
+    "region": "CN-JS",
+    "marketId": "mkt-js-spot-sim",
+    "productId": "prod-energy",
+    "stage": "mid_long_term",
+    "environment": "simulation",
+    "assetId": "asset-bess-js-03"
+  },
+  "source": {
+    "sourceId": "ln-fgw-unified-settlement-da-hourly-2025-03-10",
+    "kind": "user",
+    "observedAt": "2025-03-09T18:05:00+08:00",
+    "asOf": "2025-03-09T18:00:00+08:00",
+    "validUntil": "2025-03-10T12:00:00+08:00",
+    "revision": "ln-public-transcribe-1"
+  },
+  "rules": {
+    "id": "rules-sim-da-storage",
+    "version": "2025.03.sim.1",
+    "source": {
+      "sourceId": "rules-sim-da-storage-src",
+      "kind": "synthetic",
+      "observedAt": "2025-03-09T18:05:00+08:00",
+      "asOf": "2025-03-09T18:00:00+08:00",
+      "validUntil": "2025-03-10T12:00:00+08:00",
+      "revision": "rv1"
+    },
+    "verification": "synthetic",
+    "effectiveFrom": "2025-01-01T00:00:00+08:00",
+    "effectiveTo": "2026-12-31T23:59:59+08:00",
+    "timezone": "Asia/Shanghai",
+    "currency": "CNY",
+    "intervalMinutes": 60,
+    "priceMin": "-80",
+    "priceMax": "1500",
+    "priceStep": "0.1",
+    "energyStep": "0.1",
+    "maxSnapshotAgeSeconds": 86400
+  },
+  "input": {
+    "kind": "storage",
+    "capacityMwh": "50",
+    "initialEnergyMwh": "25",
+    "minEnergyMwh": "2",
+    "maxEnergyMwh": "49",
+    "terminalMinEnergyMwh": "12.5",
+    "maxChargeMw": "25",
+    "maxDischargeMw": "25",
+    "chargeEfficiency": "0.95",
+    "dischargeEfficiency": "0.95",
+    "degradationCostPerMwh": "12",
+    "intervals": [
+      {
+        "start": "2025-03-10T00:00:00+08:00",
+        "end": "2025-03-10T01:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T01:00:00+08:00",
+        "end": "2025-03-10T02:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T02:00:00+08:00",
+        "end": "2025-03-10T03:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T03:00:00+08:00",
+        "end": "2025-03-10T04:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T04:00:00+08:00",
+        "end": "2025-03-10T05:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T05:00:00+08:00",
+        "end": "2025-03-10T06:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T06:00:00+08:00",
+        "end": "2025-03-10T07:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T07:00:00+08:00",
+        "end": "2025-03-10T08:00:00+08:00",
+        "forecastPrice": "5.595"
+      },
+      {
+        "start": "2025-03-10T08:00:00+08:00",
+        "end": "2025-03-10T09:00:00+08:00",
+        "forecastPrice": "32.4425"
+      },
+      {
+        "start": "2025-03-10T09:00:00+08:00",
+        "end": "2025-03-10T10:00:00+08:00",
+        "forecastPrice": "40.4525"
+      },
+      {
+        "start": "2025-03-10T10:00:00+08:00",
+        "end": "2025-03-10T11:00:00+08:00",
+        "forecastPrice": "40.1775"
+      },
+      {
+        "start": "2025-03-10T11:00:00+08:00",
+        "end": "2025-03-10T12:00:00+08:00",
+        "forecastPrice": "32.585"
+      },
+      {
+        "start": "2025-03-10T12:00:00+08:00",
+        "end": "2025-03-10T13:00:00+08:00",
+        "forecastPrice": "29.005"
+      },
+      {
+        "start": "2025-03-10T13:00:00+08:00",
+        "end": "2025-03-10T14:00:00+08:00",
+        "forecastPrice": "28.43"
+      },
+      {
+        "start": "2025-03-10T14:00:00+08:00",
+        "end": "2025-03-10T15:00:00+08:00",
+        "forecastPrice": "27.44"
+      },
+      {
+        "start": "2025-03-10T15:00:00+08:00",
+        "end": "2025-03-10T16:00:00+08:00",
+        "forecastPrice": "28.375"
+      },
+      {
+        "start": "2025-03-10T16:00:00+08:00",
+        "end": "2025-03-10T17:00:00+08:00",
+        "forecastPrice": "29.9075"
+      },
+      {
+        "start": "2025-03-10T17:00:00+08:00",
+        "end": "2025-03-10T18:00:00+08:00",
+        "forecastPrice": "34.24"
+      },
+      {
+        "start": "2025-03-10T18:00:00+08:00",
+        "end": "2025-03-10T19:00:00+08:00",
+        "forecastPrice": "35.9025"
+      },
+      {
+        "start": "2025-03-10T19:00:00+08:00",
+        "end": "2025-03-10T20:00:00+08:00",
+        "forecastPrice": "30.6025"
+      },
+      {
+        "start": "2025-03-10T20:00:00+08:00",
+        "end": "2025-03-10T21:00:00+08:00",
+        "forecastPrice": "28.115"
+      },
+      {
+        "start": "2025-03-10T21:00:00+08:00",
+        "end": "2025-03-10T22:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T22:00:00+08:00",
+        "end": "2025-03-10T23:00:00+08:00",
+        "forecastPrice": "0"
+      },
+      {
+        "start": "2025-03-10T23:00:00+08:00",
+        "end": "2025-03-11T00:00:00+08:00",
+        "forecastPrice": "0"
+      }
+    ]
+  }
+}

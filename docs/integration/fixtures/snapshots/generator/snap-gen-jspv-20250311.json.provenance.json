@@ -1,0 +1,14 @@
+{
+  "snapshotId": "snap-gen-jspv-20250311",
+  "forecastPrice": {
+    "origin": "Liaoning DRC public unified-settlement day-ahead price",
+    "aggregation": "hourly arithmetic mean of 15-min points",
+    "unit": "CNY/MWh",
+    "tradeDate": "2025-03-11",
+    "pdfUrl": "https://fgw.ln.gov.cn/fgw/articleFileDir/2025-03/12/a941c6f49cd0433c81493f5cdf731176/2025031216432444082.pdf",
+    "tableFile": "public-sources/liaoning-unified-settlement/2025-03-11.json",
+    "sourceKind": "user",
+    "notCompanyData": true,
+    "scopeRegionDisclaimer": "scope.region remains simulation stub (CN-SH/JS/SD); prices are LN public overlay for teaching only."
+  }
+}

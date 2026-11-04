@@ -22,6 +22,9 @@ model AiDataConsent {
 }
 
 model User {
+  tradingWorkspaces TradingWorkspace[]
+  tradingDesks TradingDesk[]
+  tradingAnalyses TradingAnalysis[]
   aiDataConsents AiDataConsent[]
   id                          String                       @id
   name                        String
@@ -379,6 +382,9 @@ model Member {
 }
 
 model Space {
+  tradingWorkspaces TradingWorkspace[]
+  tradingDesks TradingDesk[]
+  tradingAnalyses TradingAnalysis[]
   aiDataConsents              AiDataConsent[]
   id                          String                       @id
   organizationId              String
@@ -685,6 +691,8 @@ model SpaceVoicePreference {
 }
 
 model Bot {
+  tradingRole String?
+  tradingBindings TradingBotBinding[]
   screenGeneration Int @default(0)
   id                String            @id @default(cuid())
   spaceId           String
@@ -1139,6 +1147,7 @@ model ExternalEffect {
 }
 
 model Routine {
+  tradingLearningPlan TradingLearningPlan?
   id             String    @id @default(cuid())
   spaceId        String
   space          Space     @relation(fields: [spaceId], references: [id], onDelete: Cascade)
@@ -2254,4 +2263,287 @@ model CapabilityInstallSpace {
   @@id([installId, spaceId])
   @@index([spaceId, userId])
   @@map("capability_install_spaces")
+}
+
+/// Immutable synthetic analysis evidence. Live execution authorization is a separate concern.
+model TradingAnalysis {
+  id String @id
+  spaceId String
+  userId String
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  snapshot Json
+  decision Json
+  parameters Json
+  createdAt DateTime @default(now())
+
+  @@index([spaceId, userId, createdAt, id])
+  @@map("trading_analyses")
+}
+
+model TradingDesk {
+  simulationPolicy TradingSimulationPolicy?
+  workspaceLink TradingWorkspaceDesk?
+  learningPlans TradingLearningPlan[]
+  learningSources TradingLearningSource[]
+  learningSessions TradingLearningSession[]
+  learningReports TradingLearningReport[]
+  learningRequests TradingLearningRequest[]
+  bindings TradingBotBinding[]
+  id String @id
+  spaceId String
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  ownerUserId String
+  owner User @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  algorithmApproverUserId String
+  tradeApproverUserId String
+  scope Json
+  createdAt DateTime @default(now())
+  versions TradingVersion[]
+  intents TradingIntent[]
+  grants TradingGrant[]
+  executions TradingExecution[]
+  audit TradingAudit[]
+
+  @@index([spaceId, ownerUserId])
+  @@index([spaceId, algorithmApproverUserId])
+  @@index([spaceId, tradeApproverUserId])
+  @@map("trading_desks")
+}
+
+model TradingVersion {
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  algorithmVersionId String
+  artifactHash String
+  artifact String
+  parameters Json
+  validation Json
+  status String @default("pending")
+  approvedByUserId String?
+  approvedAt DateTime?
+  createdAt DateTime @default(now())
+  intents TradingIntent[]
+  grants TradingGrant[]
+
+  @@unique([deskId, algorithmVersionId])
+  @@map("trading_versions")
+}
+
+model TradingIntent {
+  botId String?
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  versionId String
+  version TradingVersion @relation(fields: [versionId], references: [id])
+  analysisId String
+  intent Json
+  snapshot Json
+  parameters Json
+  grossNotionalCny Decimal @db.Decimal(36, 6)
+  approvedByUserId String?
+  approvedAt DateTime?
+  createdAt DateTime @default(now())
+  execution TradingExecution?
+
+  @@index([deskId, createdAt])
+  @@map("trading_intents")
+}
+
+model TradingGrant {
+  botId String?
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  versionId String
+  version TradingVersion @relation(fields: [versionId], references: [id])
+  perTradeLimitCny Decimal @db.Decimal(36, 6)
+  cumulativeLimitCny Decimal @db.Decimal(36, 6)
+  usedCny Decimal @default(0) @db.Decimal(36, 6)
+  reservedCny Decimal @default(0) @db.Decimal(36, 6)
+  allowCancellation Boolean @default(false)
+  expiresAt DateTime
+  revokedAt DateTime?
+  approvedByUserId String
+  createdAt DateTime @default(now())
+  executions TradingExecution[]
+
+  @@index([deskId, createdAt])
+  @@map("trading_grants")
+}
+
+model TradingExecution {
+  simulationScenario String @default("immediate_fill")
+  events TradingExecutionEvent[]
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  intentId String @unique
+  intent TradingIntent @relation(fields: [intentId], references: [id])
+  grantId String?
+  grant TradingGrant? @relation(fields: [grantId], references: [id])
+  clientRequestId String
+  requestHash String
+  receipt Json
+  createdAt DateTime @default(now())
+
+  @@unique([deskId, clientRequestId])
+  @@index([deskId, createdAt])
+  @@map("trading_executions")
+}
+
+model TradingAudit {
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  actorUserId String
+  kind String
+  recordId String
+  createdAt DateTime @default(now())
+
+  @@index([deskId, createdAt])
+  @@map("trading_audit")
+}
+
+model TradingBotBinding {
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  botId String
+  bot Bot @relation(fields: [botId], references: [id], onDelete: Cascade)
+  role String
+  createdAt DateTime @default(now())
+
+  @@id([deskId, botId])
+  @@index([botId])
+  @@map("trading_bot_bindings")
+}
+
+model TradingLearningPlan {
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  botId String
+  routineId String @unique
+  routine Routine @relation(fields: [routineId], references: [id], onDelete: Cascade)
+  time String
+  baselineMargin String @default("0")
+  createdAt DateTime @default(now())
+  @@unique([deskId, botId])
+  @@map("trading_learning_plans")
+}
+
+model TradingLearningSource {
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  kind String
+  reference String
+  content String
+  contentHash String
+  createdAt DateTime @default(now())
+  @@unique([deskId, kind, reference, contentHash])
+  @@index([deskId, createdAt])
+  @@map("trading_learning_sources")
+}
+
+model TradingLearningSession {
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  botId String
+  runId String @unique
+  inputHash String
+  engineHash String
+  baselineMargin String
+  sources Json
+  createdAt DateTime @default(now())
+  report TradingLearningReport?
+  @@index([deskId, createdAt])
+  @@map("trading_learning_sessions")
+}
+
+model TradingLearningReport {
+  id String @id
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  sessionId String @unique
+  session TradingLearningSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  body Json
+  createdAt DateTime @default(now())
+  @@index([deskId, createdAt])
+  @@map("trading_learning_reports")
+}
+
+model TradingLearningRequest {
+  deskId String
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  clientRequestId String
+  botId String
+  runId String
+  @@id([deskId, clientRequestId])
+  @@map("trading_learning_requests")
+}
+
+model TradingWorkspace {
+  id String @id
+  name String
+  spaceId String
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  ownerUserId String
+  owner User @relation(fields: [ownerUserId], references: [id], onDelete: Cascade)
+  algorithmApproverUserId String
+  tradeApproverUserId String
+  scope Json
+  createdAt DateTime @default(now())
+  desks TradingWorkspaceDesk[]
+  interfaces TradingWorkspaceInterface[]
+  @@unique([spaceId])
+  @@index([spaceId, ownerUserId])
+  @@map("trading_workspaces")
+}
+
+model TradingWorkspaceDesk {
+  deskId String @id
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace TradingWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  @@index([workspaceId])
+  @@map("trading_workspace_desks")
+}
+
+model TradingWorkspaceInterface {
+  id String @id
+  workspaceId String
+  workspace TradingWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  name String
+  purpose String
+  config Json
+  secretId String?
+  revision Int @default(1)
+  updatedAt DateTime @updatedAt
+  @@index([workspaceId])
+  @@map("trading_workspace_interfaces")
+}
+
+model TradingSimulationPolicy {
+  deskId String @id
+  desk TradingDesk @relation(fields: [deskId], references: [id], onDelete: Cascade)
+  scenario String @default("immediate_fill")
+  @@map("trading_simulation_policies")
+}
+
+model TradingExecutionEvent {
+  id String @id
+  executionId String
+  execution TradingExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  sequence Int
+  receipt Json
+  operation String
+  clientRequestId String?
+  createdAt DateTime @default(now())
+  @@unique([executionId, sequence])
+  @@unique([executionId, clientRequestId])
+  @@map("trading_execution_events")
 }

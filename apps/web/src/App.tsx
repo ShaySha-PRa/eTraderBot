@@ -14,6 +14,7 @@ import {
 import { Navigate, Outlet, Route, Routes, useLocation, useSearchParams } from "react-router-dom";
 import { LoadingState } from "./components/ai/primitives";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
 import { MarkdownLinkPrompt } from "./components/markdown-link-prompt";
 import { PageLoading } from "./components/PageLoading";
 import { SubscriptionGate } from "./components/SubscriptionGate";
@@ -182,108 +183,121 @@ function SessionApp() {
   return (
     <QueryUserProvider value={user?.id ?? null}>
       <MarkdownLinkPrompt>
-        <div className="h-full" data-rakazo-app-state="ready">
-          <Suspense fallback={<PageLoading />}>
-            <Routes>
-              <Route path="/" element={user ? <Navigate to="/app" replace /> : <WelcomePage />} />
-              <Route
-                path="/sign-in"
-                element={
-                  user ? (
-                    <Navigate to={signInDestination} replace />
-                  ) : (
-                    <AuthPage key="in" mode="in" />
-                  )
-                }
-              />
-              <Route
-                path="/sign-up"
-                element={
-                  user ? <Navigate to="/onboarding" replace /> : <AuthPage key="up" mode="up" />
-                }
-              />
-              <Route
-                path="/forgot-password"
-                element={
-                  user ? <Navigate to="/app" replace /> : <AuthPage key="forgot" mode="forgot" />
-                }
-              />
-              <Route path="/reset-password" element={<PasswordResetPage />} />
-              <Route
-                path={MCP_OAUTH_CALLBACK_PATH}
-                element={
-                  user ? (
-                    <McpOAuthCallbackPage />
-                  ) : (
-                    <Navigate
-                      to={`/sign-in?next=${encodeURIComponent(pathname + search)}`}
-                      replace
-                    />
-                  )
-                }
-              />
-              <Route
-                path={SLACK_INSTALL_CALLBACK_PATH}
-                element={
-                  user ? (
-                    <SlackInstallCallbackPage />
-                  ) : (
-                    <Navigate
-                      to={`/sign-in?next=${encodeURIComponent(pathname + search)}`}
-                      replace
-                    />
-                  )
-                }
-              />
-              <Route
-                path="/integrations/setup"
-                element={
-                  user ? (
-                    <IntegrationSetupPage />
-                  ) : (
-                    <Navigate to="/sign-in?next=/integrations/setup" replace />
-                  )
-                }
-              />
-              <Route
-                path="/admin/plugins"
-                element={
-                  user ? (
-                    <AdminPluginsPage />
-                  ) : (
-                    <Navigate to="/sign-in?next=/admin/plugins" replace />
-                  )
-                }
-              />
-              <Route
-                path="/admin/access"
-                element={
-                  user ? <AdminAccessPage /> : <Navigate to="/sign-in?next=/admin/access" replace />
-                }
-              />
-              <Route
-                element={
-                  user ? (
-                    <SubscriptionGate fallback={<PageLoading />}>
-                      <Outlet />
-                    </SubscriptionGate>
-                  ) : (
-                    <Navigate to="/sign-in" replace />
-                  )
-                }
-              >
-                <Route path="/onboarding/:step?" element={<OnboardingPage />} />
-                <Route path="/app" element={<ShellPage />} />
-                <Route path="/app/g/:groupId" element={<ShellPage />} />
-                <Route path="/app/artifacts" element={<ArtifactsPage />} />
-                <Route path="/app/artifacts/:artifactId" element={<ArtifactsPage />} />
-                {ticketBoardEnabled ? <Route path="/app/board" element={<BoardPage />} /> : null}
-                <Route path="/app/x/:linkId" element={<NavLinkPage />} />
-                <Route path="/app/:botId" element={<ShellPage />} />
-              </Route>
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
+        <div className="flex h-full min-h-0 flex-col" data-rakazo-app-state="ready">
+          <div
+            className={`app-drag flex h-11 shrink-0 items-center justify-between gap-3 border-b bg-background pe-4 ${desktopBridge() ? "ps-24" : "ps-4"}`}
+          >
+            <span className="truncate text-sm font-medium">eTraderBot</span>
+            <LanguageSwitcher />
+          </div>
+          <div className="relative min-h-0 flex-1 [&_[data-slot=sidebar-container]]:top-11 [&_[data-slot=sidebar-container]]:h-[calc(100svh-2.75rem)]">
+            <Suspense fallback={<PageLoading />}>
+              <Routes>
+                <Route path="/" element={user ? <Navigate to="/app" replace /> : <WelcomePage />} />
+                <Route
+                  path="/sign-in"
+                  element={
+                    user ? (
+                      <Navigate to={signInDestination} replace />
+                    ) : (
+                      <AuthPage key="in" mode="in" />
+                    )
+                  }
+                />
+                <Route
+                  path="/sign-up"
+                  element={
+                    user ? <Navigate to="/onboarding" replace /> : <AuthPage key="up" mode="up" />
+                  }
+                />
+                <Route
+                  path="/forgot-password"
+                  element={
+                    user ? <Navigate to="/app" replace /> : <AuthPage key="forgot" mode="forgot" />
+                  }
+                />
+                <Route path="/reset-password" element={<PasswordResetPage />} />
+                <Route
+                  path={MCP_OAUTH_CALLBACK_PATH}
+                  element={
+                    user ? (
+                      <McpOAuthCallbackPage />
+                    ) : (
+                      <Navigate
+                        to={`/sign-in?next=${encodeURIComponent(pathname + search)}`}
+                        replace
+                      />
+                    )
+                  }
+                />
+                <Route
+                  path={SLACK_INSTALL_CALLBACK_PATH}
+                  element={
+                    user ? (
+                      <SlackInstallCallbackPage />
+                    ) : (
+                      <Navigate
+                        to={`/sign-in?next=${encodeURIComponent(pathname + search)}`}
+                        replace
+                      />
+                    )
+                  }
+                />
+                <Route
+                  path="/integrations/setup"
+                  element={
+                    user ? (
+                      <IntegrationSetupPage />
+                    ) : (
+                      <Navigate to="/sign-in?next=/integrations/setup" replace />
+                    )
+                  }
+                />
+                <Route
+                  path="/admin/plugins"
+                  element={
+                    user ? (
+                      <AdminPluginsPage />
+                    ) : (
+                      <Navigate to="/sign-in?next=/admin/plugins" replace />
+                    )
+                  }
+                />
+                <Route
+                  path="/admin/access"
+                  element={
+                    user ? (
+                      <AdminAccessPage />
+                    ) : (
+                      <Navigate to="/sign-in?next=/admin/access" replace />
+                    )
+                  }
+                />
+                <Route
+                  element={
+                    user ? (
+                      <SubscriptionGate fallback={<PageLoading />}>
+                        <Outlet />
+                      </SubscriptionGate>
+                    ) : (
+                      <Navigate to="/sign-in" replace />
+                    )
+                  }
+                >
+                  <Route path="/onboarding/:step?" element={<OnboardingPage />} />
+                  <Route path="/app" element={<ShellPage />} />
+                  <Route path="/app/g/:groupId" element={<ShellPage />} />
+                  <Route path="/app/artifacts" element={<ArtifactsPage />} />
+                  <Route path="/app/trading" element={<Navigate to="/app" replace />} />
+                  <Route path="/app/artifacts/:artifactId" element={<ArtifactsPage />} />
+                  {ticketBoardEnabled ? <Route path="/app/board" element={<BoardPage />} /> : null}
+                  <Route path="/app/x/:linkId" element={<NavLinkPage />} />
+                  <Route path="/app/:botId" element={<ShellPage />} />
+                </Route>
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+          </div>
         </div>
       </MarkdownLinkPrompt>
     </QueryUserProvider>

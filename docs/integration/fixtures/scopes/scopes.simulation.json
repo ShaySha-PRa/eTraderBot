@@ -1,0 +1,164 @@
+{
+  "scopes": [
+    {
+      "subjectId": "ret-sh-01",
+      "subjectKind": "retailer",
+      "accountId": "acct-ret-sh-01",
+      "region": "CN-SH",
+      "marketId": "mkt-sh-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "ret-sd-01",
+      "subjectKind": "retailer",
+      "accountId": "acct-ret-sd-01",
+      "region": "CN-SD",
+      "marketId": "mkt-sd-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "ret-js-01",
+      "subjectKind": "retailer",
+      "accountId": "acct-ret-js-01",
+      "region": "CN-JS",
+      "marketId": "mkt-js-spot-sim",
+      "productId": "prod-energy",
+      "stage": "intraday",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "gen-sd-wind-01",
+      "subjectKind": "generator",
+      "accountId": "acct-gen-sd-01",
+      "region": "CN-SD",
+      "marketId": "mkt-sd-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation",
+      "assetId": "asset-wind-sd-01"
+    },
+    {
+      "subjectId": "gen-sh-coal-01",
+      "subjectKind": "generator",
+      "accountId": "acct-gen-sh-01",
+      "region": "CN-SH",
+      "marketId": "mkt-sh-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation",
+      "assetId": "asset-coal-sh-01"
+    },
+    {
+      "subjectId": "gen-js-pv-01",
+      "subjectKind": "generator",
+      "accountId": "acct-gen-js-01",
+      "region": "CN-JS",
+      "marketId": "mkt-js-spot-sim",
+      "productId": "prod-energy",
+      "stage": "realtime",
+      "environment": "simulation",
+      "assetId": "asset-pv-js-01"
+    },
+    {
+      "subjectId": "sto-sd-bess-01",
+      "subjectKind": "storage",
+      "accountId": "acct-sto-sd-01",
+      "region": "CN-SD",
+      "marketId": "mkt-sd-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation",
+      "assetId": "asset-bess-sd-01"
+    },
+    {
+      "subjectId": "sto-sh-bess-02",
+      "subjectKind": "storage",
+      "accountId": "acct-sto-sh-01",
+      "region": "CN-SH",
+      "marketId": "mkt-sh-spot-sim",
+      "productId": "prod-energy",
+      "stage": "intraday",
+      "environment": "simulation",
+      "assetId": "asset-bess-sh-02"
+    },
+    {
+      "subjectId": "sto-js-bess-03",
+      "subjectKind": "storage",
+      "accountId": "acct-sto-js-01",
+      "region": "CN-JS",
+      "marketId": "mkt-js-spot-sim",
+      "productId": "prod-energy",
+      "stage": "mid_long_term",
+      "environment": "simulation",
+      "assetId": "asset-bess-js-03"
+    },
+    {
+      "subjectId": "ret-sh-02",
+      "subjectKind": "retailer",
+      "accountId": "acct-ret-sh-02",
+      "region": "CN-SH",
+      "marketId": "mkt-sh-spot-sim",
+      "productId": "prod-energy",
+      "stage": "realtime",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "ret-sd-02",
+      "subjectKind": "retailer",
+      "accountId": "acct-ret-sd-02",
+      "region": "CN-SD",
+      "marketId": "mkt-sd-spot-sim",
+      "productId": "prod-energy",
+      "stage": "mid_long_term",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "gen-sd-coal-02",
+      "subjectKind": "generator",
+      "accountId": "acct-gen-sd-02",
+      "assetId": "asset-coal-sd-02",
+      "region": "CN-SD",
+      "marketId": "mkt-sd-spot-sim",
+      "productId": "prod-energy",
+      "stage": "intraday",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "gen-js-wind-02",
+      "subjectKind": "generator",
+      "accountId": "acct-gen-js-02",
+      "assetId": "asset-wind-js-02",
+      "region": "CN-JS",
+      "marketId": "mkt-js-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "sto-sd-bess-04",
+      "subjectKind": "storage",
+      "accountId": "acct-sto-sd-02",
+      "assetId": "asset-bess-sd-04",
+      "region": "CN-SD",
+      "marketId": "mkt-sd-spot-sim",
+      "productId": "prod-energy",
+      "stage": "realtime",
+      "environment": "simulation"
+    },
+    {
+      "subjectId": "sto-sh-bess-05",
+      "subjectKind": "storage",
+      "accountId": "acct-sto-sh-02",
+      "assetId": "asset-bess-sh-05",
+      "region": "CN-SH",
+      "marketId": "mkt-sh-spot-sim",
+      "productId": "prod-energy",
+      "stage": "day_ahead",
+      "environment": "simulation"
+    }
+  ]
+}

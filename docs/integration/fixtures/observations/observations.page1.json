@@ -1,0 +1,176 @@
+{
+  "items": [
+    {
+      "id": "obs-sim-000",
+      "scope": {
+        "subjectId": "sto-sd-bess-01",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation",
+        "assetId": "asset-bess-sd-01"
+      },
+      "source": {
+        "sourceId": "src-obs-000",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T18:00:30+08:00",
+        "asOf": "2025-03-09T18:00:00+08:00",
+        "validUntil": "2025-04-08T18:00:00+08:00",
+        "revision": "1"
+      },
+      "kind": "chat",
+      "occurredAt": "2025-03-09T18:00:00+08:00",
+      "content": "Trader: Prefer charging below 280 CNY/MWh on shoulder hours; keep SOC above 20% before evening peak.",
+      "snapshotIds": [
+        "snap-ret-sh01-20250310"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-sim-001",
+      "scope": {
+        "subjectId": "ret-sd-01",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-001",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T18:10:30+08:00",
+        "asOf": "2025-03-09T18:10:00+08:00",
+        "validUntil": "2025-04-08T18:10:00+08:00",
+        "revision": "1"
+      },
+      "kind": "chat",
+      "occurredAt": "2025-03-09T18:10:00+08:00",
+      "content": "Trader: Do not discharge across noon if day-ahead peak is already short; wait for evening.",
+      "snapshotIds": [
+        "snap-ret-sh01-20250311"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-sim-002",
+      "scope": {
+        "subjectId": "sto-sd-bess-01",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation",
+        "assetId": "asset-bess-sd-01"
+      },
+      "source": {
+        "sourceId": "src-obs-002",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T18:20:30+08:00",
+        "asOf": "2025-03-09T18:20:00+08:00",
+        "validUntil": "2025-04-08T18:20:00+08:00",
+        "revision": "1"
+      },
+      "kind": "operation",
+      "occurredAt": "2025-03-09T18:20:00+08:00",
+      "content": "SHADOW propose sell 5 MWh @ 520 during 18:00-19:00; awaiting human review.",
+      "snapshotIds": [
+        "snap-ret-sd01-20250310"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-sim-003",
+      "scope": {
+        "subjectId": "ret-sd-01",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-003",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T18:30:30+08:00",
+        "asOf": "2025-03-09T18:30:00+08:00",
+        "validUntil": "2025-04-08T18:30:00+08:00",
+        "revision": "1"
+      },
+      "kind": "operation",
+      "occurredAt": "2025-03-09T18:30:00+08:00",
+      "content": "Gate rejected live submit: missing approval token for intent intent-demo-001.",
+      "snapshotIds": [
+        "snap-ret-sd01-20250312"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-sim-004",
+      "scope": {
+        "subjectId": "sto-sd-bess-01",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation",
+        "assetId": "asset-bess-sd-01"
+      },
+      "source": {
+        "sourceId": "src-obs-004",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T18:40:30+08:00",
+        "asOf": "2025-03-09T18:40:00+08:00",
+        "validUntil": "2025-04-08T18:40:00+08:00",
+        "revision": "1"
+      },
+      "kind": "history",
+      "occurredAt": "2025-03-09T18:40:00+08:00",
+      "content": "Synthetic day-ahead curve used for teaching; not an official provincial clearing print.",
+      "snapshotIds": [
+        "snap-ret-js01-20250310"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-sim-005",
+      "scope": {
+        "subjectId": "ret-sd-01",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-005",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T18:50:30+08:00",
+        "asOf": "2025-03-09T18:50:00+08:00",
+        "validUntil": "2025-04-08T18:50:00+08:00",
+        "revision": "1"
+      },
+      "kind": "file",
+      "occurredAt": "2025-03-09T18:50:00+08:00",
+      "content": "Parsed notes from internal training (synthetic): mid_long_term hedges change economic exposure, not a second battery.",
+      "snapshotIds": [
+        "snap-ret-js01-20250311"
+      ],
+      "executionIds": []
+    }
+  ],
+  "nextCursor": "cursor-obs-page2"
+}

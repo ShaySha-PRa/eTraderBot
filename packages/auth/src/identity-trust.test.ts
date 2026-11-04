@@ -41,6 +41,7 @@ function fixture({
   webOrigin = "http://web.example.test",
   requestOrigin,
   stalledDelivery = false,
+  localAutoLoginEmail,
 }: {
   allowlist?: string;
   delivery?: boolean;
@@ -49,6 +50,7 @@ function fixture({
   requestOrigin?: string;
   /** The provider accepts the message but never settles, like a hung SMTP connection. */
   stalledDelivery?: boolean;
+  localAutoLoginEmail?: string;
 } = {}) {
   const data: Record<string, Record<string, unknown>[]> = {
     user: [],
@@ -146,6 +148,7 @@ function fixture({
   });
   const secret = "offline-auth-secret-at-least-32-characters";
   const auth = createAuth(prisma as never, {
+    localAutoLoginEmail,
     secret,
     baseURL,
     webOrigin,
@@ -261,6 +264,76 @@ function fixture({
 }
 
 beforeEach(() => vi.clearAllMocks());
+
+describe("local auto-login", () => {
+  const local = () =>
+    fixture({
+      baseURL: "http://127.0.0.1:5173",
+      webOrigin: "http://127.0.0.1:5173",
+      delivery: false,
+      localAutoLoginEmail: "local@example.test",
+    });
+  it("opens the configured account without credentials and reuses its signed session", async () => {
+    const f = local();
+    const owner = await f.legacyAccount("local@example.test");
+    f.policy.signupsEnabled = false;
+    const response = await f.request("/get-session");
+    expect(response.status).toBe(200);
+    const body = (await response.json()) as {
+      user: { id: string };
+      session: { id: string; token?: string };
+    };
+    expect(body.user.id).toBe(owner.id);
+    expect(body.session.token).toBeUndefined();
+    const cookie = response.headers
+      .getSetCookie()
+      .map((value) => value.split(";")[0])
+      .join("; ");
+    expect(cookie).not.toBe("");
+    const count = f.data.session!.length;
+    const current = await f.auth.handler(
+      new Request("http://127.0.0.1:5173/api/auth/get-session", { headers: { cookie } }),
+    );
+    const currentBody = (await current.json()) as { session: { id: string } };
+    expect(currentBody.session.id).toBe(body.session.id);
+    expect(f.data.session).toHaveLength(count);
+    const server = await f.auth.api.getSession({ headers: new Headers({ cookie }) });
+    expect(server?.user.id).toBe(owner.id);
+    expect(
+      await f.auth.hasRecentIdentityConfirmation({ userId: owner.id, sessionId: body.session.id }),
+    ).toBe(true);
+    expect(
+      await f.auth.hasRecentIdentityConfirmation({
+        userId: owner.id,
+        sessionId: "missing-session",
+      }),
+    ).toBe(false);
+  });
+  it("does not create an account when the configured account is missing", async () => {
+    const f = local();
+    expect((await f.request("/get-session")).status).toBe(503);
+    expect(f.data.user).toHaveLength(0);
+  });
+  it("does not create sessions for foreign origins or non-loopback requests", async () => {
+    const f = local();
+    await f.legacyAccount("local@example.test");
+    const count = f.data.session!.length;
+    for (const request of [
+      new Request("http://foreign.example.test/api/auth/get-session"),
+      new Request("http://127.0.0.1:5173/api/auth/get-session", {
+        headers: { origin: "https://foreign.example.test", "sec-fetch-site": "cross-site" },
+      }),
+    ]) {
+      const response = await f.auth.handler(request);
+      const body = (await response.json()) as { user?: unknown } | null;
+      expect(body?.user).toBeUndefined();
+      expect(f.data.session).toHaveLength(count);
+    }
+  });
+  it("does not enable auto-login with public auth addresses", () => {
+    expect(() => fixture({ localAutoLoginEmail: "local@example.test" })).toThrow("loopback");
+  });
+});
 
 describe("client address and security events", () => {
   const signInWith = (f: ReturnType<typeof fixture>, headers: Record<string, string>) =>

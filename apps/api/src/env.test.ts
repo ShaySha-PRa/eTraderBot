@@ -7,6 +7,27 @@ const base = {
 };
 
 describe("loadEnv", () => {
+  it("keeps local auto-login off by default and restricts it to development on loopback", () => {
+    expect(loadEnv(base).localAutoLoginEmail).toBeUndefined();
+    const local = {
+      ...base,
+      NODE_ENV: "development",
+      LOCAL_AUTO_LOGIN_EMAIL: "local@example.test",
+      BETTER_AUTH_SECRET: "prod-auth-secret-with-enough-length",
+      ENCRYPTION_KEY: "prod-encryption-key-with-enough-length",
+      SCREEN_PROXY_SECRET: "prod-screen-proxy-secret-with-enough-length",
+    };
+    expect(loadEnv(local).localAutoLoginEmail).toBe("local@example.test");
+    expect(loadEnv({ ...local, NODE_ENV: "test" }).localAutoLoginEmail).toBeUndefined();
+    for (const config of [
+      { NODE_ENV: "production" },
+      { API_HOST: "0.0.0.0" },
+      { WEB_ORIGIN: "https://app.example.test" },
+      { BETTER_AUTH_URL: "https://auth.example.test" },
+      { API_URL: "https://api.example.test" },
+    ])
+      expect(() => loadEnv({ ...local, ...config })).toThrow("LOCAL_AUTO_LOGIN_EMAIL");
+  });
   it("defaults the attachment count to four and accepts configured bounds", () => {
     expect(loadEnv(base).maxAttachmentsPerMessage).toBe(4);
     expect(loadEnv({ ...base, MAX_ATTACHMENTS_PER_MESSAGE: " " }).maxAttachmentsPerMessage).toBe(4);

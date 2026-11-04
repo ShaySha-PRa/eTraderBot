@@ -22,6 +22,12 @@ msgstr " (अपठित)"
 msgid "{0, plural, one {# bot has its own model:} other {# bots have their own model:}}"
 msgstr ""
 
+#. placeholder {0}: availability.spaceIds.length
+#. placeholder {0}: chosen.length
+#: src/components/integrations/space-availability.tsx
+msgid "{0, plural, one {# business scope} other {# business scopes}}"
+msgstr ""
+
 #. placeholder {0}: servers.length
 #: src/pages/PluginsOverlay.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -50,12 +56,6 @@ msgstr ""
 #. placeholder {0}: skillCount(install)
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
-msgstr ""
-
-#. placeholder {0}: availability.spaceIds.length
-#. placeholder {0}: chosen.length
-#: src/components/integrations/space-availability.tsx
-msgid "{0, plural, one {# space} other {# spaces}}"
 msgstr ""
 
 #. placeholder {0}: server.health.toolCount
@@ -425,7 +425,7 @@ msgid "/ month"
 msgstr ""
 
 #: src/components/integrations/space-availability.tsx
-msgid "1 space"
+msgid "1 business scope"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx
@@ -454,6 +454,10 @@ msgstr ""
 msgid "About {label}"
 msgstr "{label} के बारे में"
 
+#: src/pages/Trading.tsx
+msgid "Accepted"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Access token (optional)"
 msgstr "एक्सेस टोकन (वैकल्पिक)"
@@ -469,6 +473,7 @@ msgstr "खाता डिफ़ॉल्ट"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Account ID"
 msgstr "खाता आईडी"
 
@@ -490,11 +495,12 @@ msgid "Actions for {0}"
 msgstr "{0} के लिए कार्रवाइयां"
 
 #: src/pages/shell/shell-dialogs.tsx
-msgid "Actions for space"
+msgid "Actions for business scope"
 msgstr ""
 
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/Trading.tsx
 msgid "Active"
 msgstr ""
 
@@ -555,8 +561,16 @@ msgstr ""
 msgid "Add an HTTPS server URL."
 msgstr "एक HTTPS सर्वर URL दर्ज करें।"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add an MCP connection in Integrations first."
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Add another"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Add bot to business scope"
 msgstr ""
 
 #: src/components/VaultSettings.tsx
@@ -583,9 +597,17 @@ msgstr "फ़ील्ड जोड़ें"
 msgid "Add header"
 msgstr "हेडर जोड़ें"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add interface"
+msgstr ""
+
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "आइटम जोड़ें"
+
+#: src/pages/TradingLearning.tsx
+msgid "Add learning material"
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -657,6 +679,18 @@ msgstr ""
 msgid "Agent from another app"
 msgstr ""
 
+#: src/pages/shell/business-scope.tsx
+msgid "Algorithm approver"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Algorithm version"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Algorithm versions"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "All"
 msgstr ""
@@ -668,11 +702,12 @@ msgstr "पूरे {credit} मॉडल उपयोग में जात�
 #: src/components/integrations/agent-access.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/shell/agent-import.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "All bots"
 msgstr ""
 
 #: src/components/integrations/space-availability.tsx
-msgid "All spaces"
+msgid "All business scopes"
 msgstr ""
 
 #: src/pages/ActivityList.tsx
@@ -693,6 +728,10 @@ msgstr ""
 
 #: src/lib/dictation.ts
 msgid "Allow eTraderBot to use Speech Recognition and the microphone in System Settings."
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Allow executor bot to cancel"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -800,6 +839,10 @@ msgstr ""
 msgid "Any model, with your own key"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API credential"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/lib/localized-provider-hint.ts
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
@@ -818,11 +861,24 @@ msgstr "{provider} के लिए API कुंजी"
 msgid "API key header"
 msgstr "API कुंजी हेडर"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in header"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in query"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 msgid "API keys"
 msgstr "API कुंजियाँ"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API URL"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/shell/create-bot-dialog.tsx
 msgid "Appearance"
 msgstr "रूप"
 
@@ -837,6 +893,10 @@ msgstr "लागू करें"
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Approval boundaries"
 msgstr "अनुमोदन सीमाएं"
+
+#: src/pages/Trading.tsx
+msgid "Approval evidence"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "Approval model"
@@ -853,6 +913,10 @@ msgstr "स्वीकृतियाँ"
 msgid "Approve"
 msgstr "अनुमोदित करें"
 
+#: src/pages/Trading.tsx
+msgid "Approve algorithm"
+msgstr ""
+
 #: src/lib/call-session.ts
 msgid "Approve or deny it on screen."
 msgstr "स्क्रीन पर अनुमोदित या अस्वीकार करें।"
@@ -861,7 +925,12 @@ msgstr "स्क्रीन पर अनुमोदित या अस्�
 msgid "Approve this server to let your agent use its tools."
 msgstr "अपने एजेंट को इसके टूल उपयोग करने देने के लिए इस सर्वर को अनुमोदित करें।"
 
+#: src/pages/Trading.tsx
+msgid "Approve trade"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Approved"
 msgstr ""
 
@@ -903,6 +972,10 @@ msgstr "पूछें"
 msgid "Asleep"
 msgstr "स्लीप में"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Asset ID"
+msgstr ""
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -921,6 +994,11 @@ msgstr "फ़ाइल संलग्न करें"
 msgid "Attachment"
 msgstr "अटैचमेंट"
 
+#: src/pages/Trading.tsx
+msgid "Audit history"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Authentication"
 msgstr ""
@@ -928,6 +1006,10 @@ msgstr ""
 #: src/lib/model-connection-preflight.ts
 msgid "Authentication failed."
 msgstr "प्रमाणीकरण विफल रहा।"
+
+#: src/pages/Trading.tsx
+msgid "Authorization"
+msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -953,6 +1035,14 @@ msgstr "ऑथराइज़ करें"
 #: src/pages/shell/message-cards.tsx
 msgid "Authorize this server so agents can use its tools. A popup opens."
 msgstr "एजेंटों को इसके टूल का उपयोग करने देने के लिए इस सर्वर को ऑथराइज़ करें। एक पॉपअप खुलता है।"
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized materials"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized operation"
+msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Auto"
@@ -986,6 +1076,10 @@ msgstr "शेल कमांड के लिए {commandVariable} के र�
 msgid "Avatar Studio"
 msgstr "अवतार स्टूडियो"
 
+#: src/pages/Trading.tsx
+msgid "Awaiting trade approval"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/AdminAccessPage.tsx
@@ -1001,6 +1095,10 @@ msgstr "अवतार स्टूडियो"
 msgid "Back"
 msgstr "वापस"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Back to bots"
+msgstr ""
+
 #: src/pages/Auth.tsx
 msgid "Back to sign in"
 msgstr "साइन इन पर वापस जाएँ"
@@ -1008,6 +1106,10 @@ msgstr "साइन इन पर वापस जाएँ"
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "बेस URL"
+
+#: src/pages/TradingLearning.tsx
+msgid "Baseline margin"
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "Basic auth"
@@ -1029,6 +1131,10 @@ msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Billing period"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Bind a trading bot to create a learning plan."
 msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
@@ -1068,6 +1174,10 @@ msgstr "बॉट"
 msgid "Bot"
 msgstr "बॉट"
 
+#: src/pages/Trading.tsx
+msgid "Bot cancellation permission"
+msgstr ""
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Bot is watching, not acting"
 msgstr "बॉट देख रहा है, कार्रवाई नहीं कर रहा"
@@ -1083,6 +1193,14 @@ msgstr "बॉट स्क्रीन"
 #: src/pages/shell/computer-panel.tsx
 msgid "Bot screen preview"
 msgstr "बॉट स्क्रीन प्रीव्यू"
+
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Bot template"
+msgstr ""
+
+#: src/pages/Shell.tsx
+msgid "Bot workspace"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 msgid "Bot's model"
@@ -1104,6 +1222,10 @@ msgstr ""
 msgid "Bots with their own computer and browser"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Bounded authorizations"
+msgstr ""
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr ""
@@ -1120,6 +1242,26 @@ msgstr ""
 #: src/pages/shell/agent-import.tsx
 msgid "Built-in"
 msgstr "अंतर्निहित"
+
+#: src/lib/identity-display.ts
+#: src/pages/SettingsOverlay.tsx
+#: src/pages/shell/bot-business-labels.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Business scope"
+msgstr ""
+
+#: src/pages/shell/bot-panel.tsx
+msgid "Business scope default"
+msgstr ""
+
+#: src/pages/SettingsOverlay.tsx
+msgid "Business scopes"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Buy"
+msgstr ""
 
 #: src/pages/shell/chat-header.tsx
 msgid "Call"
@@ -1166,6 +1308,7 @@ msgstr "तस्वीरें नहीं पढ़ सकता"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -1174,6 +1317,7 @@ msgstr "तस्वीरें नहीं पढ़ सकता"
 #: src/pages/Onboarding.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingOverrides.tsx
@@ -1188,6 +1332,10 @@ msgstr "नया बॉट रद्द करें"
 msgid "Cancel new group"
 msgstr "नया समूह रद्द करें"
 
+#: src/pages/Trading.tsx
+msgid "Cancel order"
+msgstr ""
+
 #: src/pages/shell/chat-context.tsx
 msgid "Cancel reply"
 msgstr "उत्तर रद्द करें"
@@ -1196,14 +1344,28 @@ msgstr "उत्तर रद्द करें"
 msgid "Canceled"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Cancellation timeout"
+msgstr ""
+
 #: src/components/CloudAgentCard.tsx
 msgid "cancelled"
 msgstr "रद्द"
 
 #: src/components/AskCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Cancelled"
 msgstr "रद्द किया गया"
+
+#: src/pages/Trading.tsx
+msgid "Candidate analysis"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Candidate margin"
+msgstr ""
 
 #: src/pages/Artifacts.tsx
 msgid "Card view"
@@ -1234,11 +1396,16 @@ msgid "Chart failed to render: {error}"
 msgstr "चार्ट रेंडर नहीं हो सका: {error}"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Chat"
 msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Chat Completions"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Chat feedback"
 msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
@@ -1326,9 +1493,22 @@ msgstr "नया पासवर्ड चुनें"
 msgid "Choose a provider"
 msgstr ""
 
+#: src/pages/TradingLearning.tsx
+msgid "Choose a text file up to 64 KB"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Choose a UTF-8 text file"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 msgid "Choose backup"
 msgstr "बैकअप चुनें"
+
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Choose business scope"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -1512,6 +1692,7 @@ msgid "Complete"
 msgstr "पूर्ण"
 
 #: src/components/SubagentCard.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Completed"
 msgstr "पूर्ण"
 
@@ -1558,6 +1739,14 @@ msgstr "कंप्यूटर बंद हैं। SANDBOX_PROVIDER=docker 
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Configure business scope"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Configured · not verified"
 msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
@@ -1619,6 +1808,10 @@ msgstr "API कुंजी कनेक्ट करें"
 #: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "ऐप कनेक्ट करें"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connect HTTP data APIs or select MCP connections for this business scope. Saving a configuration does not verify connectivity or authorize trades."
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Connect MCP server “{name}”"
@@ -1684,8 +1877,20 @@ msgstr "कनेक्शन परीक्षण विफल रहा।"
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "{0} से कनेक्शन अभी लंबित है। आप इसे बंद करके बाद में जांच सकते हैं।"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connection type"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints failed"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints passed · human review required"
 msgstr ""
 
 #: src/pages/shell/agent-import.tsx
@@ -1721,6 +1926,10 @@ msgstr ""
 #: src/pages/Auth.tsx
 msgid "Continue with {0}"
 msgstr "{0} के साथ जारी रखें"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Contracts, coverage and delivery exposure"
+msgstr ""
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Conversations"
@@ -1859,6 +2068,7 @@ msgstr ""
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/lib/account-security.ts
 #: src/lib/sso-flow.ts
+#: src/lib/trading-actions.ts
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/shell/use-computer.tsx
@@ -1870,6 +2080,10 @@ msgstr "जारी नहीं रखा जा सका"
 msgid "Could not create bot"
 msgstr "बॉट नहीं बनाया जा सका"
 
+#: src/pages/shell/dialogs.tsx
+msgid "Could not create business scope"
+msgstr ""
+
 #: src/pages/GroupPanel.tsx
 msgid "Could not create group"
 msgstr "समूह नहीं बनाया जा सका"
@@ -1878,10 +2092,6 @@ msgstr "समूह नहीं बनाया जा सका"
 msgid "Could not create section"
 msgstr "सेक्शन नहीं बनाया जा सका"
 
-#: src/pages/shell/dialogs.tsx
-msgid "Could not create space"
-msgstr ""
-
 #: src/pages/Onboarding.tsx
 msgid "Could not create your bot"
 msgstr "आपका बॉट नहीं बनाया जा सका"
@@ -1889,6 +2099,10 @@ msgstr "आपका बॉट नहीं बनाया जा सका"
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete bot"
 msgstr "बॉट डिलीट नहीं किया जा सका"
+
+#: src/pages/shell/dialogs.tsx
+msgid "Could not delete business scope"
+msgstr ""
 
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete group"
@@ -1909,10 +2123,6 @@ msgstr "अनुभाग हटाया नहीं जा सका"
 #: src/pages/KnowledgeSection.tsx
 msgid "Could not delete skill"
 msgstr "स्किल हटाई नहीं जा सकी"
-
-#: src/pages/shell/dialogs.tsx
-msgid "Could not delete space"
-msgstr ""
 
 #: src/pages/Artifacts.tsx
 msgid "Could not delete this artifact."
@@ -1994,6 +2204,10 @@ msgstr ""
 msgid "Could not load bots. Reload to try again."
 msgstr ""
 
+#: src/pages/Shell.tsx
+msgid "Could not load business scopes."
+msgstr ""
+
 #: src/components/VaultSettings.tsx
 msgid "Could not load credentials."
 msgstr ""
@@ -2001,6 +2215,10 @@ msgstr ""
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not load integrations"
 msgstr "इंटीग्रेशन लोड नहीं हो सके"
+
+#: src/pages/TradingLearning.tsx
+msgid "Could not load learning records"
+msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -2109,6 +2327,10 @@ msgstr ""
 msgid "Could not remove the credential"
 msgstr ""
 
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Could not rename business scope"
+msgstr ""
+
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not rename connection"
@@ -2117,10 +2339,6 @@ msgstr ""
 #: src/pages/shell/dialogs.tsx
 msgid "Could not rename section"
 msgstr "अनुभाग का नाम नहीं बदला जा सका"
-
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Could not rename space"
-msgstr "स्पेस का नाम नहीं बदला जा सका"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Could not render chart"
@@ -2326,17 +2544,22 @@ msgstr "एक सेक्शन बनाएं और {0} को उसमे
 msgid "Create account"
 msgstr "खाता बनाएं"
 
+#: src/pages/Trading.tsx
+msgid "Create authorization"
+msgstr ""
+
+#: src/components/AskCard.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "Create business scope"
+msgstr ""
+
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "समूह बनाएं"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Create Routine"
-msgstr ""
-
-#: src/components/AskCard.tsx
-#: src/pages/shell/dialogs.tsx
-msgid "Create space"
 msgstr ""
 
 #: src/pages/Auth.tsx
@@ -2357,9 +2580,17 @@ msgstr "बनाया जा रहा है…"
 msgid "Credential"
 msgstr "क्रेडेंशियल"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential field name"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Credential saved"
 msgstr "क्रेडेंशियल सहेजा गया"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential saved securely"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Credentials are encrypted and never sent to the model."
@@ -2384,6 +2615,10 @@ msgstr "Cron"
 #: src/pages/RoutineSchedule.tsx
 msgid "Cron expression"
 msgstr "Cron एक्सप्रेशन"
+
+#: src/pages/Trading.tsx
+msgid "Cumulative limit (CNY)"
+msgstr ""
 
 #: src/components/AccountAccess.tsx
 #: src/pages/AccountSettingsOverlay.tsx
@@ -2410,6 +2645,18 @@ msgstr "{label} अनुकूलित करें"
 msgid "Customize bot avatar"
 msgstr "बॉट अवतार अनुकूलित करें"
 
+#: src/pages/TradingLearning.tsx
+msgid "Daily"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily and manual learning use the bot's model connection. New candidates require human approval."
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily time"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "Dark"
@@ -2425,6 +2672,14 @@ msgstr ""
 msgid "day"
 msgstr "दिन"
 
+#: src/pages/Trading.tsx
+msgid "Day ahead"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Day-ahead, intraday and real-time decisions"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "Day-to-day work"
 msgstr ""
@@ -2432,6 +2687,10 @@ msgstr ""
 #: src/lib/cron.ts
 msgid "days"
 msgstr "दिन"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Decisions, receipts and lessons learned"
+msgstr ""
 
 #: src/components/call/IncomingCall.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2451,6 +2710,11 @@ msgstr "डिफ़ॉल्ट"
 #: src/pages/shell/bot-panel.tsx
 msgid "Default ({0})"
 msgstr "डिफ़ॉल्ट ({0})"
+
+#: src/components/integrations/space-availability.tsx
+#: src/pages/Shell.tsx
+msgid "Default business scope"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 msgid "Default from Hermes"
@@ -2505,6 +2769,11 @@ msgstr "{0} डिलीट करें?"
 msgid "Delete account"
 msgstr "खाता हटाएँ"
 
+#: src/pages/shell/shell-dialogs.tsx
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Delete business scope"
+msgstr ""
+
 #: src/pages/GroupPanel.tsx
 msgid "Delete group"
 msgstr "समूह डिलीट करें"
@@ -2516,11 +2785,6 @@ msgstr "मेमोरी भी डिलीट करें"
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Delete section"
 msgstr "अनुभाग हटाएँ"
-
-#: src/pages/shell/shell-dialogs.tsx
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Delete space"
-msgstr ""
 
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Delete this Space's credentials?"
@@ -2539,6 +2803,10 @@ msgstr "डिलीट किया जा रहा है…"
 #: src/components/AccountAccess.tsx
 msgid "Deletion code"
 msgstr "हटाने का कोड"
+
+#: src/pages/Trading.tsx
+msgid "Delivery"
+msgstr ""
 
 #: src/components/AskCard.tsx
 msgid "Denied"
@@ -2569,6 +2837,10 @@ msgstr ""
 #: src/pages/shell/composer-error.tsx
 msgid "Details"
 msgstr "विवरण"
+
+#: src/pages/Trading.tsx
+msgid "Deterministic constraints checked"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Developer"
@@ -2613,6 +2885,10 @@ msgstr ""
 
 #: src/pages/PaymentWalletSettingsPanel.tsx
 msgid "Disconnect {name}?"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Disconnect scope"
 msgstr ""
 
 #: src/pages/VoiceSettingsOverlay.tsx
@@ -2727,6 +3003,7 @@ msgstr "हर नाम का उपयोग केवल एक बार �
 
 #: src/components/AskCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/McpServersOverlay.tsx
 msgid "Edit"
 msgstr "संपादित करें"
@@ -2734,6 +3011,14 @@ msgstr "संपादित करें"
 #: src/components/AskCard.tsx
 msgid "Edit first"
 msgstr "पहले संपादित करें"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Edit interface"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Edit learning plan"
+msgstr ""
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Edit name"
@@ -2885,6 +3170,14 @@ msgstr "हर महीने"
 msgid "Every week"
 msgstr "हर सप्ताह"
 
+#: src/pages/Trading.tsx
+msgid "Execute simulation"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Executor"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Executor token"
 msgstr "Executor टोकन"
@@ -2906,6 +3199,10 @@ msgstr "तालिका बड़ी करें"
 msgid "expired"
 msgstr "समाप्त"
 
+#: src/pages/Trading.tsx
+msgid "Expired"
+msgstr ""
+
 #: src/components/AccountDataSettings.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Export"
@@ -2918,6 +3215,10 @@ msgstr "डेटा निर्यात करें"
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "CRM से इस सप्ताह की सूची एक्सपोर्ट करें और उसे साझा फ़ोल्डर में डालें"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Exposure, limits and approval evidence"
+msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2940,6 +3241,7 @@ msgstr "असफल"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Failed"
 msgstr "विफल"
 
@@ -2970,6 +3272,7 @@ msgstr "तुलना के लिए फ़ील्ड, जैसे id, mo
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/SpaceSearch.tsx
+#: src/pages/TradingLearning.tsx
 msgid "File"
 msgstr "फ़ाइल"
 
@@ -2980,6 +3283,14 @@ msgstr "कंप्यूटर पर फ़ाइलें या फ़ो�
 #: src/pages/RoutineEditor.tsx
 msgid "Files or folders, one per line"
 msgstr "फ़ाइलें या फ़ोल्डर, हर पंक्ति में एक"
+
+#: src/pages/Trading.tsx
+msgid "Filled"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "fills"
+msgstr ""
 
 #: src/pages/GroupPanel.tsx
 msgid "Filter bots"
@@ -3028,6 +3339,14 @@ msgstr "पूरा हुआ।"
 #: src/pages/McpOAuthCallback.tsx
 msgid "Finishing MCP connection…"
 msgstr "MCP कनेक्शन पूरा हो रहा है…"
+
+#: src/pages/shell/business-scope.tsx
+msgid "For example: Shandong retail trading"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Forecasts"
+msgstr ""
 
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
@@ -3081,6 +3400,15 @@ msgstr "गेटवे आईडी"
 #: src/pages/SettingsOverlay.tsx
 msgid "General"
 msgstr "सामान्य"
+
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "General bot"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Generator"
+msgstr ""
 
 #: src/components/InviteDialog.tsx
 msgid "Get a free month for each friend who starts a trial."
@@ -3197,6 +3525,14 @@ msgstr "उच्च"
 msgid "High"
 msgstr "उच्च"
 
+#: src/pages/Trading.tsx
+msgid "Historical constraints checked; profit improvement is unproven"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Historical data"
+msgstr ""
+
 #: src/components/composer/HoldToTalk.tsx
 msgid "Hold to talk"
 msgstr "बोलने के लिए दबाए रखें"
@@ -3238,6 +3574,19 @@ msgstr "जांच कैसे करें"
 msgid "How will you use eTraderBot?"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Human approval · this bot has no access to this scope"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Human approvals"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Human cancellation only"
+msgstr ""
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "मेरा काम हो गया"
@@ -3266,6 +3615,10 @@ msgstr "इस मॉडल के लिए चित्र इनपुट क
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Image upload area"
 msgstr "छवि अपलोड क्षेत्र"
+
+#: src/pages/Trading.tsx
+msgid "Immediate fill"
+msgstr ""
 
 #: src/components/AccountDataSettings.tsx
 msgid "Import"
@@ -3316,6 +3669,10 @@ msgstr "डिफ़ॉल्ट का पालन करें"
 msgid "Input"
 msgstr "इनपुट"
 
+#: src/pages/Trading.tsx
+msgid "Input evidence"
+msgstr ""
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Inputs"
 msgstr "इनपुट"
@@ -3359,6 +3716,10 @@ msgstr "निर्देश बहुत लंबे हैं। कुछ �
 msgid "Instructions updated"
 msgstr "निर्देश अपडेट किए गए"
 
+#: src/pages/TradingLearning.tsx
+msgid "Insufficient historical data"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Integration domain"
 msgstr ""
@@ -3366,6 +3727,15 @@ msgstr ""
 #: src/pages/PluginsOverlay.tsx
 msgid "Integrations"
 msgstr "इंटीग्रेशन"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Interface configuration"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/shell/business-scope.tsx
+msgid "Interface settings"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/RoutineSchedule.tsx
@@ -3379,6 +3749,10 @@ msgstr "अंतराल मात्रा"
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval unit"
 msgstr "अंतराल इकाई"
+
+#: src/pages/Trading.tsx
+msgid "Intraday"
+msgstr ""
 
 #: src/lib/user-error.ts
 msgid "Invalid code"
@@ -3410,6 +3784,10 @@ msgstr "इसके बॉट और समूह बने रहेंगे 
 msgid "Its conversation, files, and routines will be permanently deleted. Bots it created stay in your list."
 msgstr "इसकी बातचीत, फ़ाइलें और रूटीन स्थायी रूप से डिलीट कर दिए जाएंगे। इसके बनाए बॉट आपकी सूची में बने रहेंगे।"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Jiangsu · Suzhou"
+msgstr ""
+
 #: src/pages/shell/transcript.tsx
 msgid "Jump to latest"
 msgstr "नवीनतम संदेश पर जाएँ"
@@ -3438,6 +3816,7 @@ msgstr ""
 msgid "Label"
 msgstr "लेबल"
 
+#: src/components/LanguageSwitcher.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Language"
 msgstr "भाषा"
@@ -3456,8 +3835,30 @@ msgstr "पिछली जाँच {0}: कोई बदलाव नहीं
 msgid "Later"
 msgstr ""
 
+#: src/pages/TradingLearning.tsx
+msgid "Learn now"
+msgstr ""
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
+msgid "Learning"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning runs"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning schedule"
+msgstr ""
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Leave"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Leave empty to keep the saved credential"
 msgstr ""
 
 #: src/components/ComputerDeviceSettings.tsx
@@ -3556,11 +3957,13 @@ msgstr "आवाज़ प्रोवाइडर्स लोड हो र�
 #: src/components/PageLoading.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/transcript.tsx
+#: src/pages/Trading.tsx
 msgid "Loading…"
 msgstr "लोड हो रहा है…"
 
@@ -3617,6 +4020,10 @@ msgstr "{0} प्रबंधित करें"
 msgid "Manage billing"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Manage interface"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manage MCP servers"
 msgstr "MCP सर्वर प्रबंधित करें"
@@ -3625,12 +4032,20 @@ msgstr "MCP सर्वर प्रबंधित करें"
 msgid "Manage other bots"
 msgstr "अन्य बॉट प्रबंधित करें"
 
+#: src/pages/Trading.tsx
+msgid "Manage trading stage"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual"
 msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual setup required"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Margin"
 msgstr ""
 
 #: src/pages/BotContextMenu.tsx
@@ -3649,8 +4064,24 @@ msgstr "अपठित चिह्नित करें"
 msgid "Markdown table"
 msgstr "Markdown तालिका"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market data"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Market ID"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market rules"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Marketing"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
@@ -3678,6 +4109,10 @@ msgstr "प्रति अनुरोध अधिकतम इमेज"
 msgid "Maximum output tokens"
 msgstr "अधिकतम आउटपुट टोकन"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP connection"
+msgstr ""
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "MCP endpoint"
 msgstr ""
@@ -3690,6 +4125,10 @@ msgstr ""
 #: src/pages/shell/agent-import.tsx
 msgid "MCP servers"
 msgstr "MCP सर्वर"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP tool approval remains separate for each bot."
+msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3792,6 +4231,14 @@ msgstr ""
 #: src/lib/dictation.ts
 msgid "Microphone failed"
 msgstr "माइक्रोफ़ोन विफल"
+
+#: src/pages/Trading.tsx
+msgid "Mid / long term"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Mid / long term bot"
+msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3941,6 +4388,7 @@ msgstr "माइक बंद है"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/providers-section.tsx
@@ -3948,6 +4396,7 @@ msgstr "माइक बंद है"
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/bot-panel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingsPanel.tsx
@@ -4005,11 +4454,23 @@ msgstr "कभी न पूछें"
 msgid "New"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "New authorization"
+msgstr ""
+
 #: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "New bot"
 msgstr "नया बॉट"
+
+#: src/pages/Shell.tsx
+#: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "New business scope"
+msgstr ""
 
 #: src/pages/GroupPanel.tsx
 msgid "New group"
@@ -4028,15 +4489,14 @@ msgstr ""
 msgid "New open-work item"
 msgstr "नया खुला-कार्य आइटम"
 
+#: src/pages/Trading.tsx
+msgid "New orders"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
 msgstr "नया पासवर्ड"
-
-#: src/pages/Shell.tsx
-#: src/pages/shell/bot-picker.tsx
-msgid "New private space"
-msgstr "नया निजी स्पेस"
 
 #: src/pages/BotContextMenu.tsx
 #: src/pages/shell/dialogs.tsx
@@ -4047,12 +4507,12 @@ msgstr "नया अनुभाग"
 msgid "New skill"
 msgstr "नई स्किल"
 
-#: src/pages/shell/dialogs.tsx
-msgid "New space"
-msgstr ""
-
 #: src/pages/Board.tsx
 msgid "New ticket"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Next learning run"
 msgstr ""
 
 #: src/components/markdown-copy.tsx
@@ -4061,6 +4521,10 @@ msgstr "अगला पृष्ठ"
 
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "No analysis yet"
 msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
@@ -4079,13 +4543,29 @@ msgstr "कोई प्रमाणीकरण नहीं"
 msgid "No authentication"
 msgstr "कोई प्रमाणीकरण नहीं"
 
+#: src/pages/Trading.tsx
+msgid "No authorizations"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "No authorized material"
+msgstr ""
+
 #: src/components/integrations/agent-access.tsx
 msgid "No bots"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "No bots in this business scope yet."
 msgstr ""
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "No bots match"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "No interfaces configured for this business scope."
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -4122,6 +4602,10 @@ msgstr "कोई मॉडल कैटलॉग उपलब्ध नही�
 #: src/lib/model-connection-preflight.ts
 msgid "No models listed."
 msgstr "कोई मॉडल सूचीबद्ध नहीं।"
+
+#: src/pages/TradingLearning.tsx
+msgid "No new material"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 msgid "No OpenClaw, Hermes or agent document found."
@@ -4166,8 +4650,16 @@ msgstr ""
 msgid "No tickets yet"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "No trading stages configured yet."
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "No trigger"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "None"
 msgstr ""
 
 #: src/lib/ticket-priority.ts
@@ -4288,6 +4780,14 @@ msgstr "एक बार"
 msgid "One-time purchase. Credits do not expire."
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Only the business scope owner can configure interfaces."
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Only this experience text is shared. Raw materials and source reports stay in their original scope."
+msgstr ""
+
 #: src/components/markdown-link-prompt.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/shell/computer-panel.tsx
@@ -4332,6 +4832,7 @@ msgstr "बाहरी लिंक खोलें?"
 msgid "Open in full window"
 msgstr "पूरी विंडो में खोलें"
 
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/shell/chat-header.tsx
 msgid "Open navigation"
 msgstr "नेविगेशन खोलें"
@@ -4369,6 +4870,10 @@ msgstr "वैकल्पिक हेडर मान"
 msgid "Or paste an API key"
 msgstr "या एक API कुंजी पेस्ट करें"
 
+#: src/pages/Trading.tsx
+msgid "Orders"
+msgstr ""
+
 #: src/pages/memory-providers/SupermemorySettingsForm.tsx
 msgid "Organization API key"
 msgstr "संगठन API कुंजी"
@@ -4380,6 +4885,10 @@ msgstr ""
 #: src/pages/shell/chat-context.tsx
 msgid "Original message unavailable"
 msgstr "मूल संदेश उपलब्ध नहीं है"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Other data"
+msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -4405,6 +4914,14 @@ msgstr "पेज नहीं मिला"
 
 #: src/pages/RoutineEditor.tsx
 msgid "PagerDuty incident"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Partial fill"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Partially filled"
 msgstr ""
 
 #: src/components/PasskeySettings.tsx
@@ -4472,13 +4989,23 @@ msgstr "अपनी API कुंजी पेस्ट करें, फिर
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/import-status.ts
+#: src/pages/TradingLearning.tsx
 msgid "Paused"
 msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Pending"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Pending order"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Per trade approval"
 msgstr ""
 
 #: src/pages/shell/bot-panel.tsx
@@ -4551,6 +5078,10 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Positions and assets"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Post \"No changes\" in chat"
 msgstr "चैट में “कोई बदलाव नहीं” पोस्ट करें"
@@ -4562,6 +5093,10 @@ msgstr ""
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Preferences"
 msgstr "प्राथमिकताएँ"
+
+#: src/pages/Trading.tsx
+msgid "Prepare intent"
+msgstr ""
 
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -4585,6 +5120,10 @@ msgstr "पिछला पृष्ठ"
 msgid "Previous settings sections"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Price margin (CNY/MWh)"
+msgstr ""
+
 #: src/pages/Board.tsx
 msgid "Priority"
 msgstr ""
@@ -4593,12 +5132,12 @@ msgstr ""
 msgid "Private"
 msgstr "निजी"
 
-#: src/pages/shell/bot-picker.tsx
-msgid "Private workspace with its own bots and groups."
-msgstr ""
-
 #: src/pages/PluginsOverlay.tsx
 msgid "Productivity"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Profit improvement and semantic quality have not been established."
 msgstr ""
 
 #: src/pages/shell/import-status.ts
@@ -4627,7 +5166,20 @@ msgstr "प्रोवाइडर"
 msgid "Pull request"
 msgstr "पुल अनुरोध"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Purpose"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters (JSON)"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters must be a JSON object"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Queued"
 msgstr "कतार में"
 
@@ -4651,6 +5203,10 @@ msgstr "उत्तर पढ़कर सुनाएं"
 msgid "Ready"
 msgstr "तैयार"
 
+#: src/pages/Trading.tsx
+msgid "Real time"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr ""
@@ -4668,6 +5224,14 @@ msgstr ""
 msgid "Recall only"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Receipt details"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Receipts"
+msgstr ""
+
 #: src/pages/AdminAccessPage.tsx
 msgid "Received"
 msgstr ""
@@ -4678,6 +5242,10 @@ msgstr "हाल के"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Recommended"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Reconcile order"
 msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
@@ -4776,6 +5344,10 @@ msgstr ""
 msgid "Refreshing…"
 msgstr ""
 
+#: src/pages/shell/business-scope.tsx
+msgid "Region"
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "Registration is closed"
 msgstr "पंजीकरण बंद है"
@@ -4790,11 +5362,16 @@ msgid "Reject {0}"
 msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Rejected"
 msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Rejecting…"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Rejection"
 msgstr ""
 
 #: src/pages/shell/computer-release-actions.tsx
@@ -4855,6 +5432,10 @@ msgstr ""
 #: src/components/ModelHeadersEditor.tsx
 msgid "Remove header"
 msgstr "हेडर हटाएँ"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Remove interface"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 msgid "Remove message trigger"
@@ -4935,12 +5516,28 @@ msgstr ""
 msgid "Request a new code"
 msgstr "नया कोड मँगाएँ"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request body"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request method"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request parameters"
+msgstr ""
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Reserved"
 msgstr ""
 
 #: src/components/ComputerMaintenanceActions.tsx
@@ -5009,6 +5606,27 @@ msgstr "बहाल किया गया"
 msgid "Restoring your workspace"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Result uncertain"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Result uncertain; the reservation is retained."
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Retailer"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Retire algorithm"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Retired"
+msgstr ""
+
 #: src/components/AccountAccess.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -5041,17 +5659,40 @@ msgstr "{0} के साथ कॉल पर लौटें"
 msgid "Return to eTraderBot"
 msgstr "eTraderBot पर लौटें"
 
+#: src/pages/Trading.tsx
+msgid "Review"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Review bot"
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "प्रोवाइडर सेटिंग्स की समीक्षा करें और फिर से परीक्षण करें।"
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Revoke"
 msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/Trading.tsx
 msgid "Revoked"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Risk"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Risk bot"
+msgstr ""
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Risk review"
 msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
@@ -5086,8 +5727,16 @@ msgstr "पंक्ति"
 msgid "Rules"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Run analysis"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Run at"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Run finished without a learning report. Review the conversation and retry."
 msgstr ""
 
 #: src/pages/RoutineRunHistory.tsx
@@ -5105,6 +5754,7 @@ msgstr "चल रहा है"
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Running"
 msgstr "चल रहा है"
 
@@ -5146,12 +5796,28 @@ msgstr "शनिवार"
 msgid "Save"
 msgstr "सहेजें"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Save configuration"
+msgstr ""
+
 #: src/components/VaultSettings.tsx
 msgid "Save credential"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Save interface"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Save material"
+msgstr ""
+
 #: src/components/VaultSettings.tsx
 msgid "Save new value"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Save plan"
 msgstr ""
 
 #: src/components/ComputerMaintenanceActions.tsx
@@ -5207,6 +5873,10 @@ msgstr "हां या ना कहें, या एक वाक्य म�
 
 #: src/components/ModelCredits.tsx
 msgid "Scheduled routines"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Scope owner"
 msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
@@ -5288,9 +5958,22 @@ msgstr ""
 msgid "Select a bot"
 msgstr "एक बॉट चुनें"
 
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Select a business scope in the sidebar first."
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Select a connection"
+msgstr ""
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Self-hosted"
 msgstr "सेल्फ़-होस्टेड"
+
+#: src/pages/Trading.tsx
+msgid "Sell"
+msgstr ""
 
 #: src/pages/shell/composer.tsx
 msgid "Send"
@@ -5384,6 +6067,10 @@ msgstr "सेटिंग्स: सामान्य"
 msgid "Settings: Usage"
 msgstr "सेटिंग्स: उपयोग"
 
+#: src/pages/Trading.tsx
+msgid "Settled"
+msgstr ""
+
 #: src/pages/shell/import-setup-card.tsx
 msgid "Setup complete"
 msgstr "सेटअप पूरा हुआ"
@@ -5392,6 +6079,14 @@ msgstr "सेटअप पूरा हुआ"
 msgid "Setup help"
 msgstr "सेटअप सहायता"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Shandong"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Shanghai"
+msgstr ""
+
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape"
 msgstr "आकार"
@@ -5399,6 +6094,14 @@ msgstr "आकार"
 #. placeholder {0}: index + 1
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape {0}"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Share experience"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Share selected experience"
 msgstr ""
 
 #: src/pages/MemorySettingsOverlay.tsx
@@ -5447,6 +6150,10 @@ msgstr ""
 #: src/components/call/VoiceChatCard.tsx
 msgid "Show transcript"
 msgstr "ट्रांसक्रिप्ट दिखाएँ"
+
+#: src/pages/Trading.tsx
+msgid "Side"
+msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Sidebar density"
@@ -5500,6 +6207,26 @@ msgstr "साइन अप करें"
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Sign-in cancelled. Try again."
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Simulation · bots and interfaces are configured within this business scope."
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Simulation receipt"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Simulation scenario"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Simulation trading"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Single intent limit (CNY)"
 msgstr ""
 
 #: src/components/VaultSettings.tsx
@@ -5594,18 +6321,9 @@ msgstr "{column} के अनुसार क्रमबद्ध, आरो�
 msgid "Sorted by {column}, descending"
 msgstr "{column} के अनुसार क्रमबद्ध, अवरोही"
 
-#: src/lib/identity-display.ts
-#: src/pages/SettingsOverlay.tsx
-msgid "Space"
-msgstr "कार्यस्थान"
-
-#: src/pages/shell/bot-panel.tsx
-msgid "Space default"
-msgstr "स्पेस डिफ़ॉल्ट"
-
-#: src/pages/SettingsOverlay.tsx
-msgid "Spaces"
-msgstr "कार्यस्थान"
+#: src/pages/TradingLearning.tsx
+msgid "Source reference"
+msgstr ""
 
 #: src/pages/shell/message-view.tsx
 msgid "Speak"
@@ -5622,6 +6340,14 @@ msgstr "बोल रहा है"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Speech model"
 msgstr "वाक् मॉडल"
+
+#: src/pages/Trading.tsx
+msgid "Spot"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Spot bot"
+msgstr ""
 
 #: src/components/AccountAccess.tsx
 msgid "SSO"
@@ -5661,6 +6387,7 @@ msgid "Start your plan now?"
 msgstr "अपना प्लान अभी शुरू करें?"
 
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Starting"
 msgstr "शुरू हो रहा है"
 
@@ -5708,6 +6435,11 @@ msgstr "रोक दिया गया।"
 msgid "Stopping…"
 msgstr ""
 
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Storage"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Stored encrypted"
 msgstr "एन्क्रिप्टेड रूप में संग्रहीत"
@@ -5719,6 +6451,18 @@ msgstr "जवाब स्ट्रीम करें"
 #: src/lib/identity-display.ts
 msgid "subagent"
 msgstr "सबएजेंट"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject ID"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject type"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Submission timeout"
+msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -5776,6 +6520,14 @@ msgstr ""
 msgid "Switching…"
 msgstr "बदला जा रहा है…"
 
+#: src/pages/Trading.tsx
+msgid "Synthetic data"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Synthetic fill"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "System"
@@ -5788,6 +6540,10 @@ msgstr "तालिका"
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "नियंत्रण लें"
+
+#: src/pages/TradingLearning.tsx
+msgid "Target scope"
+msgstr ""
 
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Teach a task"
@@ -6057,6 +6813,10 @@ msgstr "गुरुवार"
 msgid "Time of day"
 msgstr "दिन का समय"
 
+#: src/pages/TradingLearning.tsx
+msgid "Time zone"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Timezone"
 msgstr ""
@@ -6114,6 +6874,39 @@ msgstr "टूल का नाम"
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Trade approved"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Trade authorizer"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Trade execution"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Trade intents"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Trader feedback"
+msgstr ""
+
+#: src/pages/Shell.tsx
+msgid "Trading"
+msgstr ""
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Trading review"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Trading stage"
 msgstr ""
 
 #: src/components/composer/HoldToTalk.tsx
@@ -6189,6 +6982,10 @@ msgstr "अपना उत्तर लिखें"
 #: src/pages/Shell.tsx
 msgid "Unassigned"
 msgstr "असाइन नहीं किया गया"
+
+#: src/pages/Trading.tsx
+msgid "Uncovered exposure"
+msgstr ""
 
 #: src/components/AskCard.tsx
 msgid "Undo"
@@ -6280,6 +7077,14 @@ msgstr ""
 msgid "Upload"
 msgstr "अपलोड"
 
+#: src/pages/TradingLearning.tsx
+msgid "Upload file"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Upload learning file"
+msgstr ""
+
 #: src/lib/ticket-priority.ts
 msgid "Urgent"
 msgstr ""
@@ -6344,6 +7149,10 @@ msgstr ""
 msgid "Use space default"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Use the credential field for keys and tokens."
+msgstr ""
+
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
 msgstr ""
@@ -6377,6 +7186,22 @@ msgstr ""
 msgid "Using your API key. Free plan ends {freeUntil}."
 msgstr "आपकी API कुंजी इस्तेमाल हो रही है। मुफ़्त प्लान {freeUntil} को खत्म होगा।"
 
+#: src/pages/Trading.tsx
+msgid "Valid for 24 hours"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Valid until"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Validation and source"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Validation evidence"
+msgstr ""
+
 #: src/components/LoginFields.tsx
 #: src/components/VaultSettings.tsx
 #: src/pages/McpServersOverlay.tsx
@@ -6387,6 +7212,10 @@ msgstr "मान"
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Vault"
 msgstr "वॉल्ट"
+
+#: src/pages/Trading.tsx
+msgid "Venue unavailable"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Verify and add"
@@ -6422,6 +7251,14 @@ msgstr ""
 #: src/lib/model-connection-preflight.ts
 msgid "Wait a moment and test again."
 msgstr "थोड़ी देर रुकें और फिर से परीक्षण करें।"
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for input"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for you"
+msgstr ""
 
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"

@@ -12,6 +12,7 @@ import {
   isOneShotRoutineCrons,
   nextRoutineRunDateAcross,
 } from "@rakazo/core";
+import { createTradingLearningService } from "@rakazo/db";
 import { getLogger } from "@rakazo/logging";
 import { sanitizedError } from "@rakazo/logging/monitoring";
 import { protectedComputerLifecycleRefusal } from "./desktop-command-guard.js";
@@ -185,6 +186,9 @@ export async function wakeRoutine(deps: ExecutorDeps, routineId: string, schedul
     expandSkillReferencesInPrompt(routine.prompt, skillRecords) +
     (watchTick?.run ? watchTick.note : "");
   const claimed = await deps.prisma.$transaction(async (tx) => {
+    const learning = deps.trading ? createTradingLearningService(deps.prisma) : null;
+    // Lock the business scope before the Routine row, matching manual learning starts.
+    const learningTick = await learning?.prepareRoutineTick(tx, routine.id);
     const updated = await tx.routine.updateMany({
       where: {
         id: routine.id,
@@ -209,15 +213,19 @@ export async function wakeRoutine(deps: ExecutorDeps, routineId: string, schedul
     const timerTick = routine.watch == null && !isOneShotRoutineCrons(routine.crons);
     const timerNonce = timerTick ? routineTimerNonce(routine.id, scheduledFor) : undefined;
     if (timerNonce) {
-      const pending = await findPendingRoutineTick(tx, {
-        routineId: routine.id,
-        spaceId: routine.spaceId,
-        botId: bot.id,
-        userId: routine.userId,
-        threadId: thread.id,
-        prompt: routinePrompt,
-        ...routineRunModelPin(currentModel),
-      });
+      if (learningTick?.pendingRun)
+        return { ...learningTick.pendingRun, coalesced: true, cancelledEvents: [] };
+      const pending = learningTick
+        ? null
+        : await findPendingRoutineTick(tx, {
+            routineId: routine.id,
+            spaceId: routine.spaceId,
+            botId: bot.id,
+            userId: routine.userId,
+            threadId: thread.id,
+            prompt: routinePrompt,
+            ...routineRunModelPin(currentModel),
+          });
       if (pending) return { ...pending, coalesced: true };
       // An edit racing an earlier tick can rewind the schedule onto an occurrence that already ran.
       const fired = await tx.run.findUnique({
@@ -250,6 +258,7 @@ export async function wakeRoutine(deps: ExecutorDeps, routineId: string, schedul
         ...routineRunModelPin(currentModel),
       },
     });
+    if (learningTick) await learning?.freezeRoutineTick(tx, learningTick, run.id);
     return { ...run, coalesced: false };
   });
   if (!claimed) return;

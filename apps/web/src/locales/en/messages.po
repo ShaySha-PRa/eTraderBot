@@ -22,6 +22,12 @@ msgstr " (unread)"
 msgid "{0, plural, one {# bot has its own model:} other {# bots have their own model:}}"
 msgstr "{0, plural, one {# bot has its own model:} other {# bots have their own model:}}"
 
+#. placeholder {0}: availability.spaceIds.length
+#. placeholder {0}: chosen.length
+#: src/components/integrations/space-availability.tsx
+msgid "{0, plural, one {# business scope} other {# business scopes}}"
+msgstr "{0, plural, one {# business scope} other {# business scopes}}"
+
 #. placeholder {0}: servers.length
 #: src/pages/PluginsOverlay.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -51,12 +57,6 @@ msgstr "{0, plural, one {# more} other {# more}}"
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
 msgstr "{0, plural, one {# skill} other {# skills}}"
-
-#. placeholder {0}: availability.spaceIds.length
-#. placeholder {0}: chosen.length
-#: src/components/integrations/space-availability.tsx
-msgid "{0, plural, one {# space} other {# spaces}}"
-msgstr "{0, plural, one {# space} other {# spaces}}"
 
 #. placeholder {0}: server.health.toolCount
 #: src/pages/McpServersOverlay.tsx
@@ -425,8 +425,8 @@ msgid "/ month"
 msgstr "/ month"
 
 #: src/components/integrations/space-availability.tsx
-msgid "1 space"
-msgstr "1 space"
+msgid "1 business scope"
+msgstr "1 business scope"
 
 #: src/pages/shell/message-cards.tsx
 msgid "A bit of everything"
@@ -454,6 +454,10 @@ msgstr "About {kb} KB of memory no longer reaches the bot."
 msgid "About {label}"
 msgstr "About {label}"
 
+#: src/pages/Trading.tsx
+msgid "Accepted"
+msgstr "Accepted"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Access token (optional)"
 msgstr "Access token (optional)"
@@ -469,6 +473,7 @@ msgstr "Account default"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Account ID"
 msgstr "Account ID"
 
@@ -490,11 +495,12 @@ msgid "Actions for {0}"
 msgstr "Actions for {0}"
 
 #: src/pages/shell/shell-dialogs.tsx
-msgid "Actions for space"
-msgstr "Actions for space"
+msgid "Actions for business scope"
+msgstr "Actions for business scope"
 
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/Trading.tsx
 msgid "Active"
 msgstr "Active"
 
@@ -555,9 +561,17 @@ msgstr "Add a voice provider key and pick a voice in Voice settings."
 msgid "Add an HTTPS server URL."
 msgstr "Add an HTTPS server URL."
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add an MCP connection in Integrations first."
+msgstr "Add an MCP connection in Integrations first."
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Add another"
 msgstr "Add another"
+
+#: src/pages/Trading.tsx
+msgid "Add bot to business scope"
+msgstr "Add bot to business scope"
 
 #: src/components/VaultSettings.tsx
 msgid "Add credential"
@@ -583,9 +597,17 @@ msgstr "Add field"
 msgid "Add header"
 msgstr "Add header"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add interface"
+msgstr "Add interface"
+
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "Add item"
+
+#: src/pages/TradingLearning.tsx
+msgid "Add learning material"
+msgstr "Add learning material"
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -657,6 +679,18 @@ msgstr "Advanced..."
 msgid "Agent from another app"
 msgstr "Agent from another app"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Algorithm approver"
+msgstr "Algorithm approver"
+
+#: src/pages/Trading.tsx
+msgid "Algorithm version"
+msgstr "Algorithm version"
+
+#: src/pages/Trading.tsx
+msgid "Algorithm versions"
+msgstr "Algorithm versions"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "All"
 msgstr "All"
@@ -668,12 +702,13 @@ msgstr "All {credit} goes to model usage."
 #: src/components/integrations/agent-access.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/shell/agent-import.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "All bots"
 msgstr "All bots"
 
 #: src/components/integrations/space-availability.tsx
-msgid "All spaces"
-msgstr "All spaces"
+msgid "All business scopes"
+msgstr "All business scopes"
 
 #: src/pages/ActivityList.tsx
 msgid "All statuses"
@@ -694,6 +729,10 @@ msgstr "Allow cross-space bot communication"
 #: src/lib/dictation.ts
 msgid "Allow eTraderBot to use Speech Recognition and the microphone in System Settings."
 msgstr "Allow eTraderBot to use Speech Recognition and the microphone in System Settings."
+
+#: src/pages/Trading.tsx
+msgid "Allow executor bot to cancel"
+msgstr "Allow executor bot to cancel"
 
 #: src/components/AskCard.tsx
 msgid "Allow in this space"
@@ -800,6 +839,10 @@ msgstr "Anthropic Messages"
 msgid "Any model, with your own key"
 msgstr "Any model, with your own key"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API credential"
+msgstr "API credential"
+
 #: src/components/AskCard.tsx
 #: src/lib/localized-provider-hint.ts
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
@@ -818,11 +861,24 @@ msgstr "API key for {provider}"
 msgid "API key header"
 msgstr "API key header"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in header"
+msgstr "API key in header"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in query"
+msgstr "API key in query"
+
 #: src/pages/shell/agent-import.tsx
 msgid "API keys"
 msgstr "API keys"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API URL"
+msgstr "API URL"
+
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/shell/create-bot-dialog.tsx
 msgid "Appearance"
 msgstr "Appearance"
 
@@ -837,6 +893,10 @@ msgstr "Apply"
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Approval boundaries"
 msgstr "Approval boundaries"
+
+#: src/pages/Trading.tsx
+msgid "Approval evidence"
+msgstr "Approval evidence"
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "Approval model"
@@ -853,6 +913,10 @@ msgstr "Approvals"
 msgid "Approve"
 msgstr "Approve"
 
+#: src/pages/Trading.tsx
+msgid "Approve algorithm"
+msgstr "Approve algorithm"
+
 #: src/lib/call-session.ts
 msgid "Approve or deny it on screen."
 msgstr "Approve or deny it on screen."
@@ -861,7 +925,12 @@ msgstr "Approve or deny it on screen."
 msgid "Approve this server to let your agent use its tools."
 msgstr "Approve this server to let your agent use its tools."
 
+#: src/pages/Trading.tsx
+msgid "Approve trade"
+msgstr "Approve trade"
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Approved"
 msgstr "Approved"
 
@@ -903,6 +972,10 @@ msgstr "Ask"
 msgid "Asleep"
 msgstr "Asleep"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Asset ID"
+msgstr "Asset ID"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -921,6 +994,11 @@ msgstr "Attach file"
 msgid "Attachment"
 msgstr "Attachment"
 
+#: src/pages/Trading.tsx
+msgid "Audit history"
+msgstr "Audit history"
+
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Authentication"
 msgstr "Authentication"
@@ -928,6 +1006,10 @@ msgstr "Authentication"
 #: src/lib/model-connection-preflight.ts
 msgid "Authentication failed."
 msgstr "Authentication failed."
+
+#: src/pages/Trading.tsx
+msgid "Authorization"
+msgstr "Authorization"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -953,6 +1035,14 @@ msgstr "Authorize"
 #: src/pages/shell/message-cards.tsx
 msgid "Authorize this server so agents can use its tools. A popup opens."
 msgstr "Authorize this server so agents can use its tools. A popup opens."
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized materials"
+msgstr "Authorized materials"
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized operation"
+msgstr "Authorized operation"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Auto"
@@ -986,6 +1076,10 @@ msgstr "Available to shell commands as {commandVariable}"
 msgid "Avatar Studio"
 msgstr "Avatar Studio"
 
+#: src/pages/Trading.tsx
+msgid "Awaiting trade approval"
+msgstr "Awaiting trade approval"
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/AdminAccessPage.tsx
@@ -1001,6 +1095,10 @@ msgstr "Avatar Studio"
 msgid "Back"
 msgstr "Back"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Back to bots"
+msgstr "Back to bots"
+
 #: src/pages/Auth.tsx
 msgid "Back to sign in"
 msgstr "Back to sign in"
@@ -1008,6 +1106,10 @@ msgstr "Back to sign in"
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "Base URL"
+
+#: src/pages/TradingLearning.tsx
+msgid "Baseline margin"
+msgstr "Baseline margin"
 
 #: src/components/VaultSettings.tsx
 msgid "Basic auth"
@@ -1030,6 +1132,10 @@ msgstr "Billing"
 #: src/components/ModelCredits.tsx
 msgid "Billing period"
 msgstr "Billing period"
+
+#: src/pages/TradingLearning.tsx
+msgid "Bind a trading bot to create a learning plan."
+msgstr "Bind a trading bot to create a learning plan."
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Block"
@@ -1068,6 +1174,10 @@ msgstr "Bot"
 msgid "Bot"
 msgstr "Bot"
 
+#: src/pages/Trading.tsx
+msgid "Bot cancellation permission"
+msgstr "Bot cancellation permission"
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Bot is watching, not acting"
 msgstr "Bot is watching, not acting"
@@ -1083,6 +1193,14 @@ msgstr "Bot screen"
 #: src/pages/shell/computer-panel.tsx
 msgid "Bot screen preview"
 msgstr "Bot screen preview"
+
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Bot template"
+msgstr "Bot template"
+
+#: src/pages/Shell.tsx
+msgid "Bot workspace"
+msgstr "Bot workspace"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Bot's model"
@@ -1104,6 +1222,10 @@ msgstr "Bots and browser automation"
 msgid "Bots with their own computer and browser"
 msgstr "Bots with their own computer and browser"
 
+#: src/pages/Trading.tsx
+msgid "Bounded authorizations"
+msgstr "Bounded authorizations"
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr "Brain label"
@@ -1120,6 +1242,26 @@ msgstr "Browse MCP servers"
 #: src/pages/shell/agent-import.tsx
 msgid "Built-in"
 msgstr "Built-in"
+
+#: src/lib/identity-display.ts
+#: src/pages/SettingsOverlay.tsx
+#: src/pages/shell/bot-business-labels.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Business scope"
+msgstr "Business scope"
+
+#: src/pages/shell/bot-panel.tsx
+msgid "Business scope default"
+msgstr "Business scope default"
+
+#: src/pages/SettingsOverlay.tsx
+msgid "Business scopes"
+msgstr "Business scopes"
+
+#: src/pages/Trading.tsx
+msgid "Buy"
+msgstr "Buy"
 
 #: src/pages/shell/chat-header.tsx
 msgid "Call"
@@ -1166,6 +1308,7 @@ msgstr "Can't read images"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -1174,6 +1317,7 @@ msgstr "Can't read images"
 #: src/pages/Onboarding.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingOverrides.tsx
@@ -1188,6 +1332,10 @@ msgstr "Cancel new bot"
 msgid "Cancel new group"
 msgstr "Cancel new group"
 
+#: src/pages/Trading.tsx
+msgid "Cancel order"
+msgstr "Cancel order"
+
 #: src/pages/shell/chat-context.tsx
 msgid "Cancel reply"
 msgstr "Cancel reply"
@@ -1196,14 +1344,28 @@ msgstr "Cancel reply"
 msgid "Canceled"
 msgstr "Canceled"
 
+#: src/pages/Trading.tsx
+msgid "Cancellation timeout"
+msgstr "Cancellation timeout"
+
 #: src/components/CloudAgentCard.tsx
 msgid "cancelled"
 msgstr "cancelled"
 
 #: src/components/AskCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Cancelled"
 msgstr "Cancelled"
+
+#: src/pages/Trading.tsx
+msgid "Candidate analysis"
+msgstr "Candidate analysis"
+
+#: src/pages/TradingLearning.tsx
+msgid "Candidate margin"
+msgstr "Candidate margin"
 
 #: src/pages/Artifacts.tsx
 msgid "Card view"
@@ -1234,12 +1396,17 @@ msgid "Chart failed to render: {error}"
 msgstr "Chart failed to render: {error}"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Chat"
 msgstr "Chat"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Chat Completions"
 msgstr "Chat Completions"
+
+#: src/pages/TradingLearning.tsx
+msgid "Chat feedback"
+msgstr "Chat feedback"
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Chat Settings"
@@ -1326,9 +1493,22 @@ msgstr "Choose a new password"
 msgid "Choose a provider"
 msgstr "Choose a provider"
 
+#: src/pages/TradingLearning.tsx
+msgid "Choose a text file up to 64 KB"
+msgstr "Choose a text file up to 64 KB"
+
+#: src/pages/TradingLearning.tsx
+msgid "Choose a UTF-8 text file"
+msgstr "Choose a UTF-8 text file"
+
 #: src/pages/shell/agent-import.tsx
 msgid "Choose backup"
 msgstr "Choose backup"
+
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Choose business scope"
+msgstr "Choose business scope"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -1512,6 +1692,7 @@ msgid "Complete"
 msgstr "Complete"
 
 #: src/components/SubagentCard.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Completed"
 msgstr "Completed"
 
@@ -1559,6 +1740,14 @@ msgstr "Computers are off. Set SANDBOX_PROVIDER=docker with SANDBOX_SUPERVISOR_T
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
 msgstr "Configure a plugin catalog on the server to connect apps."
+
+#: src/pages/shell/business-scope.tsx
+msgid "Configure business scope"
+msgstr "Configure business scope"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Configured · not verified"
+msgstr "Configured · not verified"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Confirm delete"
@@ -1619,6 +1808,10 @@ msgstr "Connect API key"
 #: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "Connect apps"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connect HTTP data APIs or select MCP connections for this business scope. Saving a configuration does not verify connectivity or authorize trades."
+msgstr "Connect HTTP data APIs or select MCP connections for this business scope. Saving a configuration does not verify connectivity or authorize trades."
 
 #: src/pages/shell/message-cards.tsx
 msgid "Connect MCP server “{name}”"
@@ -1684,9 +1877,21 @@ msgstr "Connection test failed."
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "Connection to {0} is still pending. You can close this and check again."
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connection type"
+msgstr "Connection type"
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
 msgstr "Connector"
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints failed"
+msgstr "Constraints failed"
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints passed · human review required"
+msgstr "Constraints passed · human review required"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
@@ -1721,6 +1926,10 @@ msgstr "Continue to checkout"
 #: src/pages/Auth.tsx
 msgid "Continue with {0}"
 msgstr "Continue with {0}"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Contracts, coverage and delivery exposure"
+msgstr "Contracts, coverage and delivery exposure"
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Conversations"
@@ -1859,6 +2068,7 @@ msgstr "Could not connect to the computer screen"
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/lib/account-security.ts
 #: src/lib/sso-flow.ts
+#: src/lib/trading-actions.ts
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/shell/use-computer.tsx
@@ -1870,6 +2080,10 @@ msgstr "Could not continue"
 msgid "Could not create bot"
 msgstr "Could not create bot"
 
+#: src/pages/shell/dialogs.tsx
+msgid "Could not create business scope"
+msgstr "Could not create business scope"
+
 #: src/pages/GroupPanel.tsx
 msgid "Could not create group"
 msgstr "Could not create group"
@@ -1878,10 +2092,6 @@ msgstr "Could not create group"
 msgid "Could not create section"
 msgstr "Could not create section"
 
-#: src/pages/shell/dialogs.tsx
-msgid "Could not create space"
-msgstr "Could not create space"
-
 #: src/pages/Onboarding.tsx
 msgid "Could not create your bot"
 msgstr "Could not create your bot"
@@ -1889,6 +2099,10 @@ msgstr "Could not create your bot"
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete bot"
 msgstr "Could not delete bot"
+
+#: src/pages/shell/dialogs.tsx
+msgid "Could not delete business scope"
+msgstr "Could not delete business scope"
 
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete group"
@@ -1909,10 +2123,6 @@ msgstr "Could not delete section"
 #: src/pages/KnowledgeSection.tsx
 msgid "Could not delete skill"
 msgstr "Could not delete skill"
-
-#: src/pages/shell/dialogs.tsx
-msgid "Could not delete space"
-msgstr "Could not delete space"
 
 #: src/pages/Artifacts.tsx
 msgid "Could not delete this artifact."
@@ -1994,6 +2204,10 @@ msgstr "Could not load billing"
 msgid "Could not load bots. Reload to try again."
 msgstr "Could not load bots. Reload to try again."
 
+#: src/pages/Shell.tsx
+msgid "Could not load business scopes."
+msgstr "Could not load business scopes."
+
 #: src/components/VaultSettings.tsx
 msgid "Could not load credentials."
 msgstr "Could not load credentials."
@@ -2001,6 +2215,10 @@ msgstr "Could not load credentials."
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not load integrations"
 msgstr "Could not load integrations"
+
+#: src/pages/TradingLearning.tsx
+msgid "Could not load learning records"
+msgstr "Could not load learning records"
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -2109,6 +2327,10 @@ msgstr "Could not remove skills"
 msgid "Could not remove the credential"
 msgstr "Could not remove the credential"
 
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Could not rename business scope"
+msgstr "Could not rename business scope"
+
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not rename connection"
@@ -2117,10 +2339,6 @@ msgstr "Could not rename connection"
 #: src/pages/shell/dialogs.tsx
 msgid "Could not rename section"
 msgstr "Could not rename section"
-
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Could not rename space"
-msgstr "Could not rename space"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Could not render chart"
@@ -2326,6 +2544,16 @@ msgstr "Create a section and move {0} into it."
 msgid "Create account"
 msgstr "Create account"
 
+#: src/pages/Trading.tsx
+msgid "Create authorization"
+msgstr "Create authorization"
+
+#: src/components/AskCard.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "Create business scope"
+msgstr "Create business scope"
+
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "Create group"
@@ -2333,11 +2561,6 @@ msgstr "Create group"
 #: src/pages/RoutineEditor.tsx
 msgid "Create Routine"
 msgstr "Create Routine"
-
-#: src/components/AskCard.tsx
-#: src/pages/shell/dialogs.tsx
-msgid "Create space"
-msgstr "Create space"
 
 #: src/pages/Auth.tsx
 msgid "Create your eTraderBot"
@@ -2357,9 +2580,17 @@ msgstr "Creating…"
 msgid "Credential"
 msgstr "Credential"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential field name"
+msgstr "Credential field name"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Credential saved"
 msgstr "Credential saved"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential saved securely"
+msgstr "Credential saved securely"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Credentials are encrypted and never sent to the model."
@@ -2384,6 +2615,10 @@ msgstr "Cron"
 #: src/pages/RoutineSchedule.tsx
 msgid "Cron expression"
 msgstr "Cron expression"
+
+#: src/pages/Trading.tsx
+msgid "Cumulative limit (CNY)"
+msgstr "Cumulative limit (CNY)"
 
 #: src/components/AccountAccess.tsx
 #: src/pages/AccountSettingsOverlay.tsx
@@ -2410,6 +2645,18 @@ msgstr "Customize {label}"
 msgid "Customize bot avatar"
 msgstr "Customize bot avatar"
 
+#: src/pages/TradingLearning.tsx
+msgid "Daily"
+msgstr "Daily"
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily and manual learning use the bot's model connection. New candidates require human approval."
+msgstr "Daily and manual learning use the bot's model connection. New candidates require human approval."
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily time"
+msgstr "Daily time"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "Dark"
@@ -2425,6 +2672,14 @@ msgstr "Data"
 msgid "day"
 msgstr "day"
 
+#: src/pages/Trading.tsx
+msgid "Day ahead"
+msgstr "Day ahead"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Day-ahead, intraday and real-time decisions"
+msgstr "Day-ahead, intraday and real-time decisions"
+
 #: src/pages/shell/message-cards.tsx
 msgid "Day-to-day work"
 msgstr "Day-to-day work"
@@ -2432,6 +2687,10 @@ msgstr "Day-to-day work"
 #: src/lib/cron.ts
 msgid "days"
 msgstr "days"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Decisions, receipts and lessons learned"
+msgstr "Decisions, receipts and lessons learned"
 
 #: src/components/call/IncomingCall.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2451,6 +2710,11 @@ msgstr "Default"
 #: src/pages/shell/bot-panel.tsx
 msgid "Default ({0})"
 msgstr "Default ({0})"
+
+#: src/components/integrations/space-availability.tsx
+#: src/pages/Shell.tsx
+msgid "Default business scope"
+msgstr "Default business scope"
 
 #: src/pages/shell/agent-import.tsx
 msgid "Default from Hermes"
@@ -2505,6 +2769,11 @@ msgstr "Delete {0}?"
 msgid "Delete account"
 msgstr "Delete account"
 
+#: src/pages/shell/shell-dialogs.tsx
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Delete business scope"
+msgstr "Delete business scope"
+
 #: src/pages/GroupPanel.tsx
 msgid "Delete group"
 msgstr "Delete group"
@@ -2516,11 +2785,6 @@ msgstr "Delete memories too"
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Delete section"
 msgstr "Delete section"
-
-#: src/pages/shell/shell-dialogs.tsx
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Delete space"
-msgstr "Delete space"
 
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Delete this Space's credentials?"
@@ -2539,6 +2803,10 @@ msgstr "Deleting…"
 #: src/components/AccountAccess.tsx
 msgid "Deletion code"
 msgstr "Deletion code"
+
+#: src/pages/Trading.tsx
+msgid "Delivery"
+msgstr "Delivery"
 
 #: src/components/AskCard.tsx
 msgid "Denied"
@@ -2569,6 +2837,10 @@ msgstr "Desktop update"
 #: src/pages/shell/composer-error.tsx
 msgid "Details"
 msgstr "Details"
+
+#: src/pages/Trading.tsx
+msgid "Deterministic constraints checked"
+msgstr "Deterministic constraints checked"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Developer"
@@ -2614,6 +2886,10 @@ msgstr "Disconnect {disconnectName}?"
 #: src/pages/PaymentWalletSettingsPanel.tsx
 msgid "Disconnect {name}?"
 msgstr "Disconnect {name}?"
+
+#: src/pages/Trading.tsx
+msgid "Disconnect scope"
+msgstr "Disconnect scope"
 
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Disconnect Self-hosted"
@@ -2727,6 +3003,7 @@ msgstr "Each name can be used once."
 
 #: src/components/AskCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/McpServersOverlay.tsx
 msgid "Edit"
 msgstr "Edit"
@@ -2734,6 +3011,14 @@ msgstr "Edit"
 #: src/components/AskCard.tsx
 msgid "Edit first"
 msgstr "Edit first"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Edit interface"
+msgstr "Edit interface"
+
+#: src/pages/TradingLearning.tsx
+msgid "Edit learning plan"
+msgstr "Edit learning plan"
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Edit name"
@@ -2885,6 +3170,14 @@ msgstr "Every month"
 msgid "Every week"
 msgstr "Every week"
 
+#: src/pages/Trading.tsx
+msgid "Execute simulation"
+msgstr "Execute simulation"
+
+#: src/pages/Trading.tsx
+msgid "Executor"
+msgstr "Executor"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Executor token"
 msgstr "Executor token"
@@ -2906,6 +3199,10 @@ msgstr "Expand table"
 msgid "expired"
 msgstr "expired"
 
+#: src/pages/Trading.tsx
+msgid "Expired"
+msgstr "Expired"
+
 #: src/components/AccountDataSettings.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Export"
@@ -2918,6 +3215,10 @@ msgstr "Export data"
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "Export this week's list from the CRM and drop it in the shared folder"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Exposure, limits and approval evidence"
+msgstr "Exposure, limits and approval evidence"
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2940,6 +3241,7 @@ msgstr "failed"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Failed"
 msgstr "Failed"
 
@@ -2970,6 +3272,7 @@ msgstr "Fields to compare, e.g. id, modifiedTime (optional)"
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/SpaceSearch.tsx
+#: src/pages/TradingLearning.tsx
 msgid "File"
 msgstr "File"
 
@@ -2980,6 +3283,14 @@ msgstr "Files or folders on the computer"
 #: src/pages/RoutineEditor.tsx
 msgid "Files or folders, one per line"
 msgstr "Files or folders, one per line"
+
+#: src/pages/Trading.tsx
+msgid "Filled"
+msgstr "Filled"
+
+#: src/pages/Trading.tsx
+msgid "fills"
+msgstr "fills"
 
 #: src/pages/GroupPanel.tsx
 msgid "Filter bots"
@@ -3028,6 +3339,14 @@ msgstr "Finished."
 #: src/pages/McpOAuthCallback.tsx
 msgid "Finishing MCP connection…"
 msgstr "Finishing MCP connection…"
+
+#: src/pages/shell/business-scope.tsx
+msgid "For example: Shandong retail trading"
+msgstr "For example: Shandong retail trading"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Forecasts"
+msgstr "Forecasts"
 
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
@@ -3081,6 +3400,15 @@ msgstr "Gateway ID"
 #: src/pages/SettingsOverlay.tsx
 msgid "General"
 msgstr "General"
+
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "General bot"
+msgstr "General bot"
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Generator"
+msgstr "Generator"
 
 #: src/components/InviteDialog.tsx
 msgid "Get a free month for each friend who starts a trial."
@@ -3197,6 +3525,14 @@ msgstr "High"
 msgid "High"
 msgstr "High"
 
+#: src/pages/Trading.tsx
+msgid "Historical constraints checked; profit improvement is unproven"
+msgstr "Historical constraints checked; profit improvement is unproven"
+
+#: src/pages/TradingLearning.tsx
+msgid "Historical data"
+msgstr "Historical data"
+
 #: src/components/composer/HoldToTalk.tsx
 msgid "Hold to talk"
 msgstr "Hold to talk"
@@ -3238,6 +3574,19 @@ msgstr "How to check"
 msgid "How will you use eTraderBot?"
 msgstr "How will you use eTraderBot?"
 
+#: src/pages/Trading.tsx
+msgid "Human approval · this bot has no access to this scope"
+msgstr "Human approval · this bot has no access to this scope"
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Human approvals"
+msgstr "Human approvals"
+
+#: src/pages/Trading.tsx
+msgid "Human cancellation only"
+msgstr "Human cancellation only"
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "I’m done"
@@ -3266,6 +3615,10 @@ msgstr "Image input is not configured for this model."
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Image upload area"
 msgstr "Image upload area"
+
+#: src/pages/Trading.tsx
+msgid "Immediate fill"
+msgstr "Immediate fill"
 
 #: src/components/AccountDataSettings.tsx
 msgid "Import"
@@ -3316,6 +3669,10 @@ msgstr "Inherit default"
 msgid "Input"
 msgstr "Input"
 
+#: src/pages/Trading.tsx
+msgid "Input evidence"
+msgstr "Input evidence"
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Inputs"
 msgstr "Inputs"
@@ -3359,6 +3716,10 @@ msgstr "Instructions are too long. Untick some files."
 msgid "Instructions updated"
 msgstr "Instructions updated"
 
+#: src/pages/TradingLearning.tsx
+msgid "Insufficient historical data"
+msgstr "Insufficient historical data"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Integration domain"
 msgstr "Integration domain"
@@ -3366,6 +3727,15 @@ msgstr "Integration domain"
 #: src/pages/PluginsOverlay.tsx
 msgid "Integrations"
 msgstr "Integrations"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Interface configuration"
+msgstr "Interface configuration"
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/shell/business-scope.tsx
+msgid "Interface settings"
+msgstr "Interface settings"
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/RoutineSchedule.tsx
@@ -3379,6 +3749,10 @@ msgstr "Interval amount"
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval unit"
 msgstr "Interval unit"
+
+#: src/pages/Trading.tsx
+msgid "Intraday"
+msgstr "Intraday"
 
 #: src/lib/user-error.ts
 msgid "Invalid code"
@@ -3410,6 +3784,10 @@ msgstr "Its bots and groups are kept and leave the section."
 msgid "Its conversation, files, and routines will be permanently deleted. Bots it created stay in your list."
 msgstr "Its conversation, files, and routines will be permanently deleted. Bots it created stay in your list."
 
+#: src/pages/shell/business-scope.tsx
+msgid "Jiangsu · Suzhou"
+msgstr "Jiangsu · Suzhou"
+
 #: src/pages/shell/transcript.tsx
 msgid "Jump to latest"
 msgstr "Jump to latest"
@@ -3438,6 +3816,7 @@ msgstr "key"
 msgid "Label"
 msgstr "Label"
 
+#: src/components/LanguageSwitcher.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Language"
 msgstr "Language"
@@ -3456,9 +3835,31 @@ msgstr "Last check {0}: no changes"
 msgid "Later"
 msgstr "Later"
 
+#: src/pages/TradingLearning.tsx
+msgid "Learn now"
+msgstr "Learn now"
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
+msgid "Learning"
+msgstr "Learning"
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning runs"
+msgstr "Learning runs"
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning schedule"
+msgstr "Learning schedule"
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Leave"
 msgstr "Leave"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Leave empty to keep the saved credential"
+msgstr "Leave empty to keep the saved credential"
 
 #: src/components/ComputerDeviceSettings.tsx
 msgid "Let bots use this computer"
@@ -3556,11 +3957,13 @@ msgstr "Loading voice providers…"
 #: src/components/PageLoading.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/transcript.tsx
+#: src/pages/Trading.tsx
 msgid "Loading…"
 msgstr "Loading…"
 
@@ -3617,6 +4020,10 @@ msgstr "Manage {0}"
 msgid "Manage billing"
 msgstr "Manage billing"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Manage interface"
+msgstr "Manage interface"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manage MCP servers"
 msgstr "Manage MCP servers"
@@ -3625,6 +4032,10 @@ msgstr "Manage MCP servers"
 msgid "Manage other bots"
 msgstr "Manage other bots"
 
+#: src/pages/Trading.tsx
+msgid "Manage trading stage"
+msgstr "Manage trading stage"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual"
 msgstr "Manual"
@@ -3632,6 +4043,10 @@ msgstr "Manual"
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual setup required"
 msgstr "Manual setup required"
+
+#: src/pages/Trading.tsx
+msgid "Margin"
+msgstr "Margin"
 
 #: src/pages/BotContextMenu.tsx
 msgid "Mark as Read"
@@ -3649,9 +4064,25 @@ msgstr "Mark as Unread"
 msgid "Markdown table"
 msgstr "Markdown table"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market data"
+msgstr "Market data"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Market ID"
+msgstr "Market ID"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market rules"
+msgstr "Market rules"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Marketing"
 msgstr "Marketing"
+
+#: src/pages/TradingLearning.tsx
+msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
+msgstr "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3678,6 +4109,10 @@ msgstr "Maximum images per request"
 msgid "Maximum output tokens"
 msgstr "Maximum output tokens"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP connection"
+msgstr "MCP connection"
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "MCP endpoint"
 msgstr "MCP endpoint"
@@ -3690,6 +4125,10 @@ msgstr "MCP server"
 #: src/pages/shell/agent-import.tsx
 msgid "MCP servers"
 msgstr "MCP servers"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP tool approval remains separate for each bot."
+msgstr "MCP tool approval remains separate for each bot."
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3792,6 +4231,14 @@ msgstr "Messaging"
 #: src/lib/dictation.ts
 msgid "Microphone failed"
 msgstr "Microphone failed"
+
+#: src/pages/Trading.tsx
+msgid "Mid / long term"
+msgstr "Mid / long term"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Mid / long term bot"
+msgstr "Mid / long term bot"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3941,6 +4388,7 @@ msgstr "Muted"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/providers-section.tsx
@@ -3948,6 +4396,7 @@ msgstr "Muted"
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/bot-panel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingsPanel.tsx
@@ -4005,11 +4454,23 @@ msgstr "Never ask"
 msgid "New"
 msgstr "New"
 
+#: src/pages/Trading.tsx
+msgid "New authorization"
+msgstr "New authorization"
+
 #: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "New bot"
 msgstr "New bot"
+
+#: src/pages/Shell.tsx
+#: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "New business scope"
+msgstr "New business scope"
 
 #: src/pages/GroupPanel.tsx
 msgid "New group"
@@ -4028,15 +4489,14 @@ msgstr "New messages"
 msgid "New open-work item"
 msgstr "New open-work item"
 
+#: src/pages/Trading.tsx
+msgid "New orders"
+msgstr "New orders"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
 msgstr "New password"
-
-#: src/pages/Shell.tsx
-#: src/pages/shell/bot-picker.tsx
-msgid "New private space"
-msgstr "New private space"
 
 #: src/pages/BotContextMenu.tsx
 #: src/pages/shell/dialogs.tsx
@@ -4047,13 +4507,13 @@ msgstr "New section"
 msgid "New skill"
 msgstr "New skill"
 
-#: src/pages/shell/dialogs.tsx
-msgid "New space"
-msgstr "New space"
-
 #: src/pages/Board.tsx
 msgid "New ticket"
 msgstr "New ticket"
+
+#: src/pages/TradingLearning.tsx
+msgid "Next learning run"
+msgstr "Next learning run"
 
 #: src/components/markdown-copy.tsx
 msgid "Next page"
@@ -4062,6 +4522,10 @@ msgstr "Next page"
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
 msgstr "Next settings sections"
+
+#: src/pages/Trading.tsx
+msgid "No analysis yet"
+msgstr "No analysis yet"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "No apps match your search."
@@ -4079,14 +4543,30 @@ msgstr "No auth"
 msgid "No authentication"
 msgstr "No authentication"
 
+#: src/pages/Trading.tsx
+msgid "No authorizations"
+msgstr "No authorizations"
+
+#: src/pages/TradingLearning.tsx
+msgid "No authorized material"
+msgstr "No authorized material"
+
 #: src/components/integrations/agent-access.tsx
 msgid "No bots"
 msgstr "No bots"
+
+#: src/pages/shell/business-scope.tsx
+msgid "No bots in this business scope yet."
+msgstr "No bots in this business scope yet."
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "No bots match"
 msgstr "No bots match"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "No interfaces configured for this business scope."
+msgstr "No interfaces configured for this business scope."
 
 #: src/components/AskCard.tsx
 msgid "No longer active"
@@ -4122,6 +4602,10 @@ msgstr "No model catalog is available."
 #: src/lib/model-connection-preflight.ts
 msgid "No models listed."
 msgstr "No models listed."
+
+#: src/pages/TradingLearning.tsx
+msgid "No new material"
+msgstr "No new material"
 
 #: src/pages/shell/agent-import.tsx
 msgid "No OpenClaw, Hermes or agent document found."
@@ -4166,9 +4650,17 @@ msgstr "No submissions"
 msgid "No tickets yet"
 msgstr "No tickets yet"
 
+#: src/pages/Trading.tsx
+msgid "No trading stages configured yet."
+msgstr "No trading stages configured yet."
+
 #: src/pages/RoutineEditor.tsx
 msgid "No trigger"
 msgstr "No trigger"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "None"
+msgstr "None"
 
 #: src/lib/ticket-priority.ts
 msgid "Normal"
@@ -4288,6 +4780,14 @@ msgstr "One-time"
 msgid "One-time purchase. Credits do not expire."
 msgstr "One-time purchase. Credits do not expire."
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Only the business scope owner can configure interfaces."
+msgstr "Only the business scope owner can configure interfaces."
+
+#: src/pages/TradingLearning.tsx
+msgid "Only this experience text is shared. Raw materials and source reports stay in their original scope."
+msgstr "Only this experience text is shared. Raw materials and source reports stay in their original scope."
+
 #: src/components/markdown-link-prompt.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/shell/computer-panel.tsx
@@ -4332,6 +4832,7 @@ msgstr "Open external link?"
 msgid "Open in full window"
 msgstr "Open in full window"
 
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/shell/chat-header.tsx
 msgid "Open navigation"
 msgstr "Open navigation"
@@ -4369,6 +4870,10 @@ msgstr "Optional header value"
 msgid "Or paste an API key"
 msgstr "Or paste an API key"
 
+#: src/pages/Trading.tsx
+msgid "Orders"
+msgstr "Orders"
+
 #: src/pages/memory-providers/SupermemorySettingsForm.tsx
 msgid "Organization API key"
 msgstr "Organization API key"
@@ -4380,6 +4885,10 @@ msgstr "Original"
 #: src/pages/shell/chat-context.tsx
 msgid "Original message unavailable"
 msgstr "Original message unavailable"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Other data"
+msgstr "Other data"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -4406,6 +4915,14 @@ msgstr "Page not found"
 #: src/pages/RoutineEditor.tsx
 msgid "PagerDuty incident"
 msgstr "PagerDuty incident"
+
+#: src/pages/Trading.tsx
+msgid "Partial fill"
+msgstr "Partial fill"
+
+#: src/pages/Trading.tsx
+msgid "Partially filled"
+msgstr "Partially filled"
 
 #: src/components/PasskeySettings.tsx
 msgid "Passkey"
@@ -4472,14 +4989,24 @@ msgstr "Paste your API key, then test again."
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/import-status.ts
+#: src/pages/TradingLearning.tsx
 msgid "Paused"
 msgstr "Paused"
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Pending"
 msgstr "Pending"
+
+#: src/pages/Trading.tsx
+msgid "Pending order"
+msgstr "Pending order"
+
+#: src/pages/Trading.tsx
+msgid "Per trade approval"
+msgstr "Per trade approval"
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Permissions"
@@ -4551,6 +5078,10 @@ msgstr "Plugin submissions"
 msgid "Plugins"
 msgstr "Plugins"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Positions and assets"
+msgstr "Positions and assets"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Post \"No changes\" in chat"
 msgstr "Post \"No changes\" in chat"
@@ -4562,6 +5093,10 @@ msgstr "POST to"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Preferences"
 msgstr "Preferences"
+
+#: src/pages/Trading.tsx
+msgid "Prepare intent"
+msgstr "Prepare intent"
 
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -4585,6 +5120,10 @@ msgstr "Previous page"
 msgid "Previous settings sections"
 msgstr "Previous settings sections"
 
+#: src/pages/Trading.tsx
+msgid "Price margin (CNY/MWh)"
+msgstr "Price margin (CNY/MWh)"
+
 #: src/pages/Board.tsx
 msgid "Priority"
 msgstr "Priority"
@@ -4593,13 +5132,13 @@ msgstr "Priority"
 msgid "Private"
 msgstr "Private"
 
-#: src/pages/shell/bot-picker.tsx
-msgid "Private workspace with its own bots and groups."
-msgstr "Private workspace with its own bots and groups."
-
 #: src/pages/PluginsOverlay.tsx
 msgid "Productivity"
 msgstr "Productivity"
+
+#: src/pages/TradingLearning.tsx
+msgid "Profit improvement and semantic quality have not been established."
+msgstr "Profit improvement and semantic quality have not been established."
 
 #: src/pages/shell/import-status.ts
 msgid "Program: {name}"
@@ -4627,7 +5166,20 @@ msgstr "Providers"
 msgid "Pull request"
 msgstr "Pull request"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Purpose"
+msgstr "Purpose"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters (JSON)"
+msgstr "Query parameters (JSON)"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters must be a JSON object"
+msgstr "Query parameters must be a JSON object"
+
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Queued"
 msgstr "Queued"
 
@@ -4651,6 +5203,10 @@ msgstr "Read replies aloud"
 msgid "Ready"
 msgstr "Ready"
 
+#: src/pages/Trading.tsx
+msgid "Real time"
+msgstr "Real time"
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr "Reason"
@@ -4668,6 +5224,14 @@ msgstr "Recall and write"
 msgid "Recall only"
 msgstr "Recall only"
 
+#: src/pages/Trading.tsx
+msgid "Receipt details"
+msgstr "Receipt details"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Receipts"
+msgstr "Receipts"
+
 #: src/pages/AdminAccessPage.tsx
 msgid "Received"
 msgstr "Received"
@@ -4679,6 +5243,10 @@ msgstr "Recent"
 #: src/pages/PluginsOverlay.tsx
 msgid "Recommended"
 msgstr "Recommended"
+
+#: src/pages/Trading.tsx
+msgid "Reconcile order"
+msgstr "Reconcile order"
 
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/VoiceSettingsOverlay.tsx
@@ -4776,6 +5344,10 @@ msgstr "Refresh view"
 msgid "Refreshing…"
 msgstr "Refreshing…"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Region"
+msgstr "Region"
+
 #: src/lib/user-error.ts
 msgid "Registration is closed"
 msgstr "Registration is closed"
@@ -4790,12 +5362,17 @@ msgid "Reject {0}"
 msgstr "Reject {0}"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Rejected"
 msgstr "Rejected"
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Rejecting…"
 msgstr "Rejecting…"
+
+#: src/pages/Trading.tsx
+msgid "Rejection"
+msgstr "Rejection"
 
 #: src/pages/shell/computer-release-actions.tsx
 msgid "Release control"
@@ -4855,6 +5432,10 @@ msgstr "Remove Git event"
 #: src/components/ModelHeadersEditor.tsx
 msgid "Remove header"
 msgstr "Remove header"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Remove interface"
+msgstr "Remove interface"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Remove message trigger"
@@ -4935,6 +5516,18 @@ msgstr "Replying to {0}"
 msgid "Request a new code"
 msgstr "Request a new code"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request body"
+msgstr "Request body"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request method"
+msgstr "Request method"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request parameters"
+msgstr "Request parameters"
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr "Requests"
@@ -4942,6 +5535,10 @@ msgstr "Requests"
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
 msgstr "Research & writing"
+
+#: src/pages/Trading.tsx
+msgid "Reserved"
+msgstr "Reserved"
 
 #: src/components/ComputerMaintenanceActions.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -5009,6 +5606,27 @@ msgstr "Restored"
 msgid "Restoring your workspace"
 msgstr "Restoring your workspace"
 
+#: src/pages/Trading.tsx
+msgid "Result uncertain"
+msgstr "Result uncertain"
+
+#: src/pages/Trading.tsx
+msgid "Result uncertain; the reservation is retained."
+msgstr "Result uncertain; the reservation is retained."
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Retailer"
+msgstr "Retailer"
+
+#: src/pages/Trading.tsx
+msgid "Retire algorithm"
+msgstr "Retire algorithm"
+
+#: src/pages/Trading.tsx
+msgid "Retired"
+msgstr "Retired"
+
 #: src/components/AccountAccess.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -5041,18 +5659,41 @@ msgstr "Return to call with {0}"
 msgid "Return to eTraderBot"
 msgstr "Return to eTraderBot"
 
+#: src/pages/Trading.tsx
+msgid "Review"
+msgstr "Review"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Review bot"
+msgstr "Review bot"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "Review provider settings and test again."
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Revoke"
 msgstr "Revoke"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/Trading.tsx
 msgid "Revoked"
 msgstr "Revoked"
+
+#: src/pages/Trading.tsx
+msgid "Risk"
+msgstr "Risk"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Risk bot"
+msgstr "Risk bot"
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Risk review"
+msgstr "Risk review"
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Room guidance"
@@ -5086,9 +5727,17 @@ msgstr "Row"
 msgid "Rules"
 msgstr "Rules"
 
+#: src/pages/Trading.tsx
+msgid "Run analysis"
+msgstr "Run analysis"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Run at"
 msgstr "Run at"
+
+#: src/pages/TradingLearning.tsx
+msgid "Run finished without a learning report. Review the conversation and retry."
+msgstr "Run finished without a learning report. Review the conversation and retry."
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
@@ -5105,6 +5754,7 @@ msgstr "running"
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Running"
 msgstr "Running"
 
@@ -5146,13 +5796,29 @@ msgstr "Saturday"
 msgid "Save"
 msgstr "Save"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Save configuration"
+msgstr "Save configuration"
+
 #: src/components/VaultSettings.tsx
 msgid "Save credential"
 msgstr "Save credential"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Save interface"
+msgstr "Save interface"
+
+#: src/pages/TradingLearning.tsx
+msgid "Save material"
+msgstr "Save material"
+
 #: src/components/VaultSettings.tsx
 msgid "Save new value"
 msgstr "Save new value"
+
+#: src/pages/TradingLearning.tsx
+msgid "Save plan"
+msgstr "Save plan"
 
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
@@ -5208,6 +5874,10 @@ msgstr "Say yes or no, or answer in a sentence."
 #: src/components/ModelCredits.tsx
 msgid "Scheduled routines"
 msgstr "Scheduled routines"
+
+#: src/pages/Trading.tsx
+msgid "Scope owner"
+msgstr "Scope owner"
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Scopes (optional)"
@@ -5288,9 +5958,22 @@ msgstr "Security & Ops"
 msgid "Select a bot"
 msgstr "Select a bot"
 
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Select a business scope in the sidebar first."
+msgstr "Select a business scope in the sidebar first."
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Select a connection"
+msgstr "Select a connection"
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Self-hosted"
 msgstr "Self-hosted"
+
+#: src/pages/Trading.tsx
+msgid "Sell"
+msgstr "Sell"
 
 #: src/pages/shell/composer.tsx
 msgid "Send"
@@ -5384,6 +6067,10 @@ msgstr "Settings: General"
 msgid "Settings: Usage"
 msgstr "Settings: Usage"
 
+#: src/pages/Trading.tsx
+msgid "Settled"
+msgstr "Settled"
+
 #: src/pages/shell/import-setup-card.tsx
 msgid "Setup complete"
 msgstr "Setup complete"
@@ -5391,6 +6078,14 @@ msgstr "Setup complete"
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Setup help"
 msgstr "Setup help"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Shandong"
+msgstr "Shandong"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Shanghai"
+msgstr "Shanghai"
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape"
@@ -5400,6 +6095,14 @@ msgstr "Shape"
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape {0}"
 msgstr "Shape {0}"
+
+#: src/pages/TradingLearning.tsx
+msgid "Share experience"
+msgstr "Share experience"
+
+#: src/pages/TradingLearning.tsx
+msgid "Share selected experience"
+msgstr "Share selected experience"
 
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
@@ -5447,6 +6150,10 @@ msgstr "Show tool activity"
 #: src/components/call/VoiceChatCard.tsx
 msgid "Show transcript"
 msgstr "Show transcript"
+
+#: src/pages/Trading.tsx
+msgid "Side"
+msgstr "Side"
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Sidebar density"
@@ -5501,6 +6208,26 @@ msgstr "Sign up"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Sign-in cancelled. Try again."
 msgstr "Sign-in cancelled. Try again."
+
+#: src/pages/shell/business-scope.tsx
+msgid "Simulation · bots and interfaces are configured within this business scope."
+msgstr "Simulation · bots and interfaces are configured within this business scope."
+
+#: src/pages/Trading.tsx
+msgid "Simulation receipt"
+msgstr "Simulation receipt"
+
+#: src/pages/Trading.tsx
+msgid "Simulation scenario"
+msgstr "Simulation scenario"
+
+#: src/pages/Trading.tsx
+msgid "Simulation trading"
+msgstr "Simulation trading"
+
+#: src/pages/Trading.tsx
+msgid "Single intent limit (CNY)"
+msgstr "Single intent limit (CNY)"
 
 #: src/components/VaultSettings.tsx
 msgid "Site"
@@ -5594,18 +6321,9 @@ msgstr "Sorted by {column}, ascending"
 msgid "Sorted by {column}, descending"
 msgstr "Sorted by {column}, descending"
 
-#: src/lib/identity-display.ts
-#: src/pages/SettingsOverlay.tsx
-msgid "Space"
-msgstr "Space"
-
-#: src/pages/shell/bot-panel.tsx
-msgid "Space default"
-msgstr "Space default"
-
-#: src/pages/SettingsOverlay.tsx
-msgid "Spaces"
-msgstr "Spaces"
+#: src/pages/TradingLearning.tsx
+msgid "Source reference"
+msgstr "Source reference"
 
 #: src/pages/shell/message-view.tsx
 msgid "Speak"
@@ -5622,6 +6340,14 @@ msgstr "Speaking"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Speech model"
 msgstr "Speech model"
+
+#: src/pages/Trading.tsx
+msgid "Spot"
+msgstr "Spot"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Spot bot"
+msgstr "Spot bot"
 
 #: src/components/AccountAccess.tsx
 msgid "SSO"
@@ -5661,6 +6387,7 @@ msgid "Start your plan now?"
 msgstr "Start your plan now?"
 
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Starting"
 msgstr "Starting"
 
@@ -5708,6 +6435,11 @@ msgstr "Stopped."
 msgid "Stopping…"
 msgstr "Stopping…"
 
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Storage"
+msgstr "Storage"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Stored encrypted"
 msgstr "Stored encrypted"
@@ -5719,6 +6451,18 @@ msgstr "Stream replies"
 #: src/lib/identity-display.ts
 msgid "subagent"
 msgstr "subagent"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject ID"
+msgstr "Subject ID"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject type"
+msgstr "Subject type"
+
+#: src/pages/Trading.tsx
+msgid "Submission timeout"
+msgstr "Submission timeout"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -5776,6 +6520,14 @@ msgstr "Switch"
 msgid "Switching…"
 msgstr "Switching…"
 
+#: src/pages/Trading.tsx
+msgid "Synthetic data"
+msgstr "Synthetic data"
+
+#: src/pages/Trading.tsx
+msgid "Synthetic fill"
+msgstr "Synthetic fill"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "System"
@@ -5788,6 +6540,10 @@ msgstr "Table"
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "Take control"
+
+#: src/pages/TradingLearning.tsx
+msgid "Target scope"
+msgstr "Target scope"
 
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Teach a task"
@@ -6057,6 +6813,10 @@ msgstr "Thursday"
 msgid "Time of day"
 msgstr "Time of day"
 
+#: src/pages/TradingLearning.tsx
+msgid "Time zone"
+msgstr "Time zone"
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Timezone"
 msgstr "Timezone"
@@ -6115,6 +6875,39 @@ msgstr "Tool name"
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
 msgstr "Tools"
+
+#: src/pages/Trading.tsx
+msgid "Trade approved"
+msgstr "Trade approved"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Trade authorizer"
+msgstr "Trade authorizer"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Trade execution"
+msgstr "Trade execution"
+
+#: src/pages/Trading.tsx
+msgid "Trade intents"
+msgstr "Trade intents"
+
+#: src/pages/TradingLearning.tsx
+msgid "Trader feedback"
+msgstr "Trader feedback"
+
+#: src/pages/Shell.tsx
+msgid "Trading"
+msgstr "Trading"
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Trading review"
+msgstr "Trading review"
+
+#: src/pages/Trading.tsx
+msgid "Trading stage"
+msgstr "Trading stage"
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Transcribing…"
@@ -6189,6 +6982,10 @@ msgstr "Type your answer"
 #: src/pages/Shell.tsx
 msgid "Unassigned"
 msgstr "Unassigned"
+
+#: src/pages/Trading.tsx
+msgid "Uncovered exposure"
+msgstr "Uncovered exposure"
 
 #: src/components/AskCard.tsx
 msgid "Undo"
@@ -6280,6 +7077,14 @@ msgstr "Upgrade now"
 msgid "Upload"
 msgstr "Upload"
 
+#: src/pages/TradingLearning.tsx
+msgid "Upload file"
+msgstr "Upload file"
+
+#: src/pages/TradingLearning.tsx
+msgid "Upload learning file"
+msgstr "Upload learning file"
+
 #: src/lib/ticket-priority.ts
 msgid "Urgent"
 msgstr "Urgent"
@@ -6344,6 +7149,10 @@ msgstr "Use Protected input for passwords."
 msgid "Use space default"
 msgstr "Use space default"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Use the credential field for keys and tokens."
+msgstr "Use the credential field for keys and tokens."
+
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
 msgstr "Use up to 512 letters, digits, _ or -."
@@ -6377,6 +7186,22 @@ msgstr "Using your API key"
 msgid "Using your API key. Free plan ends {freeUntil}."
 msgstr "Using your API key. Free plan ends {freeUntil}."
 
+#: src/pages/Trading.tsx
+msgid "Valid for 24 hours"
+msgstr "Valid for 24 hours"
+
+#: src/pages/Trading.tsx
+msgid "Valid until"
+msgstr "Valid until"
+
+#: src/pages/Trading.tsx
+msgid "Validation and source"
+msgstr "Validation and source"
+
+#: src/pages/TradingLearning.tsx
+msgid "Validation evidence"
+msgstr "Validation evidence"
+
 #: src/components/LoginFields.tsx
 #: src/components/VaultSettings.tsx
 #: src/pages/McpServersOverlay.tsx
@@ -6387,6 +7212,10 @@ msgstr "Value"
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Vault"
 msgstr "Vault"
+
+#: src/pages/Trading.tsx
+msgid "Venue unavailable"
+msgstr "Venue unavailable"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Verify and add"
@@ -6422,6 +7251,14 @@ msgstr "Voice request timed out."
 #: src/lib/model-connection-preflight.ts
 msgid "Wait a moment and test again."
 msgstr "Wait a moment and test again."
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for input"
+msgstr "Waiting for input"
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for you"
+msgstr "Waiting for you"
 
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"

@@ -1,0 +1,16 @@
+{
+  "scope": {
+    "subjectId": "ret-sh-02",
+    "subjectKind": "retailer",
+    "accountId": "acct-ret-sh-02",
+    "region": "CN-SH",
+    "marketId": "mkt-sh-spot-sim",
+    "productId": "prod-energy",
+    "stage": "realtime",
+    "environment": "simulation"
+  },
+  "window": {
+    "from": "2025-03-20T00:00:00+08:00",
+    "to": "2025-03-21T00:00:00+08:00"
+  }
+}

@@ -126,7 +126,7 @@ export function useInboxRenderItem({
                     ? [
                         {
                           id: "delete",
-                          title: t("Delete space"),
+                          title: t("Delete business scope"),
                           image: "trash" as const,
                           attributes: {
                             destructive: true,

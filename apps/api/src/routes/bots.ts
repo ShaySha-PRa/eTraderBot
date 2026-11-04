@@ -24,8 +24,8 @@ import type {
   SettingsScope,
   VaultPutInput,
 } from "@rakazo/contracts";
-import { BotSecretAuth, resolveBotAvatarSet } from "@rakazo/contracts";
-import { ACTIVE_RUN_STATUSES, displayName } from "@rakazo/core";
+import { BotSecretAuth, resolveBotAvatarSet, TradingBotRoleSchema } from "@rakazo/contracts";
+import { ACTIVE_RUN_STATUSES, displayName, TradingError } from "@rakazo/core";
 import type { Prisma } from "@rakazo/db";
 import {
   BotSectionNameConflictError,
@@ -263,11 +263,17 @@ export function botsRoutes(ctx: RouterContext) {
         try {
           bot = await repos.createBot(context.actor, input);
         } catch (error) {
+          if (error instanceof TradingError)
+            throw new ORPCError(error.code === "NOT_FOUND" ? "NOT_FOUND" : "BAD_REQUEST", {
+              message: error.message,
+              data: { reason: error.code },
+            });
           throw mapSpaceLifecycleError(error);
         }
-        await enqueueBotIntroRun(deps, context.actor, bot).catch((error) => {
-          getLogger().error("bot intro run enqueue", error);
-        });
+        if (!bot.tradingRole)
+          await enqueueBotIntroRun(deps, context.actor, bot).catch((error) => {
+            getLogger().error("bot intro run enqueue", error);
+          });
         return bot;
       }),
       importPreview: authed.bots.importPreview.handler(async ({ context, input }) =>
@@ -293,6 +299,9 @@ export function botsRoutes(ctx: RouterContext) {
             name: duplicateBotName(source.name),
             description: source.description,
             instructions: source.instructions,
+            ...(source.tradingRole
+              ? { tradingRole: TradingBotRoleSchema.parse(source.tradingRole) }
+              : {}),
             notifyOnFinish: source.notifyOnFinish,
             color: source.color,
             avatarSet: resolveBotAvatarSet(source.avatarSet),

@@ -55,6 +55,8 @@ export function ShellSidebar({
   setNewSpaceOpen,
   setCreateBotOpen,
   roster,
+  businessScopePicker,
+  onCreateBusinessScope,
   archived,
   footerLogos,
   user,
@@ -80,6 +82,8 @@ export function ShellSidebar({
   setNewSpaceOpen: (open: boolean) => void;
   setCreateBotOpen: (open: boolean) => void;
   roster: ReactNode;
+  businessScopePicker?: ReactNode;
+  onCreateBusinessScope?: () => void;
   archived: ReactNode;
   footerLogos: Array<{ name: string; logo?: string | null }>;
   user: User | undefined;
@@ -167,7 +171,9 @@ export function ShellSidebar({
           navigate={navigate}
           setNewSpaceOpen={setNewSpaceOpen}
           setCreateBotOpen={setCreateBotOpen}
+          onCreateBusinessScope={onCreateBusinessScope}
         />
+        {businessScopePicker}
         {mini || !(activityMode || searchOpen || query) ? null : (
           <InputGroup
             data-testid="sidebar-search"

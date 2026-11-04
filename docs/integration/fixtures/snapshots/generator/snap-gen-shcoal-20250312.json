@@ -1,0 +1,507 @@
+{
+  "schemaVersion": "1",
+  "snapshotId": "snap-gen-shcoal-20250312",
+  "scope": {
+    "subjectId": "gen-sh-coal-01",
+    "subjectKind": "generator",
+    "accountId": "acct-gen-sh-01",
+    "region": "CN-SH",
+    "marketId": "mkt-sh-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation",
+    "assetId": "asset-coal-sh-01"
+  },
+  "source": {
+    "sourceId": "ln-fgw-unified-settlement-da-hourly-2025-03-12",
+    "kind": "user",
+    "observedAt": "2025-03-09T18:05:00+08:00",
+    "asOf": "2025-03-09T18:00:00+08:00",
+    "validUntil": "2025-03-10T12:00:00+08:00",
+    "revision": "ln-public-transcribe-1"
+  },
+  "rules": {
+    "id": "rules-sim-da-generator",
+    "version": "2025.03.sim.1",
+    "source": {
+      "sourceId": "rules-sim-da-generator-src",
+      "kind": "synthetic",
+      "observedAt": "2025-03-09T18:05:00+08:00",
+      "asOf": "2025-03-09T18:00:00+08:00",
+      "validUntil": "2025-03-10T12:00:00+08:00",
+      "revision": "rv1"
+    },
+    "verification": "synthetic",
+    "effectiveFrom": "2025-01-01T00:00:00+08:00",
+    "effectiveTo": "2026-12-31T23:59:59+08:00",
+    "timezone": "Asia/Shanghai",
+    "currency": "CNY",
+    "intervalMinutes": 60,
+    "priceMin": "-80",
+    "priceMax": "1500",
+    "priceStep": "0.1",
+    "energyStep": "0.1",
+    "maxSnapshotAgeSeconds": 86400
+  },
+  "input": {
+    "kind": "generator",
+    "intervals": [
+      {
+        "start": "2025-03-12T00:00:00+08:00",
+        "end": "2025-03-12T01:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "shcoal-h00-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h00-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T01:00:00+08:00",
+        "end": "2025-03-12T02:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "shcoal-h01-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h01-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T02:00:00+08:00",
+        "end": "2025-03-12T03:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "shcoal-h02-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h02-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T03:00:00+08:00",
+        "end": "2025-03-12T04:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "shcoal-h03-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h03-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T04:00:00+08:00",
+        "end": "2025-03-12T05:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "shcoal-h04-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h04-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T05:00:00+08:00",
+        "end": "2025-03-12T06:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "86.18",
+        "segments": [
+          {
+            "segmentId": "shcoal-h05-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h05-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T06:00:00+08:00",
+        "end": "2025-03-12T07:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "268.4975",
+        "segments": [
+          {
+            "segmentId": "shcoal-h06-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h06-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T07:00:00+08:00",
+        "end": "2025-03-12T08:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "85.1925",
+        "segments": [
+          {
+            "segmentId": "shcoal-h07-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h07-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T08:00:00+08:00",
+        "end": "2025-03-12T09:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "21.3675",
+        "segments": [
+          {
+            "segmentId": "shcoal-h08-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h08-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T09:00:00+08:00",
+        "end": "2025-03-12T10:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "25.1875",
+        "segments": [
+          {
+            "segmentId": "shcoal-h09-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h09-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T10:00:00+08:00",
+        "end": "2025-03-12T11:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "24.755",
+        "segments": [
+          {
+            "segmentId": "shcoal-h10-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h10-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T11:00:00+08:00",
+        "end": "2025-03-12T12:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "21.2325",
+        "segments": [
+          {
+            "segmentId": "shcoal-h11-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h11-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T12:00:00+08:00",
+        "end": "2025-03-12T13:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "18.9775",
+        "segments": [
+          {
+            "segmentId": "shcoal-h12-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h12-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T13:00:00+08:00",
+        "end": "2025-03-12T14:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "18.5",
+        "segments": [
+          {
+            "segmentId": "shcoal-h13-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h13-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T14:00:00+08:00",
+        "end": "2025-03-12T15:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "17.7275",
+        "segments": [
+          {
+            "segmentId": "shcoal-h14-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h14-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T15:00:00+08:00",
+        "end": "2025-03-12T16:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "18.19",
+        "segments": [
+          {
+            "segmentId": "shcoal-h15-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h15-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T16:00:00+08:00",
+        "end": "2025-03-12T17:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "18.95",
+        "segments": [
+          {
+            "segmentId": "shcoal-h16-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h16-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T17:00:00+08:00",
+        "end": "2025-03-12T18:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "23.11",
+        "segments": [
+          {
+            "segmentId": "shcoal-h17-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h17-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T18:00:00+08:00",
+        "end": "2025-03-12T19:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "373.4525",
+        "segments": [
+          {
+            "segmentId": "shcoal-h18-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h18-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T19:00:00+08:00",
+        "end": "2025-03-12T20:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "377.8375",
+        "segments": [
+          {
+            "segmentId": "shcoal-h19-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h19-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T20:00:00+08:00",
+        "end": "2025-03-12T21:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "187.6575",
+        "segments": [
+          {
+            "segmentId": "shcoal-h20-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h20-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T21:00:00+08:00",
+        "end": "2025-03-12T22:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "361.34",
+        "segments": [
+          {
+            "segmentId": "shcoal-h21-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h21-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T22:00:00+08:00",
+        "end": "2025-03-12T23:00:00+08:00",
+        "availableEnergyMwh": "161.5",
+        "committedEnergyMwh": "48.4",
+        "forecastPrice": "370",
+        "segments": [
+          {
+            "segmentId": "shcoal-h22-s1",
+            "energyMwh": "67.9",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h22-s2",
+            "energyMwh": "45.2",
+            "marginalCost": "325"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-12T23:00:00+08:00",
+        "end": "2025-03-13T00:00:00+08:00",
+        "availableEnergyMwh": "180.5",
+        "committedEnergyMwh": "54.1",
+        "forecastPrice": "377.5",
+        "segments": [
+          {
+            "segmentId": "shcoal-h23-s1",
+            "energyMwh": "75.8",
+            "marginalCost": "285"
+          },
+          {
+            "segmentId": "shcoal-h23-s2",
+            "energyMwh": "50.6",
+            "marginalCost": "325"
+          }
+        ]
+      }
+    ]
+  }
+}

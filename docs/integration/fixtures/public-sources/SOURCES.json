@@ -1,0 +1,41 @@
+{
+  "title": "Public spot-price disclosure references",
+  "updatedAt": "2026-11-03T02:55:00-08:00",
+  "policy": "Numeric series transcribed from public Liaoning PDFs use source.kind=user in updated snapshots. Never mark company. Remaining purely invented curves stay synthetic.",
+  "liaoning_transcribed": {
+    "path": "liaoning-unified-settlement/",
+    "tradeDates": [
+      "2025-03-10",
+      "2025-03-11",
+      "2025-03-12"
+    ],
+    "fields": "dayAhead + realtime at 15-min; hourly means for forecastPrice",
+    "unit": "CNY/MWh (元/千千瓦时)",
+    "settlementPoint": "统一结算点"
+  },
+  "attempted_public_sources": [
+    {
+      "name": "辽宁省发改委通知公告 — 按日 PDF《统一结算点电价信息表》",
+      "url": "https://fgw.ln.gov.cn/fgw/index/tzgg/97102a86-12.shtml",
+      "status": "transcribed",
+      "tradeDates": [
+        "2025-03-10",
+        "2025-03-11",
+        "2025-03-12"
+      ],
+      "license_or_use": "政府信息公开附件；教学样例。",
+      "mapping_to_contract": "日前电价→forecastPrice（小时均值）；完整 15 分钟序列见旁路 JSON。source.kind=user。"
+    },
+    {
+      "name": "现货电价公示专区（交互页）",
+      "url": "https://fgw.ln.gov.cn/fgw/xxgk/xhdj/index.shtml",
+      "status": "portal_listed_pdfs_used_instead",
+      "license_or_use": "页面曾 504/重 JS；本轮以通知公告 PDF 为准。"
+    },
+    {
+      "name": "国家能源局信息披露基本规则答记者问",
+      "url": "https://www.gov.cn/zhengce/202402/content_6930756.htm",
+      "status": "policy_only"
+    }
+  ]
+}

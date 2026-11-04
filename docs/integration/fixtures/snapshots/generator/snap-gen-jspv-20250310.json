@@ -1,0 +1,507 @@
+{
+  "schemaVersion": "1",
+  "snapshotId": "snap-gen-jspv-20250310",
+  "scope": {
+    "subjectId": "gen-js-pv-01",
+    "subjectKind": "generator",
+    "accountId": "acct-gen-js-01",
+    "region": "CN-JS",
+    "marketId": "mkt-js-spot-sim",
+    "productId": "prod-energy",
+    "stage": "realtime",
+    "environment": "simulation",
+    "assetId": "asset-pv-js-01"
+  },
+  "source": {
+    "sourceId": "ln-fgw-unified-settlement-da-hourly-2025-03-10",
+    "kind": "user",
+    "observedAt": "2025-03-09T18:05:00+08:00",
+    "asOf": "2025-03-09T18:00:00+08:00",
+    "validUntil": "2025-03-10T12:00:00+08:00",
+    "revision": "ln-public-transcribe-1"
+  },
+  "rules": {
+    "id": "rules-sim-da-generator",
+    "version": "2025.03.sim.1",
+    "source": {
+      "sourceId": "rules-sim-da-generator-src",
+      "kind": "synthetic",
+      "observedAt": "2025-03-09T18:05:00+08:00",
+      "asOf": "2025-03-09T18:00:00+08:00",
+      "validUntil": "2025-03-10T12:00:00+08:00",
+      "revision": "rv1"
+    },
+    "verification": "synthetic",
+    "effectiveFrom": "2025-01-01T00:00:00+08:00",
+    "effectiveTo": "2026-12-31T23:59:59+08:00",
+    "timezone": "Asia/Shanghai",
+    "currency": "CNY",
+    "intervalMinutes": 60,
+    "priceMin": "-80",
+    "priceMax": "1500",
+    "priceStep": "0.1",
+    "energyStep": "0.1",
+    "maxSnapshotAgeSeconds": 86400
+  },
+  "input": {
+    "kind": "generator",
+    "intervals": [
+      {
+        "start": "2025-03-10T00:00:00+08:00",
+        "end": "2025-03-10T01:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h00-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h00-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T01:00:00+08:00",
+        "end": "2025-03-10T02:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h01-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h01-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T02:00:00+08:00",
+        "end": "2025-03-10T03:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h02-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h02-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T03:00:00+08:00",
+        "end": "2025-03-10T04:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h03-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h03-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T04:00:00+08:00",
+        "end": "2025-03-10T05:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h04-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h04-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T05:00:00+08:00",
+        "end": "2025-03-10T06:00:00+08:00",
+        "availableEnergyMwh": "7.5",
+        "committedEnergyMwh": "2.2",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h05-s1",
+            "energyMwh": "3.2",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h05-s2",
+            "energyMwh": "2.1",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T06:00:00+08:00",
+        "end": "2025-03-10T07:00:00+08:00",
+        "availableEnergyMwh": "15",
+        "committedEnergyMwh": "4.5",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h06-s1",
+            "energyMwh": "6.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h06-s2",
+            "energyMwh": "4.2",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T07:00:00+08:00",
+        "end": "2025-03-10T08:00:00+08:00",
+        "availableEnergyMwh": "22.5",
+        "committedEnergyMwh": "6.8",
+        "forecastPrice": "5.595",
+        "segments": [
+          {
+            "segmentId": "jspv-h07-s1",
+            "energyMwh": "9.4",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h07-s2",
+            "energyMwh": "6.3",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T08:00:00+08:00",
+        "end": "2025-03-10T09:00:00+08:00",
+        "availableEnergyMwh": "30",
+        "committedEnergyMwh": "9",
+        "forecastPrice": "32.4425",
+        "segments": [
+          {
+            "segmentId": "jspv-h08-s1",
+            "energyMwh": "12.6",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h08-s2",
+            "energyMwh": "8.4",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T09:00:00+08:00",
+        "end": "2025-03-10T10:00:00+08:00",
+        "availableEnergyMwh": "37.5",
+        "committedEnergyMwh": "11.2",
+        "forecastPrice": "40.4525",
+        "segments": [
+          {
+            "segmentId": "jspv-h09-s1",
+            "energyMwh": "15.8",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h09-s2",
+            "energyMwh": "10.5",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T10:00:00+08:00",
+        "end": "2025-03-10T11:00:00+08:00",
+        "availableEnergyMwh": "45",
+        "committedEnergyMwh": "13.5",
+        "forecastPrice": "40.1775",
+        "segments": [
+          {
+            "segmentId": "jspv-h10-s1",
+            "energyMwh": "18.9",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h10-s2",
+            "energyMwh": "12.6",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T11:00:00+08:00",
+        "end": "2025-03-10T12:00:00+08:00",
+        "availableEnergyMwh": "52.5",
+        "committedEnergyMwh": "15.8",
+        "forecastPrice": "32.585",
+        "segments": [
+          {
+            "segmentId": "jspv-h11-s1",
+            "energyMwh": "22",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h11-s2",
+            "energyMwh": "14.7",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T12:00:00+08:00",
+        "end": "2025-03-10T13:00:00+08:00",
+        "availableEnergyMwh": "60",
+        "committedEnergyMwh": "18",
+        "forecastPrice": "29.005",
+        "segments": [
+          {
+            "segmentId": "jspv-h12-s1",
+            "energyMwh": "25.2",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h12-s2",
+            "energyMwh": "16.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T13:00:00+08:00",
+        "end": "2025-03-10T14:00:00+08:00",
+        "availableEnergyMwh": "52.5",
+        "committedEnergyMwh": "15.8",
+        "forecastPrice": "28.43",
+        "segments": [
+          {
+            "segmentId": "jspv-h13-s1",
+            "energyMwh": "22",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h13-s2",
+            "energyMwh": "14.7",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T14:00:00+08:00",
+        "end": "2025-03-10T15:00:00+08:00",
+        "availableEnergyMwh": "45",
+        "committedEnergyMwh": "13.5",
+        "forecastPrice": "27.44",
+        "segments": [
+          {
+            "segmentId": "jspv-h14-s1",
+            "energyMwh": "18.9",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h14-s2",
+            "energyMwh": "12.6",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T15:00:00+08:00",
+        "end": "2025-03-10T16:00:00+08:00",
+        "availableEnergyMwh": "37.5",
+        "committedEnergyMwh": "11.2",
+        "forecastPrice": "28.375",
+        "segments": [
+          {
+            "segmentId": "jspv-h15-s1",
+            "energyMwh": "15.8",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h15-s2",
+            "energyMwh": "10.5",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T16:00:00+08:00",
+        "end": "2025-03-10T17:00:00+08:00",
+        "availableEnergyMwh": "30",
+        "committedEnergyMwh": "9",
+        "forecastPrice": "29.9075",
+        "segments": [
+          {
+            "segmentId": "jspv-h16-s1",
+            "energyMwh": "12.6",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h16-s2",
+            "energyMwh": "8.4",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T17:00:00+08:00",
+        "end": "2025-03-10T18:00:00+08:00",
+        "availableEnergyMwh": "22.5",
+        "committedEnergyMwh": "6.8",
+        "forecastPrice": "34.24",
+        "segments": [
+          {
+            "segmentId": "jspv-h17-s1",
+            "energyMwh": "9.4",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h17-s2",
+            "energyMwh": "6.3",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T18:00:00+08:00",
+        "end": "2025-03-10T19:00:00+08:00",
+        "availableEnergyMwh": "15",
+        "committedEnergyMwh": "4.5",
+        "forecastPrice": "35.9025",
+        "segments": [
+          {
+            "segmentId": "jspv-h18-s1",
+            "energyMwh": "6.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h18-s2",
+            "energyMwh": "4.2",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T19:00:00+08:00",
+        "end": "2025-03-10T20:00:00+08:00",
+        "availableEnergyMwh": "7.5",
+        "committedEnergyMwh": "2.2",
+        "forecastPrice": "30.6025",
+        "segments": [
+          {
+            "segmentId": "jspv-h19-s1",
+            "energyMwh": "3.2",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h19-s2",
+            "energyMwh": "2.1",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T20:00:00+08:00",
+        "end": "2025-03-10T21:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "28.115",
+        "segments": [
+          {
+            "segmentId": "jspv-h20-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h20-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T21:00:00+08:00",
+        "end": "2025-03-10T22:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h21-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h21-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T22:00:00+08:00",
+        "end": "2025-03-10T23:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h22-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h22-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-10T23:00:00+08:00",
+        "end": "2025-03-11T00:00:00+08:00",
+        "availableEnergyMwh": "3",
+        "committedEnergyMwh": "0.9",
+        "forecastPrice": "0",
+        "segments": [
+          {
+            "segmentId": "jspv-h23-s1",
+            "energyMwh": "1.3",
+            "marginalCost": "20"
+          },
+          {
+            "segmentId": "jspv-h23-s2",
+            "energyMwh": "0.8",
+            "marginalCost": "60"
+          }
+        ]
+      }
+    ]
+  }
+}

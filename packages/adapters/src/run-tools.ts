@@ -18,6 +18,7 @@ import { preferenceTools } from "./run-tools-preferences.js";
 import { purchaseTools } from "./run-tools-purchases.js";
 import { secretTools } from "./run-tools-secrets.js";
 import { taskTools } from "./run-tools-tasks.js";
+import { tradingTools } from "./run-tools-trading.js";
 import {
   USER_COMPUTER_ACT_TOOL,
   USER_COMPUTER_OBSERVE_TOOL,
@@ -34,6 +35,7 @@ const TOOL_HANDLERS = new Map<string, ToolHandler>([
   ...Object.entries(memoryTools),
   ...Object.entries(integrationTools),
   ...Object.entries(taskTools),
+  ...Object.entries(tradingTools),
   ...Object.entries(messagingTools),
   ...Object.entries(secretTools),
   ...Object.entries(fleetTools),

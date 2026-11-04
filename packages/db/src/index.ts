@@ -46,7 +46,14 @@ export * from "./sessions.js";
 export * from "./space-settings.js";
 export * from "./spaces.js";
 export { primaryActiveRun } from "./thread-listing.js";
+export * from "./trading.js";
+export * from "./trading-bots.js";
+export * from "./trading-control.js";
+export * from "./trading-engine.js";
+export { createTradingLearningService } from "./trading-learning.js";
 export * from "./transaction-retry.js";
 export * from "./unread-inbox-chats.js";
 export * from "./usage.js";
 export * from "./voice-credentials.js";
+
+export { createTradingWorkspaceService } from "./trading-workspaces.js";

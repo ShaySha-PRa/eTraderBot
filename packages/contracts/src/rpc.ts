@@ -167,6 +167,7 @@ import {
 import { SearchQueryOutputSchema } from "./search.js";
 import { SecurityEventListInputSchema, SecurityEventSchema } from "./security-events.js";
 import { SettingsScopeSchema, SpaceSettingSchema, settingsScopeInput } from "./settings-scope.js";
+import { tradingContract } from "./trading-rpc.js";
 
 const botId = z.object({ botId: Id });
 const groupId = z.object({ groupId: Id });
@@ -244,6 +245,7 @@ const threadSendWithRoutinesInput = threadSendFields.safeExtend({
 const spaceName = z.string().trim().min(1).max(60);
 
 export const appContract = {
+  trading: tradingContract,
   analytics: { screen: oc.input(AnalyticsScreenInput).output(z.object({ ok: z.literal(true) })) },
   aiConsent: {
     status: oc.input(AiConsentQuerySchema).output(AiConsentStatusSchema),

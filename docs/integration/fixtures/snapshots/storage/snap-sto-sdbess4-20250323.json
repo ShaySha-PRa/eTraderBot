@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1",
+  "snapshotId": "snap-sto-sdbess4-20250323",
+  "scope": {
+    "subjectId": "sto-sd-bess-04",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sd-02",
+    "assetId": "asset-bess-sd-04",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "realtime",
+    "environment": "simulation"
+  },
+  "source": {
+    "sourceId": "src-snap-sto-sdbess4-20250323",
+    "kind": "synthetic",
+    "observedAt": "2025-03-22T18:02:00+08:00",
+    "asOf": "2025-03-22T18:00:00+08:00",
+    "validUntil": "2025-03-23T12:00:00+08:00",
+    "revision": "syn-batch2"
+  },
+  "rules": {
+    "id": "rules-sim-batch2-sto",
+    "version": "2025.03.sim.batch2",
+    "source": {
+      "sourceId": "rules-sim-batch2-sto-src",
+      "kind": "synthetic",
+      "observedAt": "2025-03-19T18:05:00+08:00",
+      "asOf": "2025-03-19T18:00:00+08:00",
+      "validUntil": "2025-03-20T18:00:00+08:00",
+      "revision": "syn-batch2"
+    },
+    "verification": "synthetic",
+    "effectiveFrom": "2025-01-01T00:00:00+08:00",
+    "effectiveTo": "2026-12-31T23:59:59+08:00",
+    "timezone": "Asia/Shanghai",
+    "currency": "CNY",
+    "intervalMinutes": 60,
+    "priceMin": "-80",
+    "priceMax": "1500",
+    "priceStep": "0.1",
+    "energyStep": "0.1",
+    "maxSnapshotAgeSeconds": 86400
+  },
+  "input": {
+    "kind": "storage",
+    "capacityMwh": "30",
+    "initialEnergyMwh": "12",
+    "minEnergyMwh": "1.5",
+    "maxEnergyMwh": "29.5",
+    "terminalMinEnergyMwh": "5.4",
+    "maxChargeMw": "15",
+    "maxDischargeMw": "15",
+    "chargeEfficiency": "0.94",
+    "dischargeEfficiency": "0.94",
+    "degradationCostPerMwh": "15",
+    "intervals": [
+      {
+        "start": "2025-03-23T00:00:00+08:00",
+        "end": "2025-03-23T01:00:00+08:00",
+        "forecastPrice": "226"
+      },
+      {
+        "start": "2025-03-23T01:00:00+08:00",
+        "end": "2025-03-23T02:00:00+08:00",
+        "forecastPrice": "217"
+      },
+      {
+        "start": "2025-03-23T02:00:00+08:00",
+        "end": "2025-03-23T03:00:00+08:00",
+        "forecastPrice": "213"
+      },
+      {
+        "start": "2025-03-23T03:00:00+08:00",
+        "end": "2025-03-23T04:00:00+08:00",
+        "forecastPrice": "209"
+      },
+      {
+        "start": "2025-03-23T04:00:00+08:00",
+        "end": "2025-03-23T05:00:00+08:00",
+        "forecastPrice": "216"
+      },
+      {
+        "start": "2025-03-23T05:00:00+08:00",
+        "end": "2025-03-23T06:00:00+08:00",
+        "forecastPrice": "257"
+      },
+      {
+        "start": "2025-03-23T06:00:00+08:00",
+        "end": "2025-03-23T07:00:00+08:00",
+        "forecastPrice": "328"
+      },
+      {
+        "start": "2025-03-23T07:00:00+08:00",
+        "end": "2025-03-23T08:00:00+08:00",
+        "forecastPrice": "389"
+      },
+      {
+        "start": "2025-03-23T08:00:00+08:00",
+        "end": "2025-03-23T09:00:00+08:00",
+        "forecastPrice": "436"
+      },
+      {
+        "start": "2025-03-23T09:00:00+08:00",
+        "end": "2025-03-23T10:00:00+08:00",
+        "forecastPrice": "417"
+      },
+      {
+        "start": "2025-03-23T10:00:00+08:00",
+        "end": "2025-03-23T11:00:00+08:00",
+        "forecastPrice": "378"
+      },
+      {
+        "start": "2025-03-23T11:00:00+08:00",
+        "end": "2025-03-23T12:00:00+08:00",
+        "forecastPrice": "359"
+      },
+      {
+        "start": "2025-03-23T12:00:00+08:00",
+        "end": "2025-03-23T13:00:00+08:00",
+        "forecastPrice": "346"
+      },
+      {
+        "start": "2025-03-23T13:00:00+08:00",
+        "end": "2025-03-23T14:00:00+08:00",
+        "forecastPrice": "337"
+      },
+      {
+        "start": "2025-03-23T14:00:00+08:00",
+        "end": "2025-03-23T15:00:00+08:00",
+        "forecastPrice": "328"
+      },
+      {
+        "start": "2025-03-23T15:00:00+08:00",
+        "end": "2025-03-23T16:00:00+08:00",
+        "forecastPrice": "319"
+      },
+      {
+        "start": "2025-03-23T16:00:00+08:00",
+        "end": "2025-03-23T17:00:00+08:00",
+        "forecastPrice": "356"
+      },
+      {
+        "start": "2025-03-23T17:00:00+08:00",
+        "end": "2025-03-23T18:00:00+08:00",
+        "forecastPrice": "467"
+      },
+      {
+        "start": "2025-03-23T18:00:00+08:00",
+        "end": "2025-03-23T19:00:00+08:00",
+        "forecastPrice": "538"
+      },
+      {
+        "start": "2025-03-23T19:00:00+08:00",
+        "end": "2025-03-23T20:00:00+08:00",
+        "forecastPrice": "499"
+      },
+      {
+        "start": "2025-03-23T20:00:00+08:00",
+        "end": "2025-03-23T21:00:00+08:00",
+        "forecastPrice": "416"
+      },
+      {
+        "start": "2025-03-23T21:00:00+08:00",
+        "end": "2025-03-23T22:00:00+08:00",
+        "forecastPrice": "337"
+      },
+      {
+        "start": "2025-03-23T22:00:00+08:00",
+        "end": "2025-03-23T23:00:00+08:00",
+        "forecastPrice": "298"
+      },
+      {
+        "start": "2025-03-23T23:00:00+08:00",
+        "end": "2025-03-24T00:00:00+08:00",
+        "forecastPrice": "269"
+      }
+    ]
+  }
+}

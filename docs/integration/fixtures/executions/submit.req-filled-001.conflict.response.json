@@ -1,0 +1,6 @@
+{
+  "code": "IDEMPOTENCY_CONFLICT",
+  "message": "clientRequestId req-filled-001 already bound to a different intentHash",
+  "requestId": "http-req-conflict-001",
+  "retryable": false
+}

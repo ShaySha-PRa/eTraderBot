@@ -1,0 +1,14 @@
+{
+  "snapshotId": "snap-sto-shbess-20250312",
+  "forecastPrice": {
+    "origin": "Liaoning DRC public unified-settlement day-ahead price",
+    "aggregation": "hourly arithmetic mean of 15-min points",
+    "unit": "CNY/MWh",
+    "tradeDate": "2025-03-12",
+    "pdfUrl": "https://fgw.ln.gov.cn/fgw/articleFileDir/2025-03/13/6d2e91ef7a564ba791483571ce7f9aca/2025031314070595187.pdf",
+    "tableFile": "public-sources/liaoning-unified-settlement/2025-03-12.json",
+    "sourceKind": "user",
+    "notCompanyData": true,
+    "scopeRegionDisclaimer": "scope.region remains simulation stub (CN-SH/JS/SD); prices are LN public overlay for teaching only."
+  }
+}

@@ -56,6 +56,7 @@ async function runTurn(
     startedAt?: Date;
     /** Runs each scripted tool call through the executor, as a real runtime does. */
     executeTools?: boolean;
+    learningRun?: boolean;
     /** A hand-written runtime, for orderings a flat event list can't express. */
     runtime?: (request: AgentRunRequest) => AsyncGenerator<AgentRuntimeEvent>;
     /** Lets a test hold an event write open, to land runtime events while it waits. */
@@ -284,6 +285,15 @@ async function runTurn(
   });
   const pauseRunForInput = vi.fn(async () => ({ continuationRunId: null }));
   const executor = createRunExecutor({
+    ...(options.learningRun
+      ? {
+          trading: {
+            available: async () => true,
+            isLearningRun: async () => true,
+            call: async () => ({}),
+          },
+        }
+      : {}),
     deploymentModelKey: "fixture-model-key",
     prisma,
     runtime: {
@@ -1294,6 +1304,22 @@ describe("a run that fails partway through its reply", () => {
 });
 
 describe("a kept partial reply in later history", () => {
+  it("isolates a learning run from chat history and exposes only the scoped trading tool", async () => {
+    const { runtimeRun } = await runTurn("Done.", false, [], [], "fyi", {
+      trigger: "routine",
+      learningRun: true,
+      history: [
+        { id: "foreign-source", seq: 1, role: "user", text: "PRIVATE_UNRELATED_SCOPE_SENTINEL" },
+      ],
+    });
+    const request = runtimeRun.mock.calls[0]![0];
+    expect(request.history).toEqual([]);
+    expect(request.tools.map((tool) => tool.name)).toEqual(["trading"]);
+    expect(request.verbatimMcpServers).toBeUndefined();
+    expect(
+      JSON.stringify({ instructions: request.instructions, prompt: request.prompt }),
+    ).not.toContain("PRIVATE_UNRELATED_SCOPE_SENTINEL");
+  });
   it("tells the model that reply was cut off, without changing other replies", async () => {
     const { runtimeRun } = await runTurn("Done.", false, [], [], "fyi", {
       history: [

@@ -86,6 +86,7 @@ import {
   createDb,
   createSecurityEventPruner,
   createThreadEvents,
+  createTradingBotService,
   describeRowSecurity,
   installAuditEventStore,
   installSecurityEventStore,
@@ -265,6 +266,7 @@ async function main() {
     accessToken: process.env.EXPO_ACCESS_TOKEN,
   });
   const executor = createRunExecutor({
+    trading: createTradingBotService(prisma, undefined, jobs),
     maxUploadSizeBytes: uploadSizeFromEnv(process.env),
     prisma,
     runtime,

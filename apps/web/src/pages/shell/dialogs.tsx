@@ -67,7 +67,7 @@ export function NewSpaceDialog({
       try {
         spaceId = await onCreate(trimmed);
       } catch (reason) {
-        setError(errorText(reason, t`Could not create space`));
+        setError(errorText(reason, t`Could not create business scope`));
         setSaving(false);
         return;
       }
@@ -149,7 +149,7 @@ export function NewSpaceDialog({
               className="text-muted-foreground"
               aria-hidden="true"
             />
-            <Trans>New space</Trans>
+            <Trans>New business scope</Trans>
           </DialogTitle>
         </DialogHeader>
         <label htmlFor={nameId} className="block text-[13.5px] text-foreground/75">
@@ -176,7 +176,7 @@ export function NewSpaceDialog({
             <Trans>Cancel</Trans>
           </Button>
           <Button disabled={saving || !name.trim()} onClick={create}>
-            {saving ? <Trans>Creating…</Trans> : <Trans>Create space</Trans>}
+            {saving ? <Trans>Creating…</Trans> : <Trans>Create business scope</Trans>}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -540,7 +540,7 @@ export function DeleteItemDialog({
                     noun === "group"
                       ? t`Could not delete group`
                       : noun === "space"
-                        ? t`Could not delete space`
+                        ? t`Could not delete business scope`
                         : noun === "section"
                           ? t`Could not delete section`
                           : t`Could not delete routine`,

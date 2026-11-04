@@ -1,0 +1,6 @@
+{
+  "code": "UNAUTHORIZED",
+  "message": "missing bearer",
+  "requestId": "http-batch2-unauth-001",
+  "retryable": false
+}

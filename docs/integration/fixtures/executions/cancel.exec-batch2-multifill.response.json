@@ -1,0 +1,43 @@
+{
+  "executionId": "exec-batch2-multifill",
+  "clientRequestId": "req-batch2-multifill",
+  "intentHash": "d4c9373cd7bd850797bd7f87f9fe01d2a0e307b509be4b8fec28f71da6ef8cad",
+  "scope": {
+    "subjectId": "sto-sh-bess-05",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sh-02",
+    "assetId": "asset-bess-sh-05",
+    "region": "CN-SH",
+    "marketId": "mkt-sh-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation"
+  },
+  "status": "cancelled",
+  "source": {
+    "sourceId": "src-exec-b2-mfc",
+    "kind": "synthetic",
+    "observedAt": "2025-03-20T19:31:00+08:00",
+    "asOf": "2025-03-20T19:30:00+08:00",
+    "validUntil": "2025-03-22T00:00:00+08:00",
+    "revision": "syn-batch2-2"
+  },
+  "sequence": 4,
+  "fills": [
+    {
+      "fillId": "fill-b2-a",
+      "lineIndex": 0,
+      "energyMwh": "4",
+      "price": "472",
+      "occurredAt": "2025-03-20T18:10:00+08:00"
+    },
+    {
+      "fillId": "fill-b2-b",
+      "lineIndex": 1,
+      "energyMwh": "1.5",
+      "price": "481",
+      "occurredAt": "2025-03-20T19:05:00+08:00"
+    }
+  ],
+  "message": "remainder cancelled; fills retained"
+}

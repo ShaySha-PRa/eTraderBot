@@ -1,0 +1,233 @@
+{
+  "items": [
+    {
+      "id": "obs-batch2-000",
+      "scope": {
+        "subjectId": "sto-sd-bess-04",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-02",
+        "assetId": "asset-bess-sd-04",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-0",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T18:00:20+08:00",
+        "asOf": "2025-03-19T18:00:00+08:00",
+        "validUntil": "2025-04-02T18:00:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "chat",
+      "occurredAt": "2025-03-19T18:00:00+08:00",
+      "content": "Trader batch2: On negative-price morning, charge aggressively if SOC headroom exists.",
+      "snapshotIds": [
+        "snap-ret-sh02-20250320"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-batch2-001",
+      "scope": {
+        "subjectId": "ret-sh-02",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sh-02",
+        "region": "CN-SH",
+        "marketId": "mkt-sh-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-1",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T18:15:20+08:00",
+        "asOf": "2025-03-19T18:15:00+08:00",
+        "validUntil": "2025-04-02T18:15:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "operation",
+      "occurredAt": "2025-03-19T18:15:00+08:00",
+      "content": "SHADOW duplicate task suppressed by TaskLedger for clientRequestId=req-batch2-dup-001.",
+      "snapshotIds": [
+        "snap-ret-sd02-20250320"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-batch2-002",
+      "scope": {
+        "subjectId": "sto-sd-bess-04",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-02",
+        "assetId": "asset-bess-sd-04",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-2",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T18:30:20+08:00",
+        "asOf": "2025-03-19T18:30:00+08:00",
+        "validUntil": "2025-04-02T18:30:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "history",
+      "occurredAt": "2025-03-19T18:30:00+08:00",
+      "content": "Synthetic mid_long_term stage scope used for retailer ret-sd-02 — no live hedges.",
+      "snapshotIds": [
+        "snap-gen-sdcoal2-20250320"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-batch2-003",
+      "scope": {
+        "subjectId": "ret-sh-02",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sh-02",
+        "region": "CN-SH",
+        "marketId": "mkt-sh-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-3",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T18:45:20+08:00",
+        "asOf": "2025-03-19T18:45:00+08:00",
+        "validUntil": "2025-04-02T18:45:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "file",
+      "occurredAt": "2025-03-19T18:45:00+08:00",
+      "content": "Synthetic spreadsheet parse: hourly forecast demand for ret-sh-02 week of 2025-03-20.",
+      "snapshotIds": [
+        "snap-gen-jswind2-20250320"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-batch2-004",
+      "scope": {
+        "subjectId": "sto-sd-bess-04",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-02",
+        "assetId": "asset-bess-sd-04",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-4",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T19:00:20+08:00",
+        "asOf": "2025-03-19T19:00:00+08:00",
+        "validUntil": "2025-04-02T19:00:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "chat",
+      "occurredAt": "2025-03-19T19:00:00+08:00",
+      "content": "Risk note: two storage assets must not double-count same interconnection MW (synthetic).",
+      "snapshotIds": [
+        "snap-sto-sdbess4-20250320"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-batch2-005",
+      "scope": {
+        "subjectId": "ret-sh-02",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sh-02",
+        "region": "CN-SH",
+        "marketId": "mkt-sh-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-5",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T19:15:20+08:00",
+        "asOf": "2025-03-19T19:15:00+08:00",
+        "validUntil": "2025-04-02T19:15:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "operation",
+      "occurredAt": "2025-03-19T19:15:00+08:00",
+      "content": "STALE_DATA returned when snapshot older than maxSnapshotAgeSeconds.",
+      "snapshotIds": [
+        "snap-sto-shbess5-20250320"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-batch2-006",
+      "scope": {
+        "subjectId": "sto-sd-bess-04",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-02",
+        "assetId": "asset-bess-sd-04",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-6",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T19:30:20+08:00",
+        "asOf": "2025-03-19T19:30:00+08:00",
+        "validUntil": "2025-04-02T19:30:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "history",
+      "occurredAt": "2025-03-19T19:30:00+08:00",
+      "content": "RULES_UNVERIFIED path: rules.verification=synthetic cannot enable live.",
+      "snapshotIds": [
+        "snap-ret-sh02-20250321"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-batch2-007",
+      "scope": {
+        "subjectId": "ret-sh-02",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sh-02",
+        "region": "CN-SH",
+        "marketId": "mkt-sh-spot-sim",
+        "productId": "prod-energy",
+        "stage": "realtime",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-b2-7",
+        "kind": "synthetic",
+        "observedAt": "2025-03-19T19:45:20+08:00",
+        "asOf": "2025-03-19T19:45:00+08:00",
+        "validUntil": "2025-04-02T19:45:00+08:00",
+        "revision": "syn-batch2"
+      },
+      "kind": "chat",
+      "occurredAt": "2025-03-19T19:45:00+08:00",
+      "content": "Intraday skill: re-check window after each clearing ingest stub.",
+      "snapshotIds": [
+        "snap-ret-sd02-20250321"
+      ],
+      "executionIds": []
+    }
+  ],
+  "nextCursor": null
+}

@@ -1,0 +1,17 @@
+{
+  "scope": {
+    "subjectId": "gen-sd-coal-02",
+    "subjectKind": "generator",
+    "accountId": "acct-gen-sd-02",
+    "assetId": "asset-coal-sd-02",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "intraday",
+    "environment": "simulation"
+  },
+  "window": {
+    "from": "2025-03-24T00:00:00+08:00",
+    "to": "2025-03-25T00:00:00+08:00"
+  }
+}

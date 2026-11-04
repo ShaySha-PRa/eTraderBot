@@ -136,50 +136,87 @@ export async function createSpaceForMember(
     currentSpaceId: string;
     userId: string;
     name: string;
+    id?: string;
+    initialize?: (
+      tx: Prisma.TransactionClient,
+      space: { id: string; name: string },
+    ) => Promise<void>;
   },
 ): Promise<{ id: string; name: string }> {
   const name = normalizeSpaceName(input.name);
-  const spaceId = randomUUID();
+  const spaceId = input.id ?? randomUUID();
   const spaceMembershipId = randomUUID();
   const createdAt = new Date();
 
-  await withTransactionRetry(() =>
-    prisma.$transaction(
-      async (tx) => {
-        const currentMembership = await tx.spaceMember.findUnique({
-          where: {
-            spaceId_userId: {
-              spaceId: input.currentSpaceId,
-              userId: input.userId,
+  const insert = () =>
+    withTransactionRetry(() =>
+      prisma.$transaction(
+        async (tx) => {
+          const currentMembership = await tx.spaceMember.findUnique({
+            where: {
+              spaceId_userId: {
+                spaceId: input.currentSpaceId,
+                userId: input.userId,
+              },
             },
-          },
-          select: { organizationId: true },
-        });
-        if (!currentMembership) throw new IsolationError();
-        const count = await tx.spaceMember.count({
-          where: {
-            userId: input.userId,
+            select: { organizationId: true },
+          });
+          if (!currentMembership) throw new IsolationError();
+          // An idempotent business creation must still prove membership in the same organization.
+          const existing = await tx.space.findUnique({ where: { id: spaceId } });
+          if (existing) {
+            if (
+              existing.organizationId !== currentMembership.organizationId ||
+              existing.createdByUserId !== input.userId ||
+              existing.name !== name ||
+              existing.deletingAt
+            )
+              throw new IsolationError();
+            await input.initialize?.(tx, { id: spaceId, name });
+            return;
+          }
+          const count = await tx.spaceMember.count({
+            where: {
+              userId: input.userId,
+              organizationId: currentMembership.organizationId,
+            },
+          });
+          if (count >= MAX_SPACES_PER_MEMBER) throw new SpaceLimitError();
+          await createSpace(tx, {
+            spaceId,
+            spaceMembershipId,
             organizationId: currentMembership.organizationId,
-          },
-        });
-        if (count >= MAX_SPACES_PER_MEMBER) throw new SpaceLimitError();
-        await createSpace(tx, {
-          spaceId,
-          spaceMembershipId,
-          organizationId: currentMembership.organizationId,
-          userId: input.userId,
-          name,
-          createdAt,
-        });
-        await createSpaceDefaults(tx, {
-          spaceId,
-          userId: input.userId,
-          memoryContent: "# Space memory\n\n",
-        });
-      },
-      { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
-    ),
-  );
+            userId: input.userId,
+            name,
+            createdAt,
+          });
+          await createSpaceDefaults(tx, {
+            spaceId,
+            userId: input.userId,
+            memoryContent: "# Space memory\n\n",
+          });
+          await input.initialize?.(tx, { id: spaceId, name });
+        },
+        { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+      ),
+    );
+
+  try {
+    await insert();
+  } catch (error) {
+    // Two requests can observe the same absent id before either commits. The loser
+    // rereads in a new transaction, which checks ownership and configuration again.
+    if (
+      !input.id ||
+      !error ||
+      typeof error !== "object" ||
+      !("code" in error) ||
+      error.code !== "P2002" ||
+      !(await prisma.space.findUnique({ where: { id: spaceId }, select: { id: true } }))
+    )
+      throw error;
+    await insert();
+  }
 
   return { id: spaceId, name };
 }

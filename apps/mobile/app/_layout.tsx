@@ -439,7 +439,7 @@ function LayoutContent() {
                     <Stack.Screen
                       name="new-space"
                       options={{
-                        title: t("New private space"),
+                        title: t("New business scope"),
                         presentation: "modal",
                         gestureEnabled: true,
                         headerBackVisible: false,
@@ -476,6 +476,8 @@ function LayoutContent() {
                     <Stack.Screen name="routines" options={glassHeaderOptions(t("Routines"))} />
                     <Stack.Screen name="routine" options={glassHeaderOptions(t("Routine"))} />
                     <Stack.Screen name="board" options={glassHeaderOptions(t("Board"))} />
+                    <Stack.Screen name="trading" options={glassHeaderOptions(t("Trading"))} />
+                    <Stack.Screen name="new-bot" options={glassHeaderOptions(t("New bot"))} />
                     <Stack.Screen name="computer" options={{ title: t("Computer") }} />
                     <Stack.Screen
                       name="image"

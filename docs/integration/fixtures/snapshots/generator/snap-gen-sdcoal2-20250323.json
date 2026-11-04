@@ -1,0 +1,507 @@
+{
+  "schemaVersion": "1",
+  "snapshotId": "snap-gen-sdcoal2-20250323",
+  "scope": {
+    "subjectId": "gen-sd-coal-02",
+    "subjectKind": "generator",
+    "accountId": "acct-gen-sd-02",
+    "assetId": "asset-coal-sd-02",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "intraday",
+    "environment": "simulation"
+  },
+  "source": {
+    "sourceId": "src-snap-gen-sdcoal2-20250323",
+    "kind": "synthetic",
+    "observedAt": "2025-03-22T18:04:00+08:00",
+    "asOf": "2025-03-22T18:00:00+08:00",
+    "validUntil": "2025-03-23T12:00:00+08:00",
+    "revision": "syn-batch2"
+  },
+  "rules": {
+    "id": "rules-sim-batch2-gen",
+    "version": "2025.03.sim.batch2",
+    "source": {
+      "sourceId": "rules-sim-batch2-gen-src",
+      "kind": "synthetic",
+      "observedAt": "2025-03-19T18:05:00+08:00",
+      "asOf": "2025-03-19T18:00:00+08:00",
+      "validUntil": "2025-03-20T18:00:00+08:00",
+      "revision": "syn-batch2"
+    },
+    "verification": "synthetic",
+    "effectiveFrom": "2025-01-01T00:00:00+08:00",
+    "effectiveTo": "2026-12-31T23:59:59+08:00",
+    "timezone": "Asia/Shanghai",
+    "currency": "CNY",
+    "intervalMinutes": 60,
+    "priceMin": "-80",
+    "priceMax": "1500",
+    "priceStep": "0.1",
+    "energyStep": "0.1",
+    "maxSnapshotAgeSeconds": 86400
+  },
+  "input": {
+    "kind": "generator",
+    "intervals": [
+      {
+        "start": "2025-03-23T00:00:00+08:00",
+        "end": "2025-03-23T01:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "226",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h00-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h00-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T01:00:00+08:00",
+        "end": "2025-03-23T02:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "217",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h01-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h01-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T02:00:00+08:00",
+        "end": "2025-03-23T03:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "213",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h02-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h02-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T03:00:00+08:00",
+        "end": "2025-03-23T04:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "209",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h03-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h03-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T04:00:00+08:00",
+        "end": "2025-03-23T05:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "216",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h04-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h04-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T05:00:00+08:00",
+        "end": "2025-03-23T06:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "257",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h05-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h05-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T06:00:00+08:00",
+        "end": "2025-03-23T07:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "328",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h06-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h06-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T07:00:00+08:00",
+        "end": "2025-03-23T08:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "389",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h07-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h07-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T08:00:00+08:00",
+        "end": "2025-03-23T09:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "436",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h08-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h08-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T09:00:00+08:00",
+        "end": "2025-03-23T10:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "417",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h09-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h09-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T10:00:00+08:00",
+        "end": "2025-03-23T11:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "378",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h10-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h10-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T11:00:00+08:00",
+        "end": "2025-03-23T12:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "359",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h11-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h11-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T12:00:00+08:00",
+        "end": "2025-03-23T13:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "346",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h12-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h12-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T13:00:00+08:00",
+        "end": "2025-03-23T14:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "337",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h13-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h13-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T14:00:00+08:00",
+        "end": "2025-03-23T15:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "328",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h14-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h14-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T15:00:00+08:00",
+        "end": "2025-03-23T16:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "319",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h15-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h15-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T16:00:00+08:00",
+        "end": "2025-03-23T17:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "356",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h16-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h16-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T17:00:00+08:00",
+        "end": "2025-03-23T18:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "467",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h17-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h17-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T18:00:00+08:00",
+        "end": "2025-03-23T19:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "538",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h18-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h18-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T19:00:00+08:00",
+        "end": "2025-03-23T20:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "499",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h19-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h19-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T20:00:00+08:00",
+        "end": "2025-03-23T21:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "416",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h20-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h20-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T21:00:00+08:00",
+        "end": "2025-03-23T22:00:00+08:00",
+        "availableEnergyMwh": "144",
+        "committedEnergyMwh": "36",
+        "forecastPrice": "337",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h21-s1",
+            "energyMwh": "59.4",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h21-s2",
+            "energyMwh": "48.6",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T22:00:00+08:00",
+        "end": "2025-03-23T23:00:00+08:00",
+        "availableEnergyMwh": "157.5",
+        "committedEnergyMwh": "39.4",
+        "forecastPrice": "298",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h22-s1",
+            "energyMwh": "65",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h22-s2",
+            "energyMwh": "53.1",
+            "marginalCost": "315"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-23T23:00:00+08:00",
+        "end": "2025-03-24T00:00:00+08:00",
+        "availableEnergyMwh": "171",
+        "committedEnergyMwh": "42.8",
+        "forecastPrice": "269",
+        "segments": [
+          {
+            "segmentId": "sdcoal2-h23-s1",
+            "energyMwh": "70.5",
+            "marginalCost": "260"
+          },
+          {
+            "segmentId": "sdcoal2-h23-s2",
+            "energyMwh": "57.7",
+            "marginalCost": "315"
+          }
+        ]
+      }
+    ]
+  }
+}

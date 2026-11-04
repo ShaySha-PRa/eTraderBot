@@ -5,6 +5,7 @@ import type {
   BotSection,
   MessageBlock,
   SpaceBot,
+  TradingBotRole,
 } from "@rakazo/contracts";
 import {
   canonicalPiProviderId,
@@ -13,6 +14,7 @@ import {
   InstructionVersionSchema,
   initialBotMemory,
   resolveBotAvatarSet,
+  TradingBotRoleSchema,
 } from "@rakazo/contracts";
 import {
   BACKGROUND_RUN_TRIGGERS,
@@ -20,6 +22,7 @@ import {
   isBackgroundRunTrigger,
   phoneCallSettings,
   ringingCall,
+  tradingBotInstructions,
   userVisibleMessages,
 } from "@rakazo/core";
 import { chooseBotAvatar } from "./bot-avatar-choice.js";
@@ -36,6 +39,7 @@ import {
   primaryActiveRun,
   withLatestBotRuns,
 } from "./thread-listing.js";
+import { connectTradingWorkspaceBot } from "./trading-workspaces.js";
 import { withTransactionRetry } from "./transaction-retry.js";
 
 /** Newest messages loaded for sidebar preview; enough to skip a short peer-run tail. */
@@ -84,6 +88,7 @@ function mapBot(
     name: string;
     description: string;
     instructions: string;
+    tradingRole?: string | null;
     instructionHistory?: unknown;
     color: string;
     avatarSet?: string;
@@ -126,6 +131,7 @@ function mapBot(
     title: "",
     description: bot.description,
     instructions: bot.instructions,
+    tradingRole: TradingBotRoleSchema.nullable().parse(bot.tradingRole ?? null),
     instructionHistory: InstructionVersionSchema.array().parse(bot.instructionHistory ?? []),
     color: bot.color,
     avatarSet: resolveBotAvatarSet(bot.avatarSet),
@@ -519,6 +525,8 @@ export function createRepos(
         name: string;
         description: string;
         instructions: string;
+        tradingRole?: TradingBotRole;
+        tradingWorkspaceId?: string;
         notifyOnFinish: boolean;
         fleetManagement?: boolean;
         color?: string;
@@ -608,7 +616,10 @@ export function createRepos(
               userId: actor.userId,
               name: displayName(input.name, ""),
               description: input.description,
-              instructions: input.instructions,
+              instructions:
+                input.instructions ||
+                (input.tradingRole ? tradingBotInstructions(input.tradingRole) : ""),
+              tradingRole: input.tradingRole,
               notifyOnFinish: input.notifyOnFinish,
               fleetManagement: input.fleetManagement,
               color: avatar.color,
@@ -623,6 +634,18 @@ export function createRepos(
               disabledBuiltinTools,
             },
           });
+          const tradingWorkspaceId =
+            input.tradingWorkspaceId ??
+            (input.tradingRole
+              ? (
+                  await tx.tradingWorkspace.findUnique({
+                    where: { spaceId: actor.spaceId },
+                    select: { id: true },
+                  })
+                )?.id
+              : undefined);
+          if (tradingWorkspaceId)
+            await connectTradingWorkspaceBot(tx, actor, tradingWorkspaceId, created.id);
           const thread = await tx.thread.create({
             data: {
               spaceId: actor.spaceId,

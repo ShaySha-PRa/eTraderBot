@@ -1,0 +1,36 @@
+{
+  "executionId": "exec-partial-001",
+  "clientRequestId": "req-partial-001",
+  "intentHash": "d43c0fcd9cd8b17d6b565ad2c64aa5201d89ff73ff939119decd2f60ab0131be",
+  "scope": {
+    "subjectId": "sto-sd-bess-01",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sd-01",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation",
+    "assetId": "asset-bess-sd-01"
+  },
+  "status": "cancelled",
+  "source": {
+    "sourceId": "src-exec-cancel",
+    "kind": "synthetic",
+    "observedAt": "2025-03-10T18:21:00+08:00",
+    "asOf": "2025-03-10T18:20:00+08:00",
+    "validUntil": "2025-03-12T00:00:00+08:00",
+    "revision": "3"
+  },
+  "sequence": 3,
+  "fills": [
+    {
+      "fillId": "fill-p-001",
+      "lineIndex": 0,
+      "energyMwh": "4",
+      "price": "505",
+      "occurredAt": "2025-03-10T18:08:00+08:00"
+    }
+  ],
+  "message": "cancelled remainder; accumulated fills retained"
+}

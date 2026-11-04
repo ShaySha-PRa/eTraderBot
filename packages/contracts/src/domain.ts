@@ -23,6 +23,7 @@ import { NavLinkSchema } from "./nav-links.js";
 import { RoutineWatchSchema, RoutineWatchStateSchema } from "./routine-watch.js";
 import { RunTriggerSchema } from "./runs.js";
 import { SettingsScopeSchema } from "./settings-scope.js";
+import { TradingBotRoleSchema } from "./trading-bot-template.js";
 
 export const ComputerModeSchema = z.enum(["team", "dedicated"]);
 export type ComputerMode = z.infer<typeof ComputerModeSchema>;
@@ -97,6 +98,7 @@ export const InstructionVersionSchema = z.object({
 });
 
 export const BotSchema = z.object({
+  tradingRole: TradingBotRoleSchema.nullable().optional(),
   id: Id,
   spaceId: Id,
   name: z.string(),
@@ -380,6 +382,8 @@ export const BOT_DESCRIPTION_MAX_LENGTH = 4000;
 export const BOT_INSTRUCTIONS_MAX_LENGTH = 20000;
 
 export const CreateBotInput = z.object({
+  tradingWorkspaceId: Id.optional(),
+  tradingRole: TradingBotRoleSchema.optional(),
   /** Optional reserved identity so a creation preview uses the final bot seed. */
   id: z
     .string()

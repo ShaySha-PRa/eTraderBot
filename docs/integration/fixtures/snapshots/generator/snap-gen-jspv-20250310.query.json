@@ -1,0 +1,17 @@
+{
+  "scope": {
+    "subjectId": "gen-js-pv-01",
+    "subjectKind": "generator",
+    "accountId": "acct-gen-js-01",
+    "region": "CN-JS",
+    "marketId": "mkt-js-spot-sim",
+    "productId": "prod-energy",
+    "stage": "realtime",
+    "environment": "simulation",
+    "assetId": "asset-pv-js-01"
+  },
+  "window": {
+    "from": "2025-03-10T00:00:00+08:00",
+    "to": "2025-03-11T00:00:00+08:00"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "code": "RATE_LIMITED",
+  "message": "simulation rate limit",
+  "requestId": "http-batch2-rl-001",
+  "retryable": true
+}

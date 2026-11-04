@@ -57,6 +57,8 @@ const EXPLICIT_APPROVAL_BUILTIN_TOOLS = new Set([
 ]);
 
 const UNATTENDED_SAFE_BUILTIN_TOOLS = new Set([
+  // This tool performs its own version, intent, role and bounded-grant checks.
+  "trading",
   "browser_snapshot",
   "cloud_agent_status",
   "computer_observe",

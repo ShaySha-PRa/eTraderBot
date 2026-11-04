@@ -1,0 +1,6 @@
+{
+  "code": "STALE_DATA",
+  "message": "snapshot older than maxSnapshotAgeSeconds",
+  "requestId": "http-batch2-stale-001",
+  "retryable": false
+}

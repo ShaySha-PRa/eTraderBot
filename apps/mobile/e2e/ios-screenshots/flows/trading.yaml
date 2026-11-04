@@ -1,0 +1,13 @@
+appId: com.rakazo.app
+name: Trading
+---
+- runFlow:
+    file: ../subflows/sign-in.yaml
+    env:
+      RAKAZO_ACTIVE_EMAIL: ${RAKAZO_SCREENSHOT_EMAIL}
+- openLink: "rakazo:///trading"
+- extendedWaitUntil:
+    visible: "Simulation trading"
+    timeout: 15000
+- assertVisible: "Open this Bot on web to configure its business scope."
+- takeScreenshot: 01-trading-empty

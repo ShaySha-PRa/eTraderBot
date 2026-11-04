@@ -5,7 +5,7 @@ export function identityLabels(): IdentityLabels {
   return {
     bot: t("Bot"),
     group: t("Group"),
-    space: t("Space"),
+    space: t("Business scope"),
     chats: t("Chats"),
     routine: t("Routine"),
     member: t("Member"),

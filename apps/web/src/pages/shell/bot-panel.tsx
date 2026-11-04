@@ -302,7 +302,7 @@ export function BotSettings({
   const modelChoices = chatModelChoices(
     connectedOptions,
     selectedModelKey,
-    t`Space default`,
+    t`Business scope default`,
     defaultEntry?.images,
   );
 

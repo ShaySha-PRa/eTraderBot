@@ -13,5 +13,6 @@ export * from "./payments.js";
 export * from "./registry.js";
 export * from "./sandbox-errors.js";
 export * from "./secret-errors.js";
+export * from "./trading.js";
 export * from "./types.js";
 export * from "./voice-errors.js";

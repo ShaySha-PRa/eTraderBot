@@ -1,0 +1,16 @@
+{
+  "scope": {
+    "subjectId": "ret-sd-01",
+    "subjectKind": "retailer",
+    "accountId": "acct-ret-sd-01",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation"
+  },
+  "window": {
+    "from": "2025-03-10T00:00:00+08:00",
+    "to": "2025-03-11T00:00:00+08:00"
+  }
+}

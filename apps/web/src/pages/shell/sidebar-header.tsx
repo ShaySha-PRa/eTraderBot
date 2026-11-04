@@ -23,6 +23,7 @@ export function SidebarHeader({
   navigate,
   setNewSpaceOpen,
   setCreateBotOpen,
+  onCreateBusinessScope,
 }: {
   mini?: boolean;
   createMenuOpen: boolean;
@@ -38,6 +39,7 @@ export function SidebarHeader({
   navigate: (path: string) => void;
   setNewSpaceOpen: (open: boolean) => void;
   setCreateBotOpen: (open: boolean) => void;
+  onCreateBusinessScope?: () => void;
 }) {
   const { t } = useLingui();
   const hasWindowChrome = Boolean(desktopBridge());
@@ -119,6 +121,15 @@ export function SidebarHeader({
             >
               <BotCreatePicker
                 bots={bots}
+                onCreateBusinessScope={
+                  onCreateBusinessScope
+                    ? () => {
+                        setCreateMenuOpen(false);
+                        setMobileSidebarOpen(false);
+                        onCreateBusinessScope();
+                      }
+                    : undefined
+                }
                 onCreateBot={() => {
                   setCreateMenuOpen(false);
                   setMobileSidebarOpen(false);

@@ -21,6 +21,7 @@ import {
   TICKET_PRIORITIES,
   TICKET_STATUSES,
   TICKET_TITLE_MAX_LENGTH,
+  tradingBotJsonSchema,
 } from "@rakazo/contracts";
 import { z } from "zod";
 import { allowPrivateHttpSecretOrigins } from "./bot-secrets.js";
@@ -237,6 +238,12 @@ const fleetGroupTargetProperties = {
 };
 
 export const builtinAgentTools: ConnectorTool[] = [
+  {
+    name: "trading",
+    description:
+      "Read a bound simulation trading scope, calculate a candidate, prepare a fixed intent for human approval, or execute an enabled and trade-authorized intent. Never approves algorithms or grants permissions. Call scopes first for assigned desk IDs, then context for version, intent and grant IDs. Learning: learning_schedule changes this Bot's daily plan, learning_capture_message explicitly attaches a user message to this scope, learning_start queues daily/manual learning; the learning run calls learning_open then learning_propose with cited source IDs. Learning runs cannot execute trades. Reconcile submitted orders with executionId and the last receipt sequence; unknown outcomes retain reservations. Cancel only with explicit cancellation permission on the original grant. Never resubmit an uncertain order under a new intent. All roles, stages, limits and approval checks are enforced by the service. Keep the same clientRequestId on retries.",
+    inputSchema: tradingBotJsonSchema(),
+  },
   {
     name: "generate_image",
     description:

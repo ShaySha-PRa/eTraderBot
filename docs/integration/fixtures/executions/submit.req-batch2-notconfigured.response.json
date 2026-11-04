@@ -1,0 +1,6 @@
+{
+  "code": "NOT_CONFIGURED",
+  "message": "live adapter not configured; simulation only",
+  "requestId": "http-batch2-nc-001",
+  "retryable": false
+}

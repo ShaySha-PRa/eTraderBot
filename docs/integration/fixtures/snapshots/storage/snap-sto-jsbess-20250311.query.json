@@ -1,0 +1,17 @@
+{
+  "scope": {
+    "subjectId": "sto-js-bess-03",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-js-01",
+    "region": "CN-JS",
+    "marketId": "mkt-js-spot-sim",
+    "productId": "prod-energy",
+    "stage": "mid_long_term",
+    "environment": "simulation",
+    "assetId": "asset-bess-js-03"
+  },
+  "window": {
+    "from": "2025-03-11T00:00:00+08:00",
+    "to": "2025-03-12T00:00:00+08:00"
+  }
+}

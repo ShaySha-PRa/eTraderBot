@@ -1,0 +1,77 @@
+{
+  "cases": [
+    {
+      "id": "filled",
+      "clientRequestId": "req-filled-001",
+      "covers": [
+        "submit",
+        "idempotent_replay",
+        "by-request"
+      ]
+    },
+    {
+      "id": "idempotency_conflict",
+      "clientRequestId": "req-filled-001",
+      "covers": [
+        "409 IDEMPOTENCY_CONFLICT"
+      ]
+    },
+    {
+      "id": "timeout_unknown",
+      "clientRequestId": "req-timeout-001",
+      "covers": [
+        "unknown then accepted; no blind resubmit"
+      ]
+    },
+    {
+      "id": "partial_then_cancel",
+      "clientRequestId": "req-partial-001",
+      "covers": [
+        "partially_filled",
+        "cancel keeps fills"
+      ]
+    },
+    {
+      "id": "rejected",
+      "clientRequestId": "req-rejected-001",
+      "covers": [
+        "business reject via 200+status"
+      ]
+    },
+    {
+      "id": "not_found",
+      "clientRequestId": "req-missing-001",
+      "covers": [
+        "404 NOT_FOUND"
+      ]
+    },
+    {
+      "id": "batch2_errors",
+      "covers": [
+        "RATE_LIMITED",
+        "UNAVAILABLE",
+        "NOT_CONFIGURED",
+        "STALE_DATA",
+        "RULES_UNVERIFIED",
+        "FORBIDDEN",
+        "UNAUTHORIZED",
+        "INVALID_INPUT"
+      ]
+    },
+    {
+      "id": "batch2_multifill_cancel",
+      "clientRequestId": "req-batch2-multifill",
+      "covers": [
+        "multi-line partial",
+        "cancel keeps fills"
+      ]
+    },
+    {
+      "id": "batch2_open_accepted",
+      "clientRequestId": "req-batch2-open",
+      "covers": [
+        "accepted with zero fills"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "scope": {
+    "subjectId": "ret-js-01",
+    "subjectKind": "retailer",
+    "accountId": "acct-ret-js-01",
+    "region": "CN-JS",
+    "marketId": "mkt-js-spot-sim",
+    "productId": "prod-energy",
+    "stage": "intraday",
+    "environment": "simulation"
+  },
+  "window": {
+    "from": "2025-03-10T00:00:00+08:00",
+    "to": "2025-03-11T00:00:00+08:00"
+  }
+}

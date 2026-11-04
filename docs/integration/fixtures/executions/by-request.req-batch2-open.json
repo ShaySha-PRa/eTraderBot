@@ -1,0 +1,28 @@
+{
+  "executionId": "exec-batch2-open",
+  "clientRequestId": "req-batch2-open",
+  "intentHash": "6c5e4e11046489286c3ca0b6863653545bedfe04146b1a67ef44fcf047d4dd9e",
+  "scope": {
+    "subjectId": "sto-sh-bess-05",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sh-02",
+    "assetId": "asset-bess-sh-05",
+    "region": "CN-SH",
+    "marketId": "mkt-sh-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation"
+  },
+  "status": "accepted",
+  "source": {
+    "sourceId": "src-exec-b2-open",
+    "kind": "synthetic",
+    "observedAt": "2025-03-20T01:01:00+08:00",
+    "asOf": "2025-03-20T01:00:00+08:00",
+    "validUntil": "2025-03-21T00:00:00+08:00",
+    "revision": "syn-batch2"
+  },
+  "sequence": 1,
+  "fills": [],
+  "message": "accepted awaiting match (synthetic)"
+}

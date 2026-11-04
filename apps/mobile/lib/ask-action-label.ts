@@ -16,7 +16,7 @@ export function askActionLabel(
   t: (message: string, values?: Record<string, string | number>) => string,
 ): string {
   if (!approval) return action.label;
-  if (action.outcome === "created") return t("Create space");
+  if (action.outcome === "created") return t("Create business scope");
   if (action.outcome === "cancelled") return t("Cancel");
   if (action.id === "allow")
     return ALLOW_IN_SPACE.has(action.label) ? t("Allow in this space") : t("Allow once");

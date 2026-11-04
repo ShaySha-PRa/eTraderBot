@@ -1,0 +1,28 @@
+{
+  "executionId": "exec-rejected-001",
+  "clientRequestId": "req-rejected-001",
+  "intentHash": "40e5e3957c1aed8ba48ad3075e30b75c1183df74de3b60386087adc94e556772",
+  "scope": {
+    "subjectId": "sto-sd-bess-01",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sd-01",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation",
+    "assetId": "asset-bess-sd-01"
+  },
+  "status": "rejected",
+  "source": {
+    "sourceId": "src-exec-rej",
+    "kind": "synthetic",
+    "observedAt": "2025-03-10T00:31:00+08:00",
+    "asOf": "2025-03-10T00:30:00+08:00",
+    "validUntil": "2025-03-11T00:00:00+08:00",
+    "revision": "1"
+  },
+  "sequence": 1,
+  "fills": [],
+  "message": "intent expired before matching window (simulation)"
+}

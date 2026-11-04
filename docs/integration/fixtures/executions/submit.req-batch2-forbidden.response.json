@@ -1,0 +1,6 @@
+{
+  "code": "FORBIDDEN",
+  "message": "credential scope excludes subject",
+  "requestId": "http-batch2-fb-001",
+  "retryable": false
+}

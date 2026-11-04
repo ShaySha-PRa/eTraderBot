@@ -28,7 +28,7 @@ import {
   TableRow,
 } from "@rakazo/ui-web/components/ui/table";
 import type { RefObject } from "react";
-import { useId, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { AccountAccess, LinkSsoRow } from "../components/AccountAccess";
 import { AccountDataSettings } from "../components/AccountDataSettings";
 import { SuccessPop } from "../components/ai/primitives";
@@ -91,7 +91,7 @@ export function GeneralSettingsPanels({
   onAccountImported,
   onImportAgent,
 }: SettingsGeneralProps) {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const account = accountDisplay({ name, email }, t`You`);
   const [editingName, setEditingName] = useState(false);
   const [nameDraft, setNameDraft] = useState("");
@@ -133,6 +133,7 @@ export function GeneralSettingsPanels({
 
   const [accountSecurity, setAccountSecurity] = useState<AccountSecurity | null>(null);
   const [locale, setLocale] = useState<UiLocale>(() => getActiveUiLocale());
+  useEffect(() => setLocale(getActiveUiLocale()), [i18n.locale]);
   const localeRequestRef = useRef(0);
   const [appearance, setAppearance] = useState<AppearancePreference>(() =>
     getUiAppearancePreference(),

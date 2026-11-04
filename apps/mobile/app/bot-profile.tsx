@@ -1,4 +1,4 @@
-import type { ComputerStatus } from "@rakazo/contracts";
+import type { ComputerStatus, Space } from "@rakazo/contracts";
 import { displayName } from "@rakazo/core";
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useRef, useState } from "react";
@@ -32,6 +32,10 @@ export default function BotProfile() {
   const stacked = useStackedSettings();
   const { botId = "", name: nameParam } = useLocalSearchParams<{ botId?: string; name?: string }>();
   const [bot, setBot] = useState<MobileBot | null>(null);
+  const [businessLabels, setBusinessLabels] = useState<{
+    botId: string;
+    spaces: Pick<Space, "id" | "name" | "isDefault">[];
+  } | null>(null);
   const [computer, setComputer] = useState<ComputerStatus | null>(null);
   const name = displayName(bot?.name ?? nameParam, t("Bot"));
   const { routines } = useBotRoutines(botId);
@@ -56,6 +60,17 @@ export default function BotProfile() {
           );
         })
         .catch(() => undefined);
+      void rpc("spaces/list", {})
+        .then((navigation) => {
+          if (current)
+            setBusinessLabels({
+              botId,
+              spaces: navigation.spaces,
+            });
+        })
+        .catch(() => {
+          if (current) setBusinessLabels(null);
+        });
       void rpc("computer/status", { botId })
         .then((next) => {
           if (current) setComputer(next);
@@ -135,7 +150,32 @@ export default function BotProfile() {
           onPress={() => router.push({ pathname: "/bot-settings", params: { botId } })}
         />
       </View>
+      {businessLabels?.botId === botId &&
+      businessLabels.spaces.some((scope) => scope.id === bot?.spaceId) ? (
+        <SettingsGroup label={t("Business scope")}>
+          {businessLabels.spaces
+            .filter((scope) => scope.id === bot?.spaceId)
+            .map((scope) => (
+              <SettingsRow
+                key={scope.id}
+                title={
+                  scope.isDefault && scope.name === "Personal"
+                    ? t("Default business scope")
+                    : scope.name
+                }
+              />
+            ))}
+        </SettingsGroup>
+      ) : null}
       <SettingsGroup>
+        {bot?.tradingRole ? (
+          <SettingsRow
+            title={t("Trading and learning")}
+            accessibilityRole="button"
+            chevron="right"
+            onPress={() => router.push({ pathname: "/trading", params: { botId } })}
+          />
+        ) : null}
         <SettingsRow
           key="routines"
           accessibilityRole="button"

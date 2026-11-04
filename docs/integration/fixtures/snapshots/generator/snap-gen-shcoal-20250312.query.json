@@ -1,0 +1,17 @@
+{
+  "scope": {
+    "subjectId": "gen-sh-coal-01",
+    "subjectKind": "generator",
+    "accountId": "acct-gen-sh-01",
+    "region": "CN-SH",
+    "marketId": "mkt-sh-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation",
+    "assetId": "asset-coal-sh-01"
+  },
+  "window": {
+    "from": "2025-03-12T00:00:00+08:00",
+    "to": "2025-03-13T00:00:00+08:00"
+  }
+}

@@ -22,6 +22,12 @@ msgstr " (непрочитано)"
 msgid "{0, plural, one {# bot has its own model:} other {# bots have their own model:}}"
 msgstr ""
 
+#. placeholder {0}: availability.spaceIds.length
+#. placeholder {0}: chosen.length
+#: src/components/integrations/space-availability.tsx
+msgid "{0, plural, one {# business scope} other {# business scopes}}"
+msgstr ""
+
 #. placeholder {0}: servers.length
 #: src/pages/PluginsOverlay.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -50,12 +56,6 @@ msgstr ""
 #. placeholder {0}: skillCount(install)
 #: src/components/integrations/skills-dialog.tsx
 msgid "{0, plural, one {# skill} other {# skills}}"
-msgstr ""
-
-#. placeholder {0}: availability.spaceIds.length
-#. placeholder {0}: chosen.length
-#: src/components/integrations/space-availability.tsx
-msgid "{0, plural, one {# space} other {# spaces}}"
 msgstr ""
 
 #. placeholder {0}: server.health.toolCount
@@ -425,7 +425,7 @@ msgid "/ month"
 msgstr ""
 
 #: src/components/integrations/space-availability.tsx
-msgid "1 space"
+msgid "1 business scope"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx
@@ -454,6 +454,10 @@ msgstr ""
 msgid "About {label}"
 msgstr "О настройке «{label}»"
 
+#: src/pages/Trading.tsx
+msgid "Accepted"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Access token (optional)"
 msgstr "Токен доступа (необязательно)"
@@ -469,6 +473,7 @@ msgstr "Учетная запись по умолчанию"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Account ID"
 msgstr "ID аккаунта"
 
@@ -490,11 +495,12 @@ msgid "Actions for {0}"
 msgstr "Действия для {0}"
 
 #: src/pages/shell/shell-dialogs.tsx
-msgid "Actions for space"
-msgstr "Действия для пространства"
+msgid "Actions for business scope"
+msgstr ""
 
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/Trading.tsx
 msgid "Active"
 msgstr "Активный"
 
@@ -555,9 +561,17 @@ msgstr ""
 msgid "Add an HTTPS server URL."
 msgstr "Добавьте URL-адрес HTTPS-сервера."
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add an MCP connection in Integrations first."
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Add another"
 msgstr "Добавить еще"
+
+#: src/pages/Trading.tsx
+msgid "Add bot to business scope"
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "Add credential"
@@ -583,9 +597,17 @@ msgstr "Добавить поле"
 msgid "Add header"
 msgstr "Добавить заголовок"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add interface"
+msgstr ""
+
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "Добавить элемент"
+
+#: src/pages/TradingLearning.tsx
+msgid "Add learning material"
+msgstr ""
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -657,6 +679,18 @@ msgstr "Расширенные..."
 msgid "Agent from another app"
 msgstr ""
 
+#: src/pages/shell/business-scope.tsx
+msgid "Algorithm approver"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Algorithm version"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Algorithm versions"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "All"
 msgstr ""
@@ -668,11 +702,12 @@ msgstr "Все {credit} идут на использование моделей.
 #: src/components/integrations/agent-access.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/shell/agent-import.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "All bots"
 msgstr ""
 
 #: src/components/integrations/space-availability.tsx
-msgid "All spaces"
+msgid "All business scopes"
 msgstr ""
 
 #: src/pages/ActivityList.tsx
@@ -693,6 +728,10 @@ msgstr "Разрешить общение ботов из разных прос�
 
 #: src/lib/dictation.ts
 msgid "Allow eTraderBot to use Speech Recognition and the microphone in System Settings."
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Allow executor bot to cancel"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -800,6 +839,10 @@ msgstr ""
 msgid "Any model, with your own key"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API credential"
+msgstr ""
+
 #: src/components/AskCard.tsx
 #: src/lib/localized-provider-hint.ts
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
@@ -818,11 +861,24 @@ msgstr "API-ключ для {provider}"
 msgid "API key header"
 msgstr "Заголовок ключа API"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in header"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in query"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 msgid "API keys"
 msgstr "Ключи API"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API URL"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/shell/create-bot-dialog.tsx
 msgid "Appearance"
 msgstr "Внешний вид"
 
@@ -837,6 +893,10 @@ msgstr "Применить"
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Approval boundaries"
 msgstr "Границы одобрения"
+
+#: src/pages/Trading.tsx
+msgid "Approval evidence"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "Approval model"
@@ -853,6 +913,10 @@ msgstr "Подтверждения"
 msgid "Approve"
 msgstr "Утвердить"
 
+#: src/pages/Trading.tsx
+msgid "Approve algorithm"
+msgstr ""
+
 #: src/lib/call-session.ts
 msgid "Approve or deny it on screen."
 msgstr "Утвердите или запретите это на экране."
@@ -861,7 +925,12 @@ msgstr "Утвердите или запретите это на экране."
 msgid "Approve this server to let your agent use its tools."
 msgstr "Одобрите этот сервер, чтобы ваш агент мог использовать его инструменты."
 
+#: src/pages/Trading.tsx
+msgid "Approve trade"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Approved"
 msgstr ""
 
@@ -903,6 +972,10 @@ msgstr "Спрашивать"
 msgid "Asleep"
 msgstr "Спит"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Asset ID"
+msgstr ""
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -921,6 +994,11 @@ msgstr "Прикрепить файл"
 msgid "Attachment"
 msgstr "Вложение"
 
+#: src/pages/Trading.tsx
+msgid "Audit history"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Authentication"
 msgstr ""
@@ -928,6 +1006,10 @@ msgstr ""
 #: src/lib/model-connection-preflight.ts
 msgid "Authentication failed."
 msgstr "Аутентификация не удалась."
+
+#: src/pages/Trading.tsx
+msgid "Authorization"
+msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -952,6 +1034,14 @@ msgstr "Авторизовать"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Authorize this server so agents can use its tools. A popup opens."
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized materials"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized operation"
 msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
@@ -986,6 +1076,10 @@ msgstr "Доступна командам оболочки как {commandVariab
 msgid "Avatar Studio"
 msgstr "Студия аватаров"
 
+#: src/pages/Trading.tsx
+msgid "Awaiting trade approval"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/AdminAccessPage.tsx
@@ -1001,6 +1095,10 @@ msgstr "Студия аватаров"
 msgid "Back"
 msgstr "Назад"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Back to bots"
+msgstr ""
+
 #: src/pages/Auth.tsx
 msgid "Back to sign in"
 msgstr "Вернуться ко входу"
@@ -1008,6 +1106,10 @@ msgstr "Вернуться ко входу"
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "Базовый URL"
+
+#: src/pages/TradingLearning.tsx
+msgid "Baseline margin"
+msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "Basic auth"
@@ -1029,6 +1131,10 @@ msgstr ""
 
 #: src/components/ModelCredits.tsx
 msgid "Billing period"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Bind a trading bot to create a learning plan."
 msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
@@ -1068,6 +1174,10 @@ msgstr "Бот"
 msgid "Bot"
 msgstr "Бот"
 
+#: src/pages/Trading.tsx
+msgid "Bot cancellation permission"
+msgstr ""
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Bot is watching, not acting"
 msgstr "Бот наблюдает, но не действует"
@@ -1083,6 +1193,14 @@ msgstr "Экран бота"
 #: src/pages/shell/computer-panel.tsx
 msgid "Bot screen preview"
 msgstr "Предварительный просмотр экрана бота"
+
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Bot template"
+msgstr ""
+
+#: src/pages/Shell.tsx
+msgid "Bot workspace"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 msgid "Bot's model"
@@ -1104,6 +1222,10 @@ msgstr ""
 msgid "Bots with their own computer and browser"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Bounded authorizations"
+msgstr ""
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr ""
@@ -1120,6 +1242,26 @@ msgstr "Просмотреть MCP-серверы"
 #: src/pages/shell/agent-import.tsx
 msgid "Built-in"
 msgstr "Встроенный"
+
+#: src/lib/identity-display.ts
+#: src/pages/SettingsOverlay.tsx
+#: src/pages/shell/bot-business-labels.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Business scope"
+msgstr ""
+
+#: src/pages/shell/bot-panel.tsx
+msgid "Business scope default"
+msgstr ""
+
+#: src/pages/SettingsOverlay.tsx
+msgid "Business scopes"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Buy"
+msgstr ""
 
 #: src/pages/shell/chat-header.tsx
 msgid "Call"
@@ -1166,6 +1308,7 @@ msgstr "Не может читать изображения"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -1174,6 +1317,7 @@ msgstr "Не может читать изображения"
 #: src/pages/Onboarding.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingOverrides.tsx
@@ -1188,6 +1332,10 @@ msgstr "Отменить создание бота"
 msgid "Cancel new group"
 msgstr "Отменить создание группы"
 
+#: src/pages/Trading.tsx
+msgid "Cancel order"
+msgstr ""
+
 #: src/pages/shell/chat-context.tsx
 msgid "Cancel reply"
 msgstr "Отменить ответ"
@@ -1196,14 +1344,28 @@ msgstr "Отменить ответ"
 msgid "Canceled"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Cancellation timeout"
+msgstr ""
+
 #: src/components/CloudAgentCard.tsx
 msgid "cancelled"
 msgstr "отменен"
 
 #: src/components/AskCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Cancelled"
 msgstr "Отменено"
+
+#: src/pages/Trading.tsx
+msgid "Candidate analysis"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Candidate margin"
+msgstr ""
 
 #: src/pages/Artifacts.tsx
 msgid "Card view"
@@ -1234,11 +1396,16 @@ msgid "Chart failed to render: {error}"
 msgstr "Не удалось отобразить диаграмму: {error}."
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Chat"
 msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Chat Completions"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Chat feedback"
 msgstr ""
 
 #: src/pages/shell/composer-mentions.tsx
@@ -1326,9 +1493,22 @@ msgstr "Выберите новый пароль"
 msgid "Choose a provider"
 msgstr ""
 
+#: src/pages/TradingLearning.tsx
+msgid "Choose a text file up to 64 KB"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Choose a UTF-8 text file"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 msgid "Choose backup"
 msgstr "Выбрать резервную копию"
+
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Choose business scope"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -1512,6 +1692,7 @@ msgid "Complete"
 msgstr "Завершить"
 
 #: src/components/SubagentCard.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Completed"
 msgstr "Завершено"
 
@@ -1558,6 +1739,14 @@ msgstr "Компьютеры выключены. Установите SANDBOX_PR
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Configure business scope"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Configured · not verified"
 msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
@@ -1619,6 +1808,10 @@ msgstr "Подключить API-ключ"
 #: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "Подключить приложения"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connect HTTP data APIs or select MCP connections for this business scope. Saving a configuration does not verify connectivity or authorize trades."
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Connect MCP server “{name}”"
@@ -1684,8 +1877,20 @@ msgstr "Тест соединения не удался."
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "Соединение с {0} все еще не завершено. Вы можете закрыть это и проверить еще раз."
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connection type"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints failed"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints passed · human review required"
 msgstr ""
 
 #: src/pages/shell/agent-import.tsx
@@ -1721,6 +1926,10 @@ msgstr ""
 #: src/pages/Auth.tsx
 msgid "Continue with {0}"
 msgstr "Продолжить с {0}"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Contracts, coverage and delivery exposure"
+msgstr ""
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Conversations"
@@ -1859,6 +2068,7 @@ msgstr "Не удалось подключиться к экрану компь�
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/lib/account-security.ts
 #: src/lib/sso-flow.ts
+#: src/lib/trading-actions.ts
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/shell/use-computer.tsx
@@ -1870,6 +2080,10 @@ msgstr "Не удалось продолжить"
 msgid "Could not create bot"
 msgstr "Не удалось создать бота"
 
+#: src/pages/shell/dialogs.tsx
+msgid "Could not create business scope"
+msgstr ""
+
 #: src/pages/GroupPanel.tsx
 msgid "Could not create group"
 msgstr "Не удалось создать группу"
@@ -1878,10 +2092,6 @@ msgstr "Не удалось создать группу"
 msgid "Could not create section"
 msgstr "Не удалось создать раздел"
 
-#: src/pages/shell/dialogs.tsx
-msgid "Could not create space"
-msgstr "Не удалось создать пространство"
-
 #: src/pages/Onboarding.tsx
 msgid "Could not create your bot"
 msgstr "Не удалось создать бота"
@@ -1889,6 +2099,10 @@ msgstr "Не удалось создать бота"
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete bot"
 msgstr "Не удалось удалить бота"
+
+#: src/pages/shell/dialogs.tsx
+msgid "Could not delete business scope"
+msgstr ""
 
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete group"
@@ -1909,10 +2123,6 @@ msgstr "Не удалось удалить раздел"
 #: src/pages/KnowledgeSection.tsx
 msgid "Could not delete skill"
 msgstr "Не удалось удалить навык"
-
-#: src/pages/shell/dialogs.tsx
-msgid "Could not delete space"
-msgstr "Не удалось удалить пространство"
 
 #: src/pages/Artifacts.tsx
 msgid "Could not delete this artifact."
@@ -1994,6 +2204,10 @@ msgstr ""
 msgid "Could not load bots. Reload to try again."
 msgstr "Не удалось загрузить ботов. Обновите страницу и попробуйте снова."
 
+#: src/pages/Shell.tsx
+msgid "Could not load business scopes."
+msgstr ""
+
 #: src/components/VaultSettings.tsx
 msgid "Could not load credentials."
 msgstr ""
@@ -2001,6 +2215,10 @@ msgstr ""
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not load integrations"
 msgstr "Не удалось загрузить интеграции"
+
+#: src/pages/TradingLearning.tsx
+msgid "Could not load learning records"
+msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -2109,6 +2327,10 @@ msgstr ""
 msgid "Could not remove the credential"
 msgstr ""
 
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Could not rename business scope"
+msgstr ""
+
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not rename connection"
@@ -2117,10 +2339,6 @@ msgstr "Не удалось переименовать соединение"
 #: src/pages/shell/dialogs.tsx
 msgid "Could not rename section"
 msgstr "Не удалось переименовать раздел"
-
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Could not rename space"
-msgstr "Не удалось переименовать пространство"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Could not render chart"
@@ -2326,6 +2544,16 @@ msgstr "Создайте раздел и переместите в него {0}.
 msgid "Create account"
 msgstr "Зарегистрироваться"
 
+#: src/pages/Trading.tsx
+msgid "Create authorization"
+msgstr ""
+
+#: src/components/AskCard.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "Create business scope"
+msgstr ""
+
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "Создать группу"
@@ -2333,11 +2561,6 @@ msgstr "Создать группу"
 #: src/pages/RoutineEditor.tsx
 msgid "Create Routine"
 msgstr "Создать задачу"
-
-#: src/components/AskCard.tsx
-#: src/pages/shell/dialogs.tsx
-msgid "Create space"
-msgstr "Создайте пространство"
 
 #: src/pages/Auth.tsx
 msgid "Create your eTraderBot"
@@ -2357,9 +2580,17 @@ msgstr "Создание…"
 msgid "Credential"
 msgstr "Учётные данные"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential field name"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Credential saved"
 msgstr "Учетные данные сохранены"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential saved securely"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Credentials are encrypted and never sent to the model."
@@ -2384,6 +2615,10 @@ msgstr "Крон"
 #: src/pages/RoutineSchedule.tsx
 msgid "Cron expression"
 msgstr "Выражение Cron"
+
+#: src/pages/Trading.tsx
+msgid "Cumulative limit (CNY)"
+msgstr ""
 
 #: src/components/AccountAccess.tsx
 #: src/pages/AccountSettingsOverlay.tsx
@@ -2410,6 +2645,18 @@ msgstr "Настроить: {label}"
 msgid "Customize bot avatar"
 msgstr "Настроить аватар бота"
 
+#: src/pages/TradingLearning.tsx
+msgid "Daily"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily and manual learning use the bot's model connection. New candidates require human approval."
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily time"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "Dark"
@@ -2425,6 +2672,14 @@ msgstr ""
 msgid "day"
 msgstr "день"
 
+#: src/pages/Trading.tsx
+msgid "Day ahead"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Day-ahead, intraday and real-time decisions"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "Day-to-day work"
 msgstr ""
@@ -2432,6 +2687,10 @@ msgstr ""
 #: src/lib/cron.ts
 msgid "days"
 msgstr "дни"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Decisions, receipts and lessons learned"
+msgstr ""
 
 #: src/components/call/IncomingCall.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2451,6 +2710,11 @@ msgstr "По умолчанию"
 #: src/pages/shell/bot-panel.tsx
 msgid "Default ({0})"
 msgstr "По умолчанию ({0})"
+
+#: src/components/integrations/space-availability.tsx
+#: src/pages/Shell.tsx
+msgid "Default business scope"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 msgid "Default from Hermes"
@@ -2505,6 +2769,11 @@ msgstr "Удалить {0}?"
 msgid "Delete account"
 msgstr "Удалить аккаунт"
 
+#: src/pages/shell/shell-dialogs.tsx
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Delete business scope"
+msgstr ""
+
 #: src/pages/GroupPanel.tsx
 msgid "Delete group"
 msgstr "Удалить группу"
@@ -2516,11 +2785,6 @@ msgstr "Удалите воспоминания тоже"
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Delete section"
 msgstr "Удалить раздел"
-
-#: src/pages/shell/shell-dialogs.tsx
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Delete space"
-msgstr "Удалить пространство"
 
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Delete this Space's credentials?"
@@ -2539,6 +2803,10 @@ msgstr "Удаление…"
 #: src/components/AccountAccess.tsx
 msgid "Deletion code"
 msgstr "Код удаления"
+
+#: src/pages/Trading.tsx
+msgid "Delivery"
+msgstr ""
 
 #: src/components/AskCard.tsx
 msgid "Denied"
@@ -2569,6 +2837,10 @@ msgstr "Обновление настольного приложения"
 #: src/pages/shell/composer-error.tsx
 msgid "Details"
 msgstr "Подробности"
+
+#: src/pages/Trading.tsx
+msgid "Deterministic constraints checked"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Developer"
@@ -2613,6 +2885,10 @@ msgstr ""
 
 #: src/pages/PaymentWalletSettingsPanel.tsx
 msgid "Disconnect {name}?"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Disconnect scope"
 msgstr ""
 
 #: src/pages/VoiceSettingsOverlay.tsx
@@ -2727,6 +3003,7 @@ msgstr "Каждое имя можно использовать только о�
 
 #: src/components/AskCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/McpServersOverlay.tsx
 msgid "Edit"
 msgstr "Изменить"
@@ -2734,6 +3011,14 @@ msgstr "Изменить"
 #: src/components/AskCard.tsx
 msgid "Edit first"
 msgstr "Сначала отредактируйте"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Edit interface"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Edit learning plan"
+msgstr ""
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Edit name"
@@ -2885,6 +3170,14 @@ msgstr "Каждый месяц"
 msgid "Every week"
 msgstr "Каждую неделю"
 
+#: src/pages/Trading.tsx
+msgid "Execute simulation"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Executor"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Executor token"
 msgstr "Токен Executor"
@@ -2906,6 +3199,10 @@ msgstr "Развернуть таблицу"
 msgid "expired"
 msgstr "истёк срок"
 
+#: src/pages/Trading.tsx
+msgid "Expired"
+msgstr ""
+
 #: src/components/AccountDataSettings.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Export"
@@ -2918,6 +3215,10 @@ msgstr "Экспорт данных"
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "Экспортируйте список этой недели из CRM и поместите его в общую папку."
+
+#: src/lib/trading-bot-templates.ts
+msgid "Exposure, limits and approval evidence"
+msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2940,6 +3241,7 @@ msgstr "неуспешный"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Failed"
 msgstr "Ошибка"
 
@@ -2970,6 +3272,7 @@ msgstr "Поля для сравнения, например id, modifiedTime (�
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/SpaceSearch.tsx
+#: src/pages/TradingLearning.tsx
 msgid "File"
 msgstr "Файл"
 
@@ -2980,6 +3283,14 @@ msgstr "Файлы или папки на компьютере"
 #: src/pages/RoutineEditor.tsx
 msgid "Files or folders, one per line"
 msgstr "Файлы или папки, по одному на строку"
+
+#: src/pages/Trading.tsx
+msgid "Filled"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "fills"
+msgstr ""
 
 #: src/pages/GroupPanel.tsx
 msgid "Filter bots"
@@ -3028,6 +3339,14 @@ msgstr "Завершено."
 #: src/pages/McpOAuthCallback.tsx
 msgid "Finishing MCP connection…"
 msgstr "Завершение подключения MCP…"
+
+#: src/pages/shell/business-scope.tsx
+msgid "For example: Shandong retail trading"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Forecasts"
+msgstr ""
 
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
@@ -3081,6 +3400,15 @@ msgstr "ID шлюза"
 #: src/pages/SettingsOverlay.tsx
 msgid "General"
 msgstr "Общие"
+
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "General bot"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Generator"
+msgstr ""
 
 #: src/components/InviteDialog.tsx
 msgid "Get a free month for each friend who starts a trial."
@@ -3197,6 +3525,14 @@ msgstr "Высокий"
 msgid "High"
 msgstr "Высокий"
 
+#: src/pages/Trading.tsx
+msgid "Historical constraints checked; profit improvement is unproven"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Historical data"
+msgstr ""
+
 #: src/components/composer/HoldToTalk.tsx
 msgid "Hold to talk"
 msgstr "Удерживайте, чтобы говорить"
@@ -3238,6 +3574,19 @@ msgstr "Как проверить"
 msgid "How will you use eTraderBot?"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Human approval · this bot has no access to this scope"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Human approvals"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Human cancellation only"
+msgstr ""
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "Готово"
@@ -3266,6 +3615,10 @@ msgstr "Ввод изображений не настроен для этой м
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Image upload area"
 msgstr "Область загрузки изображения"
+
+#: src/pages/Trading.tsx
+msgid "Immediate fill"
+msgstr ""
 
 #: src/components/AccountDataSettings.tsx
 msgid "Import"
@@ -3316,6 +3669,10 @@ msgstr "Наследовать значение по умолчанию"
 msgid "Input"
 msgstr "Ввод"
 
+#: src/pages/Trading.tsx
+msgid "Input evidence"
+msgstr ""
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Inputs"
 msgstr "Входы"
@@ -3359,6 +3716,10 @@ msgstr "Инструкции слишком длинные. Снимите от�
 msgid "Instructions updated"
 msgstr "Инструкции обновлены"
 
+#: src/pages/TradingLearning.tsx
+msgid "Insufficient historical data"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Integration domain"
 msgstr "Домен интеграции"
@@ -3366,6 +3727,15 @@ msgstr "Домен интеграции"
 #: src/pages/PluginsOverlay.tsx
 msgid "Integrations"
 msgstr "Интеграции"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Interface configuration"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/shell/business-scope.tsx
+msgid "Interface settings"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/RoutineSchedule.tsx
@@ -3379,6 +3749,10 @@ msgstr "Значение интервала"
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval unit"
 msgstr "Единица интервала"
+
+#: src/pages/Trading.tsx
+msgid "Intraday"
+msgstr ""
 
 #: src/lib/user-error.ts
 msgid "Invalid code"
@@ -3410,6 +3784,10 @@ msgstr "Боты и группы из него сохранятся и выйд�
 msgid "Its conversation, files, and routines will be permanently deleted. Bots it created stay in your list."
 msgstr "Его диалог, файлы и задачи будут безвозвратно удалены. Созданные им боты останутся в вашем списке."
 
+#: src/pages/shell/business-scope.tsx
+msgid "Jiangsu · Suzhou"
+msgstr ""
+
 #: src/pages/shell/transcript.tsx
 msgid "Jump to latest"
 msgstr "Перейти к последнему"
@@ -3438,6 +3816,7 @@ msgstr "ключ"
 msgid "Label"
 msgstr "Название"
 
+#: src/components/LanguageSwitcher.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Language"
 msgstr "Язык"
@@ -3456,9 +3835,31 @@ msgstr "Последняя проверка {0}: без изменений"
 msgid "Later"
 msgstr "Позже"
 
+#: src/pages/TradingLearning.tsx
+msgid "Learn now"
+msgstr ""
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
+msgid "Learning"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning runs"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning schedule"
+msgstr ""
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Leave"
 msgstr "Выйти"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Leave empty to keep the saved credential"
+msgstr ""
 
 #: src/components/ComputerDeviceSettings.tsx
 msgid "Let bots use this computer"
@@ -3556,11 +3957,13 @@ msgstr "Загрузка поставщиков голосовой связи…
 #: src/components/PageLoading.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/transcript.tsx
+#: src/pages/Trading.tsx
 msgid "Loading…"
 msgstr "Загрузка…"
 
@@ -3617,6 +4020,10 @@ msgstr "Управление {0}"
 msgid "Manage billing"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Manage interface"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manage MCP servers"
 msgstr "Управление серверами MCP"
@@ -3625,6 +4032,10 @@ msgstr "Управление серверами MCP"
 msgid "Manage other bots"
 msgstr "Управлять другими ботами"
 
+#: src/pages/Trading.tsx
+msgid "Manage trading stage"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual"
 msgstr "Вручную"
@@ -3632,6 +4043,10 @@ msgstr "Вручную"
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual setup required"
 msgstr "Требуется ручная настройка"
+
+#: src/pages/Trading.tsx
+msgid "Margin"
+msgstr ""
 
 #: src/pages/BotContextMenu.tsx
 msgid "Mark as Read"
@@ -3649,8 +4064,24 @@ msgstr "Отметить как непрочитанное"
 msgid "Markdown table"
 msgstr "Таблица Markdown"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market data"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Market ID"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market rules"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Marketing"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
@@ -3678,6 +4109,10 @@ msgstr ""
 msgid "Maximum output tokens"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP connection"
+msgstr ""
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "MCP endpoint"
 msgstr ""
@@ -3690,6 +4125,10 @@ msgstr ""
 #: src/pages/shell/agent-import.tsx
 msgid "MCP servers"
 msgstr "MCP-серверы"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP tool approval remains separate for each bot."
+msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3792,6 +4231,14 @@ msgstr "Обмен сообщениями"
 #: src/lib/dictation.ts
 msgid "Microphone failed"
 msgstr "Ошибка микрофона"
+
+#: src/pages/Trading.tsx
+msgid "Mid / long term"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Mid / long term bot"
+msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3941,6 +4388,7 @@ msgstr "микрофон выключен"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/providers-section.tsx
@@ -3948,6 +4396,7 @@ msgstr "микрофон выключен"
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/bot-panel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingsPanel.tsx
@@ -4005,11 +4454,23 @@ msgstr "Не спрашивать"
 msgid "New"
 msgstr "Новые"
 
+#: src/pages/Trading.tsx
+msgid "New authorization"
+msgstr ""
+
 #: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "New bot"
 msgstr "Новый бот"
+
+#: src/pages/Shell.tsx
+#: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "New business scope"
+msgstr ""
 
 #: src/pages/GroupPanel.tsx
 msgid "New group"
@@ -4028,15 +4489,14 @@ msgstr "Новые сообщения"
 msgid "New open-work item"
 msgstr "Новая задача"
 
+#: src/pages/Trading.tsx
+msgid "New orders"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
 msgstr "Новый пароль"
-
-#: src/pages/Shell.tsx
-#: src/pages/shell/bot-picker.tsx
-msgid "New private space"
-msgstr "Новое личное пространство"
 
 #: src/pages/BotContextMenu.tsx
 #: src/pages/shell/dialogs.tsx
@@ -4047,12 +4507,12 @@ msgstr "Новый раздел"
 msgid "New skill"
 msgstr "Новый навык"
 
-#: src/pages/shell/dialogs.tsx
-msgid "New space"
-msgstr "Новое пространство"
-
 #: src/pages/Board.tsx
 msgid "New ticket"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Next learning run"
 msgstr ""
 
 #: src/components/markdown-copy.tsx
@@ -4061,6 +4521,10 @@ msgstr "Следующая страница"
 
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "No analysis yet"
 msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
@@ -4079,14 +4543,30 @@ msgstr "Нет авторизации"
 msgid "No authentication"
 msgstr "Нет аутентификации"
 
+#: src/pages/Trading.tsx
+msgid "No authorizations"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "No authorized material"
+msgstr ""
+
 #: src/components/integrations/agent-access.tsx
 msgid "No bots"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "No bots in this business scope yet."
 msgstr ""
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "No bots match"
 msgstr "Ни один бот не подходит"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "No interfaces configured for this business scope."
+msgstr ""
 
 #: src/components/AskCard.tsx
 msgid "No longer active"
@@ -4122,6 +4602,10 @@ msgstr "Каталога моделей нет."
 #: src/lib/model-connection-preflight.ts
 msgid "No models listed."
 msgstr "Модели не перечислены."
+
+#: src/pages/TradingLearning.tsx
+msgid "No new material"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 msgid "No OpenClaw, Hermes or agent document found."
@@ -4166,9 +4650,17 @@ msgstr ""
 msgid "No tickets yet"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "No trading stages configured yet."
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "No trigger"
 msgstr "Нет триггера"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "None"
+msgstr ""
 
 #: src/lib/ticket-priority.ts
 msgid "Normal"
@@ -4288,6 +4780,14 @@ msgstr "Один раз"
 msgid "One-time purchase. Credits do not expire."
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Only the business scope owner can configure interfaces."
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Only this experience text is shared. Raw materials and source reports stay in their original scope."
+msgstr ""
+
 #: src/components/markdown-link-prompt.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/shell/computer-panel.tsx
@@ -4332,6 +4832,7 @@ msgstr "Открыть внешнюю ссылку?"
 msgid "Open in full window"
 msgstr "Открыть в полном окне"
 
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/shell/chat-header.tsx
 msgid "Open navigation"
 msgstr "Открыть навигацию"
@@ -4369,6 +4870,10 @@ msgstr "Необязательное значение заголовка"
 msgid "Or paste an API key"
 msgstr "Или вставьте ключ API"
 
+#: src/pages/Trading.tsx
+msgid "Orders"
+msgstr ""
+
 #: src/pages/memory-providers/SupermemorySettingsForm.tsx
 msgid "Organization API key"
 msgstr "Ключ API организации"
@@ -4380,6 +4885,10 @@ msgstr ""
 #: src/pages/shell/chat-context.tsx
 msgid "Original message unavailable"
 msgstr "Исходное сообщение недоступно"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Other data"
+msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -4406,6 +4915,14 @@ msgstr "Страница не найдена"
 #: src/pages/RoutineEditor.tsx
 msgid "PagerDuty incident"
 msgstr "Инцидент PagerDuty"
+
+#: src/pages/Trading.tsx
+msgid "Partial fill"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Partially filled"
+msgstr ""
 
 #: src/components/PasskeySettings.tsx
 msgid "Passkey"
@@ -4472,13 +4989,23 @@ msgstr "Вставьте API-ключ и повторите тест."
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/import-status.ts
+#: src/pages/TradingLearning.tsx
 msgid "Paused"
 msgstr "Приостановлено"
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Pending"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Pending order"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Per trade approval"
 msgstr ""
 
 #: src/pages/shell/bot-panel.tsx
@@ -4551,6 +5078,10 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Positions and assets"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Post \"No changes\" in chat"
 msgstr "Писать «Без изменений» в чат"
@@ -4562,6 +5093,10 @@ msgstr "ОТПРАВИТЬ в"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Preferences"
 msgstr "Предпочтения"
+
+#: src/pages/Trading.tsx
+msgid "Prepare intent"
+msgstr ""
 
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -4585,6 +5120,10 @@ msgstr "Предыдущая страница"
 msgid "Previous settings sections"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Price margin (CNY/MWh)"
+msgstr ""
+
 #: src/pages/Board.tsx
 msgid "Priority"
 msgstr ""
@@ -4593,12 +5132,12 @@ msgstr ""
 msgid "Private"
 msgstr "Личный"
 
-#: src/pages/shell/bot-picker.tsx
-msgid "Private workspace with its own bots and groups."
-msgstr "Приватное пространство со своими ботами и группами."
-
 #: src/pages/PluginsOverlay.tsx
 msgid "Productivity"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Profit improvement and semantic quality have not been established."
 msgstr ""
 
 #: src/pages/shell/import-status.ts
@@ -4627,7 +5166,20 @@ msgstr "Поставщики"
 msgid "Pull request"
 msgstr "Запрос на слияние"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Purpose"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters (JSON)"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters must be a JSON object"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Queued"
 msgstr "В очереди"
 
@@ -4651,6 +5203,10 @@ msgstr "Читать ответы вслух"
 msgid "Ready"
 msgstr "Готово"
 
+#: src/pages/Trading.tsx
+msgid "Real time"
+msgstr ""
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr ""
@@ -4668,6 +5224,14 @@ msgstr ""
 msgid "Recall only"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Receipt details"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Receipts"
+msgstr ""
+
 #: src/pages/AdminAccessPage.tsx
 msgid "Received"
 msgstr ""
@@ -4678,6 +5242,10 @@ msgstr "Недавние"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Recommended"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Reconcile order"
 msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
@@ -4776,6 +5344,10 @@ msgstr "Обновить экран"
 msgid "Refreshing…"
 msgstr "Обновление…"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Region"
+msgstr ""
+
 #: src/lib/user-error.ts
 msgid "Registration is closed"
 msgstr "Регистрация закрыта"
@@ -4790,11 +5362,16 @@ msgid "Reject {0}"
 msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Rejected"
 msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Rejecting…"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Rejection"
 msgstr ""
 
 #: src/pages/shell/computer-release-actions.tsx
@@ -4855,6 +5432,10 @@ msgstr "Удалить событие Git"
 #: src/components/ModelHeadersEditor.tsx
 msgid "Remove header"
 msgstr "Удалить заголовок"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Remove interface"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 msgid "Remove message trigger"
@@ -4935,12 +5516,28 @@ msgstr ""
 msgid "Request a new code"
 msgstr "Запросите новый код"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request body"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request method"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request parameters"
+msgstr ""
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Reserved"
 msgstr ""
 
 #: src/components/ComputerMaintenanceActions.tsx
@@ -5009,6 +5606,27 @@ msgstr "Восстановлено"
 msgid "Restoring your workspace"
 msgstr "Восстановление вашего рабочего пространства"
 
+#: src/pages/Trading.tsx
+msgid "Result uncertain"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Result uncertain; the reservation is retained."
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Retailer"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Retire algorithm"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Retired"
+msgstr ""
+
 #: src/components/AccountAccess.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -5041,17 +5659,40 @@ msgstr "Вернуться к звонку с {0}"
 msgid "Return to eTraderBot"
 msgstr "Вернуться в eTraderBot"
 
+#: src/pages/Trading.tsx
+msgid "Review"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Review bot"
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "Проверьте настройки поставщика и повторите тест."
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Revoke"
 msgstr "Отозвать"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/Trading.tsx
 msgid "Revoked"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Risk"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Risk bot"
+msgstr ""
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Risk review"
 msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
@@ -5086,9 +5727,17 @@ msgstr "Строка"
 msgid "Rules"
 msgstr ""
 
+#: src/pages/Trading.tsx
+msgid "Run analysis"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Run at"
 msgstr "Запустить в"
+
+#: src/pages/TradingLearning.tsx
+msgid "Run finished without a learning report. Review the conversation and retry."
+msgstr ""
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
@@ -5105,6 +5754,7 @@ msgstr "выполняется"
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Running"
 msgstr "Выполняется"
 
@@ -5146,12 +5796,28 @@ msgstr "суббота"
 msgid "Save"
 msgstr "Сохранить"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Save configuration"
+msgstr ""
+
 #: src/components/VaultSettings.tsx
 msgid "Save credential"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Save interface"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Save material"
+msgstr ""
+
 #: src/components/VaultSettings.tsx
 msgid "Save new value"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Save plan"
 msgstr ""
 
 #: src/components/ComputerMaintenanceActions.tsx
@@ -5207,6 +5873,10 @@ msgstr "Скажите «да» или «нет» или ответьте пре
 
 #: src/components/ModelCredits.tsx
 msgid "Scheduled routines"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Scope owner"
 msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
@@ -5288,9 +5958,22 @@ msgstr ""
 msgid "Select a bot"
 msgstr "Выберите бота"
 
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Select a business scope in the sidebar first."
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Select a connection"
+msgstr ""
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Self-hosted"
 msgstr "Свой сервер"
+
+#: src/pages/Trading.tsx
+msgid "Sell"
+msgstr ""
 
 #: src/pages/shell/composer.tsx
 msgid "Send"
@@ -5384,6 +6067,10 @@ msgstr "Настройки: Общие"
 msgid "Settings: Usage"
 msgstr "Настройки: Использование"
 
+#: src/pages/Trading.tsx
+msgid "Settled"
+msgstr ""
+
 #: src/pages/shell/import-setup-card.tsx
 msgid "Setup complete"
 msgstr "Настройка завершена"
@@ -5392,6 +6079,14 @@ msgstr "Настройка завершена"
 msgid "Setup help"
 msgstr "Помощь по настройке"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Shandong"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Shanghai"
+msgstr ""
+
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape"
 msgstr "Форма"
@@ -5399,6 +6094,14 @@ msgstr "Форма"
 #. placeholder {0}: index + 1
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape {0}"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Share experience"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Share selected experience"
 msgstr ""
 
 #: src/pages/MemorySettingsOverlay.tsx
@@ -5447,6 +6150,10 @@ msgstr ""
 #: src/components/call/VoiceChatCard.tsx
 msgid "Show transcript"
 msgstr "Показать расшифровку"
+
+#: src/pages/Trading.tsx
+msgid "Side"
+msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Sidebar density"
@@ -5500,6 +6207,26 @@ msgstr "Зарегистрироваться"
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Sign-in cancelled. Try again."
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Simulation · bots and interfaces are configured within this business scope."
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Simulation receipt"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Simulation scenario"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Simulation trading"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Single intent limit (CNY)"
 msgstr ""
 
 #: src/components/VaultSettings.tsx
@@ -5594,18 +6321,9 @@ msgstr "Сортировка по {column}, по возрастанию"
 msgid "Sorted by {column}, descending"
 msgstr "Сортировка по {column}, по убыванию"
 
-#: src/lib/identity-display.ts
-#: src/pages/SettingsOverlay.tsx
-msgid "Space"
-msgstr "Пространство"
-
-#: src/pages/shell/bot-panel.tsx
-msgid "Space default"
-msgstr "Пространство по умолчанию"
-
-#: src/pages/SettingsOverlay.tsx
-msgid "Spaces"
-msgstr "Пространства"
+#: src/pages/TradingLearning.tsx
+msgid "Source reference"
+msgstr ""
 
 #: src/pages/shell/message-view.tsx
 msgid "Speak"
@@ -5622,6 +6340,14 @@ msgstr "говорит"
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Speech model"
 msgstr "Речевая модель"
+
+#: src/pages/Trading.tsx
+msgid "Spot"
+msgstr ""
+
+#: src/lib/trading-bot-templates.ts
+msgid "Spot bot"
+msgstr ""
 
 #: src/components/AccountAccess.tsx
 msgid "SSO"
@@ -5661,6 +6387,7 @@ msgid "Start your plan now?"
 msgstr "Начать тариф сейчас?"
 
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Starting"
 msgstr "Запуск"
 
@@ -5708,6 +6435,11 @@ msgstr "Остановлено."
 msgid "Stopping…"
 msgstr ""
 
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Storage"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Stored encrypted"
 msgstr "Хранится в зашифрованном виде"
@@ -5719,6 +6451,18 @@ msgstr "Потоковые ответы"
 #: src/lib/identity-display.ts
 msgid "subagent"
 msgstr "субагент"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject ID"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject type"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Submission timeout"
+msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -5776,6 +6520,14 @@ msgstr ""
 msgid "Switching…"
 msgstr "Переключение…"
 
+#: src/pages/Trading.tsx
+msgid "Synthetic data"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Synthetic fill"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "System"
@@ -5788,6 +6540,10 @@ msgstr "Таблица"
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "Взять управление"
+
+#: src/pages/TradingLearning.tsx
+msgid "Target scope"
+msgstr ""
 
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Teach a task"
@@ -6057,6 +6813,10 @@ msgstr "четверг"
 msgid "Time of day"
 msgstr "Время суток"
 
+#: src/pages/TradingLearning.tsx
+msgid "Time zone"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Timezone"
 msgstr ""
@@ -6115,6 +6875,39 @@ msgstr "Название инструмента"
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
 msgstr "Инструменты"
+
+#: src/pages/Trading.tsx
+msgid "Trade approved"
+msgstr ""
+
+#: src/pages/shell/business-scope.tsx
+msgid "Trade authorizer"
+msgstr ""
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Trade execution"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Trade intents"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Trader feedback"
+msgstr ""
+
+#: src/pages/Shell.tsx
+msgid "Trading"
+msgstr ""
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Trading review"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Trading stage"
+msgstr ""
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Transcribing…"
@@ -6189,6 +6982,10 @@ msgstr "Введите ответ"
 #: src/pages/Shell.tsx
 msgid "Unassigned"
 msgstr "Без раздела"
+
+#: src/pages/Trading.tsx
+msgid "Uncovered exposure"
+msgstr ""
 
 #: src/components/AskCard.tsx
 msgid "Undo"
@@ -6280,6 +7077,14 @@ msgstr ""
 msgid "Upload"
 msgstr "Загрузить"
 
+#: src/pages/TradingLearning.tsx
+msgid "Upload file"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Upload learning file"
+msgstr ""
+
 #: src/lib/ticket-priority.ts
 msgid "Urgent"
 msgstr ""
@@ -6344,6 +7149,10 @@ msgstr ""
 msgid "Use space default"
 msgstr ""
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Use the credential field for keys and tokens."
+msgstr ""
+
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
 msgstr ""
@@ -6377,6 +7186,22 @@ msgstr ""
 msgid "Using your API key. Free plan ends {freeUntil}."
 msgstr "Используется ваш API-ключ. Бесплатный тариф закончится {freeUntil}."
 
+#: src/pages/Trading.tsx
+msgid "Valid for 24 hours"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Valid until"
+msgstr ""
+
+#: src/pages/Trading.tsx
+msgid "Validation and source"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Validation evidence"
+msgstr ""
+
 #: src/components/LoginFields.tsx
 #: src/components/VaultSettings.tsx
 #: src/pages/McpServersOverlay.tsx
@@ -6387,6 +7212,10 @@ msgstr "Значение"
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Vault"
 msgstr "Хранилище"
+
+#: src/pages/Trading.tsx
+msgid "Venue unavailable"
+msgstr ""
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Verify and add"
@@ -6422,6 +7251,14 @@ msgstr ""
 #: src/lib/model-connection-preflight.ts
 msgid "Wait a moment and test again."
 msgstr "Подождите немного и повторите тест."
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for input"
+msgstr ""
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for you"
+msgstr ""
 
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"

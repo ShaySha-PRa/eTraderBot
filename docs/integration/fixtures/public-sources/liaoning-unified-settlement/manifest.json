@@ -1,0 +1,47 @@
+{
+  "title": "辽宁省电力现货市场统一结算点电价（公开 PDF 抄录）",
+  "unit": "CNY/MWh",
+  "unit_on_pdf": "元/千千瓦时（= 元/MWh）",
+  "settlement_point": "统一结算点（全省统一结算点电价信息表，非节点电价）",
+  "interval": "15 minutes as published; hourly means derived for snapshot forecastPrice",
+  "hourly_aggregation": "For hour H starting H:00 Asia/Shanghai: arithmetic mean of published points H:15, H:30, H:45, and (H+1):00 (table label 0:00 closes hour 23).",
+  "source_kind_in_fixtures": "user",
+  "not_company": true,
+  "region_contract_note": "trading.ts region enum is CN-SH|CN-JS|CN-SD only; LN prices are overlaid onto existing simulation scopes as teaching forecastPrice. Scope.region is NOT claimed to be Liaoning.",
+  "listing_index": "https://fgw.ln.gov.cn/fgw/index/tzgg/97102a86-12.shtml",
+  "portal": "https://fgw.ln.gov.cn/fgw/xxgk/xhdj/index.shtml",
+  "license_or_use": "辽宁省发改委政府信息公开网页/附件 PDF；教学与对接样例用途。未获单独商用授权声明——勿当公司内部行情。",
+  "transcribedAt": "2026-11-03T02:55:00-08:00",
+  "days": [
+    {
+      "tradeDate": "2025-03-10",
+      "pdfUrl": "https://fgw.ln.gov.cn/fgw/articleFileDir/2025-03/11/683a654284a94392b0c1f2766810d575/2025031120560692249.pdf",
+      "noticePublished": "2025-03-11",
+      "n15": 96,
+      "files": [
+        "2025-03-10.json",
+        "2025-03-10.extract.txt"
+      ]
+    },
+    {
+      "tradeDate": "2025-03-11",
+      "pdfUrl": "https://fgw.ln.gov.cn/fgw/articleFileDir/2025-03/12/a941c6f49cd0433c81493f5cdf731176/2025031216432444082.pdf",
+      "noticePublished": "2025-03-12",
+      "n15": 96,
+      "files": [
+        "2025-03-11.json",
+        "2025-03-11.extract.txt"
+      ]
+    },
+    {
+      "tradeDate": "2025-03-12",
+      "pdfUrl": "https://fgw.ln.gov.cn/fgw/articleFileDir/2025-03/13/6d2e91ef7a564ba791483571ce7f9aca/2025031314070595187.pdf",
+      "noticePublished": "2025-03-13",
+      "n15": 96,
+      "files": [
+        "2025-03-12.json",
+        "2025-03-12.extract.txt"
+      ]
+    }
+  ]
+}

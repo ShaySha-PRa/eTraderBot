@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1",
+  "environments": [
+    "simulation"
+  ],
+  "subjectKinds": [
+    "retailer",
+    "generator",
+    "storage"
+  ],
+  "supportsExecution": true,
+  "supportsCancellation": true,
+  "supportsObservations": true,
+  "sourceId": "sim-adapter-capabilities-v1"
+}

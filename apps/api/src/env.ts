@@ -32,6 +32,7 @@ export { resolveCloudAgentProvider, resolveSandboxProvider } from "@rakazo/adapt
 const DEFAULT_WEB_ORIGIN = "http://127.0.0.1:5173";
 
 export interface AppEnv {
+  localAutoLoginEmail?: string;
   passwordAuth?: boolean;
   /** Opt-in Have I Been Pwned check for new passwords. Default off: it calls an outside service. */
   breachedPasswordCheck?: boolean;
@@ -218,10 +219,28 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
       : undefined;
   const authSecret = resolveAuthSecret(source);
   const webOrigin = resolveWebOrigin(source.WEB_ORIGIN, DEFAULT_WEB_ORIGIN, "WEB_ORIGIN");
+  // Verification harnesses may inherit a local .env; their test accounts keep normal auth.
+  const localAutoLoginEmail =
+    source.NODE_ENV === "test" ? undefined : optional(source.LOCAL_AUTO_LOGIN_EMAIL)?.toLowerCase();
+  if (localAutoLoginEmail) {
+    const loopback = (value: string) =>
+      ["localhost", "127.0.0.1", "[::1]"].includes(new URL(value).hostname);
+    if (
+      source.NODE_ENV !== "development" ||
+      !["localhost", "127.0.0.1", "::1", "[::1]"].includes(source.API_HOST ?? "127.0.0.1") ||
+      !loopback(webOrigin) ||
+      !loopback(source.BETTER_AUTH_URL || webOrigin) ||
+      !loopback(source.API_URL || "http://127.0.0.1:3100")
+    )
+      throw new Error(
+        "LOCAL_AUTO_LOGIN_EMAIL requires development mode and loopback API/web addresses",
+      );
+  }
   const sandboxProvider = resolveSandboxProvider(source);
   const cloudAgentProvider = resolveCloudAgentProvider(source);
   const deploymentModel = resolveDeploymentModel(source);
   return {
+    localAutoLoginEmail,
     passwordAuth,
     breachedPasswordCheck: source.AUTH_BREACHED_PASSWORD_CHECK_ENABLED === "true",
     oidc,

@@ -22,6 +22,12 @@ msgstr "（未读）"
 msgid "{0, plural, one {# bot has its own model:} other {# bots have their own model:}}"
 msgstr "{0, plural, one {# 个 Bot 使用自己的模型：} other {# 个 Bot 使用自己的模型：}}"
 
+#. placeholder {0}: availability.spaceIds.length
+#. placeholder {0}: chosen.length
+#: src/components/integrations/space-availability.tsx
+msgid "{0, plural, one {# business scope} other {# business scopes}}"
+msgstr "{0, plural, other {# 个业务范围}}"
+
 #. placeholder {0}: servers.length
 #: src/pages/PluginsOverlay.tsx
 msgid "{0, plural, one {# connector} other {# connectors}}"
@@ -40,7 +46,7 @@ msgstr "{0, plural, one {已获得 # 个月免费} other {已获得 # 个月免�
 #. placeholder {0}: item.freeMonths
 #: src/pages/AdminAccessPage.tsx
 msgid "{0, plural, one {# free month} other {# free months}}"
-msgstr ""
+msgstr "{0, plural, one {# 个月免费} other {# 个月免费}}"
 
 #. placeholder {0}: skills.length - shownSkills.length
 #: src/components/integrations/plugin-marketplace.tsx
@@ -52,16 +58,10 @@ msgstr "{0, plural, one {还有 # 个} other {还有 # 个}}"
 msgid "{0, plural, one {# skill} other {# skills}}"
 msgstr "{0, plural, one {# 个技能} other {# 个技能}}"
 
-#. placeholder {0}: availability.spaceIds.length
-#. placeholder {0}: chosen.length
-#: src/components/integrations/space-availability.tsx
-msgid "{0, plural, one {# space} other {# spaces}}"
-msgstr "{0, plural, one {# 个工作区} other {# 个工作区}}"
-
 #. placeholder {0}: server.health.toolCount
 #: src/pages/McpServersOverlay.tsx
 msgid "{0, plural, one {# tool} other {# tools}}"
-msgstr ""
+msgstr "{0, plural, one {# 个工具} other {# 个工具}}"
 
 #. placeholder {0}: pinned.length
 #: src/pages/model-settings/space-bots-model.tsx
@@ -222,7 +222,7 @@ msgstr "{hidden, plural, one {+# 个更早的步骤} other {+# 个更早的步�
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "{hiddenSelectedCount, plural, one {# selected model is hidden by your search.} other {# selected models are hidden by your search.}}"
-msgstr ""
+msgstr "{hiddenSelectedCount, plural, one {搜索结果隐藏了 # 个已选模型。} other {搜索结果隐藏了 # 个已选模型。}}"
 
 #: src/lib/relative-time.ts
 msgid "{hours}h ago"
@@ -242,7 +242,7 @@ msgstr "{moved, plural, one {# 个 Bot 已改用工作区默认。} other {# 个
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "{name} (same name as a built-in skill)"
-msgstr ""
+msgstr "{name}（与内置技能重名）"
 
 #: src/lib/activity-list-filters.ts
 msgid "{name} asked"
@@ -422,11 +422,11 @@ msgstr "@{0}"
 
 #: src/components/ModelCredits.tsx
 msgid "/ month"
-msgstr ""
+msgstr "／月"
 
 #: src/components/integrations/space-availability.tsx
-msgid "1 space"
-msgstr "1 个工作区"
+msgid "1 business scope"
+msgstr "1 个业务范围"
 
 #: src/pages/shell/message-cards.tsx
 msgid "A bit of everything"
@@ -448,11 +448,15 @@ msgstr "订阅凭据已安全存储。"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "About {kb} KB of memory no longer reaches the bot."
-msgstr ""
+msgstr "约有 {kb} KB 的记忆不再提供给 Bot。"
 
 #: src/components/InfoTooltip.tsx
 msgid "About {label}"
 msgstr "关于{label}"
+
+#: src/pages/Trading.tsx
+msgid "Accepted"
+msgstr "已受理"
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Access token (optional)"
@@ -469,6 +473,7 @@ msgstr "账户默认"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "Account ID"
 msgstr "账户 ID"
 
@@ -490,11 +495,12 @@ msgid "Actions for {0}"
 msgstr "{0} 的操作"
 
 #: src/pages/shell/shell-dialogs.tsx
-msgid "Actions for space"
-msgstr "工作区操作"
+msgid "Actions for business scope"
+msgstr "业务范围操作"
 
 #: src/pages/BillingSettingsPanel.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/Trading.tsx
 msgid "Active"
 msgstr "启用"
 
@@ -549,15 +555,23 @@ msgstr "添加触发器以运行此例程。"
 
 #: src/lib/tts.ts
 msgid "Add a voice provider key and pick a voice in Voice settings."
-msgstr ""
+msgstr "请在语音设置中添加服务密钥并选择音色。"
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Add an HTTPS server URL."
 msgstr "请填写 HTTPS 服务器 URL。"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add an MCP connection in Integrations first."
+msgstr "请先在“连接应用”中添加 MCP 连接。"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Add another"
 msgstr "再添加一个"
+
+#: src/pages/Trading.tsx
+msgid "Add bot to business scope"
+msgstr "加入业务范围"
 
 #: src/components/VaultSettings.tsx
 msgid "Add credential"
@@ -583,9 +597,17 @@ msgstr "添加字段"
 msgid "Add header"
 msgstr "添加请求头"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Add interface"
+msgstr "添加接口"
+
 #: src/pages/ScratchpadSection.tsx
 msgid "Add item"
 msgstr "添加项目"
+
+#: src/pages/TradingLearning.tsx
+msgid "Add learning material"
+msgstr "添加学习资料"
 
 #: src/components/integrations/IntegrationSetup.tsx
 msgid "Add MCP server"
@@ -655,7 +677,19 @@ msgstr "高级..."
 
 #: src/components/AccountDataSettings.tsx
 msgid "Agent from another app"
-msgstr ""
+msgstr "从其他应用导入的 Agent"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Algorithm approver"
+msgstr "算法审批人"
+
+#: src/pages/Trading.tsx
+msgid "Algorithm version"
+msgstr "算法版本"
+
+#: src/pages/Trading.tsx
+msgid "Algorithm versions"
+msgstr "算法版本"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "All"
@@ -668,12 +702,13 @@ msgstr "全部 {credit} 都用于模型用量。"
 #: src/components/integrations/agent-access.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/shell/agent-import.tsx
+#: src/pages/shell/business-scope.tsx
 msgid "All bots"
 msgstr "全部 Bot"
 
 #: src/components/integrations/space-availability.tsx
-msgid "All spaces"
-msgstr "所有工作区"
+msgid "All business scopes"
+msgstr "全部业务范围"
 
 #: src/pages/ActivityList.tsx
 msgid "All statuses"
@@ -693,11 +728,15 @@ msgstr "允许跨空间机器人通信"
 
 #: src/lib/dictation.ts
 msgid "Allow eTraderBot to use Speech Recognition and the microphone in System Settings."
-msgstr ""
+msgstr "请在系统设置中允许 eTraderBot 使用语音识别和麦克风。"
+
+#: src/pages/Trading.tsx
+msgid "Allow executor bot to cancel"
+msgstr "允许执行 Bot 撤单"
 
 #: src/components/AskCard.tsx
 msgid "Allow in this space"
-msgstr ""
+msgstr "允许在此空间使用"
 
 #: src/components/AskCard.tsx
 msgid "Allow once"
@@ -709,7 +748,7 @@ msgstr "允许写入"
 
 #: src/components/AskCard.tsx
 msgid "Allowed in this space"
-msgstr ""
+msgstr "已允许在此空间使用"
 
 #: src/components/AskCard.tsx
 msgid "Allowed once"
@@ -794,11 +833,15 @@ msgstr "Anthropic API"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Anthropic Messages"
-msgstr ""
+msgstr "Anthropic Messages"
 
 #: src/pages/Paywall.tsx
 msgid "Any model, with your own key"
 msgstr "任意模型，使用你自己的密钥"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "API credential"
+msgstr "API 密钥"
 
 #: src/components/AskCard.tsx
 #: src/lib/localized-provider-hint.ts
@@ -818,17 +861,30 @@ msgstr "{provider} 的 API 密钥"
 msgid "API key header"
 msgstr "API 密钥请求头"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in header"
+msgstr "请求头 API 密钥"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "API key in query"
+msgstr "查询参数 API 密钥"
+
 #: src/pages/shell/agent-import.tsx
 msgid "API keys"
 msgstr "API 密钥"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "API URL"
+msgstr "API 地址"
+
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/shell/create-bot-dialog.tsx
 msgid "Appearance"
 msgstr "外观"
 
 #: src/pages/Shell.tsx
 msgid "Appearance: {label}"
-msgstr ""
+msgstr "外观：{label}"
 
 #: src/components/AskCard.tsx
 msgid "Apply"
@@ -837,6 +893,10 @@ msgstr "应用"
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Approval boundaries"
 msgstr "审批边界"
+
+#: src/pages/Trading.tsx
+msgid "Approval evidence"
+msgstr "批准依据"
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "Approval model"
@@ -853,6 +913,10 @@ msgstr "审批"
 msgid "Approve"
 msgstr "批准"
 
+#: src/pages/Trading.tsx
+msgid "Approve algorithm"
+msgstr "批准启用算法"
+
 #: src/lib/call-session.ts
 msgid "Approve or deny it on screen."
 msgstr "请在屏幕上批准或拒绝。"
@@ -861,7 +925,12 @@ msgstr "请在屏幕上批准或拒绝。"
 msgid "Approve this server to let your agent use its tools."
 msgstr "批准此服务器后，Agent 才能使用它的工具。"
 
+#: src/pages/Trading.tsx
+msgid "Approve trade"
+msgstr "批准交易"
+
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Approved"
 msgstr "已批准"
 
@@ -903,6 +972,10 @@ msgstr "询问"
 msgid "Asleep"
 msgstr "休眠中"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Asset ID"
+msgstr "资产标识"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -921,6 +994,11 @@ msgstr "附加文件"
 msgid "Attachment"
 msgstr "附件"
 
+#: src/pages/Trading.tsx
+msgid "Audit history"
+msgstr "审计记录"
+
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Authentication"
 msgstr "认证"
@@ -928,6 +1006,10 @@ msgstr "认证"
 #: src/lib/model-connection-preflight.ts
 msgid "Authentication failed."
 msgstr "身份验证失败。"
+
+#: src/pages/Trading.tsx
+msgid "Authorization"
+msgstr "执行授权"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -953,6 +1035,14 @@ msgstr "授权"
 #: src/pages/shell/message-cards.tsx
 msgid "Authorize this server so agents can use its tools. A popup opens."
 msgstr "授权此服务器后，Agent 才能使用其工具。将打开弹窗。"
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized materials"
+msgstr "授权资料"
+
+#: src/pages/TradingLearning.tsx
+msgid "Authorized operation"
+msgstr "已授权操作"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Auto"
@@ -986,6 +1076,10 @@ msgstr "Shell 命令可通过 {commandVariable} 使用"
 msgid "Avatar Studio"
 msgstr "头像工作室"
 
+#: src/pages/Trading.tsx
+msgid "Awaiting trade approval"
+msgstr "待批准交易"
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/AdminAccessPage.tsx
@@ -1001,6 +1095,10 @@ msgstr "头像工作室"
 msgid "Back"
 msgstr "返回"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Back to bots"
+msgstr "返回 Bots"
+
 #: src/pages/Auth.tsx
 msgid "Back to sign in"
 msgstr "返回登录"
@@ -1008,6 +1106,10 @@ msgstr "返回登录"
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Base URL"
 msgstr "Base URL"
+
+#: src/pages/TradingLearning.tsx
+msgid "Baseline margin"
+msgstr "基线加价／价差门槛"
 
 #: src/components/VaultSettings.tsx
 msgid "Basic auth"
@@ -1029,7 +1131,11 @@ msgstr "账单"
 
 #: src/components/ModelCredits.tsx
 msgid "Billing period"
-msgstr ""
+msgstr "计费周期"
+
+#: src/pages/TradingLearning.tsx
+msgid "Bind a trading bot to create a learning plan."
+msgstr "绑定交易 Bot 后即可建立学习计划。"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Block"
@@ -1068,6 +1174,10 @@ msgstr "Bot"
 msgid "Bot"
 msgstr "Bot"
 
+#: src/pages/Trading.tsx
+msgid "Bot cancellation permission"
+msgstr "Bot 撤单权限"
+
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Bot is watching, not acting"
 msgstr "Bot 只看不操作"
@@ -1083,6 +1193,14 @@ msgstr "Bot 屏幕"
 #: src/pages/shell/computer-panel.tsx
 msgid "Bot screen preview"
 msgstr "Bot 屏幕预览"
+
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Bot template"
+msgstr "Bot 模板"
+
+#: src/pages/Shell.tsx
+msgid "Bot workspace"
+msgstr "Bot 工作区"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Bot's model"
@@ -1104,6 +1222,10 @@ msgstr "Bot 和浏览器自动化"
 msgid "Bots with their own computer and browser"
 msgstr "每个 Bot 都有自己的电脑和浏览器"
 
+#: src/pages/Trading.tsx
+msgid "Bounded authorizations"
+msgstr "范围授权"
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "Brain label"
 msgstr "Brain 标签"
@@ -1120,6 +1242,26 @@ msgstr "浏览 MCP 服务器"
 #: src/pages/shell/agent-import.tsx
 msgid "Built-in"
 msgstr "内置"
+
+#: src/lib/identity-display.ts
+#: src/pages/SettingsOverlay.tsx
+#: src/pages/shell/bot-business-labels.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "Business scope"
+msgstr "业务范围"
+
+#: src/pages/shell/bot-panel.tsx
+msgid "Business scope default"
+msgstr "业务范围默认值"
+
+#: src/pages/SettingsOverlay.tsx
+msgid "Business scopes"
+msgstr "业务范围"
+
+#: src/pages/Trading.tsx
+msgid "Buy"
+msgstr "买入"
 
 #: src/pages/shell/chat-header.tsx
 msgid "Call"
@@ -1166,6 +1308,7 @@ msgstr "无法读取图像"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -1174,6 +1317,7 @@ msgstr "无法读取图像"
 #: src/pages/Onboarding.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingOverrides.tsx
@@ -1188,6 +1332,10 @@ msgstr "取消新建 Bot"
 msgid "Cancel new group"
 msgstr "取消新建群组"
 
+#: src/pages/Trading.tsx
+msgid "Cancel order"
+msgstr "撤销订单"
+
 #: src/pages/shell/chat-context.tsx
 msgid "Cancel reply"
 msgstr "取消回复"
@@ -1196,14 +1344,28 @@ msgstr "取消回复"
 msgid "Canceled"
 msgstr "已取消"
 
+#: src/pages/Trading.tsx
+msgid "Cancellation timeout"
+msgstr "撤单超时"
+
 #: src/components/CloudAgentCard.tsx
 msgid "cancelled"
 msgstr "已取消"
 
 #: src/components/AskCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Cancelled"
 msgstr "已取消"
+
+#: src/pages/Trading.tsx
+msgid "Candidate analysis"
+msgstr "候选分析"
+
+#: src/pages/TradingLearning.tsx
+msgid "Candidate margin"
+msgstr "候选加价／价差门槛"
 
 #: src/pages/Artifacts.tsx
 msgid "Card view"
@@ -1234,12 +1396,17 @@ msgid "Chart failed to render: {error}"
 msgstr "图表渲染失败：{error}"
 
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/Shell.tsx
 msgid "Chat"
-msgstr ""
+msgstr "聊天"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Chat Completions"
-msgstr ""
+msgstr "Chat Completions"
+
+#: src/pages/TradingLearning.tsx
+msgid "Chat feedback"
+msgstr "聊天反馈"
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Chat Settings"
@@ -1326,9 +1493,22 @@ msgstr "设置新密码"
 msgid "Choose a provider"
 msgstr "选择提供方"
 
+#: src/pages/TradingLearning.tsx
+msgid "Choose a text file up to 64 KB"
+msgstr "请选择不超过 64 KB 的文本文件"
+
+#: src/pages/TradingLearning.tsx
+msgid "Choose a UTF-8 text file"
+msgstr "请选择 UTF-8 文本文件"
+
 #: src/pages/shell/agent-import.tsx
 msgid "Choose backup"
 msgstr "选择备份"
+
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Choose business scope"
+msgstr "选择业务范围"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -1488,7 +1668,7 @@ msgstr "命令"
 
 #: src/pages/shell/command-palette.tsx
 msgid "Command menu"
-msgstr ""
+msgstr "命令菜单"
 
 #: src/components/AskCard.tsx
 #: src/components/VaultSettings.tsx
@@ -1512,6 +1692,7 @@ msgid "Complete"
 msgstr "完成"
 
 #: src/components/SubagentCard.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Completed"
 msgstr "已完成"
 
@@ -1559,6 +1740,14 @@ msgstr "电脑未开启。请设置 SANDBOX_PROVIDER=docker 并提供 SANDBOX_SU
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
 msgstr "要连接应用，请先在服务器上配置插件目录。"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Configure business scope"
+msgstr "配置业务范围"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Configured · not verified"
+msgstr "已配置 · 未验证连通"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Confirm delete"
@@ -1619,6 +1808,10 @@ msgstr "连接 API 密钥"
 #: src/pages/Shell.tsx
 msgid "Connect apps"
 msgstr "连接应用"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connect HTTP data APIs or select MCP connections for this business scope. Saving a configuration does not verify connectivity or authorize trades."
+msgstr "为当前业务范围配置 HTTP 数据 API 或选择 MCP 连接。保存配置不代表已验证连通，也不会授予交易权限。"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Connect MCP server “{name}”"
@@ -1684,9 +1877,21 @@ msgstr "连接测试失败。"
 msgid "Connection to {0} is still pending. You can close this and check again."
 msgstr "与 {0} 的连接仍在等待。可以关闭此窗口稍后再看。"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Connection type"
+msgstr "连接方式"
+
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Connector"
 msgstr "连接器"
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints failed"
+msgstr "约束检查未通过"
+
+#: src/pages/TradingLearning.tsx
+msgid "Constraints passed · human review required"
+msgstr "约束检查通过·待人工审核"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
@@ -1721,6 +1926,10 @@ msgstr "继续结账"
 #: src/pages/Auth.tsx
 msgid "Continue with {0}"
 msgstr "通过 {0} 继续"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Contracts, coverage and delivery exposure"
+msgstr "合约、持仓覆盖与交割敞口"
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Conversations"
@@ -1859,6 +2068,7 @@ msgstr "无法连接电脑屏幕"
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/lib/account-security.ts
 #: src/lib/sso-flow.ts
+#: src/lib/trading-actions.ts
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/shell/use-computer.tsx
@@ -1870,6 +2080,10 @@ msgstr "无法继续"
 msgid "Could not create bot"
 msgstr "无法创建 Bot"
 
+#: src/pages/shell/dialogs.tsx
+msgid "Could not create business scope"
+msgstr "无法创建业务范围"
+
 #: src/pages/GroupPanel.tsx
 msgid "Could not create group"
 msgstr "无法创建群组"
@@ -1878,10 +2092,6 @@ msgstr "无法创建群组"
 msgid "Could not create section"
 msgstr "无法创建分组"
 
-#: src/pages/shell/dialogs.tsx
-msgid "Could not create space"
-msgstr "无法创建工作区"
-
 #: src/pages/Onboarding.tsx
 msgid "Could not create your bot"
 msgstr "无法创建你的 Bot"
@@ -1889,6 +2099,10 @@ msgstr "无法创建你的 Bot"
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete bot"
 msgstr "无法删除 Bot"
+
+#: src/pages/shell/dialogs.tsx
+msgid "Could not delete business scope"
+msgstr "无法删除业务范围"
 
 #: src/pages/shell/dialogs.tsx
 msgid "Could not delete group"
@@ -1909,10 +2123,6 @@ msgstr "无法删除分组"
 #: src/pages/KnowledgeSection.tsx
 msgid "Could not delete skill"
 msgstr "无法删除技能"
-
-#: src/pages/shell/dialogs.tsx
-msgid "Could not delete space"
-msgstr "无法删除工作区"
 
 #: src/pages/Artifacts.tsx
 msgid "Could not delete this artifact."
@@ -1957,7 +2167,7 @@ msgstr "无法启用工具"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Could not grant access"
-msgstr ""
+msgstr "无法授予访问权"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not install connector"
@@ -1994,6 +2204,10 @@ msgstr "无法加载账单"
 msgid "Could not load bots. Reload to try again."
 msgstr "无法加载 Bot。请重新加载后再试。"
 
+#: src/pages/Shell.tsx
+msgid "Could not load business scopes."
+msgstr "业务范围加载失败。"
+
 #: src/components/VaultSettings.tsx
 msgid "Could not load credentials."
 msgstr "无法加载凭据。"
@@ -2001,6 +2215,10 @@ msgstr "无法加载凭据。"
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not load integrations"
 msgstr "无法加载集成"
+
+#: src/pages/TradingLearning.tsx
+msgid "Could not load learning records"
+msgstr "无法加载学习记录"
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -2109,6 +2327,10 @@ msgstr "无法移除技能"
 msgid "Could not remove the credential"
 msgstr "无法移除凭据"
 
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Could not rename business scope"
+msgstr "无法重命名业务范围"
+
 #: src/pages/model-settings/providers-section.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "Could not rename connection"
@@ -2117,10 +2339,6 @@ msgstr "无法重命名连接"
 #: src/pages/shell/dialogs.tsx
 msgid "Could not rename section"
 msgstr "无法重命名分组"
-
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Could not rename space"
-msgstr "无法重命名工作区"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Could not render chart"
@@ -2136,7 +2354,7 @@ msgstr "无法撤销连接"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Could not revoke grant"
-msgstr ""
+msgstr "无法撤销授权"
 
 #: src/pages/shell/use-routine-editor.ts
 msgid "Could not run routine"
@@ -2247,7 +2465,7 @@ msgstr "无法测试 MCP 服务器"
 
 #: src/lib/dictation.ts
 msgid "Could not transcribe that recording."
-msgstr ""
+msgstr "无法转写该录音。"
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Could not update"
@@ -2259,7 +2477,7 @@ msgstr "无法更新账单"
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Could not update bot access"
-msgstr ""
+msgstr "无法更新 Bot 访问权限"
 
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Could not update computer"
@@ -2283,7 +2501,7 @@ msgstr "无法确认电脑是否就绪（{failureMessage}）。请修复连接�
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Couldn't load grants"
-msgstr ""
+msgstr "无法加载授权"
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Couldn't load messaging settings"
@@ -2326,6 +2544,16 @@ msgstr "创建分组并把 {0} 移入。"
 msgid "Create account"
 msgstr "创建账户"
 
+#: src/pages/Trading.tsx
+msgid "Create authorization"
+msgstr "创建授权"
+
+#: src/components/AskCard.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "Create business scope"
+msgstr "创建业务范围"
+
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "创建群组"
@@ -2333,11 +2561,6 @@ msgstr "创建群组"
 #: src/pages/RoutineEditor.tsx
 msgid "Create Routine"
 msgstr "新建例行任务"
-
-#: src/components/AskCard.tsx
-#: src/pages/shell/dialogs.tsx
-msgid "Create space"
-msgstr "创建工作区"
 
 #: src/pages/Auth.tsx
 msgid "Create your eTraderBot"
@@ -2357,9 +2580,17 @@ msgstr "正在创建…"
 msgid "Credential"
 msgstr "凭据"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential field name"
+msgstr "密钥字段名"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Credential saved"
 msgstr "凭据已保存"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Credential saved securely"
+msgstr "密钥已安全保存"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Credentials are encrypted and never sent to the model."
@@ -2375,7 +2606,7 @@ msgstr "额度金额"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Credits ($)"
-msgstr ""
+msgstr "额度（美元）"
 
 #: src/lib/cron.ts
 msgid "Cron"
@@ -2384,6 +2615,10 @@ msgstr "Cron"
 #: src/pages/RoutineSchedule.tsx
 msgid "Cron expression"
 msgstr "Cron 表达式"
+
+#: src/pages/Trading.tsx
+msgid "Cumulative limit (CNY)"
+msgstr "累计限额（元）"
 
 #: src/components/AccountAccess.tsx
 #: src/pages/AccountSettingsOverlay.tsx
@@ -2410,6 +2645,18 @@ msgstr "自定义{label}"
 msgid "Customize bot avatar"
 msgstr "自定义机器人头像"
 
+#: src/pages/TradingLearning.tsx
+msgid "Daily"
+msgstr "每天"
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily and manual learning use the bot's model connection. New candidates require human approval."
+msgstr "每日和手动学习使用 Bot 已连接的模型，候选算法需经人工批准后启用。"
+
+#: src/pages/TradingLearning.tsx
+msgid "Daily time"
+msgstr "每日时间"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "Dark"
@@ -2425,6 +2672,14 @@ msgstr "数据"
 msgid "day"
 msgstr "天"
 
+#: src/pages/Trading.tsx
+msgid "Day ahead"
+msgstr "日前"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Day-ahead, intraday and real-time decisions"
+msgstr "日前、日内与实时交易决策"
+
 #: src/pages/shell/message-cards.tsx
 msgid "Day-to-day work"
 msgstr "日常工作"
@@ -2432,6 +2687,10 @@ msgstr "日常工作"
 #: src/lib/cron.ts
 msgid "days"
 msgstr "天"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Decisions, receipts and lessons learned"
+msgstr "决策、回执与经验总结"
 
 #: src/components/call/IncomingCall.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2451,6 +2710,11 @@ msgstr "默认"
 #: src/pages/shell/bot-panel.tsx
 msgid "Default ({0})"
 msgstr "默认（{0}）"
+
+#: src/components/integrations/space-availability.tsx
+#: src/pages/Shell.tsx
+msgid "Default business scope"
+msgstr "默认业务范围"
 
 #: src/pages/shell/agent-import.tsx
 msgid "Default from Hermes"
@@ -2505,6 +2769,11 @@ msgstr "删除 {0}？"
 msgid "Delete account"
 msgstr "删除账户"
 
+#: src/pages/shell/shell-dialogs.tsx
+#: src/pages/SpaceSettingsPanel.tsx
+msgid "Delete business scope"
+msgstr "删除业务范围"
+
 #: src/pages/GroupPanel.tsx
 msgid "Delete group"
 msgstr "删除群组"
@@ -2516,11 +2785,6 @@ msgstr "同时删除记忆"
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Delete section"
 msgstr "删除分组"
-
-#: src/pages/shell/shell-dialogs.tsx
-#: src/pages/SpaceSettingsPanel.tsx
-msgid "Delete space"
-msgstr "删除工作区"
 
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Delete this Space's credentials?"
@@ -2539,6 +2803,10 @@ msgstr "正在删除…"
 #: src/components/AccountAccess.tsx
 msgid "Deletion code"
 msgstr "删除验证码"
+
+#: src/pages/Trading.tsx
+msgid "Delivery"
+msgstr "交割时段"
 
 #: src/components/AskCard.tsx
 msgid "Denied"
@@ -2570,21 +2838,25 @@ msgstr "桌面更新"
 msgid "Details"
 msgstr "详情"
 
+#: src/pages/Trading.tsx
+msgid "Deterministic constraints checked"
+msgstr "确定性约束检查已通过"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Developer"
 msgstr "开发"
 
 #: src/lib/dictation.ts
 msgid "Dictation ended unexpectedly."
-msgstr ""
+msgstr "听写意外结束。"
 
 #: src/lib/dictation.ts
 msgid "Dictation failed: {code}"
-msgstr ""
+msgstr "听写失败：{code}"
 
 #: src/lib/dictation.ts
 msgid "Dictation failed."
-msgstr ""
+msgstr "听写失败。"
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Disable a tool"
@@ -2614,6 +2886,10 @@ msgstr "断开 {disconnectName}？"
 #: src/pages/PaymentWalletSettingsPanel.tsx
 msgid "Disconnect {name}?"
 msgstr "断开 {name}？"
+
+#: src/pages/Trading.tsx
+msgid "Disconnect scope"
+msgstr "解除场景绑定"
 
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Disconnect Self-hosted"
@@ -2727,6 +3003,7 @@ msgstr "每个名称只能使用一次。"
 
 #: src/components/AskCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/McpServersOverlay.tsx
 msgid "Edit"
 msgstr "编辑"
@@ -2734,6 +3011,14 @@ msgstr "编辑"
 #: src/components/AskCard.tsx
 msgid "Edit first"
 msgstr "先编辑"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Edit interface"
+msgstr "编辑接口"
+
+#: src/pages/TradingLearning.tsx
+msgid "Edit learning plan"
+msgstr "修改学习计划"
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Edit name"
@@ -2775,7 +3060,7 @@ msgstr "在…时参与，忽略…"
 
 #: src/components/GitHubStarPrompt.tsx
 msgid "Enjoying eTraderBot?"
-msgstr ""
+msgstr "喜欢 eTraderBot 吗？"
 
 #: src/lib/user-error.ts
 msgid "Enter a password"
@@ -2885,6 +3170,14 @@ msgstr "每月"
 msgid "Every week"
 msgstr "每周"
 
+#: src/pages/Trading.tsx
+msgid "Execute simulation"
+msgstr "模拟执行"
+
+#: src/pages/Trading.tsx
+msgid "Executor"
+msgstr "执行者"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Executor token"
 msgstr "Executor 令牌"
@@ -2906,6 +3199,10 @@ msgstr "展开表格"
 msgid "expired"
 msgstr "已过期"
 
+#: src/pages/Trading.tsx
+msgid "Expired"
+msgstr "已过期"
+
 #: src/components/AccountDataSettings.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Export"
@@ -2918,6 +3215,10 @@ msgstr "导出数据"
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "从 CRM 导出本周名单并放到共享文件夹"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Exposure, limits and approval evidence"
+msgstr "敞口、限额与审批依据"
 
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -2940,6 +3241,7 @@ msgstr "失败"
 
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Failed"
 msgstr "失败"
 
@@ -2970,6 +3272,7 @@ msgstr "要比较的字段，例如 id, modifiedTime（可选）"
 
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/SpaceSearch.tsx
+#: src/pages/TradingLearning.tsx
 msgid "File"
 msgstr "文件"
 
@@ -2980,6 +3283,14 @@ msgstr "计算机上的文件或文件夹"
 #: src/pages/RoutineEditor.tsx
 msgid "Files or folders, one per line"
 msgstr "文件或文件夹，每行一个"
+
+#: src/pages/Trading.tsx
+msgid "Filled"
+msgstr "全部成交"
+
+#: src/pages/Trading.tsx
+msgid "fills"
+msgstr "笔成交"
 
 #: src/pages/GroupPanel.tsx
 msgid "Filter bots"
@@ -3029,6 +3340,14 @@ msgstr "已完成。"
 msgid "Finishing MCP connection…"
 msgstr "正在完成 MCP 连接…"
 
+#: src/pages/shell/business-scope.tsx
+msgid "For example: Shandong retail trading"
+msgstr "例如：山东售电业务"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Forecasts"
+msgstr "预测数据"
+
 #: src/pages/Auth.tsx
 msgid "Forgot password?"
 msgstr "忘记密码？"
@@ -3040,11 +3359,11 @@ msgstr "免费"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Free access"
-msgstr ""
+msgstr "免费使用"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Free months"
-msgstr ""
+msgstr "免费月数"
 
 #: src/pages/shell/shell-sidebar.tsx
 msgid "Free plan ends {day}"
@@ -3082,6 +3401,15 @@ msgstr "网关 ID"
 msgid "General"
 msgstr "通用"
 
+#: src/pages/shell/create-bot-dialog.tsx
+msgid "General bot"
+msgstr "通用 Bot"
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Generator"
+msgstr "发电企业"
+
 #: src/components/InviteDialog.tsx
 msgid "Get a free month for each friend who starts a trial."
 msgstr "每有一位朋友开始试用，你就能获得一个月免费。"
@@ -3104,11 +3432,11 @@ msgstr "返回首页"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Grant"
-msgstr ""
+msgstr "授权"
 
 #: src/pages/AdminAccessPage.tsx
 msgid "Granting…"
-msgstr ""
+msgstr "正在授权…"
 
 #: src/lib/identity-display.ts
 #: src/pages/MessagingSettingsPanel.tsx
@@ -3197,6 +3525,14 @@ msgstr "高"
 msgid "High"
 msgstr "高"
 
+#: src/pages/Trading.tsx
+msgid "Historical constraints checked; profit improvement is unproven"
+msgstr "历史约束已检查；尚未证明收益改善"
+
+#: src/pages/TradingLearning.tsx
+msgid "Historical data"
+msgstr "历史数据"
+
 #: src/components/composer/HoldToTalk.tsx
 msgid "Hold to talk"
 msgstr "按住说话"
@@ -3238,6 +3574,19 @@ msgstr "如何检查"
 msgid "How will you use eTraderBot?"
 msgstr "你会如何使用 eTraderBot？"
 
+#: src/pages/Trading.tsx
+msgid "Human approval · this bot has no access to this scope"
+msgstr "人工审批 · 此 Bot 无权访问该业务范围"
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Human approvals"
+msgstr "人工审批"
+
+#: src/pages/Trading.tsx
+msgid "Human cancellation only"
+msgstr "仅人工可撤单"
+
 #: src/pages/shell/computer-release-actions.tsx
 msgid "I’m done"
 msgstr "我做完了"
@@ -3267,9 +3616,13 @@ msgstr "此模型尚未配置图片输入。"
 msgid "Image upload area"
 msgstr "图片上传区域"
 
+#: src/pages/Trading.tsx
+msgid "Immediate fill"
+msgstr "立即全部成交"
+
 #: src/components/AccountDataSettings.tsx
 msgid "Import"
-msgstr ""
+msgstr "导入"
 
 #: src/components/AccountDataSettings.tsx
 #: src/pages/shell/agent-import.tsx
@@ -3316,6 +3669,10 @@ msgstr "沿用默认"
 msgid "Input"
 msgstr "输入"
 
+#: src/pages/Trading.tsx
+msgid "Input evidence"
+msgstr "输入依据"
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Inputs"
 msgstr "输入"
@@ -3359,6 +3716,10 @@ msgstr "指令太长。请取消勾选部分文件。"
 msgid "Instructions updated"
 msgstr "指令已更新"
 
+#: src/pages/TradingLearning.tsx
+msgid "Insufficient historical data"
+msgstr "历史数据不足"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Integration domain"
 msgstr "集成域名"
@@ -3366,6 +3727,15 @@ msgstr "集成域名"
 #: src/pages/PluginsOverlay.tsx
 msgid "Integrations"
 msgstr "集成"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Interface configuration"
+msgstr "接口配置"
+
+#: src/pages/BusinessInterfaces.tsx
+#: src/pages/shell/business-scope.tsx
+msgid "Interface settings"
+msgstr "接口设置"
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/RoutineSchedule.tsx
@@ -3379,6 +3749,10 @@ msgstr "间隔数量"
 #: src/pages/RoutineSchedule.tsx
 msgid "Interval unit"
 msgstr "间隔单位"
+
+#: src/pages/Trading.tsx
+msgid "Intraday"
+msgstr "日内"
 
 #: src/lib/user-error.ts
 msgid "Invalid code"
@@ -3410,6 +3784,10 @@ msgstr "其中的 Bot 和群组会保留，并移出该分组。"
 msgid "Its conversation, files, and routines will be permanently deleted. Bots it created stay in your list."
 msgstr "它的对话、文件和例行任务将被永久删除。它创建的 Bot 仍留在列表中。"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Jiangsu · Suzhou"
+msgstr "江苏·苏州"
+
 #: src/pages/shell/transcript.tsx
 msgid "Jump to latest"
 msgstr "跳到最新"
@@ -3428,7 +3806,7 @@ msgstr "保留记忆"
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Keep tool results whole"
-msgstr ""
+msgstr "保留完整工具结果"
 
 #: src/pages/RoutineEditor.tsx
 msgid "key"
@@ -3438,6 +3816,7 @@ msgstr "密钥"
 msgid "Label"
 msgstr "标签"
 
+#: src/components/LanguageSwitcher.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Language"
 msgstr "语言"
@@ -3456,9 +3835,31 @@ msgstr "上次检查 {0}：无变化"
 msgid "Later"
 msgstr "稍后"
 
+#: src/pages/TradingLearning.tsx
+msgid "Learn now"
+msgstr "立即学习"
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+#: src/pages/TradingLearning.tsx
+msgid "Learning"
+msgstr "学习"
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning runs"
+msgstr "学习任务"
+
+#: src/pages/TradingLearning.tsx
+msgid "Learning schedule"
+msgstr "学习安排"
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Leave"
 msgstr "退出"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Leave empty to keep the saved credential"
+msgstr "留空保留已保存的密钥"
 
 #: src/components/ComputerDeviceSettings.tsx
 msgid "Let bots use this computer"
@@ -3479,7 +3880,7 @@ msgstr "Linear 工单"
 
 #: src/pages/SpaceSearch.tsx
 msgid "Link"
-msgstr ""
+msgstr "链接"
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Link DMs"
@@ -3556,11 +3957,13 @@ msgstr "正在加载语音提供方…"
 #: src/components/PageLoading.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/PeerMessagesOverlay.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
 #: src/pages/RoutineRunHistory.tsx
 #: src/pages/shell/transcript.tsx
+#: src/pages/Trading.tsx
 msgid "Loading…"
 msgstr "加载中…"
 
@@ -3617,6 +4020,10 @@ msgstr "管理 {0}"
 msgid "Manage billing"
 msgstr "管理账单"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Manage interface"
+msgstr "管理接口"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manage MCP servers"
 msgstr "管理 MCP 服务器"
@@ -3625,6 +4032,10 @@ msgstr "管理 MCP 服务器"
 msgid "Manage other bots"
 msgstr "管理其他机器人"
 
+#: src/pages/Trading.tsx
+msgid "Manage trading stage"
+msgstr "管理交易阶段"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual"
 msgstr "手动"
@@ -3632,6 +4043,10 @@ msgstr "手动"
 #: src/pages/PluginsOverlay.tsx
 msgid "Manual setup required"
 msgstr "需要手动设置"
+
+#: src/pages/Trading.tsx
+msgid "Margin"
+msgstr "加价／价差门槛"
 
 #: src/pages/BotContextMenu.tsx
 msgid "Mark as Read"
@@ -3649,9 +4064,25 @@ msgstr "标为未读"
 msgid "Markdown table"
 msgstr "Markdown 表格"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market data"
+msgstr "市场行情"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Market ID"
+msgstr "市场标识"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Market rules"
+msgstr "市场规则"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Marketing"
 msgstr "营销"
+
+#: src/pages/TradingLearning.tsx
+msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
+msgstr "资料仅用于当前业务范围。请明确添加聊天反馈；支持上传不超过 64 KB 的文本、Markdown、CSV 或 JSON 文件。"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3678,6 +4109,10 @@ msgstr "每次请求的最大图像数"
 msgid "Maximum output tokens"
 msgstr "最大输出 token 数"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP connection"
+msgstr "MCP 连接"
+
 #: src/pages/memory-providers/SerenitySettingsForm.tsx
 msgid "MCP endpoint"
 msgstr "MCP 端点"
@@ -3690,6 +4125,10 @@ msgstr "MCP 服务器"
 #: src/pages/shell/agent-import.tsx
 msgid "MCP servers"
 msgstr "MCP 服务器"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "MCP tool approval remains separate for each bot."
+msgstr "每个 Bot 的 MCP 工具权限仍需单独批准。"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3792,6 +4231,14 @@ msgstr "消息"
 #: src/lib/dictation.ts
 msgid "Microphone failed"
 msgstr "麦克风失败"
+
+#: src/pages/Trading.tsx
+msgid "Mid / long term"
+msgstr "中长期"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Mid / long term bot"
+msgstr "中长期交易 Bot"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -3941,6 +4388,7 @@ msgstr "已静音"
 #: src/components/VaultSettings.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/providers-section.tsx
@@ -3948,6 +4396,7 @@ msgstr "已静音"
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/bot-panel.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 #: src/pages/shell/dialogs.tsx
 #: src/pages/SpaceSettingsPanel.tsx
@@ -4005,11 +4454,23 @@ msgstr "从不询问"
 msgid "New"
 msgstr "新消息"
 
+#: src/pages/Trading.tsx
+msgid "New authorization"
+msgstr "新增授权"
+
 #: src/pages/Shell.tsx
 #: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
 #: src/pages/shell/create-bot-dialog.tsx
 msgid "New bot"
 msgstr "新建 Bot"
+
+#: src/pages/Shell.tsx
+#: src/pages/shell/bot-picker.tsx
+#: src/pages/shell/business-scope.tsx
+#: src/pages/shell/dialogs.tsx
+msgid "New business scope"
+msgstr "新建业务范围"
 
 #: src/pages/GroupPanel.tsx
 msgid "New group"
@@ -4028,15 +4489,14 @@ msgstr "新消息"
 msgid "New open-work item"
 msgstr "新的待办"
 
+#: src/pages/Trading.tsx
+msgid "New orders"
+msgstr "新订单"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
 msgstr "新密码"
-
-#: src/pages/Shell.tsx
-#: src/pages/shell/bot-picker.tsx
-msgid "New private space"
-msgstr "新建私人空间"
 
 #: src/pages/BotContextMenu.tsx
 #: src/pages/shell/dialogs.tsx
@@ -4047,13 +4507,13 @@ msgstr "新建分组"
 msgid "New skill"
 msgstr "新建技能"
 
-#: src/pages/shell/dialogs.tsx
-msgid "New space"
-msgstr "新建工作区"
-
 #: src/pages/Board.tsx
 msgid "New ticket"
 msgstr "新建工单"
+
+#: src/pages/TradingLearning.tsx
+msgid "Next learning run"
+msgstr "下次学习"
 
 #: src/components/markdown-copy.tsx
 msgid "Next page"
@@ -4062,6 +4522,10 @@ msgstr "下一页"
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
 msgstr "下一组设置项"
+
+#: src/pages/Trading.tsx
+msgid "No analysis yet"
+msgstr "尚无分析结果"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "No apps match your search."
@@ -4079,14 +4543,30 @@ msgstr "无认证"
 msgid "No authentication"
 msgstr "无认证"
 
+#: src/pages/Trading.tsx
+msgid "No authorizations"
+msgstr "暂无授权"
+
+#: src/pages/TradingLearning.tsx
+msgid "No authorized material"
+msgstr "没有授权资料"
+
 #: src/components/integrations/agent-access.tsx
 msgid "No bots"
-msgstr ""
+msgstr "暂无 Bot"
+
+#: src/pages/shell/business-scope.tsx
+msgid "No bots in this business scope yet."
+msgstr "此业务范围还没有 Bot。"
 
 #: src/pages/GroupPanel.tsx
 #: src/pages/shell/bot-picker.tsx
 msgid "No bots match"
 msgstr "没有匹配的 Bot"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "No interfaces configured for this business scope."
+msgstr "此业务范围尚未配置接口。"
 
 #: src/components/AskCard.tsx
 msgid "No longer active"
@@ -4122,6 +4602,10 @@ msgstr "没有可用的模型目录。"
 #: src/lib/model-connection-preflight.ts
 msgid "No models listed."
 msgstr "未列出模型。"
+
+#: src/pages/TradingLearning.tsx
+msgid "No new material"
+msgstr "没有新资料"
 
 #: src/pages/shell/agent-import.tsx
 msgid "No OpenClaw, Hermes or agent document found."
@@ -4166,9 +4650,17 @@ msgstr "暂无提交"
 msgid "No tickets yet"
 msgstr "还没有工单"
 
+#: src/pages/Trading.tsx
+msgid "No trading stages configured yet."
+msgstr "尚未配置交易阶段。"
+
 #: src/pages/RoutineEditor.tsx
 msgid "No trigger"
 msgstr "无触发器"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "None"
+msgstr "无"
 
 #: src/lib/ticket-priority.ts
 msgid "Normal"
@@ -4288,6 +4780,14 @@ msgstr "一次性"
 msgid "One-time purchase. Credits do not expire."
 msgstr "单次购买，额度不会过期。"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Only the business scope owner can configure interfaces."
+msgstr "仅业务范围所有者可以配置接口。"
+
+#: src/pages/TradingLearning.tsx
+msgid "Only this experience text is shared. Raw materials and source reports stay in their original scope."
+msgstr "仅共享这条经验文字，原始资料和来源报告仍保留在原业务范围。"
+
 #: src/components/markdown-link-prompt.tsx
 #: src/pages/PaymentWalletSettingsPanel.tsx
 #: src/pages/shell/computer-panel.tsx
@@ -4332,6 +4832,7 @@ msgstr "打开外部链接？"
 msgid "Open in full window"
 msgstr "在完整窗口中打开"
 
+#: src/pages/BusinessInterfaces.tsx
 #: src/pages/shell/chat-header.tsx
 msgid "Open navigation"
 msgstr "打开导航"
@@ -4369,6 +4870,10 @@ msgstr "可选请求头值"
 msgid "Or paste an API key"
 msgstr "或粘贴 API 密钥"
 
+#: src/pages/Trading.tsx
+msgid "Orders"
+msgstr "订单"
+
 #: src/pages/memory-providers/SupermemorySettingsForm.tsx
 msgid "Organization API key"
 msgstr "组织 API 密钥"
@@ -4380,6 +4885,10 @@ msgstr "原始"
 #: src/pages/shell/chat-context.tsx
 msgid "Original message unavailable"
 msgstr "原消息不可用"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Other data"
+msgstr "其他数据"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
@@ -4406,6 +4915,14 @@ msgstr "找不到页面"
 #: src/pages/RoutineEditor.tsx
 msgid "PagerDuty incident"
 msgstr "PagerDuty 事件"
+
+#: src/pages/Trading.tsx
+msgid "Partial fill"
+msgstr "部分成交"
+
+#: src/pages/Trading.tsx
+msgid "Partially filled"
+msgstr "部分成交"
 
 #: src/components/PasskeySettings.tsx
 msgid "Passkey"
@@ -4472,14 +4989,24 @@ msgstr "请粘贴你的 API 密钥，然后重新测试。"
 
 #: src/pages/RoutineEditor.tsx
 #: src/pages/shell/import-status.ts
+#: src/pages/TradingLearning.tsx
 msgid "Paused"
 msgstr "已暂停"
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Pending"
 msgstr "待处理"
+
+#: src/pages/Trading.tsx
+msgid "Pending order"
+msgstr "挂单待成交"
+
+#: src/pages/Trading.tsx
+msgid "Per trade approval"
+msgstr "逐笔批准"
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Permissions"
@@ -4551,6 +5078,10 @@ msgstr "插件提交"
 msgid "Plugins"
 msgstr "插件"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Positions and assets"
+msgstr "持仓与资产"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Post \"No changes\" in chat"
 msgstr "在聊天中发布“无变化”"
@@ -4562,6 +5093,10 @@ msgstr "POST 到"
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Preferences"
 msgstr "偏好设置"
+
+#: src/pages/Trading.tsx
+msgid "Prepare intent"
+msgstr "准备交易意图"
 
 #: src/components/integrations/skills-dialog.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -4585,6 +5120,10 @@ msgstr "上一页"
 msgid "Previous settings sections"
 msgstr "上一组设置项"
 
+#: src/pages/Trading.tsx
+msgid "Price margin (CNY/MWh)"
+msgstr "加价／价差门槛（元/MWh）"
+
 #: src/pages/Board.tsx
 msgid "Priority"
 msgstr "优先级"
@@ -4593,13 +5132,13 @@ msgstr "优先级"
 msgid "Private"
 msgstr "私有"
 
-#: src/pages/shell/bot-picker.tsx
-msgid "Private workspace with its own bots and groups."
-msgstr "单独的工作区，有自己的 Bot 和群组。"
-
 #: src/pages/PluginsOverlay.tsx
 msgid "Productivity"
 msgstr "效率"
+
+#: src/pages/TradingLearning.tsx
+msgid "Profit improvement and semantic quality have not been established."
+msgstr "尚未证明收益改善，也未完成语义质量评价。"
 
 #: src/pages/shell/import-status.ts
 msgid "Program: {name}"
@@ -4611,7 +5150,7 @@ msgstr "受保护输入"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Protocol"
-msgstr ""
+msgstr "协议"
 
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/Onboarding.tsx
@@ -4627,7 +5166,20 @@ msgstr "提供方"
 msgid "Pull request"
 msgstr "拉取请求"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Purpose"
+msgstr "用途"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters (JSON)"
+msgstr "查询参数（JSON）"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Query parameters must be a JSON object"
+msgstr "查询参数必须是 JSON 对象"
+
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Queued"
 msgstr "排队中"
 
@@ -4651,6 +5203,10 @@ msgstr "朗读回复"
 msgid "Ready"
 msgstr "就绪"
 
+#: src/pages/Trading.tsx
+msgid "Real time"
+msgstr "实时"
+
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
 msgstr "原因"
@@ -4668,9 +5224,17 @@ msgstr "读取并写入"
 msgid "Recall only"
 msgstr "只读取"
 
+#: src/pages/Trading.tsx
+msgid "Receipt details"
+msgstr "回执详情"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Receipts"
+msgstr "回执"
+
 #: src/pages/AdminAccessPage.tsx
 msgid "Received"
-msgstr ""
+msgstr "已接收"
 
 #: src/pages/ActivityList.tsx
 msgid "Recent"
@@ -4679,6 +5243,10 @@ msgstr "最近"
 #: src/pages/PluginsOverlay.tsx
 msgid "Recommended"
 msgstr "推荐"
+
+#: src/pages/Trading.tsx
+msgid "Reconcile order"
+msgstr "核对订单"
 
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/VoiceSettingsOverlay.tsx
@@ -4776,6 +5344,10 @@ msgstr "刷新画面"
 msgid "Refreshing…"
 msgstr "正在刷新…"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Region"
+msgstr "地区"
+
 #: src/lib/user-error.ts
 msgid "Registration is closed"
 msgstr "注册已关闭"
@@ -4790,12 +5362,17 @@ msgid "Reject {0}"
 msgstr "拒绝 {0}"
 
 #: src/pages/PluginSubmissionsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Rejected"
 msgstr "已拒绝"
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Rejecting…"
 msgstr "正在拒绝…"
+
+#: src/pages/Trading.tsx
+msgid "Rejection"
+msgstr "拒单"
 
 #: src/pages/shell/computer-release-actions.tsx
 msgid "Release control"
@@ -4855,6 +5432,10 @@ msgstr "移除 Git 事件"
 #: src/components/ModelHeadersEditor.tsx
 msgid "Remove header"
 msgstr "移除请求头"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Remove interface"
+msgstr "删除接口"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Remove message trigger"
@@ -4935,6 +5516,18 @@ msgstr "正在回复 {0}"
 msgid "Request a new code"
 msgstr "请重新获取验证码"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request body"
+msgstr "请求体"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request method"
+msgstr "请求方法"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Request parameters"
+msgstr "请求参数"
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr "请求"
@@ -4942,6 +5535,10 @@ msgstr "请求"
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
 msgstr "调研和写作"
+
+#: src/pages/Trading.tsx
+msgid "Reserved"
+msgstr "占用"
 
 #: src/components/ComputerMaintenanceActions.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -4982,7 +5579,7 @@ msgstr "调整面板大小"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Responses"
-msgstr ""
+msgstr "Responses"
 
 #: src/components/DesktopUpdates.tsx
 msgid "Restart to update"
@@ -5008,6 +5605,27 @@ msgstr "已恢复"
 #: src/components/ComputerUpdateProgress.tsx
 msgid "Restoring your workspace"
 msgstr "正在恢复工作区"
+
+#: src/pages/Trading.tsx
+msgid "Result uncertain"
+msgstr "结果不确定"
+
+#: src/pages/Trading.tsx
+msgid "Result uncertain; the reservation is retained."
+msgstr "结果尚未确认，占用额度继续保留。"
+
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Retailer"
+msgstr "售电公司"
+
+#: src/pages/Trading.tsx
+msgid "Retire algorithm"
+msgstr "停用算法"
+
+#: src/pages/Trading.tsx
+msgid "Retired"
+msgstr "已停用"
 
 #: src/components/AccountAccess.tsx
 #: src/components/integrations/plugin-marketplace.tsx
@@ -5041,18 +5659,41 @@ msgstr "返回与 {0} 的通话"
 msgid "Return to eTraderBot"
 msgstr "返回 eTraderBot"
 
+#: src/pages/Trading.tsx
+msgid "Review"
+msgstr "复盘"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Review bot"
+msgstr "复盘 Bot"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Review provider settings and test again."
 msgstr "请检查提供方设置并重新测试。"
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
+#: src/pages/Trading.tsx
 msgid "Revoke"
 msgstr "撤销"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/Trading.tsx
 msgid "Revoked"
-msgstr ""
+msgstr "已撤销"
+
+#: src/pages/Trading.tsx
+msgid "Risk"
+msgstr "风控"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Risk bot"
+msgstr "风控 Bot"
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Risk review"
+msgstr "风险检查"
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Room guidance"
@@ -5084,11 +5725,19 @@ msgstr "行"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Rules"
-msgstr ""
+msgstr "规则"
+
+#: src/pages/Trading.tsx
+msgid "Run analysis"
+msgstr "运行分析"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Run at"
 msgstr "运行时间"
+
+#: src/pages/TradingLearning.tsx
+msgid "Run finished without a learning report. Review the conversation and retry."
+msgstr "任务已结束，但未生成学习报告。请检查会话后重试。"
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
@@ -5105,6 +5754,7 @@ msgstr "运行中"
 #: src/components/SubagentCard.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/RoutineEditor.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Running"
 msgstr "运行中"
 
@@ -5146,13 +5796,29 @@ msgstr "周六"
 msgid "Save"
 msgstr "保存"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Save configuration"
+msgstr "保存配置"
+
 #: src/components/VaultSettings.tsx
 msgid "Save credential"
 msgstr "保存凭据"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Save interface"
+msgstr "保存接口"
+
+#: src/pages/TradingLearning.tsx
+msgid "Save material"
+msgstr "保存资料"
+
 #: src/components/VaultSettings.tsx
 msgid "Save new value"
 msgstr "保存新值"
+
+#: src/pages/TradingLearning.tsx
+msgid "Save plan"
+msgstr "保存安排"
 
 #: src/components/ComputerMaintenanceActions.tsx
 msgid "Save the workspace and install current software."
@@ -5209,6 +5875,10 @@ msgstr "回答是或否，或一句话说明。"
 msgid "Scheduled routines"
 msgstr "定时例行任务"
 
+#: src/pages/Trading.tsx
+msgid "Scope owner"
+msgstr "范围创建者"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Scopes (optional)"
 msgstr "范围（可选）"
@@ -5241,7 +5911,7 @@ msgstr "搜索产物…"
 
 #: src/pages/shell/command-palette.tsx
 msgid "Search bots, actions, and settings"
-msgstr ""
+msgstr "搜索 Bot、操作和设置"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Search by domain"
@@ -5288,9 +5958,22 @@ msgstr "安全与运维"
 msgid "Select a bot"
 msgstr "选择 Bot"
 
+#: src/pages/shell/create-bot-dialog.tsx
+#: src/pages/Trading.tsx
+msgid "Select a business scope in the sidebar first."
+msgstr "请先在左侧选择业务范围。"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Select a connection"
+msgstr "选择连接"
+
 #: src/pages/memory-providers/ConnectionModeFields.tsx
 msgid "Self-hosted"
 msgstr "自托管"
+
+#: src/pages/Trading.tsx
+msgid "Sell"
+msgstr "卖出"
 
 #: src/pages/shell/composer.tsx
 msgid "Send"
@@ -5374,7 +6057,7 @@ msgstr "设置已更新"
 
 #: src/pages/Shell.tsx
 msgid "Settings: {label}"
-msgstr ""
+msgstr "设置：{label}"
 
 #: src/pages/shell/composer-mentions.tsx
 msgid "Settings: General"
@@ -5384,6 +6067,10 @@ msgstr "设置：通用"
 msgid "Settings: Usage"
 msgstr "设置：用量"
 
+#: src/pages/Trading.tsx
+msgid "Settled"
+msgstr "已核销"
+
 #: src/pages/shell/import-setup-card.tsx
 msgid "Setup complete"
 msgstr "设置完成"
@@ -5391,6 +6078,14 @@ msgstr "设置完成"
 #: src/pages/model-settings/compatible-model-fields.tsx
 msgid "Setup help"
 msgstr "设置帮助"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Shandong"
+msgstr "山东"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Shanghai"
+msgstr "上海"
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape"
@@ -5400,6 +6095,14 @@ msgstr "形状"
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "Shape {0}"
 msgstr "形状 {0}"
+
+#: src/pages/TradingLearning.tsx
+msgid "Share experience"
+msgstr "共享经验"
+
+#: src/pages/TradingLearning.tsx
+msgid "Share selected experience"
+msgstr "共享这条经验"
 
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
@@ -5447,6 +6150,10 @@ msgstr "显示工具活动"
 #: src/components/call/VoiceChatCard.tsx
 msgid "Show transcript"
 msgstr "显示文字记录"
+
+#: src/pages/Trading.tsx
+msgid "Side"
+msgstr "方向"
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Sidebar density"
@@ -5502,6 +6209,26 @@ msgstr "注册"
 msgid "Sign-in cancelled. Try again."
 msgstr "登录已取消。请重试。"
 
+#: src/pages/shell/business-scope.tsx
+msgid "Simulation · bots and interfaces are configured within this business scope."
+msgstr "模拟环境 · Bots 和接口按此业务范围配置。"
+
+#: src/pages/Trading.tsx
+msgid "Simulation receipt"
+msgstr "模拟回执"
+
+#: src/pages/Trading.tsx
+msgid "Simulation scenario"
+msgstr "模拟执行场景"
+
+#: src/pages/Trading.tsx
+msgid "Simulation trading"
+msgstr "模拟交易"
+
+#: src/pages/Trading.tsx
+msgid "Single intent limit (CNY)"
+msgstr "单笔意图限额（元）"
+
 #: src/components/VaultSettings.tsx
 msgid "Site"
 msgstr "网站"
@@ -5537,7 +6264,7 @@ msgstr "跳过或使用部署密钥"
 
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
-msgstr ""
+msgstr "已跳过"
 
 #. placeholder {0}: skipped.join(", ")
 #: src/pages/shell/use-composer-actions.ts
@@ -5594,18 +6321,9 @@ msgstr "按 {column} 排序，升序"
 msgid "Sorted by {column}, descending"
 msgstr "按 {column} 排序，降序"
 
-#: src/lib/identity-display.ts
-#: src/pages/SettingsOverlay.tsx
-msgid "Space"
-msgstr "工作区"
-
-#: src/pages/shell/bot-panel.tsx
-msgid "Space default"
-msgstr "工作区默认"
-
-#: src/pages/SettingsOverlay.tsx
-msgid "Spaces"
-msgstr "工作区"
+#: src/pages/TradingLearning.tsx
+msgid "Source reference"
+msgstr "来源说明"
 
 #: src/pages/shell/message-view.tsx
 msgid "Speak"
@@ -5623,9 +6341,17 @@ msgstr "正在说话"
 msgid "Speech model"
 msgstr "语音模型"
 
+#: src/pages/Trading.tsx
+msgid "Spot"
+msgstr "现货"
+
+#: src/lib/trading-bot-templates.ts
+msgid "Spot bot"
+msgstr "现货交易 Bot"
+
 #: src/components/AccountAccess.tsx
 msgid "SSO"
-msgstr ""
+msgstr "单点登录（SSO）"
 
 #: src/lib/user-error.ts
 msgid "SSO is temporarily unavailable. Try again."
@@ -5633,7 +6359,7 @@ msgstr "SSO 暂时不可用，请重试。"
 
 #: src/components/GitHubStarPrompt.tsx
 msgid "Star on GitHub"
-msgstr ""
+msgstr "在 GitHub 上点星"
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "Start"
@@ -5661,6 +6387,7 @@ msgid "Start your plan now?"
 msgstr "立即开始你的套餐？"
 
 #: src/pages/ActivityList.tsx
+#: src/pages/TradingLearning.tsx
 msgid "Starting"
 msgstr "正在开始"
 
@@ -5708,6 +6435,11 @@ msgstr "已停止。"
 msgid "Stopping…"
 msgstr "正在停止…"
 
+#: src/pages/shell/business-scope.tsx
+#: src/pages/Trading.tsx
+msgid "Storage"
+msgstr "独立储能"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Stored encrypted"
 msgstr "已加密存储"
@@ -5719,6 +6451,18 @@ msgstr "流式回复"
 #: src/lib/identity-display.ts
 msgid "subagent"
 msgstr "子 Agent"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject ID"
+msgstr "主体标识"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Subject type"
+msgstr "主体类型"
+
+#: src/pages/Trading.tsx
+msgid "Submission timeout"
+msgstr "提交超时"
 
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
@@ -5736,7 +6480,7 @@ msgstr "订阅"
 
 #: src/components/ModelCredits.tsx
 msgid "Subscribe for {annualPrice} / year"
-msgstr ""
+msgstr "按每年 {annualPrice} 订阅"
 
 #: src/components/ModelCredits.tsx
 msgid "Subscribe for {price} / month"
@@ -5776,6 +6520,14 @@ msgstr "切换"
 msgid "Switching…"
 msgstr "正在切换…"
 
+#: src/pages/Trading.tsx
+msgid "Synthetic data"
+msgstr "合成数据"
+
+#: src/pages/Trading.tsx
+msgid "Synthetic fill"
+msgstr "合成成交"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
 msgid "System"
@@ -5788,6 +6540,10 @@ msgstr "表格"
 #: src/pages/shell/computer-overlay.tsx
 msgid "Take control"
 msgstr "接管控制权"
+
+#: src/pages/TradingLearning.tsx
+msgid "Target scope"
+msgstr "目标业务范围"
 
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Teach a task"
@@ -5844,7 +6600,7 @@ msgstr "Bot 可以使用该文件，但看不到图片内容。"
 
 #: src/lib/dictation.ts
 msgid "The browser keeps dropping the microphone. Start dictation again to retry."
-msgstr ""
+msgstr "浏览器反复断开麦克风，请重新启动听写。"
 
 #: src/lib/model-connection-preflight.ts
 msgid "The connection timed out."
@@ -5931,11 +6687,11 @@ msgstr "此 Bot 运行在这台电脑上，而不是 Linux 桌面。Shell 和文
 
 #: src/lib/dictation.ts
 msgid "This browser can't detect when you stop talking. Use Chrome, the desktop app, or hold-to-talk in the composer."
-msgstr ""
+msgstr "此浏览器无法检测你何时停止说话。请使用 Chrome、桌面应用，或在输入框中按住说话。"
 
 #: src/lib/dictation.ts
 msgid "This browser has no on-device dictation. Connect a voice provider with transcription, or use Chrome / the desktop app."
-msgstr ""
+msgstr "此浏览器不支持本机听写。请连接支持转写的语音服务，或使用 Chrome／桌面应用。"
 
 #: src/components/call/IncomingCall.tsx
 msgid "This call is no longer ringing."
@@ -6039,7 +6795,7 @@ msgstr "此服务器已连接。请先断开再重新授权。"
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "This server's tool result does not fit the model. Turn off Keep tool results whole for that server, or choose another model."
-msgstr ""
+msgstr "该服务器的工具结果超出模型容量。请关闭该服务器的“保留完整工具结果”，或选择其他模型。"
 
 #: src/pages/model-settings/connection-controls.tsx
 msgid "This subscription sign-in is not available in eTraderBot yet. Use a deployment credential or choose another provider."
@@ -6056,6 +6812,10 @@ msgstr "周四"
 #: src/pages/RoutineSchedule.tsx
 msgid "Time of day"
 msgstr "时间"
+
+#: src/pages/TradingLearning.tsx
+msgid "Time zone"
+msgstr "时区"
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Timezone"
@@ -6116,6 +6876,39 @@ msgstr "工具名称"
 msgid "Tools"
 msgstr "工具"
 
+#: src/pages/Trading.tsx
+msgid "Trade approved"
+msgstr "交易已批准"
+
+#: src/pages/shell/business-scope.tsx
+msgid "Trade authorizer"
+msgstr "交易授权人"
+
+#: src/pages/BusinessInterfaces.tsx
+msgid "Trade execution"
+msgstr "交易执行"
+
+#: src/pages/Trading.tsx
+msgid "Trade intents"
+msgstr "交易意图"
+
+#: src/pages/TradingLearning.tsx
+msgid "Trader feedback"
+msgstr "交易员反馈"
+
+#: src/pages/Shell.tsx
+msgid "Trading"
+msgstr "交易"
+
+#: src/pages/Shell.tsx
+#: src/pages/Trading.tsx
+msgid "Trading review"
+msgstr "交易复盘"
+
+#: src/pages/Trading.tsx
+msgid "Trading stage"
+msgstr "交易阶段"
+
 #: src/components/composer/HoldToTalk.tsx
 msgid "Transcribing…"
 msgstr "正在转写…"
@@ -6130,11 +6923,11 @@ msgstr "转写模型"
 
 #: src/lib/dictation.ts
 msgid "Transcription request timed out."
-msgstr ""
+msgstr "转写请求超时。"
 
 #: src/lib/dictation.ts
 msgid "Transcription response is too large."
-msgstr ""
+msgstr "转写响应过大。"
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Treat like a person"
@@ -6189,6 +6982,10 @@ msgstr "输入你的回答"
 #: src/pages/Shell.tsx
 msgid "Unassigned"
 msgstr "未分配"
+
+#: src/pages/Trading.tsx
+msgid "Uncovered exposure"
+msgstr "未覆盖敞口"
 
 #: src/components/AskCard.tsx
 msgid "Undo"
@@ -6280,6 +7077,14 @@ msgstr "立即升级"
 msgid "Upload"
 msgstr "上传"
 
+#: src/pages/TradingLearning.tsx
+msgid "Upload file"
+msgstr "上传文件"
+
+#: src/pages/TradingLearning.tsx
+msgid "Upload learning file"
+msgstr "上传学习文件"
+
 #: src/lib/ticket-priority.ts
 msgid "Urgent"
 msgstr "紧急"
@@ -6344,6 +7149,10 @@ msgstr "输入密码时请用受保护输入。"
 msgid "Use space default"
 msgstr "使用工作区默认"
 
+#: src/pages/BusinessInterfaces.tsx
+msgid "Use the credential field for keys and tokens."
+msgstr "密钥和令牌请填写在 API 密钥字段中。"
+
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
 msgid "Use up to 512 letters, digits, _ or -."
 msgstr "最多 512 个字母、数字、_ 或 -。"
@@ -6377,6 +7186,22 @@ msgstr "使用你的 API 密钥"
 msgid "Using your API key. Free plan ends {freeUntil}."
 msgstr "正在使用你的 API 密钥。免费方案将于 {freeUntil} 结束。"
 
+#: src/pages/Trading.tsx
+msgid "Valid for 24 hours"
+msgstr "有效期为 24 小时"
+
+#: src/pages/Trading.tsx
+msgid "Valid until"
+msgstr "有效至"
+
+#: src/pages/Trading.tsx
+msgid "Validation and source"
+msgstr "验证与源码"
+
+#: src/pages/TradingLearning.tsx
+msgid "Validation evidence"
+msgstr "验证依据"
+
 #: src/components/LoginFields.tsx
 #: src/components/VaultSettings.tsx
 #: src/pages/McpServersOverlay.tsx
@@ -6387,6 +7212,10 @@ msgstr "值"
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Vault"
 msgstr "保管库"
+
+#: src/pages/Trading.tsx
+msgid "Venue unavailable"
+msgstr "模拟场所不可用"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Verify and add"
@@ -6417,11 +7246,19 @@ msgstr "语音"
 
 #: src/lib/tts.ts
 msgid "Voice request timed out."
-msgstr ""
+msgstr "语音请求超时。"
 
 #: src/lib/model-connection-preflight.ts
 msgid "Wait a moment and test again."
 msgstr "请稍候并重新测试。"
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for input"
+msgstr "等待输入"
+
+#: src/pages/TradingLearning.tsx
+msgid "Waiting for you"
+msgstr "等待你操作"
 
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
@@ -6570,7 +7407,7 @@ msgstr "年"
 
 #: src/components/ModelCredits.tsx
 msgid "Yearly"
-msgstr ""
+msgstr "按年"
 
 #: src/pages/shell/chat-context.tsx
 #: src/pages/shell/sidebar-roster.tsx
@@ -6608,7 +7445,7 @@ msgstr "你的 Anthropic"
 
 #: src/components/AccountDataSettings.tsx
 msgid "Your data"
-msgstr ""
+msgstr "你的数据"
 
 #: src/pages/SpaceSettingOverrides.tsx
 msgid "Your defaults"

@@ -95,7 +95,7 @@ export default function SettingsLayout() {
         // Named after the Space it opened from.
         options={({ route }) => ({
           ...glassHeaderOptions(
-            (route.params as { name?: string } | undefined)?.name ?? t("Space"),
+            (route.params as { name?: string } | undefined)?.name ?? t("Business scope"),
           ),
           contentStyle: { backgroundColor: native.groupedPage },
         })}

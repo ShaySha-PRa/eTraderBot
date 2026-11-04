@@ -22,6 +22,8 @@ describe("iOS screenshot catalog", () => {
       "compose",
       "split-view",
       "settings",
+      "trading",
+      "bot-templates",
     ]);
     for (const section of sections) {
       await access(path.join(catalogDir, section.flow));

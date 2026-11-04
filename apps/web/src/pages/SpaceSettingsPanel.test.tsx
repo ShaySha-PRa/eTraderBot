@@ -197,7 +197,7 @@ describe("SpaceSettingsPanel", () => {
     });
     await type("Help desk");
     await commit();
-    expect(container.textContent).toContain("Could not rename space");
+    expect(container.textContent).toContain("Could not rename business scope");
   });
 
   it("shows neither rename nor delete to a space it cannot change", async () => {
@@ -207,7 +207,7 @@ describe("SpaceSettingsPanel", () => {
     expect(container.querySelector("input")).toBeNull();
     // Every member can still customize their own settings for the space.
     expect(container.querySelector('[data-testid="space-setting-overrides"]')).not.toBeNull();
-    expect(button("Delete space")).toBeUndefined();
+    expect(button("Delete business scope")).toBeUndefined();
   });
 
   it("names the bots that go with the space before deleting it", async () => {
@@ -222,7 +222,7 @@ describe("SpaceSettingsPanel", () => {
       },
       onDelete,
     });
-    await click("Delete space");
+    await click("Delete business scope");
     expect(container.querySelector("h2")?.textContent).toBe("Delete Support and its 2 bots?");
     await click("Delete");
     expect(onDelete).toHaveBeenCalledTimes(1);
@@ -230,7 +230,7 @@ describe("SpaceSettingsPanel", () => {
 
   it("asks plainly when the space has no bots", async () => {
     await render({});
-    await click("Delete space");
+    await click("Delete business scope");
     expect(container.querySelector("h2")?.textContent).toBe("Delete Support?");
   });
 });

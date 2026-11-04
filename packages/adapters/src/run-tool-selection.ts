@@ -53,6 +53,7 @@ export const FLEET_WRITE_TOOL_NAMES_SET: ReadonlySet<string> = new Set(FLEET_WRI
 const CREATED_RUN_TOOL_NAMES = new Set(["ask_user", "update_bot"]);
 
 export function selectBuiltinToolsForRun(options: {
+  tradingEnabled?: boolean;
   ticketBoardEnabled?: boolean;
   phoneCallsEnabled?: boolean;
   historyRetrievalEnabled?: boolean;
@@ -103,6 +104,7 @@ export function selectBuiltinToolsForRun(options: {
   ).filter(
     (tool) =>
       !disabled.has(tool.name) &&
+      (options.tradingEnabled || tool.name !== "trading") &&
       (options.trigger !== "created" || CREATED_RUN_TOOL_NAMES.has(tool.name)) &&
       (!FLEET_TOOL_NAMES_SET.has(tool.name) ||
         (Boolean(options.fleetManagement) && ownerStartedRun)) &&

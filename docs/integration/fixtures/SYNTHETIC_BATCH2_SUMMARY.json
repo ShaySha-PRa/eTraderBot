@@ -1,0 +1,25 @@
+{
+  "batch": "synthetic-batch2",
+  "addedScopes": 6,
+  "addedSnapshots": 31,
+  "snapshotIdsSample": [
+    "snap-ret-sh02-20250320",
+    "snap-ret-sd02-20250320",
+    "snap-gen-sdcoal2-20250320",
+    "snap-gen-jswind2-20250320",
+    "snap-sto-sdbess4-20250320",
+    "snap-sto-shbess5-20250320",
+    "snap-ret-sh02-20250321",
+    "snap-ret-sd02-20250321"
+  ],
+  "newTradeDates": [
+    "2025-03-20",
+    "2025-03-21",
+    "2025-03-22",
+    "2025-03-23",
+    "2025-03-24",
+    "2025-03-25"
+  ],
+  "observationsAdded": 8,
+  "executionAnomalyFiles": 13
+}

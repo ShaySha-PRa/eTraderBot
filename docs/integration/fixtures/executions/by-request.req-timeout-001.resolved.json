@@ -1,0 +1,28 @@
+{
+  "executionId": "exec-timeout-001",
+  "clientRequestId": "req-timeout-001",
+  "intentHash": "b3eafc82be965861d1962e226c7f19fdeed28c1eebf64ded9b2f299fca5783f2",
+  "scope": {
+    "subjectId": "sto-sd-bess-01",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sd-01",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation",
+    "assetId": "asset-bess-sd-01"
+  },
+  "status": "accepted",
+  "source": {
+    "sourceId": "src-exec-timeout-r",
+    "kind": "synthetic",
+    "observedAt": "2025-03-10T01:06:00+08:00",
+    "asOf": "2025-03-10T01:05:00+08:00",
+    "validUntil": "2025-03-11T00:00:00+08:00",
+    "revision": "2"
+  },
+  "sequence": 1,
+  "fills": [],
+  "message": "recovered after channel blip"
+}

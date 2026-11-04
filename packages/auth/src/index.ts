@@ -37,6 +37,7 @@ import { breachedPasswordCheck } from "./breached-password.js";
 import type { EmailLocaleOf } from "./email.js";
 import { emailLocale, passwordResetEmail, signInCodeEmail, verificationEmail } from "./email.js";
 import { hasRecentIdentityConfirmation, identityConfirmation } from "./identity-confirmation.js";
+import { isLoopbackUrl, localAutoLogin } from "./local-auto-login.js";
 import type { OidcConfig } from "./oidc.js";
 import { isCurrentOidcAccount, oidcDiscovery } from "./oidc.js";
 import { passkeyRelyingParty } from "./passkey.js";
@@ -60,6 +61,8 @@ export { referralEmail } from "./referral-email.js";
 export { welcomeEmail } from "./welcome-email.js";
 
 export interface AuthEnv {
+  /** Local API composition enables this only in development with loopback listeners. */
+  localAutoLoginEmail?: string;
   analytics?: ProductAnalytics;
   passwordAuth?: boolean;
   /** Opt-in: rejects new passwords found in Have I Been Pwned. Calls an outside service. */
@@ -148,6 +151,8 @@ export function authRateLimitOptions(nodeEnv = process.env.NODE_ENV) {
 }
 
 export function createAuth(prisma: PrismaClient, env: AuthEnv) {
+  if (env.localAutoLoginEmail && (!isLoopbackUrl(env.baseURL) || !isLoopbackUrl(env.webOrigin)))
+    throw new Error("Local auto-login requires loopback auth/web addresses");
   if (env.passwordAuth === false && !env.oidc)
     throw new Error("Password auth requires OIDC when disabled");
   // A failed lookup still sends the email, in the asking browser's language.
@@ -297,6 +302,9 @@ export function createAuth(prisma: PrismaClient, env: AuthEnv) {
       },
     },
     plugins: [
+      ...(env.localAutoLoginEmail
+        ? [localAutoLogin(env.localAutoLoginEmail, buildTrustedOrigins(env))]
+        : []),
       signedBearer,
       expo(),
       accountSecurity(
@@ -666,8 +674,24 @@ export function createAuth(prisma: PrismaClient, env: AuthEnv) {
     encryptStoredOAuthTokens: async () => encryptStoredOAuthTokens(prisma, await tokenKey()),
     ssoAvailability: () => discovery?.availability(),
     passkeyRpId: relyingParty?.rpID ?? null,
-    hasRecentIdentityConfirmation: async (session: { sessionId: string; userId: string }) =>
-      hasRecentIdentityConfirmation((await auth.$context).internalAdapter, session),
+    hasRecentIdentityConfirmation: async (session: { sessionId: string; userId: string }) => {
+      const context = await auth.$context;
+      if (env.localAutoLoginEmail) {
+        const active = await context.adapter.findOne<{ expiresAt: Date }>({
+          model: "session",
+          where: [
+            { field: "id", value: session.sessionId },
+            { field: "userId", value: session.userId },
+          ],
+        });
+        const user =
+          active && active.expiresAt.getTime() > Date.now()
+            ? await context.internalAdapter.findUserById(session.userId)
+            : null;
+        if (user?.email.toLowerCase() === env.localAutoLoginEmail) return true;
+      }
+      return hasRecentIdentityConfirmation(context.internalAdapter, session);
+    },
     issueAccountExportToken: async (userId: string) =>
       issueAccountExportToken((await auth.$context).internalAdapter, userId),
     consumeAccountExportToken: async (token: string) =>

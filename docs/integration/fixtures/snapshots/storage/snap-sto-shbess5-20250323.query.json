@@ -1,0 +1,17 @@
+{
+  "scope": {
+    "subjectId": "sto-sh-bess-05",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sh-02",
+    "assetId": "asset-bess-sh-05",
+    "region": "CN-SH",
+    "marketId": "mkt-sh-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation"
+  },
+  "window": {
+    "from": "2025-03-23T00:00:00+08:00",
+    "to": "2025-03-24T00:00:00+08:00"
+  }
+}

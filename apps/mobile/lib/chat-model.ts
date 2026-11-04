@@ -14,8 +14,8 @@ export function chatModelPickerChoices(
     ? catalogEntry(catalog, me.defaultProvider, me.defaultModel)
     : undefined;
   const spaceDefaultLabel = me?.defaultModel
-    ? `${t("Space default")} (${defaultEntry?.label ?? me.defaultModel})`
-    : t("Space default");
+    ? `${t("Business scope default")} (${defaultEntry?.label ?? me.defaultModel})`
+    : t("Business scope default");
   const choices = chatModelChoices(
     connectedModelChoices(credentials, catalog),
     selectedKey,
@@ -24,7 +24,7 @@ export function chatModelPickerChoices(
   );
   choices[0] = {
     ...choices[0]!,
-    title: t("Space default"),
+    title: t("Business scope default"),
     detail: me?.defaultModel ? (defaultEntry?.label ?? me.defaultModel) : undefined,
   };
   return choices;

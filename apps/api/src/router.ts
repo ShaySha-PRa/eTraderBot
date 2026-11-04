@@ -49,6 +49,7 @@ import { paymentWalletRoutes } from "./routes/payment-wallet.js";
 import { routinesRoutes } from "./routes/routines.js";
 import { spacesRoutes } from "./routes/spaces.js";
 import { threadsRoutes } from "./routes/threads.js";
+import { tradingRoutes } from "./routes/trading.js";
 import type { VoiceDeps } from "./voice.js";
 
 export { nextConnectionLabel } from "./model-credentials.js";
@@ -57,6 +58,8 @@ export { HEARTBEAT_MS, SESSION_RECHECK_MS } from "./routes/shared.js";
 export { callMarkerClientNonce } from "./routes/threads.js";
 
 export interface RouterDeps {
+  /** Trading clock seam for deterministic source expiry and authorization tests. */
+  tradingClock?: () => Date;
   pushTokens: PushTokenStore;
   analytics?: ProductAnalytics;
   cloudAgent?: CloudAgentConnection | null;
@@ -160,5 +163,6 @@ export function createRouter(deps: RouterDeps) {
     ...messagingRoutes(ctx),
     ...contentRoutes(ctx),
     ...paymentWalletRoutes(ctx),
+    ...tradingRoutes(ctx),
   });
 }

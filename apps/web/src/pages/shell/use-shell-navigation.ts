@@ -48,11 +48,16 @@ export function useShellNavigation() {
   searchParamsRef.current = searchParams;
   /** Automatic route repair preserves overlays without counting as newer user navigation. */
   const redirectKeepingOverlay = useCallback(
-    (pathname: string) =>
-      guardedNavigate(
-        { pathname, search: shellOverlaySearch(searchParamsRef.current) },
-        { replace: true },
-      ),
+    (pathname: string) => {
+      const current = searchParamsRef.current;
+      const params = new URLSearchParams(shellOverlaySearch(current));
+      // A workspace can have no Bots yet. Restoring the last chat must not close
+      // its interface settings, or the current Bot's business tab, on reload.
+      if (current.get("interfaces") === "1") params.set("interfaces", "1");
+      const workspace = current.get("workspace");
+      if (workspace === "trading" || workspace === "learning") params.set("workspace", workspace);
+      return guardedNavigate({ pathname, search: searchString(params) }, { replace: true });
+    },
     [guardedNavigate],
   );
   const overlay = readShellOverlay(searchParams);

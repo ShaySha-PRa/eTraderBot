@@ -1,0 +1,6 @@
+{
+  "code": "INVALID_INPUT",
+  "message": "energyMwh not a trading decimal string",
+  "requestId": "http-batch2-inv-001",
+  "retryable": false
+}

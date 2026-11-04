@@ -26,7 +26,10 @@ export default function NewSpace() {
     try {
       const space = await rpc("spaces/create", { name: trimmed });
       if (!(await selectSpace(space.id))) {
-        Alert.alert(t("Space created"), t("It could not be opened. Try again from the sidebar."));
+        Alert.alert(
+          t("Business scope created"),
+          t("It could not be opened. Try again from the sidebar."),
+        );
         router.dismissAll();
         router.replace("/");
         return;
@@ -34,7 +37,7 @@ export default function NewSpace() {
       router.dismissAll();
       router.replace("/");
     } catch (reason) {
-      setError(errorText(reason, t("Could not create space")));
+      setError(errorText(reason, t("Could not create business scope")));
       setPending(false);
     }
   }
@@ -55,7 +58,7 @@ export default function NewSpace() {
           maxLength={60}
           onChangeText={setName}
           onSubmitEditing={() => void create()}
-          placeholder={t("Customer support")}
+          placeholder={t("Business scope name")}
           placeholderTextColor={tokens.mutedForeground}
           returnKeyType="done"
           style={{
@@ -67,10 +70,15 @@ export default function NewSpace() {
             fontSize: 16,
           }}
         />
+        <Text style={{ color: tokens.mutedForeground, marginTop: 14 }}>
+          {t(
+            "Configure this business scope and its data APIs on the web before creating trading bots.",
+          )}
+        </Text>
         {error ? <Text style={{ color: tokens.destructive, marginTop: 14 }}>{error}</Text> : null}
         <NativeActionButton
           disabled={!name.trim() || pending}
-          label={pending ? t("Creating…") : t("Create space")}
+          label={pending ? t("Creating…") : t("Create business scope")}
           onPress={() => void create()}
           style={{ marginTop: 20 }}
         />

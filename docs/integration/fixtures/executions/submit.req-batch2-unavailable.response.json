@@ -1,0 +1,6 @@
+{
+  "code": "UNAVAILABLE",
+  "message": "execution adapter briefly down",
+  "requestId": "http-batch2-ua-001",
+  "retryable": true
+}

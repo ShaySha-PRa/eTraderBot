@@ -1,0 +1,123 @@
+{
+  "items": [
+    {
+      "id": "obs-sim-006",
+      "scope": {
+        "subjectId": "sto-sd-bess-01",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation",
+        "assetId": "asset-bess-sd-01"
+      },
+      "source": {
+        "sourceId": "src-obs-006",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T19:00:30+08:00",
+        "asOf": "2025-03-09T19:00:00+08:00",
+        "validUntil": "2025-04-08T19:00:00+08:00",
+        "revision": "1"
+      },
+      "kind": "chat",
+      "occurredAt": "2025-03-09T19:00:00+08:00",
+      "content": "Trader: For retailer ret-sd-01, cover at least 60% demand via contractedEnergy before spot buy.",
+      "snapshotIds": [
+        "snap-gen-sdwind-20250310"
+      ],
+      "executionIds": []
+    },
+    {
+      "id": "obs-sim-007",
+      "scope": {
+        "subjectId": "ret-sd-01",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-007",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T19:10:30+08:00",
+        "asOf": "2025-03-09T19:10:00+08:00",
+        "validUntil": "2025-04-08T19:10:00+08:00",
+        "revision": "1"
+      },
+      "kind": "operation",
+      "occurredAt": "2025-03-09T19:10:00+08:00",
+      "content": "Idempotent retry clientRequestId=req-fill-partial-001 returned same executionId.",
+      "snapshotIds": [
+        "snap-gen-sdwind-20250311"
+      ],
+      "executionIds": [
+        "exec-partial-001"
+      ]
+    },
+    {
+      "id": "obs-sim-008",
+      "scope": {
+        "subjectId": "sto-sd-bess-01",
+        "subjectKind": "storage",
+        "accountId": "acct-sto-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation",
+        "assetId": "asset-bess-sd-01"
+      },
+      "source": {
+        "sourceId": "src-obs-008",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T19:20:30+08:00",
+        "asOf": "2025-03-09T19:20:00+08:00",
+        "validUntil": "2025-04-08T19:20:00+08:00",
+        "revision": "1"
+      },
+      "kind": "history",
+      "occurredAt": "2025-03-09T19:20:00+08:00",
+      "content": "Partial fill then cancel: keep accumulated fills; cancel does not erase fills.",
+      "snapshotIds": [
+        "snap-gen-shcoal-20250310"
+      ],
+      "executionIds": [
+        "exec-partial-001"
+      ]
+    },
+    {
+      "id": "obs-sim-009",
+      "scope": {
+        "subjectId": "ret-sd-01",
+        "subjectKind": "retailer",
+        "accountId": "acct-ret-sd-01",
+        "region": "CN-SD",
+        "marketId": "mkt-sd-spot-sim",
+        "productId": "prod-energy",
+        "stage": "day_ahead",
+        "environment": "simulation"
+      },
+      "source": {
+        "sourceId": "src-obs-009",
+        "kind": "synthetic",
+        "observedAt": "2025-03-09T19:30:30+08:00",
+        "asOf": "2025-03-09T19:30:00+08:00",
+        "validUntil": "2025-04-08T19:30:00+08:00",
+        "revision": "1"
+      },
+      "kind": "chat",
+      "occurredAt": "2025-03-09T19:30:00+08:00",
+      "content": "Risk: capability conflict if storage and generator both claim same reserved MW — ledger must serialize.",
+      "snapshotIds": [
+        "snap-gen-shcoal-20250312"
+      ],
+      "executionIds": []
+    }
+  ],
+  "nextCursor": null
+}

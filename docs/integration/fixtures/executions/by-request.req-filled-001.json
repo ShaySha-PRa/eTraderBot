@@ -1,0 +1,43 @@
+{
+  "executionId": "exec-filled-001",
+  "clientRequestId": "req-filled-001",
+  "intentHash": "6e354966030e16798480fef83dedf96e8966bf40b6eea19e6dede4472f278f84",
+  "scope": {
+    "subjectId": "sto-sd-bess-01",
+    "subjectKind": "storage",
+    "accountId": "acct-sto-sd-01",
+    "region": "CN-SD",
+    "marketId": "mkt-sd-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation",
+    "assetId": "asset-bess-sd-01"
+  },
+  "status": "filled",
+  "source": {
+    "sourceId": "src-exec-filled-001",
+    "kind": "synthetic",
+    "observedAt": "2025-03-10T01:01:00+08:00",
+    "asOf": "2025-03-10T01:00:00+08:00",
+    "validUntil": "2025-03-12T00:00:00+08:00",
+    "revision": "2"
+  },
+  "sequence": 2,
+  "fills": [
+    {
+      "fillId": "fill-001-a",
+      "lineIndex": 0,
+      "energyMwh": "5",
+      "price": "208",
+      "occurredAt": "2025-03-10T02:05:00+08:00"
+    },
+    {
+      "fillId": "fill-001-b",
+      "lineIndex": 1,
+      "energyMwh": "5",
+      "price": "510",
+      "occurredAt": "2025-03-10T18:05:00+08:00"
+    }
+  ],
+  "message": "simulation full fill"
+}

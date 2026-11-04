@@ -1,0 +1,17 @@
+{
+  "scope": {
+    "subjectId": "gen-js-wind-02",
+    "subjectKind": "generator",
+    "accountId": "acct-gen-js-02",
+    "assetId": "asset-wind-js-02",
+    "region": "CN-JS",
+    "marketId": "mkt-js-spot-sim",
+    "productId": "prod-energy",
+    "stage": "day_ahead",
+    "environment": "simulation"
+  },
+  "window": {
+    "from": "2025-03-23T00:00:00+08:00",
+    "to": "2025-03-24T00:00:00+08:00"
+  }
+}

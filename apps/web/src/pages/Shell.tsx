@@ -56,7 +56,7 @@ import { computersAreUnavailable } from "../lib/computer-sandbox";
 import { desktopBridge } from "../lib/desktop";
 import { hasOpenDialog } from "../lib/has-open-dialog";
 import { markAfterPaint, markOnce } from "../lib/performance";
-import { usePreloadRecoveryState } from "../lib/preload-recovery";
+import { lazyComponent, usePreloadRecoveryState } from "../lib/preload-recovery";
 import { lastChatKey, lastChatOf, queryClient, spaceQueries, spaceSeedKey } from "../lib/query";
 import type { Panel } from "../lib/right-panel-state";
 import { rightPanelStorageKey } from "../lib/right-panel-state";
@@ -64,6 +64,7 @@ import { createSpaceRpc, selectedSpaceId, selectSpace } from "../lib/rpc";
 import { markShellReady, useSpaceEpoch } from "../lib/space-switch";
 import { activeThreadRuns } from "../lib/thread-events";
 import { getToolActivityEnabled, subscribeToolActivity } from "../lib/tool-activity-preference";
+import { useTradingBotTemplates } from "../lib/trading-bot-templates";
 import type { AppearancePreference } from "../lib/ui-appearance";
 import { getUiAppearancePreference, setUiAppearance } from "../lib/ui-appearance";
 import { useDesktopBadge } from "../lib/use-desktop-badge";
@@ -71,6 +72,11 @@ import { HostComputerPrompt } from "./HostComputerPrompt";
 import { RoutineList } from "./RoutineEditor";
 import { useSettingsNavItems } from "./settings-nav";
 import { ArchivedChats } from "./shell/archived-chats";
+import {
+  BusinessScopeDialog,
+  BusinessScopeEmpty,
+  BusinessScopePicker,
+} from "./shell/business-scope";
 import { ChatContextMenu } from "./shell/chat-context-menu";
 import { ChatHeader } from "./shell/chat-header";
 import { FALLBACK_BOT_COLOR } from "./shell/chat-shared";
@@ -112,6 +118,15 @@ import type { SettingsSection } from "./shell-overlay";
 const NO_AGENT_SKILLS: AgentSkillCatalogEntry[] = [];
 const NO_PROVIDERS: string[] = [];
 
+const BusinessInterfaces = lazyComponent(() =>
+  import("./BusinessInterfaces").then((module) => module.BusinessInterfaces),
+);
+
+const TradingApprovals = lazyComponent(() =>
+  import("./Trading").then((module) => module.TradingApprovals),
+);
+const TradingPage = lazyComponent(() => import("./Trading").then((module) => module.TradingPage));
+
 export function ShellPage() {
   // A new key per space switch, so nothing from the previous space survives it.
   const spaceEpoch = useSpaceEpoch();
@@ -149,6 +164,59 @@ function SpaceShell() {
     setOverlay,
   } = useShellNavigation();
   const queries = spaceQueries(userId ?? null, shellSpaceId);
+  const businessScopes = useQuery({
+    ...queries.trading.workspaces.queryOptions({ input: {} }),
+    enabled: Boolean(userId),
+  });
+  const businessViewKey = `etraderbot:business-view:${userId ?? ""}`;
+  const [allBusinesses, setAllBusinesses] = useState(() => {
+    try {
+      return localStorage.getItem(businessViewKey) === "all";
+    } catch {
+      return false;
+    }
+  });
+  const workspaceConfiguration = businessScopes.data?.[0];
+  const [configuringScope, setConfiguringScope] = useState(false);
+  const [creatingScope, setCreatingScope] = useState(false);
+  const interfacesOpen = Boolean(workspaceConfiguration) && searchParams.get("interfaces") === "1";
+  function showInterfaces(open: boolean) {
+    const params = new URLSearchParams(searchParams);
+    if (open) params.set("interfaces", "1");
+    else params.delete("interfaces");
+    setSearchParams(params);
+    if (open) {
+      setMobileSidebarOpen(false);
+      setPanel(null);
+    }
+  }
+  function rememberBusinessView(all: boolean) {
+    setAllBusinesses(all);
+    try {
+      localStorage.setItem(businessViewKey, all ? "all" : "current");
+    } catch {
+      /* Optional storage. */
+    }
+  }
+  function chooseBusinessScope(id: string) {
+    rememberBusinessView(!id);
+    setPanel(null);
+    search.setQuery("");
+    if (id) openSpaceChat(id, "/app");
+  }
+  function focusBusinessScope() {
+    dialogs.setCreateBotOpen(false);
+    if (!businessScope) setConfiguringScope(true);
+    else {
+      setBotsSidebarCollapsedPref(false);
+      if (isMobileSidebar) setMobileSidebarOpen(true);
+      requestAnimationFrame(() =>
+        document
+          .querySelector<HTMLSelectElement>('[data-testid="business-scope-picker"] select')
+          ?.focus(),
+      );
+    }
+  }
   const roster = useSpaceRoster({ rpc, seed, botId, groupId, navigate, redirectKeepingOverlay });
   const {
     groups,
@@ -167,6 +235,7 @@ function SpaceShell() {
     setBootstrapMe,
     refreshBots,
   } = roster;
+  const selectedScopeId = allBusinesses ? "" : (bootstrapMe?.spaceId ?? shellSpaceId ?? "");
   const { collapsedSidebarSections, toggleSidebarSection } = useSidebarExpansion(userId);
   const [botsSidebarCollapsed, setBotsSidebarCollapsed] = useState(false);
   useEffect(() => {
@@ -262,6 +331,7 @@ function SpaceShell() {
   openSettingsRef.current = openSettings;
   useEffect(() => desktopBridge()?.settings?.onOpen(() => openSettingsRef.current("general")), []);
 
+  const scopedBots = bots;
   const inGroup = Boolean(groupId);
   const chatPanelOpen = inGroup
     ? panel === "group-settings"
@@ -271,7 +341,18 @@ function SpaceShell() {
   const active =
     inGroup || routeChat?.groupId
       ? undefined
-      : (bots.find((b) => b.id === (botId ?? routeChat?.botId)) ?? bots[0]);
+      : (scopedBots.find((b) => b.id === (botId ?? routeChat?.botId)) ?? scopedBots[0]);
+  const tradingTemplates = useTradingBotTemplates();
+  const workspace =
+    active?.tradingRole && ["trading", "learning"].includes(searchParams.get("workspace") ?? "")
+      ? (searchParams.get("workspace") as "trading" | "learning")
+      : "chat";
+  function openWorkspace(next: string) {
+    const params = new URLSearchParams(searchParams);
+    if (next === "chat") params.delete("workspace");
+    else params.set("workspace", next);
+    setSearchParams(params);
+  }
   const selectBot = useCallback(
     (id: string) => {
       setMobileSidebarOpen(false);
@@ -283,7 +364,7 @@ function SpaceShell() {
     () => (active ? chatUserBubbleColors(active.color, active.id) : undefined),
     [active?.color, active?.id],
   );
-  const activeGroup = groups.find((group) => group.id === groupId);
+  const activeGroup = inGroup ? groups.find((group) => group.id === groupId) : undefined;
   const activeBotId = useRef<string | undefined>(inGroup ? undefined : active?.id);
   activeBotId.current = inGroup ? undefined : active?.id;
   const activeGroupId = useRef<string | undefined>(groupId);
@@ -292,8 +373,8 @@ function SpaceShell() {
   const { computer, computerOpen, setComputerOpen, booting, commitComputer } = computerState;
   useReportedUiLocale(rpc, bootstrapMe?.locale);
   const cycleBots = useMemo(
-    () => groupBotsForSidebar(bots, botSections).flatMap((group) => group.bots),
-    [bots, botSections],
+    () => groupBotsForSidebar(scopedBots, botSections).flatMap((group) => group.bots),
+    [scopedBots, botSections],
   );
   const dialogs = useShellDialogs();
   useShellShortcuts({
@@ -433,14 +514,17 @@ function SpaceShell() {
   const sidebarSpaces = useMemo(
     () =>
       spaces.length > 0
-        ? spaces.map((space) =>
-            space.id === bootstrapMe?.spaceId ? { ...space, bots, groups, botSections } : space,
-          )
+        ? spaces.map((space) => ({
+            ...space,
+            name:
+              space.isDefault && space.name === "Personal" ? t`Default business scope` : space.name,
+            ...(space.id === bootstrapMe?.spaceId ? { bots, groups, botSections } : {}),
+          }))
         : bootstrapMe
           ? [
               {
                 id: bootstrapMe.spaceId,
-                name: "Personal",
+                name: t`Default business scope`,
                 isDefault: true,
                 hasContent: true,
                 canRename: false,
@@ -451,15 +535,33 @@ function SpaceShell() {
               },
             ]
           : [],
-    [bootstrapMe, botSections, bots, groups, spaces],
+    [bootstrapMe, botSections, bots, groups, spaces, t],
+  );
+  const businessScope = useMemo(
+    () =>
+      workspaceConfiguration
+        ? {
+            ...workspaceConfiguration,
+            name:
+              sidebarSpaces.find((space) => space.id === workspaceConfiguration.spaceId)?.name ??
+              workspaceConfiguration.name,
+          }
+        : undefined,
+    [workspaceConfiguration, sidebarSpaces],
   );
   const sidebarGroups = useMemo(
     () =>
-      sidebarGroupsForSpaces(sidebarSpaces, miniSidebar ? "" : search.query, {
-        pinned: t`Pinned`,
-        unassigned: t`Unassigned`,
-      }),
-    [sidebarSpaces, search.query, miniSidebar, t],
+      sidebarGroupsForSpaces(
+        selectedScopeId
+          ? sidebarSpaces.filter((space) => space.id === selectedScopeId)
+          : sidebarSpaces,
+        miniSidebar ? "" : search.query,
+        {
+          pinned: t`Pinned`,
+          unassigned: t`Unassigned`,
+        },
+      ),
+    [sidebarSpaces, search.query, miniSidebar, t, selectedScopeId],
   );
   // The Dock badge ignores the roster search box: a filter must not hide unread chats.
   const unreadChatCount = useMemo(
@@ -774,9 +876,9 @@ function SpaceShell() {
     },
     {
       id: "new-space",
-      label: t`New private space`,
+      label: t`New business scope`,
       icon: Lock,
-      onSelect: () => dialogs.setNewSpaceOpen(true),
+      onSelect: () => setCreatingScope(true),
     },
     {
       id: "integrations",
@@ -820,6 +922,10 @@ function SpaceShell() {
         setSpaces((current) =>
           current.map((space) => (space.id === spaceId ? { ...space, name } : space)),
         );
+        queryClient.setQueryData(
+          queries.trading.workspaces.queryOptions({ input: {} }).queryKey,
+          (rows) => rows?.map((row) => (row.spaceId === spaceId ? { ...row, name } : row)),
+        );
       },
       refresh: () => refreshBots(),
     });
@@ -842,16 +948,18 @@ function SpaceShell() {
 
   function openCreatedBot(bot: Bot) {
     roster.addCreatedBot(bot);
-    navigate(`/app/${bot.id}`);
+    navigate(`/app/${bot.id}${bot.tradingRole ? "?workspace=trading" : ""}`);
     setPanel(null);
   }
 
   async function createBot(input: CreateBotDialogInput) {
     const isFirstBot = botsRef.current.length === 0;
     const bot = await rpc.bots.create({ ...input, notifyOnFinish: true });
+    if (input.tradingWorkspaceId)
+      await queryClient.invalidateQueries({ queryKey: queries.trading.key() });
     openCreatedBot(bot);
     dialogs.setCreateBotOpen(false);
-    await composer.startFocusPrompt(bot.id, isFirstBot);
+    if (!bot.tradingRole) await composer.startFocusPrompt(bot.id, isFirstBot);
     await refreshBots().catch(() => undefined);
   }
 
@@ -906,15 +1014,38 @@ function SpaceShell() {
         createMenuOpen={createMenuOpen}
         setCreateMenuOpen={setCreateMenuOpen}
         search={search}
-        bots={bots}
+        bots={scopedBots}
+        businessScopePicker={
+          <>
+            <BusinessScopePicker
+              scopes={sidebarSpaces}
+              selected={selectedScopeId}
+              pending={!initialBotsLoaded}
+              mini={miniSidebar}
+              onSelect={chooseBusinessScope}
+              onCreate={() => setCreatingScope(true)}
+              onInterfaces={() =>
+                businessScope ? showInterfaces(true) : setConfiguringScope(true)
+              }
+              onExpand={() => setBotsSidebarCollapsedPref(false)}
+            />
+            {businessScopes.isError && !miniSidebar ? (
+              <p role="alert" className="px-4 text-xs text-destructive">
+                <Trans>Could not load business scopes.</Trans>
+              </p>
+            ) : null}
+          </>
+        }
+        onCreateBusinessScope={() => setCreatingScope(true)}
         setPanel={setPanel}
         navigate={navigate}
-        setNewSpaceOpen={dialogs.setNewSpaceOpen}
+        setNewSpaceOpen={setCreatingScope}
         setCreateBotOpen={dialogs.setCreateBotOpen}
         roster={
           <SidebarRoster
             mini={miniSidebar}
             sidebarGroups={sidebarGroups}
+            businessScopes={sidebarSpaces}
             collapsedSidebarSections={collapsedSidebarSections}
             bootstrapMe={bootstrapMe}
             botSections={botSections}
@@ -981,89 +1112,154 @@ function SpaceShell() {
         ) : null}
         <CallReturnBar />
         {/* The header floats so the transcript scrolls under its buttons. */}
-        <div className="relative flex min-h-0 flex-1 flex-col">
-          {/* Only the pills take input; the gaps pass clicks and scrolling to the transcript. */}
-          <div aria-hidden="true" className="app-drag absolute inset-x-0 top-0 z-10 h-3" />
-          <ChatHeader
-            inGroup={inGroup}
-            active={active}
-            activeGroup={activeGroup}
-            activeSnapshot={activeSnapshot}
-            phoneCallsEnabled={Boolean(bootstrapMe?.phoneCallsEnabled)}
-            inCall={Boolean(active) && call?.botId === active?.id}
-            panelOpen={chatPanelOpen}
-            onOpenNavigation={() => setMobileSidebarOpen(true)}
-            onTogglePanel={() => {
-              if (chatPanelOpen) setPanel(null);
-              else if (inGroup) setPanel("group-settings");
-              else if (active) {
-                setPanel(lastBotTab.current);
-                // Refresh run/computer so Take control isn't stuck on a stale busyBotName.
-                void refreshThread(active.id).catch(() => undefined);
-              }
-            }}
-            onCall={(bot) => {
-              if (call?.botId === bot.id) {
-                setCallMinimized(false);
-                return;
-              }
-              callBot(bot);
-            }}
-          />
-          {!active && !activeGroup && initialBotsLoaded ? (
-            <div className="grid flex-1 place-items-center">
-              <Button onClick={() => dialogs.setCreateBotOpen(true)}>
-                <Plus size={16} aria-hidden="true" />
-                <Trans>New bot</Trans>
-              </Button>
-            </div>
-          ) : (
-            <Transcript
-              key={activeSnapshot?.threadId}
-              scrollRef={thread.messageScroll}
-              scrollRequest={scrollRequest}
-              onScrollRequestHandled={clearScrollRequest}
-              followRequest={composer.sentCount}
-              artifactTarget={transcriptArtifactTarget}
-              markedUnreadMessageId={read.markedUnreadMessageId}
-              transcript={transcript}
-              showToolActivity={showToolActivity}
-              olderCursor={activeSnapshot?.olderCursor ?? null}
-              unreadAfterSeq={read.unreadAfterSeq}
-              loadingOlder={loadingOlder}
-              answerableAskIds={answerableAskIds}
-              dismissableAskIds={dismissableAskIds}
-              running={transcriptRunning}
-              workingBots={workingBots}
-              userBubble={userBubble}
-              onCallBack={
-                bootstrapMe?.phoneCallsEnabled && !inGroup && active
-                  ? () => callBot(active)
-                  : undefined
-              }
-              onLoadOlder={loadOlder}
-              onOpenBot={openBot}
-              onAnswer={composer.answerMessage}
-              onReply={replyToMessage}
-              onMarkUnread={markMessageUnread}
-              onQuote={quoteMessage}
-              onReact={composer.reactToMessage}
-              onJumpToMessage={jumpToReplyMessage}
-              onOpenPeerMessages={openPeerMessages}
-              memberName={resolveTranscriptMemberName}
-              peerBot={resolveTranscriptBot}
-              onRefresh={refreshActiveThread}
-              onBotChanged={refreshBots}
-              onAddRoutine={addSkillRoutine}
-              voiceReady={Boolean(voiceStatus?.ready)}
-              speakingMessageId={speakingMessageId}
-              onSpeak={speakMessage}
-              onOpenComputer={computerControls.onOpenComputer}
-              onOpenImportSetup={openImportSetup}
+        {interfacesOpen && businessScope ? (
+          <Suspense fallback={<PageLoading />}>
+            <BusinessInterfaces
+              key={businessScope.id}
+              workspace={businessScope}
+              onBack={() => showInterfaces(false)}
+              onOpenNavigation={() => setMobileSidebarOpen(true)}
             />
-          )}
-        </div>
-        {active || activeGroup ? (
+          </Suspense>
+        ) : (
+          <div className="relative flex min-h-0 flex-1 flex-col">
+            {/* Only the pills take input; the gaps pass clicks and scrolling to the transcript. */}
+            <div aria-hidden="true" className="app-drag absolute inset-x-0 top-0 z-10 h-3" />
+            <ChatHeader
+              businessScopes={sidebarSpaces}
+              inGroup={inGroup}
+              active={active}
+              activeGroup={activeGroup}
+              activeSnapshot={activeSnapshot}
+              phoneCallsEnabled={Boolean(bootstrapMe?.phoneCallsEnabled)}
+              inCall={Boolean(active) && call?.botId === active?.id}
+              panelOpen={chatPanelOpen}
+              onOpenNavigation={() => setMobileSidebarOpen(true)}
+              onTogglePanel={() => {
+                if (chatPanelOpen) setPanel(null);
+                else if (inGroup) setPanel("group-settings");
+                else if (active) {
+                  setPanel(lastBotTab.current);
+                  // Refresh run/computer so Take control isn't stuck on a stale busyBotName.
+                  void refreshThread(active.id).catch(() => undefined);
+                }
+              }}
+              onCall={(bot) => {
+                if (call?.botId === bot.id) {
+                  setCallMinimized(false);
+                  return;
+                }
+                callBot(bot);
+              }}
+            />
+            {active?.tradingRole ? (
+              <nav
+                aria-label={t`Bot workspace`}
+                className="mt-16 flex flex-wrap items-center gap-1 border-b px-4 pb-2"
+              >
+                <span className="me-3 text-xs text-muted-foreground">
+                  {tradingTemplates[active.tradingRole].name}
+                </span>
+                {(
+                  [
+                    ["chat", t`Chat`],
+                    [
+                      "trading",
+                      active.tradingRole === "risk"
+                        ? t`Risk review`
+                        : active.tradingRole === "review"
+                          ? t`Trading review`
+                          : t`Trading`,
+                    ],
+                    ["learning", t`Learning`],
+                  ] as const
+                ).map(([value, label]) => (
+                  <Button
+                    key={value}
+                    size="sm"
+                    variant={workspace === value ? "secondary" : "ghost"}
+                    aria-current={workspace === value ? "page" : undefined}
+                    onClick={() => openWorkspace(value)}
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </nav>
+            ) : null}
+            {businessScope && businessScope.ownerUserId !== userId ? (
+              <Suspense fallback={<PageLoading />}>
+                <TradingApprovals key={businessScope.id} businessScope={businessScope} />
+              </Suspense>
+            ) : active?.tradingRole && workspace !== "chat" ? (
+              <Suspense fallback={<PageLoading />}>
+                <TradingPage
+                  key={`${active.id}:${selectedScopeId}`}
+                  bot={active}
+                  view={workspace}
+                  businessScope={businessScope}
+                  onChooseScope={focusBusinessScope}
+                />
+              </Suspense>
+            ) : !active && businessScope && initialBotsLoaded ? (
+              <BusinessScopeEmpty
+                workspace={businessScope}
+                onCreate={() => dialogs.setCreateBotOpen(true)}
+              />
+            ) : !active && !activeGroup && initialBotsLoaded ? (
+              <div className="grid flex-1 place-items-center">
+                <Button onClick={() => dialogs.setCreateBotOpen(true)}>
+                  <Plus size={16} aria-hidden="true" />
+                  <Trans>New bot</Trans>
+                </Button>
+              </div>
+            ) : (
+              <Transcript
+                key={activeSnapshot?.threadId}
+                scrollRef={thread.messageScroll}
+                scrollRequest={scrollRequest}
+                onScrollRequestHandled={clearScrollRequest}
+                followRequest={composer.sentCount}
+                artifactTarget={transcriptArtifactTarget}
+                markedUnreadMessageId={read.markedUnreadMessageId}
+                transcript={transcript}
+                showToolActivity={showToolActivity}
+                olderCursor={activeSnapshot?.olderCursor ?? null}
+                unreadAfterSeq={read.unreadAfterSeq}
+                loadingOlder={loadingOlder}
+                answerableAskIds={answerableAskIds}
+                dismissableAskIds={dismissableAskIds}
+                running={transcriptRunning}
+                workingBots={workingBots}
+                userBubble={userBubble}
+                onCallBack={
+                  bootstrapMe?.phoneCallsEnabled && !inGroup && active
+                    ? () => callBot(active)
+                    : undefined
+                }
+                onLoadOlder={loadOlder}
+                onOpenBot={openBot}
+                onAnswer={composer.answerMessage}
+                onReply={replyToMessage}
+                onMarkUnread={markMessageUnread}
+                onQuote={quoteMessage}
+                onReact={composer.reactToMessage}
+                onJumpToMessage={jumpToReplyMessage}
+                onOpenPeerMessages={openPeerMessages}
+                memberName={resolveTranscriptMemberName}
+                peerBot={resolveTranscriptBot}
+                onRefresh={refreshActiveThread}
+                onBotChanged={refreshBots}
+                onAddRoutine={addSkillRoutine}
+                voiceReady={Boolean(voiceStatus?.ready)}
+                speakingMessageId={speakingMessageId}
+                onSpeak={speakMessage}
+                onOpenComputer={computerControls.onOpenComputer}
+                onOpenImportSetup={openImportSetup}
+              />
+            )}
+          </div>
+        )}
+        {!interfacesOpen && (active || activeGroup) && workspace === "chat" ? (
           // Let messages continue behind the composer's rounded top corners.
           <div className="pointer-events-none relative z-30 -mt-7">
             {recordingSkill ? (
@@ -1207,6 +1403,35 @@ function SpaceShell() {
       />
 
       <Suspense fallback={null}>
+        {creatingScope || configuringScope ? (
+          <BusinessScopeDialog
+            configure={
+              configuringScope
+                ? {
+                    name:
+                      sidebarSpaces.find((space) => space.id === bootstrapMe?.spaceId)?.name ?? "",
+                  }
+                : undefined
+            }
+            onClose={() => {
+              setCreatingScope(false);
+              setConfiguringScope(false);
+            }}
+            onCreated={(scope) => {
+              setCreatingScope(false);
+              setConfiguringScope(false);
+              rememberBusinessView(false);
+              setPanel(null);
+              if (scope.spaceId === bootstrapMe?.spaceId) {
+                queryClient.setQueryData(
+                  queries.trading.workspaces.queryOptions({ input: {} }).queryKey,
+                  [scope],
+                );
+                showInterfaces(true);
+              } else openSpaceChat(scope.spaceId, "/app");
+            }}
+          />
+        ) : null}
         <ShellDialogs
           dialogs={dialogs}
           rpc={rpc}
@@ -1214,7 +1439,6 @@ function SpaceShell() {
           bots={bots}
           activeId={active?.id}
           activeGroupId={activeGroup?.id}
-          alive={alive}
           navigate={navigate}
           setPanel={setPanel}
           refreshBots={refreshBots}
@@ -1222,6 +1446,8 @@ function SpaceShell() {
           openSpaceSettings={openSpaceSettings}
           closeMobileSidebar={() => setMobileSidebarOpen(false)}
           createBot={createBot}
+          businessScope={businessScope}
+          onChooseScope={focusBusinessScope}
           clearOpenThread={() => {
             thread.resetHistory();
             thread.updateSnapshot((current) =>
@@ -1242,6 +1468,7 @@ function SpaceShell() {
 
       <Suspense fallback={null}>
         <SettingsOverlays
+          alive={alive}
           rpc={rpc}
           queries={queries}
           overlay={overlay}
@@ -1253,7 +1480,6 @@ function SpaceShell() {
           removeSpace={removeSpace}
           refreshSpaces={() => refreshBots()}
           openAgentImport={() => setPanel("import-agent")}
-          alive={alive}
           user={session.data?.user}
           refetchSession={() => session.refetch({ query: { disableCookieCache: true } })}
           bootstrapMe={bootstrapMe}

@@ -17,9 +17,15 @@ import { errorText } from "../../lib/user-error";
 
 /** The user's spaces; choosing where something is available only matters with two or more. */
 export function useOwnSpaces(): Array<{ id: string; name: string }> {
+  const { t } = useLingui();
   const queries = useSpaceQueries();
   const spaces = useQuery(queries.spaces.list.queryOptions());
-  return spaces.data?.spaces ?? [];
+  return (
+    spaces.data?.spaces.map((space) => ({
+      ...space,
+      name: space.isDefault && space.name === "Personal" ? t`Default business scope` : space.name,
+    })) ?? []
+  );
 }
 
 /** True when removing an item takes it from more than this one space. */
@@ -45,7 +51,11 @@ export function AvailabilityLabel({ availability }: { availability?: SpaceAvaila
       {only ? (
         only.name
       ) : (
-        <Plural value={availability.spaceIds.length} one="# space" other="# spaces" />
+        <Plural
+          value={availability.spaceIds.length}
+          one="# business scope"
+          other="# business scopes"
+        />
       )}
     </span>
   );
@@ -84,11 +94,11 @@ export function AvailabilityControl({
 
   const chosen = availability.allSpaces ? spaces.map((space) => space.id) : availability.spaceIds;
   const summary = availability.allSpaces ? (
-    <Trans>All spaces</Trans>
+    <Trans>All business scopes</Trans>
   ) : chosen.length === 1 ? (
-    (spaces.find((space) => space.id === chosen[0])?.name ?? <Trans>1 space</Trans>)
+    (spaces.find((space) => space.id === chosen[0])?.name ?? <Trans>1 business scope</Trans>)
   ) : (
-    <Plural value={chosen.length} one="# space" other="# spaces" />
+    <Plural value={chosen.length} one="# business scope" other="# business scopes" />
   );
   const toggle = (spaceId: string) => {
     const next = chosen.includes(spaceId)
@@ -129,7 +139,7 @@ export function AvailabilityControl({
               )
             }
           >
-            <Trans>All spaces</Trans>
+            <Trans>All business scopes</Trans>
           </DropdownMenuCheckboxItem>
           <DropdownMenuSeparator />
           {spaces.map((space) => (

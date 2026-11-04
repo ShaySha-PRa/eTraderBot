@@ -24,7 +24,18 @@ export function activeBotId(page: Page) {
 }
 
 export async function rpc<T>(page: Page, procedure: string, body: unknown): Promise<T> {
-  const response = await page.request.post(`/rpc/${procedure}`, { data: { json: body } });
+  // Match the app's active business context, including after a Space switch.
+  const spaceId = await page.evaluate(() => {
+    try {
+      return localStorage.getItem("rakazo:space-id");
+    } catch {
+      return null;
+    }
+  });
+  const response = await page.request.post(`/rpc/${procedure}`, {
+    data: { json: body },
+    headers: spaceId ? { "x-rakazo-space-id": spaceId } : undefined,
+  });
   const parsed = (await response.json()) as { json?: T; error?: { message?: string } };
   if (!response.ok() || parsed.error) {
     throw new Error(`${procedure} ${response.status()}: ${parsed.error?.message ?? "failed"}`);
@@ -193,7 +204,7 @@ export async function openNewGroup(page: Page) {
 
 export async function openNewSpace(page: Page) {
   await page.getByTestId("create-menu-trigger").click();
-  await page.getByTestId("create-new-space").click();
+  await page.getByTestId("create-business-scope").click();
 }
 
 export async function createBotFromPicker(

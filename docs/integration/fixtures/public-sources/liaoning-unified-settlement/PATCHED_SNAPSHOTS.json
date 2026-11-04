@@ -1,0 +1,22 @@
+{
+  "patched": [
+    "snapshots/storage/snap-sto-jsbess-20250310.json",
+    "snapshots/storage/snap-sto-jsbess-20250311.json",
+    "snapshots/storage/snap-sto-sdbess-20250310.json",
+    "snapshots/storage/snap-sto-sdbess-20250311.json",
+    "snapshots/storage/snap-sto-shbess-20250310.json",
+    "snapshots/storage/snap-sto-shbess-20250312.json",
+    "snapshots/generator/snap-gen-jspv-20250310.json",
+    "snapshots/generator/snap-gen-jspv-20250311.json",
+    "snapshots/generator/snap-gen-sdwind-20250310.json",
+    "snapshots/generator/snap-gen-sdwind-20250311.json",
+    "snapshots/generator/snap-gen-shcoal-20250310.json",
+    "snapshots/generator/snap-gen-shcoal-20250312.json",
+    "snapshots/retailer/snap-ret-js01-20250310.json",
+    "snapshots/retailer/snap-ret-js01-20250311.json",
+    "snapshots/retailer/snap-ret-sd01-20250310.json",
+    "snapshots/retailer/snap-ret-sd01-20250312.json",
+    "snapshots/retailer/snap-ret-sh01-20250310.json",
+    "snapshots/retailer/snap-ret-sh01-20250311.json"
+  ]
+}

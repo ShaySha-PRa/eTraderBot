@@ -1,0 +1,639 @@
+{
+  "tradeDate": "2025-03-10",
+  "timezone": "Asia/Shanghai",
+  "pdfUrl": "https://fgw.ln.gov.cn/fgw/articleFileDir/2025-03/11/683a654284a94392b0c1f2766810d575/2025031120560692249.pdf",
+  "listingTitle": "更新发布辽宁电力现货电价-日前、实时电价表（2025年3月10日）",
+  "noticePublished": "2025-03-11",
+  "points15min": [
+    {
+      "clock": "0:00",
+      "minutes": 0,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "0:15",
+      "minutes": 15,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "0:30",
+      "minutes": 30,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "0:45",
+      "minutes": 45,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "1:00",
+      "minutes": 60,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "1:15",
+      "minutes": 75,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "1:30",
+      "minutes": 90,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "1:45",
+      "minutes": 105,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "2:00",
+      "minutes": 120,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "2:15",
+      "minutes": 135,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "2:30",
+      "minutes": 150,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "2:45",
+      "minutes": 165,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "3:00",
+      "minutes": 180,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "3:15",
+      "minutes": 195,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "3:30",
+      "minutes": 210,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "3:45",
+      "minutes": 225,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "4:00",
+      "minutes": 240,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "4:15",
+      "minutes": 255,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "4:30",
+      "minutes": 270,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "4:45",
+      "minutes": 285,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "5:00",
+      "minutes": 300,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "5:15",
+      "minutes": 315,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "5:30",
+      "minutes": 330,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "5:45",
+      "minutes": 345,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "6:00",
+      "minutes": 360,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "6:15",
+      "minutes": 375,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "6:30",
+      "minutes": 390,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "6:45",
+      "minutes": 405,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "7:00",
+      "minutes": 420,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "7:15",
+      "minutes": 435,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "7:30",
+      "minutes": 450,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "7:45",
+      "minutes": 465,
+      "dayAhead": "0",
+      "realtime": "18.4"
+    },
+    {
+      "clock": "8:00",
+      "minutes": 480,
+      "dayAhead": "22.38",
+      "realtime": "19.93"
+    },
+    {
+      "clock": "8:15",
+      "minutes": 495,
+      "dayAhead": "27.35",
+      "realtime": "22.16"
+    },
+    {
+      "clock": "8:30",
+      "minutes": 510,
+      "dayAhead": "30.77",
+      "realtime": "23.08"
+    },
+    {
+      "clock": "8:45",
+      "minutes": 525,
+      "dayAhead": "33.9",
+      "realtime": "24.1"
+    },
+    {
+      "clock": "9:00",
+      "minutes": 540,
+      "dayAhead": "37.75",
+      "realtime": "24.28"
+    },
+    {
+      "clock": "9:15",
+      "minutes": 555,
+      "dayAhead": "39.14",
+      "realtime": "24.16"
+    },
+    {
+      "clock": "9:30",
+      "minutes": 570,
+      "dayAhead": "40.72",
+      "realtime": "25.2"
+    },
+    {
+      "clock": "9:45",
+      "minutes": 585,
+      "dayAhead": "40.97",
+      "realtime": "24.43"
+    },
+    {
+      "clock": "10:00",
+      "minutes": 600,
+      "dayAhead": "40.98",
+      "realtime": "24.71"
+    },
+    {
+      "clock": "10:15",
+      "minutes": 615,
+      "dayAhead": "40.22",
+      "realtime": "24.77"
+    },
+    {
+      "clock": "10:30",
+      "minutes": 630,
+      "dayAhead": "40.47",
+      "realtime": "24.92"
+    },
+    {
+      "clock": "10:45",
+      "minutes": 645,
+      "dayAhead": "40.5",
+      "realtime": "25.27"
+    },
+    {
+      "clock": "11:00",
+      "minutes": 660,
+      "dayAhead": "39.52",
+      "realtime": "25.34"
+    },
+    {
+      "clock": "11:15",
+      "minutes": 675,
+      "dayAhead": "34.82",
+      "realtime": "23.87"
+    },
+    {
+      "clock": "11:30",
+      "minutes": 690,
+      "dayAhead": "33.57",
+      "realtime": "22.89"
+    },
+    {
+      "clock": "11:45",
+      "minutes": 705,
+      "dayAhead": "31.37",
+      "realtime": "21.9"
+    },
+    {
+      "clock": "12:00",
+      "minutes": 720,
+      "dayAhead": "30.58",
+      "realtime": "21.49"
+    },
+    {
+      "clock": "12:15",
+      "minutes": 735,
+      "dayAhead": "29.98",
+      "realtime": "21.5"
+    },
+    {
+      "clock": "12:30",
+      "minutes": 750,
+      "dayAhead": "29.03",
+      "realtime": "21.71"
+    },
+    {
+      "clock": "12:45",
+      "minutes": 765,
+      "dayAhead": "28.6",
+      "realtime": "21.23"
+    },
+    {
+      "clock": "13:00",
+      "minutes": 780,
+      "dayAhead": "28.41",
+      "realtime": "0"
+    },
+    {
+      "clock": "13:15",
+      "minutes": 795,
+      "dayAhead": "29.15",
+      "realtime": "0"
+    },
+    {
+      "clock": "13:30",
+      "minutes": 810,
+      "dayAhead": "28.94",
+      "realtime": "21.53"
+    },
+    {
+      "clock": "13:45",
+      "minutes": 825,
+      "dayAhead": "28.42",
+      "realtime": "21.1"
+    },
+    {
+      "clock": "14:00",
+      "minutes": 840,
+      "dayAhead": "27.21",
+      "realtime": "0"
+    },
+    {
+      "clock": "14:15",
+      "minutes": 855,
+      "dayAhead": "27.54",
+      "realtime": "20.91"
+    },
+    {
+      "clock": "14:30",
+      "minutes": 870,
+      "dayAhead": "27.38",
+      "realtime": "20.42"
+    },
+    {
+      "clock": "14:45",
+      "minutes": 885,
+      "dayAhead": "27.24",
+      "realtime": "19.99"
+    },
+    {
+      "clock": "15:00",
+      "minutes": 900,
+      "dayAhead": "27.6",
+      "realtime": "20.99"
+    },
+    {
+      "clock": "15:15",
+      "minutes": 915,
+      "dayAhead": "28.23",
+      "realtime": "21.23"
+    },
+    {
+      "clock": "15:30",
+      "minutes": 930,
+      "dayAhead": "28.51",
+      "realtime": "20.56"
+    },
+    {
+      "clock": "15:45",
+      "minutes": 945,
+      "dayAhead": "28.32",
+      "realtime": "20.98"
+    },
+    {
+      "clock": "16:00",
+      "minutes": 960,
+      "dayAhead": "28.44",
+      "realtime": "0"
+    },
+    {
+      "clock": "16:15",
+      "minutes": 975,
+      "dayAhead": "29.64",
+      "realtime": "22.13"
+    },
+    {
+      "clock": "16:30",
+      "minutes": 990,
+      "dayAhead": "29.8",
+      "realtime": "22.68"
+    },
+    {
+      "clock": "16:45",
+      "minutes": 1005,
+      "dayAhead": "30.04",
+      "realtime": "49.75"
+    },
+    {
+      "clock": "17:00",
+      "minutes": 1020,
+      "dayAhead": "30.15",
+      "realtime": "22.59"
+    },
+    {
+      "clock": "17:15",
+      "minutes": 1035,
+      "dayAhead": "31.21",
+      "realtime": "22.36"
+    },
+    {
+      "clock": "17:30",
+      "minutes": 1050,
+      "dayAhead": "33.22",
+      "realtime": "22.94"
+    },
+    {
+      "clock": "17:45",
+      "minutes": 1065,
+      "dayAhead": "35.01",
+      "realtime": "24.78"
+    },
+    {
+      "clock": "18:00",
+      "minutes": 1080,
+      "dayAhead": "37.52",
+      "realtime": "24.44"
+    },
+    {
+      "clock": "18:15",
+      "minutes": 1095,
+      "dayAhead": "37.59",
+      "realtime": "23.41"
+    },
+    {
+      "clock": "18:30",
+      "minutes": 1110,
+      "dayAhead": "36.82",
+      "realtime": "22.64"
+    },
+    {
+      "clock": "18:45",
+      "minutes": 1125,
+      "dayAhead": "36.16",
+      "realtime": "23.7"
+    },
+    {
+      "clock": "19:00",
+      "minutes": 1140,
+      "dayAhead": "33.04",
+      "realtime": "23.95"
+    },
+    {
+      "clock": "19:15",
+      "minutes": 1155,
+      "dayAhead": "31.94",
+      "realtime": "24.25"
+    },
+    {
+      "clock": "19:30",
+      "minutes": 1170,
+      "dayAhead": "31.03",
+      "realtime": "23.53"
+    },
+    {
+      "clock": "19:45",
+      "minutes": 1185,
+      "dayAhead": "30.6",
+      "realtime": "22.8"
+    },
+    {
+      "clock": "20:00",
+      "minutes": 1200,
+      "dayAhead": "28.84",
+      "realtime": "23.64"
+    },
+    {
+      "clock": "20:15",
+      "minutes": 1215,
+      "dayAhead": "30.65",
+      "realtime": "24.93"
+    },
+    {
+      "clock": "20:30",
+      "minutes": 1230,
+      "dayAhead": "29.46",
+      "realtime": "24.41"
+    },
+    {
+      "clock": "20:45",
+      "minutes": 1245,
+      "dayAhead": "27.67",
+      "realtime": "23.52"
+    },
+    {
+      "clock": "21:00",
+      "minutes": 1260,
+      "dayAhead": "24.68",
+      "realtime": "22.14"
+    },
+    {
+      "clock": "21:15",
+      "minutes": 1275,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "21:30",
+      "minutes": 1290,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "21:45",
+      "minutes": 1305,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "22:00",
+      "minutes": 1320,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "22:15",
+      "minutes": 1335,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "22:30",
+      "minutes": 1350,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "22:45",
+      "minutes": 1365,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "23:00",
+      "minutes": 1380,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "23:15",
+      "minutes": 1395,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "23:30",
+      "minutes": 1410,
+      "dayAhead": "0",
+      "realtime": "0"
+    },
+    {
+      "clock": "23:45",
+      "minutes": 1425,
+      "dayAhead": "0",
+      "realtime": "0"
+    }
+  ],
+  "hourlyMeanCnyPerMwh": {
+    "dayAhead": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "5.595",
+      "32.4425",
+      "40.4525",
+      "40.1775",
+      "32.585",
+      "29.005",
+      "28.43",
+      "27.44",
+      "28.375",
+      "29.9075",
+      "34.24",
+      "35.9025",
+      "30.6025",
+      "28.115",
+      "0",
+      "0",
+      "0"
+    ],
+    "realtime": [
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "9.5825",
+      "23.405",
+      "24.625",
+      "25.075",
+      "22.5375",
+      "16.11",
+      "10.6575",
+      "20.5775",
+      "15.6925",
+      "29.2875",
+      "23.63",
+      "23.425",
+      "23.555",
+      "23.75",
+      "0",
+      "0",
+      "0"
+    ]
+  }
+}

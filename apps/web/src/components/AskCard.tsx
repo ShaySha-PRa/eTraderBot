@@ -61,7 +61,7 @@ function approvalActionLabel(
   outcome?: "created" | "cancelled",
   site?: string,
 ): string {
-  if (outcome === "created") return t`Create space`;
+  if (outcome === "created") return t`Create business scope`;
   if (outcome === "cancelled") return t`Cancel`;
   if (id === "allow") return ALLOW_IN_SPACE.has(fallback) ? t`Allow in this space` : t`Allow once`;
   if (id === "always") return site ? t`Always allow ${site}` : t`Always allow this tool`;

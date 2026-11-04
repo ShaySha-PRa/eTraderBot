@@ -49,7 +49,9 @@ export function SpaceSettingsPanel({
       setDraft(trimmed);
     } catch (err) {
       setError(
-        err instanceof Error && err.message.trim() ? err.message : t`Could not rename space`,
+        err instanceof Error && err.message.trim()
+          ? err.message
+          : t`Could not rename business scope`,
       );
     } finally {
       setPending(false);
@@ -108,7 +110,7 @@ export function SpaceSettingsPanel({
           className="rounded-full"
           onClick={() => setConfirmingDelete(true)}
         >
-          <Trans>Delete space</Trans>
+          <Trans>Delete business scope</Trans>
         </Button>
       ) : null}
       {confirmingDelete ? (

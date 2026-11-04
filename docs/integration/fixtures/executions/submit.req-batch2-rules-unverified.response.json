@@ -1,0 +1,6 @@
+{
+  "code": "RULES_UNVERIFIED",
+  "message": "rules.verification=synthetic cannot authorize live",
+  "requestId": "http-batch2-ru-001",
+  "retryable": false
+}

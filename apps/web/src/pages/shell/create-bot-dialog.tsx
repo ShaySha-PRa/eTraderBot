@@ -1,6 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { BotAvatarSet } from "@rakazo/contracts";
-import { BOT_NAME_MAX_LENGTH, DEFAULT_NEW_BOT_AVATAR_SET } from "@rakazo/contracts";
+import type { BotAvatarSet, TradingBotRole } from "@rakazo/contracts";
+import {
+  BOT_NAME_MAX_LENGTH,
+  DEFAULT_NEW_BOT_AVATAR_SET,
+  TradingBotRoleSchema,
+} from "@rakazo/contracts";
 import {
   newClientId,
   ORGANIC_AVATAR_HEART_FAMILY,
@@ -20,7 +24,8 @@ import {
   Input,
   parseBotAvatar,
 } from "@rakazo/ui-web";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useTradingBotTemplates } from "../../lib/trading-bot-templates";
 import { errorText } from "../../lib/user-error";
 import { BotLookPicker } from "./avatar-studio-popover";
 
@@ -32,6 +37,9 @@ function pick<T>(options: readonly T[]): T {
 }
 
 export interface CreateBotDialogInput {
+  tradingRole?: TradingBotRole;
+  tradingWorkspaceId?: string;
+  spawnKey?: string;
   name: string;
   color: string;
   /** Reserve the logo preview's persistent seed through creation and retries. */
@@ -45,13 +53,18 @@ export interface CreateBotDialogInput {
 export function CreateBotDialog({
   onCancel,
   onCreate,
+  businessScope,
+  onChooseScope,
 }: {
+  businessScope?: { id: string; name: string };
+  onChooseScope?: () => void;
   onCancel: () => void;
   onCreate: (input: CreateBotDialogInput) => Promise<void>;
 }) {
   const { t } = useLingui();
-  const nameRef = useRef<HTMLInputElement>(null);
-  const [name, setName] = useState("");
+  const templates = useTradingBotTemplates();
+  const [role, setRole] = useState<TradingBotRole | null>(businessScope ? "spot" : null);
+  const [name, setName] = useState(businessScope ? templates.spot.name : "");
   const [previewId] = useState(() => {
     let id: string;
     do {
@@ -69,12 +82,15 @@ export function CreateBotDialog({
   const trimmed = name.trim();
 
   async function create() {
-    if (!trimmed || submitting) return;
+    if (!trimmed || submitting || (role && !businessScope)) return;
     setError(null);
     setSubmitting(true);
     const organic = avatarSet === "organic" && parseBotAvatar(look.value).shapeIndex === undefined;
     try {
       await onCreate({
+        ...(role
+          ? { tradingRole: role, spawnKey: previewId, tradingWorkspaceId: businessScope!.id }
+          : {}),
         name: trimmed,
         color: look.value,
         ...(avatarSet === "rakazo" ? { id: previewId } : {}),
@@ -87,6 +103,22 @@ export function CreateBotDialog({
     }
   }
 
+  const lookPicker = (
+    <BotLookPicker
+      value={look.value}
+      identity={avatarSet === "rakazo" ? previewId : look.identity}
+      organicIdentities={ORGANIC_IDENTITIES}
+      avatarSet={avatarSet}
+      onAvatarSetChange={(set, value) => {
+        setAvatarSet(set);
+        setLook((current) => ({ ...current, value }));
+      }}
+      onChange={(value, identity) => {
+        setLook((current) => ({ value, identity: identity ?? current.identity }));
+      }}
+    />
+  );
+
   return (
     <Dialog
       open
@@ -97,8 +129,7 @@ export function CreateBotDialog({
       <DialogContent
         showCloseButton={false}
         aria-describedby={undefined}
-        initialFocus={nameRef}
-        className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-md"
+        className="max-h-[calc(100dvh-2rem)] overflow-y-auto sm:max-w-xl"
         data-testid="create-bot-dialog"
       >
         <form
@@ -113,16 +144,79 @@ export function CreateBotDialog({
               <Trans>New bot</Trans>
             </DialogTitle>
           </DialogHeader>
+          {businessScope ? (
+            <p className="text-sm text-muted-foreground">
+              <Trans>Business scope</Trans> · {businessScope.name}
+            </p>
+          ) : role ? (
+            <div className="grid gap-2 text-sm">
+              <p>
+                <Trans>Select a business scope in the sidebar first.</Trans>
+              </p>
+              {onChooseScope ? (
+                <Button type="button" variant="outline" onClick={onChooseScope}>
+                  <Trans>Choose business scope</Trans>
+                </Button>
+              ) : null}
+            </div>
+          ) : null}
+          <fieldset disabled={submitting} className="grid gap-2">
+            <legend className="mb-2 text-sm font-medium">
+              <Trans>Bot template</Trans>
+            </legend>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {TradingBotRoleSchema.options.map((value) => (
+                <label
+                  key={value}
+                  className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 ${role === value ? "border-primary bg-muted" : "hover:bg-muted/50"}`}
+                >
+                  <input
+                    type="radio"
+                    name="trading-template"
+                    value={value}
+                    checked={role === value}
+                    onChange={() => {
+                      if (!name.trim() || (role && name === templates[role].name))
+                        setName(templates[value].name);
+                      setRole(value);
+                    }}
+                    className="mt-1 accent-primary"
+                  />
+                  <span>
+                    <span className="block text-sm font-medium">{templates[value].name}</span>
+                    <span className="mt-1 block text-xs text-muted-foreground">
+                      {templates[value].description}
+                    </span>
+                  </span>
+                </label>
+              ))}
+            </div>
+            {
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border p-3 text-sm">
+                <input
+                  type="radio"
+                  name="trading-template"
+                  value="general"
+                  checked={!role}
+                  onChange={() => {
+                    if (role && name === templates[role].name) setName("");
+                    setRole(null);
+                  }}
+                  className="accent-primary"
+                />
+                <Trans>General bot</Trans>
+              </label>
+            }
+          </fieldset>
           <div className="flex justify-center py-2">
             <BotAvatar
               color={look.value}
               identity={avatarSet === "rakazo" ? previewId : look.identity}
-              size={96}
+              size={role ? 48 : 96}
               avatarSet={avatarSet}
             />
           </div>
           <Input
-            ref={nameRef}
             aria-label={t`Name`}
             placeholder={t`Name your Bot`}
             value={name}
@@ -135,24 +229,25 @@ export function CreateBotDialog({
               {error}
             </p>
           ) : null}
-          <BotLookPicker
-            value={look.value}
-            identity={avatarSet === "rakazo" ? previewId : look.identity}
-            organicIdentities={ORGANIC_IDENTITIES}
-            avatarSet={avatarSet}
-            onAvatarSetChange={(set, value) => {
-              setAvatarSet(set);
-              setLook((current) => ({ ...current, value }));
-            }}
-            onChange={(value, identity) => {
-              setLook((current) => ({ value, identity: identity ?? current.identity }));
-            }}
-          />
+          {role ? (
+            <details>
+              <summary className="cursor-pointer text-sm text-muted-foreground">
+                <Trans>Appearance</Trans>
+              </summary>
+              <div className="mt-3">{lookPicker}</div>
+            </details>
+          ) : (
+            lookPicker
+          )}
+
           <DialogFooter>
             <Button type="button" variant="outline" disabled={submitting} onClick={onCancel}>
               <Trans>Cancel</Trans>
             </Button>
-            <Button type="submit" disabled={!trimmed || submitting}>
+            <Button
+              type="submit"
+              disabled={!trimmed || submitting || Boolean(role && !businessScope)}
+            >
               <Trans>Create</Trans>
             </Button>
           </DialogFooter>

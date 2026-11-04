@@ -1,0 +1,5 @@
+{
+  "executionId": "exec-partial-001",
+  "clientRequestId": "req-cancel-partial-001",
+  "reason": "trader cancel remainder after partial fill (simulation)"
+}

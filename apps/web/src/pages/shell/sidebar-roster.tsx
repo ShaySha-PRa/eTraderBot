@@ -24,12 +24,14 @@ import {
   rosterHasUndismissedRunError,
   rosterWorkStatusLabel,
 } from "../../lib/roster-status";
+import { BotBusinessLabels } from "./bot-business-labels";
 import type { RosterDropAction, RosterDropTarget } from "./roster-drop";
 import type { sidebarGroupsForSpaces } from "./space-sidebar";
 import { useRedrawAtMidnight } from "./use-redraw-at-midnight";
 
 export function SidebarRoster({
   sidebarGroups,
+  businessScopes,
   collapsedSidebarSections,
   bootstrapMe,
   botSections,
@@ -62,6 +64,7 @@ export function SidebarRoster({
   sidebarGroups: ReturnType<
     typeof sidebarGroupsForSpaces<Space["bots"][number], Space["groups"][number]>
   >;
+  businessScopes?: Pick<Space, "id" | "name">[];
   collapsedSidebarSections: ReadonlySet<string>;
   bootstrapMe: Pick<Me, "spaceId"> | null | undefined;
   botSections: BotSection[];
@@ -160,7 +163,7 @@ export function SidebarRoster({
                       className={`flex min-w-0 items-center justify-between gap-2 rounded-lg px-2.5 py-1 text-[11px] font-semibold tracking-wider uppercase text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-ring ${hasSpaceActions ? "col-start-1 row-start-1 w-full" : "flex-1"}`}
                       onClick={() => {
                         if (group.emptySpaceId) {
-                          openSpaceChat(group.emptySpaceId, "/onboarding");
+                          openSpaceChat(group.emptySpaceId, "/app");
                         }
                       }}
                       onContextMenu={
@@ -267,6 +270,14 @@ export function SidebarRoster({
                 const compact = botsSidebarDensity === "compact";
                 const workStatusLabel =
                   item.kind === "bot" ? rosterWorkStatusLabel(item.chat.status) : null;
+                const botScopes =
+                  item.kind === "bot"
+                    ? businessScopes?.filter((scope) => scope.id === group.spaceId)
+                    : undefined;
+                const labelledName = [
+                  item.chat.name,
+                  ...(botScopes?.map((scope) => scope.name) ?? []),
+                ].join(" · ");
                 const rowError =
                   item.kind === "bot" &&
                   (rosterHasUndismissedRunError(item.chat.runErrorId, dismissedRunErrorIds) ||
@@ -326,7 +337,7 @@ export function SidebarRoster({
                     data-roster-unread={item.chat.unread ? "true" : undefined}
                     data-roster-error={rowError && (compact || mini) ? "true" : undefined}
                     aria-current={selected ? "page" : undefined}
-                    aria-label={mini ? item.chat.name : undefined}
+                    aria-label={mini ? labelledName : undefined}
                     aria-describedby={
                       mini
                         ? [
@@ -476,6 +487,7 @@ export function SidebarRoster({
                             ) : null}
                           </div>
                         </div>
+                        <BotBusinessLabels scopes={botScopes} />
                         {compact ? (
                           compactStatusLabel ? (
                             <div
@@ -545,8 +557,8 @@ export function SidebarRoster({
                           side="inline-end"
                           label={
                             compactStatusLabel
-                              ? `${item.chat.name}: ${compactStatusLabel}`
-                              : item.chat.name
+                              ? `${labelledName}: ${compactStatusLabel}`
+                              : labelledName
                           }
                         >
                           {chatTrigger}

@@ -83,7 +83,7 @@ test("creation actions stay visible above a long bot list", async ({ page }, tes
   await page.getByTestId("create-menu-trigger").click();
   const picker = page.getByTestId("bot-create-picker");
   const group = picker.getByTestId("create-new-group");
-  const space = picker.getByTestId("create-new-space");
+  const space = picker.getByTestId("create-business-scope");
   const firstBot = picker.locator('[data-testid^="picker-bot-"]').first();
   await expect(picker.locator('[data-testid^="picker-bot-"]')).toHaveCount(13);
   const groupBox = await group.boundingBox();

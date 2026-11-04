@@ -14,6 +14,7 @@ import type {
   PaymentWalletProvider,
   SandboxProvider,
   SecretStore,
+  TradingBotGateway,
   WebProvider,
 } from "@rakazo/adapter-kit";
 import type { PrismaClient, RunLease, ThreadEvents } from "@rakazo/db";
@@ -25,6 +26,7 @@ import type { TicketChangeNotifier } from "./ticket-changes.js";
 import type { UserDeviceGateway } from "./user-device-protocol.js";
 
 export interface ExecutorDeps {
+  trading?: TradingBotGateway;
   maxUploadSizeBytes?: number;
   contextStrategy?: AgentContextStrategy;
   prisma: PrismaClient;

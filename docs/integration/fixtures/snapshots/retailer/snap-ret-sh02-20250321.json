@@ -1,0 +1,650 @@
+{
+  "schemaVersion": "1",
+  "snapshotId": "snap-ret-sh02-20250321",
+  "scope": {
+    "subjectId": "ret-sh-02",
+    "subjectKind": "retailer",
+    "accountId": "acct-ret-sh-02",
+    "region": "CN-SH",
+    "marketId": "mkt-sh-spot-sim",
+    "productId": "prod-energy",
+    "stage": "realtime",
+    "environment": "simulation"
+  },
+  "source": {
+    "sourceId": "src-snap-ret-sh02-20250321",
+    "kind": "synthetic",
+    "observedAt": "2025-03-20T18:03:00+08:00",
+    "asOf": "2025-03-20T18:00:00+08:00",
+    "validUntil": "2025-03-21T12:00:00+08:00",
+    "revision": "syn-batch2"
+  },
+  "rules": {
+    "id": "rules-sim-batch2",
+    "version": "2025.03.sim.batch2",
+    "source": {
+      "sourceId": "rules-sim-batch2-src",
+      "kind": "synthetic",
+      "observedAt": "2025-03-19T18:05:00+08:00",
+      "asOf": "2025-03-19T18:00:00+08:00",
+      "validUntil": "2025-03-20T18:00:00+08:00",
+      "revision": "syn-batch2"
+    },
+    "verification": "synthetic",
+    "effectiveFrom": "2025-01-01T00:00:00+08:00",
+    "effectiveTo": "2026-12-31T23:59:59+08:00",
+    "timezone": "Asia/Shanghai",
+    "currency": "CNY",
+    "intervalMinutes": 60,
+    "priceMin": "-80",
+    "priceMax": "1500",
+    "priceStep": "0.1",
+    "energyStep": "0.1",
+    "maxSnapshotAgeSeconds": 86400
+  },
+  "input": {
+    "kind": "retailer",
+    "intervals": [
+      {
+        "start": "2025-03-21T00:00:00+08:00",
+        "end": "2025-03-21T01:00:00+08:00",
+        "forecastDemandMwh": "56",
+        "contractedEnergyMwh": "30.8",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h00-a",
+            "price": "222",
+            "availableEnergyMwh": "56"
+          },
+          {
+            "offerId": "buy-sh02-h00-b",
+            "price": "257",
+            "availableEnergyMwh": "22.4"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h00-a",
+            "price": "234",
+            "availableEnergyMwh": "8.4"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T01:00:00+08:00",
+        "end": "2025-03-21T02:00:00+08:00",
+        "forecastDemandMwh": "58.4",
+        "contractedEnergyMwh": "32.1",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h01-a",
+            "price": "213",
+            "availableEnergyMwh": "58.4"
+          },
+          {
+            "offerId": "buy-sh02-h01-b",
+            "price": "248",
+            "availableEnergyMwh": "23.36"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h01-a",
+            "price": "225",
+            "availableEnergyMwh": "8.76"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T02:00:00+08:00",
+        "end": "2025-03-21T03:00:00+08:00",
+        "forecastDemandMwh": "60.8",
+        "contractedEnergyMwh": "33.4",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h02-a",
+            "price": "209",
+            "availableEnergyMwh": "60.8"
+          },
+          {
+            "offerId": "buy-sh02-h02-b",
+            "price": "244",
+            "availableEnergyMwh": "24.32"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h02-a",
+            "price": "221",
+            "availableEnergyMwh": "9.12"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T03:00:00+08:00",
+        "end": "2025-03-21T04:00:00+08:00",
+        "forecastDemandMwh": "63.2",
+        "contractedEnergyMwh": "34.8",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h03-a",
+            "price": "205",
+            "availableEnergyMwh": "63.2"
+          },
+          {
+            "offerId": "buy-sh02-h03-b",
+            "price": "240",
+            "availableEnergyMwh": "25.28"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h03-a",
+            "price": "217",
+            "availableEnergyMwh": "9.48"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T04:00:00+08:00",
+        "end": "2025-03-21T05:00:00+08:00",
+        "forecastDemandMwh": "65.6",
+        "contractedEnergyMwh": "36.1",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h04-a",
+            "price": "212",
+            "availableEnergyMwh": "65.6"
+          },
+          {
+            "offerId": "buy-sh02-h04-b",
+            "price": "247",
+            "availableEnergyMwh": "26.24"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h04-a",
+            "price": "224",
+            "availableEnergyMwh": "9.84"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T05:00:00+08:00",
+        "end": "2025-03-21T06:00:00+08:00",
+        "forecastDemandMwh": "68",
+        "contractedEnergyMwh": "37.4",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h05-a",
+            "price": "253",
+            "availableEnergyMwh": "68"
+          },
+          {
+            "offerId": "buy-sh02-h05-b",
+            "price": "288",
+            "availableEnergyMwh": "27.2"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h05-a",
+            "price": "265",
+            "availableEnergyMwh": "10.2"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T06:00:00+08:00",
+        "end": "2025-03-21T07:00:00+08:00",
+        "forecastDemandMwh": "70.4",
+        "contractedEnergyMwh": "38.7",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h06-a",
+            "price": "324",
+            "availableEnergyMwh": "70.4"
+          },
+          {
+            "offerId": "buy-sh02-h06-b",
+            "price": "359",
+            "availableEnergyMwh": "28.16"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h06-a",
+            "price": "336",
+            "availableEnergyMwh": "10.56"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T07:00:00+08:00",
+        "end": "2025-03-21T08:00:00+08:00",
+        "forecastDemandMwh": "56",
+        "contractedEnergyMwh": "30.8",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h07-a",
+            "price": "385",
+            "availableEnergyMwh": "56"
+          },
+          {
+            "offerId": "buy-sh02-h07-b",
+            "price": "420",
+            "availableEnergyMwh": "22.4"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h07-a",
+            "price": "397",
+            "availableEnergyMwh": "8.4"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T08:00:00+08:00",
+        "end": "2025-03-21T09:00:00+08:00",
+        "forecastDemandMwh": "90.4",
+        "contractedEnergyMwh": "49.7",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h08-a",
+            "price": "432",
+            "availableEnergyMwh": "90.4"
+          },
+          {
+            "offerId": "buy-sh02-h08-b",
+            "price": "467",
+            "availableEnergyMwh": "36.16"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h08-a",
+            "price": "444",
+            "availableEnergyMwh": "13.56"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T09:00:00+08:00",
+        "end": "2025-03-21T10:00:00+08:00",
+        "forecastDemandMwh": "92.8",
+        "contractedEnergyMwh": "51",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h09-a",
+            "price": "413",
+            "availableEnergyMwh": "92.8"
+          },
+          {
+            "offerId": "buy-sh02-h09-b",
+            "price": "448",
+            "availableEnergyMwh": "37.12"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h09-a",
+            "price": "425",
+            "availableEnergyMwh": "13.92"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T10:00:00+08:00",
+        "end": "2025-03-21T11:00:00+08:00",
+        "forecastDemandMwh": "95.2",
+        "contractedEnergyMwh": "52.4",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h10-a",
+            "price": "374",
+            "availableEnergyMwh": "95.2"
+          },
+          {
+            "offerId": "buy-sh02-h10-b",
+            "price": "409",
+            "availableEnergyMwh": "38.08"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h10-a",
+            "price": "386",
+            "availableEnergyMwh": "14.28"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T11:00:00+08:00",
+        "end": "2025-03-21T12:00:00+08:00",
+        "forecastDemandMwh": "97.6",
+        "contractedEnergyMwh": "53.7",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h11-a",
+            "price": "355",
+            "availableEnergyMwh": "97.6"
+          },
+          {
+            "offerId": "buy-sh02-h11-b",
+            "price": "390",
+            "availableEnergyMwh": "39.04"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h11-a",
+            "price": "367",
+            "availableEnergyMwh": "14.64"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T12:00:00+08:00",
+        "end": "2025-03-21T13:00:00+08:00",
+        "forecastDemandMwh": "100",
+        "contractedEnergyMwh": "55",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h12-a",
+            "price": "342",
+            "availableEnergyMwh": "100"
+          },
+          {
+            "offerId": "buy-sh02-h12-b",
+            "price": "377",
+            "availableEnergyMwh": "40"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h12-a",
+            "price": "354",
+            "availableEnergyMwh": "15"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T13:00:00+08:00",
+        "end": "2025-03-21T14:00:00+08:00",
+        "forecastDemandMwh": "102.4",
+        "contractedEnergyMwh": "56.3",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h13-a",
+            "price": "333",
+            "availableEnergyMwh": "102.4"
+          },
+          {
+            "offerId": "buy-sh02-h13-b",
+            "price": "368",
+            "availableEnergyMwh": "40.96"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h13-a",
+            "price": "345",
+            "availableEnergyMwh": "15.36"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T14:00:00+08:00",
+        "end": "2025-03-21T15:00:00+08:00",
+        "forecastDemandMwh": "88",
+        "contractedEnergyMwh": "48.4",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h14-a",
+            "price": "324",
+            "availableEnergyMwh": "88"
+          },
+          {
+            "offerId": "buy-sh02-h14-b",
+            "price": "359",
+            "availableEnergyMwh": "35.2"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h14-a",
+            "price": "336",
+            "availableEnergyMwh": "13.2"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T15:00:00+08:00",
+        "end": "2025-03-21T16:00:00+08:00",
+        "forecastDemandMwh": "90.4",
+        "contractedEnergyMwh": "49.7",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h15-a",
+            "price": "315",
+            "availableEnergyMwh": "90.4"
+          },
+          {
+            "offerId": "buy-sh02-h15-b",
+            "price": "350",
+            "availableEnergyMwh": "36.16"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h15-a",
+            "price": "327",
+            "availableEnergyMwh": "13.56"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T16:00:00+08:00",
+        "end": "2025-03-21T17:00:00+08:00",
+        "forecastDemandMwh": "92.8",
+        "contractedEnergyMwh": "51",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h16-a",
+            "price": "352",
+            "availableEnergyMwh": "92.8"
+          },
+          {
+            "offerId": "buy-sh02-h16-b",
+            "price": "387",
+            "availableEnergyMwh": "37.12"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h16-a",
+            "price": "364",
+            "availableEnergyMwh": "13.92"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T17:00:00+08:00",
+        "end": "2025-03-21T18:00:00+08:00",
+        "forecastDemandMwh": "95.2",
+        "contractedEnergyMwh": "52.4",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h17-a",
+            "price": "463",
+            "availableEnergyMwh": "95.2"
+          },
+          {
+            "offerId": "buy-sh02-h17-b",
+            "price": "498",
+            "availableEnergyMwh": "38.08"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h17-a",
+            "price": "475",
+            "availableEnergyMwh": "14.28"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T18:00:00+08:00",
+        "end": "2025-03-21T19:00:00+08:00",
+        "forecastDemandMwh": "97.6",
+        "contractedEnergyMwh": "53.7",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h18-a",
+            "price": "534",
+            "availableEnergyMwh": "97.6"
+          },
+          {
+            "offerId": "buy-sh02-h18-b",
+            "price": "569",
+            "availableEnergyMwh": "39.04"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h18-a",
+            "price": "546",
+            "availableEnergyMwh": "14.64"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T19:00:00+08:00",
+        "end": "2025-03-21T20:00:00+08:00",
+        "forecastDemandMwh": "100",
+        "contractedEnergyMwh": "55",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h19-a",
+            "price": "495",
+            "availableEnergyMwh": "100"
+          },
+          {
+            "offerId": "buy-sh02-h19-b",
+            "price": "530",
+            "availableEnergyMwh": "40"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h19-a",
+            "price": "507",
+            "availableEnergyMwh": "15"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T20:00:00+08:00",
+        "end": "2025-03-21T21:00:00+08:00",
+        "forecastDemandMwh": "102.4",
+        "contractedEnergyMwh": "56.3",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h20-a",
+            "price": "412",
+            "availableEnergyMwh": "102.4"
+          },
+          {
+            "offerId": "buy-sh02-h20-b",
+            "price": "447",
+            "availableEnergyMwh": "40.96"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h20-a",
+            "price": "424",
+            "availableEnergyMwh": "15.36"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T21:00:00+08:00",
+        "end": "2025-03-21T22:00:00+08:00",
+        "forecastDemandMwh": "88",
+        "contractedEnergyMwh": "48.4",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h21-a",
+            "price": "333",
+            "availableEnergyMwh": "88"
+          },
+          {
+            "offerId": "buy-sh02-h21-b",
+            "price": "368",
+            "availableEnergyMwh": "35.2"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h21-a",
+            "price": "345",
+            "availableEnergyMwh": "13.2"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T22:00:00+08:00",
+        "end": "2025-03-21T23:00:00+08:00",
+        "forecastDemandMwh": "58.4",
+        "contractedEnergyMwh": "32.1",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h22-a",
+            "price": "294",
+            "availableEnergyMwh": "58.4"
+          },
+          {
+            "offerId": "buy-sh02-h22-b",
+            "price": "329",
+            "availableEnergyMwh": "23.36"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h22-a",
+            "price": "306",
+            "availableEnergyMwh": "8.76"
+          }
+        ]
+      },
+      {
+        "start": "2025-03-21T23:00:00+08:00",
+        "end": "2025-03-22T00:00:00+08:00",
+        "forecastDemandMwh": "60.8",
+        "contractedEnergyMwh": "33.4",
+        "purchaseOffers": [
+          {
+            "offerId": "buy-sh02-h23-a",
+            "price": "265",
+            "availableEnergyMwh": "60.8"
+          },
+          {
+            "offerId": "buy-sh02-h23-b",
+            "price": "300",
+            "availableEnergyMwh": "24.32"
+          }
+        ],
+        "saleOffers": [
+          {
+            "offerId": "sell-sh02-h23-a",
+            "price": "277",
+            "availableEnergyMwh": "9.12"
+          }
+        ]
+      }
+    ]
+  }
+}

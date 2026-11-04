@@ -1,3 +1,4 @@
+import type { TradingBotRole } from "@rakazo/contracts";
 import { DEFAULT_NEW_BOT_AVATAR_SET } from "@rakazo/contracts";
 import type { Href } from "expo-router";
 import { rpc } from "./api";
@@ -11,9 +12,16 @@ import { addToSearchInbox, searchInboxSession } from "./search-inbox";
 export async function createInboxBot({
   refreshBots,
   openChat,
+  template,
 }: {
   refreshBots: () => Promise<unknown>;
   openChat: (href: Href) => void;
+  template?: {
+    name: string;
+    tradingRole?: TradingBotRole;
+    tradingWorkspaceId?: string;
+    spawnKey: string;
+  };
 }) {
   // Taken before the requests, so a bot that lands after a session switch is dropped.
   const askedIn = searchInboxSession();
@@ -26,11 +34,13 @@ export async function createInboxBot({
     notifyOnFinish: true,
     avatarSet: DEFAULT_NEW_BOT_AVATAR_SET,
     computerMode: "team",
+    ...template,
   });
   void refreshBots().catch(() => undefined);
   allowFocusPrompt(bot.id);
   addToSearchInbox({ kind: "bot", bot }, askedIn);
   openChat({ pathname: "/thread", params: { botId: bot.id, name: bot.name } });
+  if (bot.tradingRole) return;
   void (async () => {
     const started = await rpc("onboarding/start", { botId: bot.id })
       .then(() => true)

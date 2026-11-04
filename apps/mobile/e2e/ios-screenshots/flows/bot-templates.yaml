@@ -1,0 +1,17 @@
+appId: com.rakazo.app
+name: Bot templates
+---
+- runFlow:
+    file: ../subflows/sign-in.yaml
+    env:
+      RAKAZO_ACTIVE_EMAIL: ${RAKAZO_SCREENSHOT_EMAIL}
+- openLink: "rakazo:///new-bot"
+- extendedWaitUntil:
+    visible: "Bot template"
+    timeout: 15000
+- assertVisible: "Mid / long term bot"
+- assertVisible: "Spot bot"
+- assertVisible: "Risk bot"
+- assertVisible: "Review bot"
+- tapOn: "Spot bot"
+- takeScreenshot: 01-bot-template-picker

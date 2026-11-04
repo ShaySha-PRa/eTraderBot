@@ -1,12 +1,14 @@
 import { useLingui } from "@lingui/react/macro";
-import type { Bot, Group, ThreadSnapshot } from "@rakazo/contracts";
+import type { Bot, Group, Space, ThreadSnapshot } from "@rakazo/contracts";
 import { BotAvatar, Button, GroupAvatar } from "@rakazo/ui-web";
 import { Menu, Phone } from "lucide-react";
 import { IconTooltip } from "../../components/IconTooltip";
+import { BotBusinessLabels } from "./bot-business-labels";
 
 /** The floating header over the transcript: navigation, the chat's name and call. */
 export function ChatHeader({
   inGroup,
+  businessScopes,
   active,
   activeGroup,
   activeSnapshot,
@@ -18,6 +20,7 @@ export function ChatHeader({
   onCall,
 }: {
   inGroup: boolean;
+  businessScopes?: Pick<Space, "id" | "name">[];
   active: Bot | undefined;
   activeGroup: Group | undefined;
   activeSnapshot: ThreadSnapshot | null;
@@ -60,12 +63,18 @@ export function ChatHeader({
             status={active.status}
           />
         ) : null}
-        <span className="min-w-0">
+        <span className="flex min-w-0 items-center gap-1.5">
           <span className="block truncate text-[15px] font-medium text-foreground" dir="auto">
             {inGroup
               ? (activeGroup?.name ?? activeSnapshot?.groupName ?? t`Group`)
               : (active?.name ?? t`Select a bot`)}
           </span>
+          {!inGroup && active ? (
+            <BotBusinessLabels
+              compact
+              scopes={businessScopes?.filter((scope) => scope.id === active.spaceId)}
+            />
+          ) : null}
         </span>
       </Button>
       <div className="flex items-center justify-self-end gap-2">
