@@ -1,7 +1,7 @@
 # eTraderBot 已完成 · 待办
 
 一页速览。**原 v1 计划**与**后加项**分栏，避免混在一起。细节见各计划／`docs/implementation/eTraderBot-v1-progress.md`。\
-整理：2026-11-03（America/Los_Angeles）
+整理：2026-11-06（America/Los_Angeles）
 
 图例：`done` · `wip` · `todo` · `later` · `blocked`
 
@@ -61,7 +61,7 @@
 
 > 与 v1 主交付分开跟踪。长文：`eTraderBot-knowledge-layer-plan.md`。
 
-工作区隔离决议见 [ADR 0004](../adr/0004-trading-general-workspace-isolation.md)，目标关系见[架构图](../architecture/eTraderBot-ideal-relation.md)。V1.1 首批隔离及最小只读授权已实施，范围与验证见[实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md)；固定版本经验交接仍待下一批。
+工作区隔离决议见 [ADR 0004](../adr/0004-trading-general-workspace-isolation.md)，目标关系见[架构图](../architecture/eTraderBot-ideal-relation.md)。V1.1 首批隔离及最小只读授权已实施，范围与验证见[实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md)；固定版本经验交接 MVP 已完成，范围见 B1。业务 Hook 插件框架仅保存设计，暂不启动，见 B3。
 
 ### B0 已定口径（后加）
 
@@ -69,7 +69,8 @@
 |---|---|
 | 2026-11-03 | 经验沉淀：记忆／文档／Skill；交易决策数字：只调用已训练并批准的算法版本（agentic RL 在版本侧，不新挂智能体） |
 | 2026-11-04 | 先采用独立通用工作区：普通 Bot 与四类交易模板分开归属，按明确授权只读指定交易资料；细则见 ADR 0004，首批实现见 B1 |
-| 2026-11-04 | 经验交接固定版本导入，目标 Bot 独立积累，不自动跟随源修改或继承交易权限；见 [ADR 0005](../adr/0005-versioned-experience-handoff.md)，实施待办见 B2 |
+| 2026-11-04 | 经验交接固定版本导入，目标 Bot 独立积累，不自动跟随源修改或继承交易权限；见 [ADR 0005](../adr/0005-versioned-experience-handoff.md)，MVP 完成范围见 B1 |
+| 2026-11-06 | 平台级业务 Hook 插件框架：平台维护、随应用发布，支持强制检查和受控后续动作；首例为合成数据源证据补查。仅保存 [Spec](../specs/eTraderBot-business-hooks-spec.md)，使用者明确暂不启动实施 |
 
 ### B1 已完成（后加）
 
@@ -80,12 +81,14 @@
 | 交易／通用工作区隔离及最小只读授权 | 后端、工具、迁移和多端入口已实现；原生设备与真实模型／接口未验收 | [V1.1 实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md) |
 | 每条业务线的主管 Bot | 固定协调身份、任务分配、结果与进度；真实模型效果未验收 | [主管说明](../implementation/eTraderBot-business-supervisor.md) |
 | 模拟业务周期与证据依赖协作 | P25 主流程及本轮缺陷定向验收通过；一次真实 Bot 复盘续跑通过，多 Bot 协作质量及正式账单接入未验收 | [业务周期说明](../implementation/eTraderBot-business-cycle.md)、[修复收尾验收](../implementation/eTraderBot-v1-acceptance.md#业务周期修复与定向复测收尾2026-11-05) |
+| 固定版本经验交接包与独立导入 MVP | 同一用户跨业务导入、来源区分、冲突与过期预览恢复、Skill 人工启用及历史保留已验收；权限与重试幂等有隔离 RPC/PostgreSQL 测试，浏览器 HTTP 重试及移动/原生端仍未验收 | [后端与收尾记录](../implementation/eTraderBot-experience-handoff.md)、[前端记录](../implementation/eTraderBot-experience-handoff-frontend.md) |
 
 ### B2 待办／想做（后加）
 
 | 优先级 | 项 | 状态 | 备注 |
 |---|---|---|---|
-| P1 | 固定版本经验交接包与独立导入 | todo | ADR 0005 已确认；补授权选取、包版本及来源、目标副本、导入记录与更新冲突处理，权限不继承 |
+| P2 | 经验交接的 HTTP 请求级重试验收 | todo | 相同 confirm 的浏览器重放、并发与响应丢失后重试；隔离 RPC 通过不能替代这一项。跨使用者共享及原生端验收仍见 A3 |
+| — | 通用业务 Hook 插件框架与证据补查首例 | later | [Spec 已保存](../specs/eTraderBot-business-hooks-spec.md)，暂不启动；拆分见 B3，不计入当前已交付能力 |
 | P0 | 拍板知识层：RAG / Ontology / 并行；内置 vs MCP | todo | K0；填 knowledge-layer §8 |
 | P0 | `RuleRegistry` 最小契约（可空配置） | todo | K2；执行不认 RAG 片段 |
 | P1 | 说明文档检索 MVP（若选 RAG） | todo | K3；无放行效力 |
@@ -95,12 +98,27 @@
 | P1 | 交易决策算法：**agentic RL 只产出可调用算法版本** | todo | **已定**：跟学／记忆／文档／Skill 管流程与像人协作；决策数字只调已 RL／已批准的 AlgoRunner 版本；不新增 Agent；离线训、现场不训；复盘人审后升版 |
 | — | 用知识库替代业务账本 | — | **不做** |
 
+### B3 业务 Hook 插件框架（暂缓实施）
+
+设计见 [业务 Hook 插件框架 Spec](../specs/eTraderBot-business-hooks-spec.md)。以下为后续任务拆分，全部保持 `later`；保存设计不表示开始开发。
+
+| 编号 | 任务 | 状态 | 完成边界 |
+|---|---|---|---|
+| H0 | 细化插件契约、能力声明与规则组合 | later | 复用现有门禁与业务服务；明确身份、版本、原因码、强制拒绝优先级及预算 |
+| H1 | 内部插件注册、执行管线与 runtime 接入 | later | 平台代码随应用发布；同步检查、结果观察和受控变换可组合，业务规则保持共享 |
+| H2 | 后续动作持久化与通道权限约束 | later | 复用 Task/Run，支持幂等、取消、恢复及递归限制；交易写入统一受控，单个 Bot 只能收紧业务配置 |
+| H3 | 受限可信采集入口与合成数据源 | later | 明确采集能力授权；服务实际取数，校验业务/周期/来源/版本；保留现有人工导入边界 |
+| H4 | 证据补查插件与原 Bot 恢复 | later | 区分缺证据、缺前序任务和缺批准；可信数据校验入库，其余人工确认；恢复分析并生成新请求 |
+| H5 | 确定性、集成及适用界面验收 | later | 覆盖 Spec H01–H12；真实模型、真实接口和原生端的验证边界分别记录 |
+
 ---
 
 ## 近期建议顺序（可改）
 
 **原计划线：** 外读适配 → 连通验证 → 真报盘联调；学习论文／案例按节奏插。\
 **后加线：** K0 选型 → K2 Registry 契约 →（可选）K3／K4。
+
+**已记录的后续方向：** 业务 Hook 插件框架暂不排入当前开发；明确启动后按 B3 的 H0–H5 推进。
 
 ---
 
