@@ -493,6 +493,10 @@ msgstr "Account label"
 msgid "Account menu for {name}"
 msgstr "Account menu for {name}"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Action for {itemTitle}"
+msgstr "Action for {itemTitle}"
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: group.spaceName
 #. placeholder {0}: section.name
@@ -525,6 +529,7 @@ msgid "Actual energy (MWh)"
 msgstr "Actual energy (MWh)"
 
 #: src/components/integrations/plugin-marketplace.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/ScratchpadSection.tsx
@@ -654,6 +659,10 @@ msgstr "Add server URL"
 msgid "Add skills"
 msgstr "Add skills"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Add summary"
+msgstr "Add summary"
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Add to routine"
 msgstr "Add to routine"
@@ -779,6 +788,10 @@ msgstr "Already connected"
 msgid "Already have an account?"
 msgstr "Already have an account?"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Already imported to this Bot"
+msgstr "Already imported to this Bot"
+
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Always act"
 msgstr "Always act"
@@ -838,6 +851,10 @@ msgstr "Another agent"
 #: src/pages/shell/agent-import.tsx
 msgid "Another assistant"
 msgstr "Another assistant"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Another item in this import uses the same name"
+msgstr "Another item in this import uses the same name"
 
 #: src/components/AskCard.tsx
 msgid "Answer"
@@ -918,6 +935,10 @@ msgstr "Appearance: {label}"
 #: src/pages/BusinessCycle.tsx
 msgid "Append metering correction"
 msgstr "Append metering correction"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Applies when"
+msgstr "Applies when"
 
 #: src/components/AskCard.tsx
 msgid "Apply"
@@ -1130,6 +1151,7 @@ msgstr "Awaiting trade approval"
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Auth.tsx
 #: src/pages/Board.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -1520,6 +1542,10 @@ msgstr "Check in."
 msgid "Check the API key or sign-in, then test again."
 msgstr "Check the API key or sign-in, then test again."
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Check the entries and try again"
+msgstr "Check the entries and try again"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Check the server URL and network, then test again."
 msgstr "Check the server URL and network, then test again."
@@ -1558,6 +1584,10 @@ msgstr "Choose a model"
 #: src/pages/Auth.tsx
 msgid "Choose a new password"
 msgstr "Choose a new password"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Choose a package"
+msgstr "Choose a package"
 
 #: src/pages/Onboarding.tsx
 msgid "Choose a provider"
@@ -1823,6 +1853,10 @@ msgstr "Computers are available. Reload or open a bot to continue."
 msgid "Computers are off. Set SANDBOX_PROVIDER=docker with SANDBOX_SUPERVISOR_TOKEN, or set SANDBOX_PROVIDER to e2b, novita, daytona, or boat with its API key. Recreate the stack after changing .env."
 msgstr "Computers are off. Set SANDBOX_PROVIDER=docker with SANDBOX_SUPERVISOR_TOKEN, or set SANDBOX_PROVIDER to e2b, novita, daytona, or boat with its API key. Recreate the stack after changing .env."
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Condition"
+msgstr "Condition"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
 msgstr "Configure a plugin catalog on the server to connect apps."
@@ -1988,6 +2022,10 @@ msgstr "Constraints passed · human review required"
 msgid "Contains code to run"
 msgstr "Contains code to run"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Content"
+msgstr "Content"
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Context limit"
@@ -2041,6 +2079,7 @@ msgstr "Conversations"
 #: src/components/InviteDialog.tsx
 #: src/components/markdown-copy.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/agent-import.tsx
@@ -2049,6 +2088,7 @@ msgstr "Copied"
 
 #: src/components/InviteDialog.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/message-hover-actions.tsx
@@ -2186,6 +2226,7 @@ msgstr "Could not connect to the computer screen"
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/use-computer.tsx
 msgid "Could not continue"
 msgstr "Could not continue"
@@ -2675,6 +2716,10 @@ msgstr "Create business scope"
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "Create group"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Create package"
+msgstr "Create package"
 
 #: src/pages/WeatherInterface.tsx
 msgid "Create push token"
@@ -3196,6 +3241,10 @@ msgstr "Email verification required"
 msgid "Enable {0}"
 msgstr "Enable {0}"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Enabled"
+msgstr "Enabled"
+
 #: src/lib/billing.ts
 msgid "Ends {day}"
 msgstr "Ends {day}"
@@ -3365,6 +3414,10 @@ msgstr "Expand {0}"
 msgid "Expand table"
 msgstr "Expand table"
 
+#: src/pages/shell/bot-panel.tsx
+msgid "Experience"
+msgstr "Experience"
+
 #: src/components/CloudAgentCard.tsx
 msgid "expired"
 msgstr "expired"
@@ -3386,6 +3439,11 @@ msgstr "Export"
 msgid "Export data"
 msgstr "Export data"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Export experience"
+msgstr "Export experience"
+
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "Export this week's list from the CRM and drop it in the shared folder"
@@ -3398,6 +3456,10 @@ msgstr "Exposure, limits and approval evidence"
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "External conversation"
 msgstr "External conversation"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "External memory can't be exported or imported"
+msgstr "External memory can't be exported or imported"
 
 #: src/pages/BusinessInterfaces.tsx
 #: src/pages/WeatherInterface.tsx
@@ -3591,6 +3653,7 @@ msgstr "Fullscreen"
 msgid "Gateway ID"
 msgstr "Gateway ID"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/settings-nav.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/business-scope.tsx
@@ -3661,6 +3724,10 @@ msgstr "Group settings"
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Group updates"
 msgstr "Group updates"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Handoff history"
+msgstr "Handoff history"
 
 #: src/components/call/CallCard.tsx
 msgid "Hang up"
@@ -3837,6 +3904,7 @@ msgid "Immediate fill"
 msgstr "Immediate fill"
 
 #: src/components/AccountDataSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Import"
 msgstr "Import"
 
@@ -3849,6 +3917,11 @@ msgstr "Import an agent"
 msgid "Import data"
 msgstr "Import data"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Import experience"
+msgstr "Import experience"
+
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated metering"
 msgstr "Import simulated metering"
@@ -3856,6 +3929,22 @@ msgstr "Import simulated metering"
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated results"
 msgstr "Import simulated results"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported"
+msgstr "Imported"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported experience"
+msgstr "Imported experience"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skill"
+msgstr "Imported Skill"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skills"
+msgstr "Imported Skills"
 
 #: src/pages/BusinessCycle.tsx
 msgid "Improvement proposal (not enabled)"
@@ -4060,6 +4149,10 @@ msgstr "Keep tool results whole"
 msgid "key"
 msgstr "key"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Known limitations"
+msgstr "Known limitations"
+
 #: src/components/LoginFields.tsx
 msgid "Label"
 msgstr "Label"
@@ -4121,6 +4214,10 @@ msgstr "Lets bots save and recall facts by meaning, alongside MEMORY.md."
 #: src/pages/Shell.tsx
 msgid "Light"
 msgstr "Light"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Limitation"
+msgstr "Limitation"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Linear issue"
@@ -4411,6 +4508,7 @@ msgstr "Member"
 msgid "Members ({0})"
 msgstr "Members ({0})"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4683,6 +4781,10 @@ msgstr "Muted"
 msgid "Name"
 msgstr "Name"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Name in this Bot for {itemTitle}"
+msgstr "Name in this Bot for {itemTitle}"
+
 #: src/pages/shell/agent-import.tsx
 msgid "Name this bot"
 msgstr "Name this bot"
@@ -4784,6 +4886,10 @@ msgstr "New open-work item"
 msgid "New orders"
 msgstr "New orders"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "New package"
+msgstr "New package"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
@@ -4817,6 +4923,10 @@ msgstr "Next page"
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
 msgstr "Next settings sections"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Next version of {packageTitle} v{version}"
+msgstr "Next version of {packageTitle} v{version}"
 
 #: src/pages/Trading.tsx
 msgid "No analysis yet"
@@ -4885,6 +4995,10 @@ msgstr "No matching models"
 #: src/pages/GroupPanel.tsx
 msgid "No members yet"
 msgstr "No members yet"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "No memory or Skill to export yet"
+msgstr "No memory or Skill to export yet"
 
 #: src/pages/PeerMessagesOverlay.tsx
 msgid "No messages with {peerBotName} yet."
@@ -5219,6 +5333,18 @@ msgstr "Owner"
 msgid "P25 teaching simulation · Energy settlement is not net profit. This is not a regional market rule."
 msgstr "P25 teaching simulation · Energy settlement is not net profit. This is not a regional market rule."
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package"
+msgstr "Package"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package title"
+msgstr "Package title"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Packages"
+msgstr "Packages"
+
 #: src/components/markdown-copy.tsx
 msgid "Page {page} of {count}"
 msgstr "Page {page} of {count}"
@@ -5307,6 +5433,10 @@ msgstr "Paste your API key, then test again."
 #: src/pages/TradingLearning.tsx
 msgid "Paused"
 msgstr "Paused"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Paused: a shared Skill uses this name"
+msgstr "Paused: a shared Skill uses this name"
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -5431,6 +5561,10 @@ msgstr "Preview"
 #: src/components/ArtifactFileCard.tsx
 msgid "Preview {0}"
 msgstr "Preview {0}"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Preview again"
+msgstr "Preview again"
 
 #: src/pages/Artifacts.tsx
 msgid "Preview isn't available for this file type — download it to view it."
@@ -5776,6 +5910,7 @@ msgstr "Reload"
 #: src/components/LoginFields.tsx
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/ModelRoleSettings.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -6094,6 +6229,7 @@ msgid "Revision allowed"
 msgstr "Revision allowed"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
@@ -6105,6 +6241,7 @@ msgid "Revoke push token"
 msgstr "Revoke push token"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoked"
@@ -6577,6 +6714,7 @@ msgstr "Shared"
 msgid "Shared evidence"
 msgstr "Shared evidence"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 msgid "Shared memory"
 msgstr "Shared memory"
@@ -6709,6 +6847,7 @@ msgstr "Single intent limit (CNY)"
 msgid "Site"
 msgstr "Site"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Skill"
 msgstr "Skill"
@@ -6734,6 +6873,7 @@ msgstr "Skills"
 msgid "Skills join the library all your bots share."
 msgstr "Skills join the library all your bots share."
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/computer-release-actions.tsx
 msgid "Skip"
 msgstr "Skip"
@@ -6742,6 +6882,7 @@ msgstr "Skip"
 msgid "Skip or deploy key"
 msgstr "Skip or deploy key"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr "Skipped"
@@ -6804,6 +6945,10 @@ msgstr "Sorted by {column}, ascending"
 #: src/components/markdown-copy.tsx
 msgid "Sorted by {column}, descending"
 msgstr "Sorted by {column}, descending"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Source"
+msgstr "Source"
 
 #: src/pages/TradingLearning.tsx
 msgid "Source reference"
@@ -6994,6 +7139,14 @@ msgstr "Subscribe with your own AI"
 msgid "Subscription required"
 msgstr "Subscription required"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary"
+msgstr "Summary"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary title"
+msgstr "Summary title"
+
 #: src/lib/cron.ts
 msgid "Sunday"
 msgstr "Sunday"
@@ -7153,9 +7306,17 @@ msgstr "The screen did not respond."
 msgid "The screen link expired."
 msgstr "The screen link expired."
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "The selected content changed. Reload and choose again"
+msgstr "The selected content changed. Reload and choose again"
+
 #: src/pages/MemorySettingsOverlay.tsx
 msgid "The selected memory provider is not available in this build."
 msgstr "The selected memory provider is not available in this build."
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "The target changed. Preview again before importing"
+msgstr "The target changed. Preview again before importing"
 
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Their own model is cleared. You can pick one again in each bot."
@@ -7197,9 +7358,17 @@ msgstr "This backup could not be read."
 msgid "This bot"
 msgstr "This bot"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot already has something with this name"
+msgstr "This Bot already has something with this name"
+
 #: src/pages/shell/computer-view.tsx
 msgid "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."
 msgstr "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot's memory"
+msgstr "This Bot's memory"
 
 #: src/lib/dictation.ts
 msgid "This browser can't detect when you stop talking. Use Chrome, the desktop app, or hold-to-talk in the composer."
@@ -7222,6 +7391,10 @@ msgstr "This can't be undone."
 #: src/pages/shell/dialogs.tsx
 msgid "This cannot be undone."
 msgstr "This cannot be undone."
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This changed meanwhile. Reload and try again"
+msgstr "This changed meanwhile. Reload and try again"
 
 #: src/pages/HostComputerPrompt.tsx
 msgid "this computer"
@@ -7275,6 +7448,18 @@ msgstr "This model's context window is too small. Choose another model."
 #: src/pages/Artifacts.tsx
 msgid "This month"
 msgstr "This month"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This name is reserved for a built-in Skill"
+msgstr "This name is reserved for a built-in Skill"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package or Bot is no longer available"
+msgstr "This package or Bot is no longer available"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package was revoked"
+msgstr "This package was revoked"
 
 #: src/components/AccountAccess.tsx
 msgid "This permanently deletes your account and data."
@@ -7420,6 +7605,7 @@ msgstr "Trade intents"
 msgid "Trader feedback"
 msgstr "Trader feedback"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/business-scope.tsx
 msgid "Trading"
@@ -7769,6 +7955,7 @@ msgid "Verifying…"
 msgstr "Verifying…"
 
 #: src/pages/Artifacts.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Version"
 msgstr "Version"
 
@@ -7810,6 +7997,10 @@ msgstr "Waiting for you"
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "Waiting in line…"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Waiting to be enabled"
+msgstr "Waiting to be enabled"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
@@ -7958,6 +8149,10 @@ msgstr "Works with your ChatGPT or Claude plan."
 msgid "Workspace"
 msgstr "Workspace"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Workspace Skill"
+msgstr "Workspace Skill"
+
 #: src/pages/shell/business-scope.tsx
 msgid "Workspace type"
 msgstr "Workspace type"
@@ -7998,6 +8193,10 @@ msgstr "You can't record this result"
 #: src/components/call/VoiceChatCard.tsx
 msgid "You declined"
 msgstr "You declined"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "You don't have access to this Bot or workspace"
+msgstr "You don't have access to this Bot or workspace"
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"

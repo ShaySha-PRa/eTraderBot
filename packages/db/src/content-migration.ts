@@ -13,7 +13,16 @@ export type ContentMigrationMode = "encrypt" | "reencrypt" | "decrypt";
 
 interface TableSpec {
   model: keyof typeof ENCRYPTED_MODELS;
-  delegate: "message" | "event" | "memoryDocument" | "memoryRevision" | "thread";
+  delegate:
+    | "message"
+    | "event"
+    | "memoryDocument"
+    | "memoryRevision"
+    | "thread"
+    | "experiencePackage"
+    | "experienceImport"
+    | "experienceSkill"
+    | "experienceHandoffEvent";
   column: string;
   json: boolean;
   /** Preserve @updatedAt so a migration does not reorder recently edited documents. */
@@ -31,6 +40,58 @@ interface ScannedRow {
 }
 
 const TABLES: TableSpec[] = [
+  {
+    model: "ExperiencePackage",
+    delegate: "experiencePackage",
+    column: "snapshot",
+    json: true,
+    scan: (cursor, limit) =>
+      Prisma.sql`SELECT id, snapshot AS value, "spaceId", "userId" AS owner FROM experience_packages WHERE id > ${cursor} ORDER BY id LIMIT ${limit}`,
+    writePlaintext: (id, value) =>
+      Prisma.sql`UPDATE experience_packages SET snapshot = ${JSON.stringify(value)}::jsonb WHERE id = ${id}`,
+  },
+  {
+    model: "ExperienceImport",
+    delegate: "experienceImport",
+    column: "snapshot",
+    json: true,
+    scan: (cursor, limit) =>
+      Prisma.sql`SELECT id, snapshot AS value, "spaceId", "userId" AS owner FROM experience_imports WHERE id > ${cursor} ORDER BY id LIMIT ${limit}`,
+    writePlaintext: (id, value) =>
+      Prisma.sql`UPDATE experience_imports SET snapshot = ${JSON.stringify(value)}::jsonb WHERE id = ${id}`,
+  },
+  {
+    model: "ExperienceImport",
+    delegate: "experienceImport",
+    column: "receipt",
+    json: true,
+    scan: (cursor, limit) =>
+      Prisma.sql`SELECT id, receipt AS value, "spaceId", "userId" AS owner FROM experience_imports WHERE id > ${cursor} ORDER BY id LIMIT ${limit}`,
+    writePlaintext: (id, value) =>
+      Prisma.sql`UPDATE experience_imports SET receipt = ${JSON.stringify(value)}::jsonb WHERE id = ${id}`,
+  },
+  {
+    model: "ExperienceSkill",
+    delegate: "experienceSkill",
+    column: "payload",
+    json: true,
+    updatedAt: true,
+    scan: (cursor, limit) =>
+      Prisma.sql`SELECT id, payload AS value, "spaceId", "userId" AS owner FROM experience_skills WHERE id > ${cursor} ORDER BY id LIMIT ${limit}`,
+    writePlaintext: (id, value) =>
+      Prisma.sql`UPDATE experience_skills SET payload = ${JSON.stringify(value)}::jsonb WHERE id = ${id}`,
+  },
+  {
+    model: "ExperienceHandoffEvent",
+    delegate: "experienceHandoffEvent",
+    column: "payload",
+    json: true,
+    scan: (cursor, limit) =>
+      Prisma.sql`SELECT id, payload AS value, "spaceId", "userId" AS owner FROM experience_handoff_events WHERE id > ${cursor} ORDER BY id LIMIT ${limit}`,
+    writePlaintext: (id, value) =>
+      Prisma.sql`UPDATE experience_handoff_events SET payload = ${JSON.stringify(value)}::jsonb WHERE id = ${id}`,
+  },
+
   {
     model: "Message",
     delegate: "message",

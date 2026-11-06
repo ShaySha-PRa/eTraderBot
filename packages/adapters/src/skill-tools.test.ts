@@ -21,6 +21,7 @@ function inScope(row: Record<string, unknown>, where: Scope): boolean {
 function makePrisma(rows: Array<Record<string, unknown>> = []) {
   const store = [...rows];
   return {
+    experienceSkill: { findMany: vi.fn(async () => []) },
     agentSkill: {
       findMany: vi.fn(async ({ where }: { where?: Scope } = {}) =>
         store.filter((row) => !where || inScope(row, where)).map((row) => ({ ...row })),

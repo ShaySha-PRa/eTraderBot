@@ -128,6 +128,9 @@ const TradingApprovals = lazyComponent(() =>
 const BusinessCyclePage = lazyComponent(() =>
   import("./BusinessCycle").then((module) => module.BusinessCyclePage),
 );
+const ExperienceHandoffPage = lazyComponent(() =>
+  import("./ExperienceHandoff").then((module) => module.ExperienceHandoffPage),
+);
 const BusinessSupervisor = lazyComponent(() =>
   import("./BusinessSupervisor").then((module) => module.BusinessSupervisor),
 );
@@ -356,6 +359,14 @@ function SpaceShell() {
     ["trading", "learning", "cycle"].includes(searchParams.get("workspace") ?? "")
       ? (searchParams.get("workspace") as "trading" | "learning" | "cycle")
       : "chat";
+  // Experience handoff is open to every Bot, not only trading roles.
+  const experienceParam = searchParams.get("workspace");
+  const experienceMode =
+    active && experienceParam === "experience-export"
+      ? "export"
+      : active && experienceParam === "experience-import"
+        ? "import"
+        : null;
   function openWorkspace(next: string) {
     const params = new URLSearchParams(searchParams);
     if (next === "chat") params.delete("workspace");
@@ -1210,6 +1221,15 @@ function SpaceShell() {
               <Suspense fallback={<PageLoading />}>
                 <TradingApprovals key={businessScope.id} businessScope={businessScope} />
               </Suspense>
+            ) : active && experienceMode ? (
+              <Suspense fallback={<PageLoading />}>
+                <ExperienceHandoffPage
+                  key={`${active.id}:${experienceMode}`}
+                  bot={active}
+                  mode={experienceMode}
+                  onClose={() => openWorkspace("chat")}
+                />
+              </Suspense>
             ) : active && workspace === "cycle" ? (
               <Suspense fallback={<PageLoading />}>
                 <BusinessCyclePage key={active.id} bot={active} roster={bots} />
@@ -1287,7 +1307,7 @@ function SpaceShell() {
             )}
           </div>
         )}
-        {!interfacesOpen && (active || activeGroup) && workspace === "chat" ? (
+        {!interfacesOpen && (active || activeGroup) && workspace === "chat" && !experienceMode ? (
           // Let messages continue behind the composer's rounded top corners.
           <div className="pointer-events-none relative z-30 -mt-7">
             {recordingSkill ? (

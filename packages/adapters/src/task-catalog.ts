@@ -51,6 +51,7 @@ export async function taskCatalogFromTool(deps: TaskCatalogToolDeps, input: Task
       select: { id: true, name: true, goal: true, status: true },
     }),
     listAgentSkillRecords(deps.prisma, {
+      botId: input.botId,
       spaceId: input.spaceId,
       userId: input.userId,
     }),

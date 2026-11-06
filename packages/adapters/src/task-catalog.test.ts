@@ -34,6 +34,7 @@ describe("task catalog", () => {
           { id: "taught-1", name: "Export report", goal: "Export the report", status: "saved" },
         ]),
       },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: {
         findMany: vi.fn(async () => [
           {

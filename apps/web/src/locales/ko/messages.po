@@ -493,6 +493,10 @@ msgstr ""
 msgid "Account menu for {name}"
 msgstr "{name}의 계정 메뉴"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Action for {itemTitle}"
+msgstr ""
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: group.spaceName
 #. placeholder {0}: section.name
@@ -525,6 +529,7 @@ msgid "Actual energy (MWh)"
 msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/ScratchpadSection.tsx
@@ -654,6 +659,10 @@ msgstr ""
 msgid "Add skills"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Add summary"
+msgstr ""
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Add to routine"
 msgstr "자동 실행에 추가"
@@ -779,6 +788,10 @@ msgstr "이미 연결됨"
 msgid "Already have an account?"
 msgstr "이미 계정이 있나요?"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Already imported to this Bot"
+msgstr ""
+
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Always act"
 msgstr ""
@@ -838,6 +851,10 @@ msgstr "다른 Agent"
 #: src/pages/shell/agent-import.tsx
 msgid "Another assistant"
 msgstr "다른 어시스턴트"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Another item in this import uses the same name"
+msgstr ""
 
 #: src/components/AskCard.tsx
 msgid "Answer"
@@ -917,6 +934,10 @@ msgstr ""
 
 #: src/pages/BusinessCycle.tsx
 msgid "Append metering correction"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Applies when"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -1130,6 +1151,7 @@ msgstr ""
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Auth.tsx
 #: src/pages/Board.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -1520,6 +1542,10 @@ msgstr "확인해 주세요."
 msgid "Check the API key or sign-in, then test again."
 msgstr "API 키 또는 로그인을 확인한 뒤 다시 테스트하세요."
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Check the entries and try again"
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Check the server URL and network, then test again."
 msgstr "서버 URL과 네트워크를 확인한 뒤 다시 테스트하세요."
@@ -1558,6 +1584,10 @@ msgstr "모델 선택"
 #: src/pages/Auth.tsx
 msgid "Choose a new password"
 msgstr "새 비밀번호 선택"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Choose a package"
+msgstr ""
 
 #: src/pages/Onboarding.tsx
 msgid "Choose a provider"
@@ -1823,6 +1853,10 @@ msgstr ""
 msgid "Computers are off. Set SANDBOX_PROVIDER=docker with SANDBOX_SUPERVISOR_TOKEN, or set SANDBOX_PROVIDER to e2b, novita, daytona, or boat with its API key. Recreate the stack after changing .env."
 msgstr "컴퓨터가 꺼져 있습니다. SANDBOX_PROVIDER=docker와 SANDBOX_SUPERVISOR_TOKEN을 설정하거나, SANDBOX_PROVIDER를 e2b, novita, daytona, boat 중 하나로 두고 해당 API 키를 넣으세요. .env 변경 후 스택을 다시 만드세요."
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Condition"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
 msgstr ""
@@ -1988,6 +2022,10 @@ msgstr ""
 msgid "Contains code to run"
 msgstr "실행할 코드 포함"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Content"
+msgstr ""
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Context limit"
@@ -2041,6 +2079,7 @@ msgstr ""
 #: src/components/InviteDialog.tsx
 #: src/components/markdown-copy.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/agent-import.tsx
@@ -2049,6 +2088,7 @@ msgstr "복사됨"
 
 #: src/components/InviteDialog.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/message-hover-actions.tsx
@@ -2186,6 +2226,7 @@ msgstr ""
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/use-computer.tsx
 msgid "Could not continue"
 msgstr "계속 진행하지 못했습니다."
@@ -2675,6 +2716,10 @@ msgstr ""
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "그룹 만들기"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Create package"
+msgstr ""
 
 #: src/pages/WeatherInterface.tsx
 msgid "Create push token"
@@ -3196,6 +3241,10 @@ msgstr "이메일 인증이 필요합니다"
 msgid "Enable {0}"
 msgstr "{0} 활성화"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Enabled"
+msgstr ""
+
 #: src/lib/billing.ts
 msgid "Ends {day}"
 msgstr ""
@@ -3365,6 +3414,10 @@ msgstr "{0} 펼치기"
 msgid "Expand table"
 msgstr "표 확장"
 
+#: src/pages/shell/bot-panel.tsx
+msgid "Experience"
+msgstr ""
+
 #: src/components/CloudAgentCard.tsx
 msgid "expired"
 msgstr "만료됨"
@@ -3386,6 +3439,11 @@ msgstr "내보내기"
 msgid "Export data"
 msgstr "데이터 내보내기"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Export experience"
+msgstr ""
+
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "CRM에서 이번 주 목록을 내려받아 공유 폴더에 넣기"
@@ -3397,6 +3455,10 @@ msgstr ""
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "External conversation"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "External memory can't be exported or imported"
 msgstr ""
 
 #: src/pages/BusinessInterfaces.tsx
@@ -3591,6 +3653,7 @@ msgstr "전체 화면"
 msgid "Gateway ID"
 msgstr "게이트웨이 ID"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/settings-nav.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/business-scope.tsx
@@ -3660,6 +3723,10 @@ msgstr "그룹 설정"
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Group updates"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Handoff history"
 msgstr ""
 
 #: src/components/call/CallCard.tsx
@@ -3837,6 +3904,7 @@ msgid "Immediate fill"
 msgstr ""
 
 #: src/components/AccountDataSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Import"
 msgstr ""
 
@@ -3849,12 +3917,33 @@ msgstr "에이전트 가져오기"
 msgid "Import data"
 msgstr "데이터 가져오기"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Import experience"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated metering"
 msgstr ""
 
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated results"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported experience"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skill"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skills"
 msgstr ""
 
 #: src/pages/BusinessCycle.tsx
@@ -4060,6 +4149,10 @@ msgstr ""
 msgid "key"
 msgstr "key"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Known limitations"
+msgstr ""
+
 #: src/components/LoginFields.tsx
 msgid "Label"
 msgstr "레이블"
@@ -4121,6 +4214,10 @@ msgstr "MEMORY.md와 함께 봇이 의미를 기준으로 사실을 저장하고
 #: src/pages/Shell.tsx
 msgid "Light"
 msgstr "라이트"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Limitation"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 msgid "Linear issue"
@@ -4411,6 +4508,7 @@ msgstr "멤버"
 msgid "Members ({0})"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4683,6 +4781,10 @@ msgstr ""
 msgid "Name"
 msgstr "이름"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Name in this Bot for {itemTitle}"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 msgid "Name this bot"
 msgstr "Bot 이름"
@@ -4784,6 +4886,10 @@ msgstr "새 진행 작업"
 msgid "New orders"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "New package"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
@@ -4816,6 +4922,10 @@ msgstr "다음 페이지"
 
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Next version of {packageTitle} v{version}"
 msgstr ""
 
 #: src/pages/Trading.tsx
@@ -4884,6 +4994,10 @@ msgstr "일치하는 모델 없음"
 
 #: src/pages/GroupPanel.tsx
 msgid "No members yet"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "No memory or Skill to export yet"
 msgstr ""
 
 #: src/pages/PeerMessagesOverlay.tsx
@@ -5219,6 +5333,18 @@ msgstr "소유자"
 msgid "P25 teaching simulation · Energy settlement is not net profit. This is not a regional market rule."
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package title"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Packages"
+msgstr ""
+
 #: src/components/markdown-copy.tsx
 msgid "Page {page} of {count}"
 msgstr "{page} / {count}페이지"
@@ -5307,6 +5433,10 @@ msgstr "API 키를 붙여넣은 뒤 다시 테스트하세요."
 #: src/pages/TradingLearning.tsx
 msgid "Paused"
 msgstr "일시 중지됨"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Paused: a shared Skill uses this name"
+msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -5431,6 +5561,10 @@ msgstr ""
 #: src/components/ArtifactFileCard.tsx
 msgid "Preview {0}"
 msgstr "{0} 미리보기"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Preview again"
+msgstr ""
 
 #: src/pages/Artifacts.tsx
 msgid "Preview isn't available for this file type — download it to view it."
@@ -5776,6 +5910,7 @@ msgstr "새로고침"
 #: src/components/LoginFields.tsx
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/ModelRoleSettings.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -6094,6 +6229,7 @@ msgid "Revision allowed"
 msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
@@ -6105,6 +6241,7 @@ msgid "Revoke push token"
 msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoked"
@@ -6577,6 +6714,7 @@ msgstr "함께 사용"
 msgid "Shared evidence"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 msgid "Shared memory"
 msgstr "공유 기억"
@@ -6709,6 +6847,7 @@ msgstr ""
 msgid "Site"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Skill"
 msgstr ""
@@ -6734,6 +6873,7 @@ msgstr "스킬"
 msgid "Skills join the library all your bots share."
 msgstr "스킬은 모든 봇이 공유하는 라이브러리에 추가됩니다."
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/computer-release-actions.tsx
 msgid "Skip"
 msgstr "건너뛰기"
@@ -6742,6 +6882,7 @@ msgstr "건너뛰기"
 msgid "Skip or deploy key"
 msgstr "건너뛰거나 배포 키"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr ""
@@ -6804,6 +6945,10 @@ msgstr "{column} 기준 정렬됨, 오름차순"
 #: src/components/markdown-copy.tsx
 msgid "Sorted by {column}, descending"
 msgstr "{column} 기준 정렬됨, 내림차순"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Source"
+msgstr ""
 
 #: src/pages/TradingLearning.tsx
 msgid "Source reference"
@@ -6994,6 +7139,14 @@ msgstr "내 AI로 구독"
 msgid "Subscription required"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary title"
+msgstr ""
+
 #: src/lib/cron.ts
 msgid "Sunday"
 msgstr "일요일"
@@ -7153,9 +7306,17 @@ msgstr "화면이 응답하지 않았습니다."
 msgid "The screen link expired."
 msgstr "화면 링크가 만료되었습니다."
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "The selected content changed. Reload and choose again"
+msgstr ""
+
 #: src/pages/MemorySettingsOverlay.tsx
 msgid "The selected memory provider is not available in this build."
 msgstr "선택한 기억 서비스는 현재 빌드에서 사용할 수 없습니다."
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "The target changed. Preview again before importing"
+msgstr ""
 
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Their own model is cleared. You can pick one again in each bot."
@@ -7197,9 +7358,17 @@ msgstr "이 백업을 읽지 못했습니다."
 msgid "This bot"
 msgstr "이 봇"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot already has something with this name"
+msgstr ""
+
 #: src/pages/shell/computer-view.tsx
 msgid "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."
 msgstr "이 Bot은 별도 Linux 화면이 아니라 현재 컴퓨터에서 실행됩니다. 터미널과 파일 작업은 홈 폴더를 사용합니다."
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot's memory"
+msgstr ""
 
 #: src/lib/dictation.ts
 msgid "This browser can't detect when you stop talking. Use Chrome, the desktop app, or hold-to-talk in the composer."
@@ -7222,6 +7391,10 @@ msgstr "되돌릴 수 없습니다."
 #: src/pages/shell/dialogs.tsx
 msgid "This cannot be undone."
 msgstr "이 작업은 되돌릴 수 없습니다."
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This changed meanwhile. Reload and try again"
+msgstr ""
 
 #: src/pages/HostComputerPrompt.tsx
 msgid "this computer"
@@ -7274,6 +7447,18 @@ msgstr "이 모델의 컨텍스트 창이 너무 작습니다. 다른 모델을 
 
 #: src/pages/Artifacts.tsx
 msgid "This month"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This name is reserved for a built-in Skill"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package or Bot is no longer available"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package was revoked"
 msgstr ""
 
 #: src/components/AccountAccess.tsx
@@ -7420,6 +7605,7 @@ msgstr ""
 msgid "Trader feedback"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/business-scope.tsx
 msgid "Trading"
@@ -7769,6 +7955,7 @@ msgid "Verifying…"
 msgstr "확인 중…"
 
 #: src/pages/Artifacts.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Version"
 msgstr ""
 
@@ -7810,6 +7997,10 @@ msgstr ""
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "줄에서 기다리는 중…"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Waiting to be enabled"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
@@ -7958,6 +8149,10 @@ msgstr "ChatGPT 또는 Claude 요금제로 사용할 수 있습니다."
 msgid "Workspace"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Workspace Skill"
+msgstr ""
+
 #: src/pages/shell/business-scope.tsx
 msgid "Workspace type"
 msgstr ""
@@ -7997,6 +8192,10 @@ msgstr ""
 
 #: src/components/call/VoiceChatCard.tsx
 msgid "You declined"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "You don't have access to this Bot or workspace"
 msgstr ""
 
 #: src/pages/shell/computer-overlay.tsx

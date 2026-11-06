@@ -494,6 +494,10 @@ msgstr "帳號標籤"
 msgid "Account menu for {name}"
 msgstr "{name} 的帳號選單"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Action for {itemTitle}"
+msgstr "{itemTitle} 的處理方式"
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: group.spaceName
 #. placeholder {0}: section.name
@@ -526,6 +530,7 @@ msgid "Actual energy (MWh)"
 msgstr "实际电量（MWh）"
 
 #: src/components/integrations/plugin-marketplace.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/ScratchpadSection.tsx
@@ -655,6 +660,10 @@ msgstr "新增伺服器網址"
 msgid "Add skills"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Add summary"
+msgstr "新增總結"
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Add to routine"
 msgstr "加入例行任務"
@@ -780,6 +789,10 @@ msgstr "已連結"
 msgid "Already have an account?"
 msgstr "已有帳號？"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Already imported to this Bot"
+msgstr "已匯入到此 Bot"
+
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Always act"
 msgstr "一律採取行動"
@@ -839,6 +852,10 @@ msgstr "其他代理程式"
 #: src/pages/shell/agent-import.tsx
 msgid "Another assistant"
 msgstr "其他助理"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Another item in this import uses the same name"
+msgstr "本次匯入中另一項使用了相同名稱"
 
 #: src/components/AskCard.tsx
 msgid "Answer"
@@ -919,6 +936,10 @@ msgstr ""
 #: src/pages/BusinessCycle.tsx
 msgid "Append metering correction"
 msgstr "追加计量更正"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Applies when"
+msgstr "適用條件"
 
 #: src/components/AskCard.tsx
 msgid "Apply"
@@ -1131,6 +1152,7 @@ msgstr ""
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Auth.tsx
 #: src/pages/Board.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -1521,6 +1543,10 @@ msgstr "報到。"
 msgid "Check the API key or sign-in, then test again."
 msgstr "請檢查 API 金鑰或登入，然後重新測試。"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Check the entries and try again"
+msgstr "請檢查填寫內容後重試"
+
 #: src/lib/model-connection-preflight.ts
 msgid "Check the server URL and network, then test again."
 msgstr "請檢查伺服器 URL 和網路，然後重新測試。"
@@ -1559,6 +1585,10 @@ msgstr "選擇模型"
 #: src/pages/Auth.tsx
 msgid "Choose a new password"
 msgstr "設定新密碼"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Choose a package"
+msgstr "選擇交接包"
 
 #: src/pages/Onboarding.tsx
 msgid "Choose a provider"
@@ -1824,6 +1854,10 @@ msgstr "電腦已可使用。請重新載入或開啟機器人以繼續。"
 msgid "Computers are off. Set SANDBOX_PROVIDER=docker with SANDBOX_SUPERVISOR_TOKEN, or set SANDBOX_PROVIDER to e2b, novita, daytona, or boat with its API key. Recreate the stack after changing .env."
 msgstr "電腦未開啟。請設定 SANDBOX_PROVIDER=docker 並提供 SANDBOX_SUPERVISOR_TOKEN，或將 SANDBOX_PROVIDER 設為 e2b、novita、daytona 或 boat 並提供對應 API 金鑰。更改 .env 後請重建環境。"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Condition"
+msgstr "條件"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
 msgstr "請在伺服器上設定外掛程式目錄，以連接應用程式。"
@@ -1989,6 +2023,10 @@ msgstr ""
 msgid "Contains code to run"
 msgstr "包含可執行的程式碼"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Content"
+msgstr "內容"
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Context limit"
@@ -2042,6 +2080,7 @@ msgstr "對話"
 #: src/components/InviteDialog.tsx
 #: src/components/markdown-copy.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/agent-import.tsx
@@ -2050,6 +2089,7 @@ msgstr "已複製"
 
 #: src/components/InviteDialog.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/message-hover-actions.tsx
@@ -2187,6 +2227,7 @@ msgstr "無法連線至電腦螢幕"
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/use-computer.tsx
 msgid "Could not continue"
 msgstr "無法繼續"
@@ -2676,6 +2717,10 @@ msgstr "建立業務範圍"
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "建立群組"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Create package"
+msgstr "建立交接包"
 
 #: src/pages/WeatherInterface.tsx
 msgid "Create push token"
@@ -3197,6 +3242,10 @@ msgstr "需要驗證電子信箱"
 msgid "Enable {0}"
 msgstr "啟用 {0}"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Enabled"
+msgstr "已啟用"
+
 #: src/lib/billing.ts
 msgid "Ends {day}"
 msgstr "於 {day} 結束"
@@ -3366,6 +3415,10 @@ msgstr "展開 {0}"
 msgid "Expand table"
 msgstr "展開表格"
 
+#: src/pages/shell/bot-panel.tsx
+msgid "Experience"
+msgstr "經驗"
+
 #: src/components/CloudAgentCard.tsx
 msgid "expired"
 msgstr "已過期"
@@ -3387,6 +3440,11 @@ msgstr "匯出"
 msgid "Export data"
 msgstr "匯出資料"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Export experience"
+msgstr "匯出經驗"
+
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "從 CRM 匯出本週名單並放到共享資料夾"
@@ -3399,6 +3457,10 @@ msgstr ""
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "External conversation"
 msgstr "外部對話"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "External memory can't be exported or imported"
+msgstr "外部記憶無法匯出或匯入"
 
 #: src/pages/BusinessInterfaces.tsx
 #: src/pages/WeatherInterface.tsx
@@ -3592,6 +3654,7 @@ msgstr "全螢幕"
 msgid "Gateway ID"
 msgstr "閘道器 ID"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/settings-nav.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/business-scope.tsx
@@ -3662,6 +3725,10 @@ msgstr "群組設定"
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Group updates"
 msgstr "群組更新"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Handoff history"
+msgstr "交接歷史"
 
 #: src/components/call/CallCard.tsx
 msgid "Hang up"
@@ -3838,6 +3905,7 @@ msgid "Immediate fill"
 msgstr "立即全部成交"
 
 #: src/components/AccountDataSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Import"
 msgstr ""
 
@@ -3850,6 +3918,11 @@ msgstr "匯入代理程式"
 msgid "Import data"
 msgstr "匯入資料"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Import experience"
+msgstr "匯入經驗"
+
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated metering"
 msgstr "导入模拟计量"
@@ -3857,6 +3930,22 @@ msgstr "导入模拟计量"
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated results"
 msgstr "导入模拟出清与履约"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported"
+msgstr "已匯入"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported experience"
+msgstr "已匯入經驗"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skill"
+msgstr "匯入的技能"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skills"
+msgstr "匯入的技能"
 
 #: src/pages/BusinessCycle.tsx
 msgid "Improvement proposal (not enabled)"
@@ -4061,6 +4150,10 @@ msgstr ""
 msgid "key"
 msgstr "金鑰"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Known limitations"
+msgstr "已知侷限"
+
 #: src/components/LoginFields.tsx
 msgid "Label"
 msgstr "標籤"
@@ -4122,6 +4215,10 @@ msgstr "讓機器人在 MEMORY.md 之外，依語意儲存和回想事實。"
 #: src/pages/Shell.tsx
 msgid "Light"
 msgstr "淺色"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Limitation"
+msgstr "侷限"
 
 #: src/pages/RoutineEditor.tsx
 msgid "Linear issue"
@@ -4412,6 +4509,7 @@ msgstr "成員"
 msgid "Members ({0})"
 msgstr "成員（{0}）"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4684,6 +4782,10 @@ msgstr "已靜音"
 msgid "Name"
 msgstr "名稱"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Name in this Bot for {itemTitle}"
+msgstr "{itemTitle} 在此 Bot 中的名稱"
+
 #: src/pages/shell/agent-import.tsx
 msgid "Name this bot"
 msgstr "為這個機器人命名"
@@ -4785,6 +4887,10 @@ msgstr "新的待辦"
 msgid "New orders"
 msgstr "新订单"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "New package"
+msgstr "新交接包"
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
@@ -4818,6 +4924,10 @@ msgstr "下一頁"
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
 msgstr "下一組設定區段"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Next version of {packageTitle} v{version}"
+msgstr "{packageTitle} v{version} 的下一版本"
 
 #: src/pages/Trading.tsx
 msgid "No analysis yet"
@@ -4886,6 +4996,10 @@ msgstr "沒有符合的模型"
 #: src/pages/GroupPanel.tsx
 msgid "No members yet"
 msgstr "尚無成員"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "No memory or Skill to export yet"
+msgstr "尚無可匯出的記憶或技能"
 
 #: src/pages/PeerMessagesOverlay.tsx
 msgid "No messages with {peerBotName} yet."
@@ -5220,6 +5334,18 @@ msgstr "擁有者"
 msgid "P25 teaching simulation · Energy settlement is not net profit. This is not a regional market rule."
 msgstr "P25 教学模拟 · 电能量结算不是净利润，不代表地区现行规则。"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package"
+msgstr "交接包"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package title"
+msgstr "交接包標題"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Packages"
+msgstr "交接包"
+
 #: src/components/markdown-copy.tsx
 msgid "Page {page} of {count}"
 msgstr "第 {page} 頁，共 {count} 頁"
@@ -5308,6 +5434,10 @@ msgstr "請貼上你的 API 金鑰，然後重新測試。"
 #: src/pages/TradingLearning.tsx
 msgid "Paused"
 msgstr "已暫停"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Paused: a shared Skill uses this name"
+msgstr "已暫停：共享技能使用了同名"
 
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -5432,6 +5562,10 @@ msgstr ""
 #: src/components/ArtifactFileCard.tsx
 msgid "Preview {0}"
 msgstr "預覽 {0}"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Preview again"
+msgstr "重新預覽"
 
 #: src/pages/Artifacts.tsx
 msgid "Preview isn't available for this file type — download it to view it."
@@ -5777,6 +5911,7 @@ msgstr "重新載入"
 #: src/components/LoginFields.tsx
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/ModelRoleSettings.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -6095,6 +6230,7 @@ msgid "Revision allowed"
 msgstr "允许修改报价"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
@@ -6106,6 +6242,7 @@ msgid "Revoke push token"
 msgstr "撤銷推送權杖"
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoked"
@@ -6578,6 +6715,7 @@ msgstr "共享"
 msgid "Shared evidence"
 msgstr "共享业务证据"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 msgid "Shared memory"
 msgstr "共用記憶"
@@ -6710,6 +6848,7 @@ msgstr ""
 msgid "Site"
 msgstr "網站"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Skill"
 msgstr ""
@@ -6735,6 +6874,7 @@ msgstr "技能"
 msgid "Skills join the library all your bots share."
 msgstr "技能會加入所有機器人共用的技能庫。"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/computer-release-actions.tsx
 msgid "Skip"
 msgstr "跳過"
@@ -6743,6 +6883,7 @@ msgstr "跳過"
 msgid "Skip or deploy key"
 msgstr "跳過或使用部署金鑰"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr ""
@@ -6805,6 +6946,10 @@ msgstr "已依 {column} 遞增排序"
 #: src/components/markdown-copy.tsx
 msgid "Sorted by {column}, descending"
 msgstr "已依 {column} 遞減排序"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Source"
+msgstr "來源"
 
 #: src/pages/TradingLearning.tsx
 msgid "Source reference"
@@ -6995,6 +7140,14 @@ msgstr "使用自己的 AI 訂閱"
 msgid "Subscription required"
 msgstr "需要訂閱"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary"
+msgstr "總結"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary title"
+msgstr "總結標題"
+
 #: src/lib/cron.ts
 msgid "Sunday"
 msgstr "週日"
@@ -7154,9 +7307,17 @@ msgstr "螢幕沒有回應。"
 msgid "The screen link expired."
 msgstr "螢幕連結已過期。"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "The selected content changed. Reload and choose again"
+msgstr "所選內容已變更，請重新整理後再選擇"
+
 #: src/pages/MemorySettingsOverlay.tsx
 msgid "The selected memory provider is not available in this build."
 msgstr "所選記憶供應商在此版本中不可用。"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "The target changed. Preview again before importing"
+msgstr "目標已變更，請重新預覽後再匯入"
 
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Their own model is cleared. You can pick one again in each bot."
@@ -7198,9 +7359,17 @@ msgstr "無法讀取此備份。"
 msgid "This bot"
 msgstr "此機器人"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot already has something with this name"
+msgstr "此 Bot 已有同名內容"
+
 #: src/pages/shell/computer-view.tsx
 msgid "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."
 msgstr "此機器人執行在這臺電腦上，而不是 Linux 桌面。Shell 和檔案使用你的主目錄。"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot's memory"
+msgstr "本 Bot 記憶"
 
 #: src/lib/dictation.ts
 msgid "This browser can't detect when you stop talking. Use Chrome, the desktop app, or hold-to-talk in the composer."
@@ -7223,6 +7392,10 @@ msgstr "此操作無法復原。"
 #: src/pages/shell/dialogs.tsx
 msgid "This cannot be undone."
 msgstr "此操作無法復原。"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This changed meanwhile. Reload and try again"
+msgstr "內容已在此期間變更，請重新整理後重試"
 
 #: src/pages/HostComputerPrompt.tsx
 msgid "this computer"
@@ -7276,6 +7449,18 @@ msgstr "此模型的上下文視窗太小。請選擇其他模型。"
 #: src/pages/Artifacts.tsx
 msgid "This month"
 msgstr "本月"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This name is reserved for a built-in Skill"
+msgstr "該名稱保留給內建技能"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package or Bot is no longer available"
+msgstr "該交接包或 Bot 已無法使用"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package was revoked"
+msgstr "該交接包已撤銷"
 
 #: src/components/AccountAccess.tsx
 msgid "This permanently deletes your account and data."
@@ -7421,6 +7606,7 @@ msgstr ""
 msgid "Trader feedback"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/business-scope.tsx
 msgid "Trading"
@@ -7770,6 +7956,7 @@ msgid "Verifying…"
 msgstr "正在驗證…"
 
 #: src/pages/Artifacts.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Version"
 msgstr "版本"
 
@@ -7811,6 +7998,10 @@ msgstr ""
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "排隊等候…"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Waiting to be enabled"
+msgstr "待啟用"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
@@ -7959,6 +8150,10 @@ msgstr "可使用你的 ChatGPT 或 Claude 方案。"
 msgid "Workspace"
 msgstr "工作空間"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Workspace Skill"
+msgstr "工作區技能"
+
 #: src/pages/shell/business-scope.tsx
 msgid "Workspace type"
 msgstr ""
@@ -7999,6 +8194,10 @@ msgstr "你無法記錄此結果"
 #: src/components/call/VoiceChatCard.tsx
 msgid "You declined"
 msgstr "你已拒絕"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "You don't have access to this Bot or workspace"
+msgstr "你無權存取此 Bot 或工作區"
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"

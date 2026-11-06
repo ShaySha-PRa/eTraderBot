@@ -255,6 +255,7 @@ export const taskTools: ToolHandlers = {
       deps.prisma,
       {
         spaceId: run.spaceId,
+        botId: run.botId,
         userId: run.userId,
       },
       {

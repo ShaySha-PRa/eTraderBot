@@ -493,6 +493,10 @@ msgstr ""
 msgid "Account menu for {name}"
 msgstr "{name} का खाता मेन्यू"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Action for {itemTitle}"
+msgstr ""
+
 #. placeholder {0}: bot.name
 #. placeholder {0}: group.spaceName
 #. placeholder {0}: section.name
@@ -525,6 +529,7 @@ msgid "Actual energy (MWh)"
 msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/ScratchpadSection.tsx
@@ -654,6 +659,10 @@ msgstr ""
 msgid "Add skills"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Add summary"
+msgstr ""
+
 #: src/components/teach/SkillDraftCard.tsx
 msgid "Add to routine"
 msgstr "रूटीन में जोड़ें"
@@ -779,6 +788,10 @@ msgstr "पहले से कनेक्ट है"
 msgid "Already have an account?"
 msgstr "पहले से खाता है?"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Already imported to this Bot"
+msgstr ""
+
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Always act"
 msgstr ""
@@ -838,6 +851,10 @@ msgstr "दूसरा एजेंट"
 #: src/pages/shell/agent-import.tsx
 msgid "Another assistant"
 msgstr "कोई दूसरा असिस्टेंट"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Another item in this import uses the same name"
+msgstr ""
 
 #: src/components/AskCard.tsx
 msgid "Answer"
@@ -917,6 +934,10 @@ msgstr ""
 
 #: src/pages/BusinessCycle.tsx
 msgid "Append metering correction"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Applies when"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -1130,6 +1151,7 @@ msgstr ""
 #: src/pages/AdminPluginsPage.tsx
 #: src/pages/Auth.tsx
 #: src/pages/Board.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/NavLinkPage.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -1520,6 +1542,10 @@ msgstr "जांच करें।"
 msgid "Check the API key or sign-in, then test again."
 msgstr "API कुंजी या साइन-इन जाँचें, फिर फिर से परीक्षण करें।"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Check the entries and try again"
+msgstr ""
+
 #: src/lib/model-connection-preflight.ts
 msgid "Check the server URL and network, then test again."
 msgstr "सर्वर URL और नेटवर्क जाँचें, फिर फिर से परीक्षण करें।"
@@ -1558,6 +1584,10 @@ msgstr "मॉडल चुनें"
 #: src/pages/Auth.tsx
 msgid "Choose a new password"
 msgstr "नया पासवर्ड चुनें"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Choose a package"
+msgstr ""
 
 #: src/pages/Onboarding.tsx
 msgid "Choose a provider"
@@ -1823,6 +1853,10 @@ msgstr ""
 msgid "Computers are off. Set SANDBOX_PROVIDER=docker with SANDBOX_SUPERVISOR_TOKEN, or set SANDBOX_PROVIDER to e2b, novita, daytona, or boat with its API key. Recreate the stack after changing .env."
 msgstr "कंप्यूटर बंद हैं। SANDBOX_PROVIDER=docker और SANDBOX_SUPERVISOR_TOKEN सेट करें, या SANDBOX_PROVIDER को e2b, novita, daytona, या boat पर सेट कर उसका API key दें। .env बदलने के बाद स्टैक फिर बनाएँ।"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Condition"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Configure a plugin catalog on the server to connect apps."
 msgstr ""
@@ -1988,6 +2022,10 @@ msgstr ""
 msgid "Contains code to run"
 msgstr "चलाने योग्य कोड है"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Content"
+msgstr ""
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Context limit"
@@ -2041,6 +2079,7 @@ msgstr ""
 #: src/components/InviteDialog.tsx
 #: src/components/markdown-copy.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/agent-import.tsx
@@ -2049,6 +2088,7 @@ msgstr "कॉपी किया गया"
 
 #: src/components/InviteDialog.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/model-settings/connection-controls.tsx
 #: src/pages/Onboarding.tsx
 #: src/pages/shell/message-hover-actions.tsx
@@ -2186,6 +2226,7 @@ msgstr ""
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
 #: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/use-computer.tsx
 msgid "Could not continue"
 msgstr "जारी नहीं रखा जा सका"
@@ -2675,6 +2716,10 @@ msgstr ""
 #: src/pages/GroupPanel.tsx
 msgid "Create group"
 msgstr "समूह बनाएं"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Create package"
+msgstr ""
 
 #: src/pages/WeatherInterface.tsx
 msgid "Create push token"
@@ -3196,6 +3241,10 @@ msgstr "ईमेल सत्यापन आवश्यक है"
 msgid "Enable {0}"
 msgstr "{0} सक्षम करें"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Enabled"
+msgstr ""
+
 #: src/lib/billing.ts
 msgid "Ends {day}"
 msgstr ""
@@ -3365,6 +3414,10 @@ msgstr ""
 msgid "Expand table"
 msgstr "तालिका बड़ी करें"
 
+#: src/pages/shell/bot-panel.tsx
+msgid "Experience"
+msgstr ""
+
 #: src/components/CloudAgentCard.tsx
 msgid "expired"
 msgstr "समाप्त"
@@ -3386,6 +3439,11 @@ msgstr "एक्सपोर्ट करें"
 msgid "Export data"
 msgstr "डेटा निर्यात करें"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Export experience"
+msgstr ""
+
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Export this week's list from the CRM and drop it in the shared folder"
 msgstr "CRM से इस सप्ताह की सूची एक्सपोर्ट करें और उसे साझा फ़ोल्डर में डालें"
@@ -3397,6 +3455,10 @@ msgstr ""
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "External conversation"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "External memory can't be exported or imported"
 msgstr ""
 
 #: src/pages/BusinessInterfaces.tsx
@@ -3591,6 +3653,7 @@ msgstr "फ़ुलस्क्रीन"
 msgid "Gateway ID"
 msgstr "गेटवे आईडी"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/settings-nav.ts
 #: src/pages/SettingsOverlay.tsx
 #: src/pages/shell/business-scope.tsx
@@ -3660,6 +3723,10 @@ msgstr "समूह सेटिंग्स"
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Group updates"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Handoff history"
 msgstr ""
 
 #: src/components/call/CallCard.tsx
@@ -3837,6 +3904,7 @@ msgid "Immediate fill"
 msgstr ""
 
 #: src/components/AccountDataSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Import"
 msgstr ""
 
@@ -3849,12 +3917,33 @@ msgstr "एजेंट इंपोर्ट करें"
 msgid "Import data"
 msgstr "डेटा आयात करें"
 
+#: src/pages/ExperienceHandoff.tsx
+#: src/pages/shell/bot-panel.tsx
+msgid "Import experience"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated metering"
 msgstr ""
 
 #: src/pages/BusinessCycle.tsx
 msgid "Import simulated results"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported experience"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skill"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Imported Skills"
 msgstr ""
 
 #: src/pages/BusinessCycle.tsx
@@ -4060,6 +4149,10 @@ msgstr ""
 msgid "key"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Known limitations"
+msgstr ""
+
 #: src/components/LoginFields.tsx
 msgid "Label"
 msgstr "लेबल"
@@ -4121,6 +4214,10 @@ msgstr "बॉट्स को MEMORY.md के साथ-साथ अर्थ
 #: src/pages/Shell.tsx
 msgid "Light"
 msgstr "लाइट"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Limitation"
+msgstr ""
 
 #: src/pages/RoutineEditor.tsx
 msgid "Linear issue"
@@ -4411,6 +4508,7 @@ msgstr "सदस्य"
 msgid "Members ({0})"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/MemorySettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4683,6 +4781,10 @@ msgstr "माइक बंद है"
 msgid "Name"
 msgstr "नाम"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Name in this Bot for {itemTitle}"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 msgid "Name this bot"
 msgstr "इस बॉट को नाम दें"
@@ -4784,6 +4886,10 @@ msgstr "नया खुला-कार्य आइटम"
 msgid "New orders"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "New package"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Auth.tsx
 msgid "New password"
@@ -4816,6 +4922,10 @@ msgstr "अगला पृष्ठ"
 
 #: src/pages/SettingsOverlay.tsx
 msgid "Next settings sections"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Next version of {packageTitle} v{version}"
 msgstr ""
 
 #: src/pages/Trading.tsx
@@ -4884,6 +4994,10 @@ msgstr ""
 
 #: src/pages/GroupPanel.tsx
 msgid "No members yet"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "No memory or Skill to export yet"
 msgstr ""
 
 #: src/pages/PeerMessagesOverlay.tsx
@@ -5219,6 +5333,18 @@ msgstr "मालिक"
 msgid "P25 teaching simulation · Energy settlement is not net profit. This is not a regional market rule."
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Package title"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Packages"
+msgstr ""
+
 #: src/components/markdown-copy.tsx
 msgid "Page {page} of {count}"
 msgstr "पृष्ठ {page} / {count}"
@@ -5306,6 +5432,10 @@ msgstr "अपनी API कुंजी पेस्ट करें, फिर
 #: src/pages/shell/import-status.ts
 #: src/pages/TradingLearning.tsx
 msgid "Paused"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Paused: a shared Skill uses this name"
 msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
@@ -5431,6 +5561,10 @@ msgstr ""
 #: src/components/ArtifactFileCard.tsx
 msgid "Preview {0}"
 msgstr "{0} का प्रीव्यू"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Preview again"
+msgstr ""
 
 #: src/pages/Artifacts.tsx
 msgid "Preview isn't available for this file type — download it to view it."
@@ -5776,6 +5910,7 @@ msgstr "फिर से लोड करें"
 #: src/components/LoginFields.tsx
 #: src/components/TrustedLinkSitesSettings.tsx
 #: src/components/VaultSettings.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/ModelRoleSettings.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -6094,6 +6229,7 @@ msgid "Revision allowed"
 msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
@@ -6105,6 +6241,7 @@ msgid "Revoke push token"
 msgstr ""
 
 #: src/pages/AdminAccessPage.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Trading.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Revoked"
@@ -6577,6 +6714,7 @@ msgstr "साझा"
 msgid "Shared evidence"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 msgid "Shared memory"
 msgstr "साझा मेमोरी"
@@ -6709,6 +6847,7 @@ msgstr ""
 msgid "Site"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/WorkspaceMaterialAccess.tsx
 msgid "Skill"
 msgstr ""
@@ -6734,6 +6873,7 @@ msgstr "स्किल्स"
 msgid "Skills join the library all your bots share."
 msgstr "स्किल्स उस लाइब्रेरी में जुड़ती हैं जिसे आपके सभी बॉट साझा करते हैं।"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/computer-release-actions.tsx
 msgid "Skip"
 msgstr "छोड़ें"
@@ -6742,6 +6882,7 @@ msgstr "छोड़ें"
 msgid "Skip or deploy key"
 msgstr "छोड़ें या डिप्लॉय कुंजी दें"
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/shell/message-view.tsx
 msgid "Skipped"
 msgstr ""
@@ -6804,6 +6945,10 @@ msgstr "{column} के अनुसार क्रमबद्ध, आरो�
 #: src/components/markdown-copy.tsx
 msgid "Sorted by {column}, descending"
 msgstr "{column} के अनुसार क्रमबद्ध, अवरोही"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Source"
+msgstr ""
 
 #: src/pages/TradingLearning.tsx
 msgid "Source reference"
@@ -6994,6 +7139,14 @@ msgstr "अपने AI के साथ सदस्यता लें"
 msgid "Subscription required"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Summary title"
+msgstr ""
+
 #: src/lib/cron.ts
 msgid "Sunday"
 msgstr "रविवार"
@@ -7153,9 +7306,17 @@ msgstr "स्क्रीन ने जवाब नहीं दिया।"
 msgid "The screen link expired."
 msgstr "स्क्रीन लिंक की समय सीमा समाप्त हो गई।"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "The selected content changed. Reload and choose again"
+msgstr ""
+
 #: src/pages/MemorySettingsOverlay.tsx
 msgid "The selected memory provider is not available in this build."
 msgstr "चयनित मेमोरी प्रोवाइडर इस बिल्ड में उपलब्ध नहीं है।"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "The target changed. Preview again before importing"
+msgstr ""
 
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Their own model is cleared. You can pick one again in each bot."
@@ -7197,9 +7358,17 @@ msgstr "यह बैकअप पढ़ा नहीं जा सका।"
 msgid "This bot"
 msgstr "यह बॉट"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot already has something with this name"
+msgstr ""
+
 #: src/pages/shell/computer-view.tsx
 msgid "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."
 msgstr "यह बॉट इसी कंप्यूटर पर चलता है, किसी Linux डेस्कटॉप पर नहीं। शेल और फ़ाइलें आपके होम फ़ोल्डर का उपयोग करती हैं।"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Bot's memory"
+msgstr ""
 
 #: src/lib/dictation.ts
 msgid "This browser can't detect when you stop talking. Use Chrome, the desktop app, or hold-to-talk in the composer."
@@ -7222,6 +7391,10 @@ msgstr "इसे पूर्ववत नहीं किया जा सक�
 #: src/pages/shell/dialogs.tsx
 msgid "This cannot be undone."
 msgstr "इसे पूर्ववत नहीं किया जा सकता।"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This changed meanwhile. Reload and try again"
+msgstr ""
 
 #: src/pages/HostComputerPrompt.tsx
 msgid "this computer"
@@ -7274,6 +7447,18 @@ msgstr "इस मॉडल की कॉन्टेक्स्ट विं�
 
 #: src/pages/Artifacts.tsx
 msgid "This month"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This name is reserved for a built-in Skill"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package or Bot is no longer available"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This package was revoked"
 msgstr ""
 
 #: src/components/AccountAccess.tsx
@@ -7420,6 +7605,7 @@ msgstr ""
 msgid "Trader feedback"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/Shell.tsx
 #: src/pages/shell/business-scope.tsx
 msgid "Trading"
@@ -7769,6 +7955,7 @@ msgid "Verifying…"
 msgstr "पुष्टि की जा रही है…"
 
 #: src/pages/Artifacts.tsx
+#: src/pages/ExperienceHandoff.tsx
 msgid "Version"
 msgstr ""
 
@@ -7810,6 +7997,10 @@ msgstr ""
 #: src/lib/roster-status.ts
 msgid "Waiting in line…"
 msgstr "कतार में प्रतीक्षा…"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Waiting to be enabled"
+msgstr ""
 
 #: src/pages/shell/message-cards.tsx
 msgid "Waiting…"
@@ -7958,6 +8149,10 @@ msgstr "आपके ChatGPT या Claude प्लान के साथ क�
 msgid "Workspace"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Workspace Skill"
+msgstr ""
+
 #: src/pages/shell/business-scope.tsx
 msgid "Workspace type"
 msgstr ""
@@ -7998,6 +8193,10 @@ msgstr ""
 #: src/components/call/VoiceChatCard.tsx
 msgid "You declined"
 msgstr "आपने कॉल अस्वीकार की"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "You don't have access to this Bot or workspace"
+msgstr ""
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"

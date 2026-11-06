@@ -2671,3 +2671,79 @@ model BusinessCycleWork {
   @@unique([cycleId, requestId])
   @@map("business_cycle_work")
 }
+
+/// Immutable user-selected experience; Bot IDs are provenance, not cascading relations.
+model ExperiencePackage {
+  id                String   @id
+  spaceId           String
+  userId            String
+  sourceBotId       String
+  requestId         String
+  requestHash       String
+  lineageId         String
+  version           Int
+  previousPackageId String?  @unique
+  snapshot          Json
+  contentHash       String
+  revokedAt         DateTime?
+  createdAt         DateTime @default(now())
+
+  @@unique([userId, requestId])
+  @@unique([lineageId, version])
+  @@index([spaceId, userId, id])
+  @@map("experience_packages")
+}
+
+/// Receipt and original snapshot survive source/target Bot deletion and later edits.
+model ExperienceImport {
+  id            String   @id
+  spaceId       String
+  userId        String
+  sourceSpaceId String
+  sourceBotId   String
+  targetBotId   String
+  packageId     String
+  planHash      String
+  snapshot      Json
+  receipt       Json
+  createdAt     DateTime @default(now())
+
+  @@unique([packageId, targetBotId])
+  @@index([spaceId, userId, id])
+  @@index([sourceSpaceId, userId, id])
+  @@map("experience_imports")
+}
+
+/// Bot-local SKILL.md copy; never enters the shared AgentSkill catalog.
+model ExperienceSkill {
+  id        String   @id
+  spaceId   String
+  userId    String
+  botId     String
+  importId  String
+  itemKey   String
+  name      String
+  payload   Json
+  revision  Int      @default(1)
+  enabledAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([importId, itemKey])
+  @@index([spaceId, userId, botId])
+  @@map("experience_skills")
+}
+
+model ExperienceHandoffEvent {
+  id        String   @id
+  spaceId   String
+  userId    String
+  packageId String
+  importId  String?
+  kind      String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  @@index([spaceId, userId, createdAt])
+  @@map("experience_handoff_events")
+}

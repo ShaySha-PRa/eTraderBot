@@ -158,7 +158,11 @@ export type SpaceSource =
   | "messages"
   | "events"
   | "memory_documents"
-  | "memory_revisions";
+  | "memory_revisions"
+  | "experience_packages"
+  | "experience_imports"
+  | "experience_skills"
+  | "experience_handoff_events";
 
 export interface SpaceKeyStore {
   forSpace(spaceId: string): Promise<SpaceKeyRecord[]>;
@@ -182,6 +186,10 @@ export interface RowContext {
 
 /** Column holding each table's owner. Application code never changes these. */
 export const ROW_OWNER: Record<SpaceSource, string> = {
+  experience_packages: "userId",
+  experience_imports: "userId",
+  experience_skills: "userId",
+  experience_handoff_events: "userId",
   threads: "userId",
   messages: "threadId",
   events: "threadId",
@@ -195,6 +203,11 @@ export interface Queryable {
 
 const COLUMNS = `id, "spaceId", version, "masterKeyId", "wrappedKey"`;
 const ROW_CONTEXT: Record<SpaceSource, string> = {
+  experience_packages: `SELECT "spaceId", "userId" AS owner FROM experience_packages WHERE id = $1`,
+  experience_imports: `SELECT "spaceId", "userId" AS owner FROM experience_imports WHERE id = $1`,
+  experience_skills: `SELECT "spaceId", "userId" AS owner FROM experience_skills WHERE id = $1`,
+  experience_handoff_events: `SELECT "spaceId", "userId" AS owner FROM experience_handoff_events WHERE id = $1`,
+
   threads: `SELECT "spaceId", "userId" AS owner FROM threads WHERE id = $1`,
   events: `SELECT "spaceId", "threadId" AS owner FROM events WHERE id = $1`,
   memory_documents: `SELECT "spaceId", "userId" AS owner FROM memory_documents WHERE id = $1`,

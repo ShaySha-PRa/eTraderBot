@@ -191,6 +191,11 @@ export function ShellSidePanel({
               routines={routinesPanel}
               focusModel={modelFocusRequest}
               onOpenConnections={() => openSettings("models")}
+              onOpenExperience={(mode) => {
+                // The page needs the room; on narrow screens the panel would cover it.
+                setPanel(null);
+                navigate(`/app/${active.id}?workspace=experience-${mode}`);
+              }}
               memoryProviderConfigured={memoryProviderConfigured}
               onSkillsChange={setAgentSkills}
               onSave={async ({ computerMode, ...patch }) => {

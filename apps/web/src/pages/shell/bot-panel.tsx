@@ -114,6 +114,7 @@ export function BotSettings({
   onClear,
   focusModel = 0,
   onOpenConnections,
+  onOpenExperience,
 }: {
   bot: Bot;
   tab?: BotPanelTab;
@@ -122,6 +123,8 @@ export function BotSettings({
   routines?: ReactNode;
   focusModel?: number;
   onOpenConnections?: () => void;
+  /** Opens the full-page experience export or import for this Bot. */
+  onOpenExperience?: (mode: "export" | "import") => void;
   /** Unused: the skill sections read and save the shared cached skill list. */
   onSkillsChange?: (skills: AgentSkillCatalogEntry[]) => void;
   memoryProviderConfigured: boolean;
@@ -594,6 +597,21 @@ export function BotSettings({
               <KnowledgeSection botId={bot.id} />
             </Suspense>
           </ErrorBoundary>
+          {onOpenExperience ? (
+            <section className="mt-6">
+              <SectionHeading variant="label" className="mb-2">
+                <Trans>Experience</Trans>
+              </SectionHeading>
+              <div className="flex flex-wrap gap-2">
+                <Button variant="outline" size="sm" onClick={() => onOpenExperience("export")}>
+                  <Trans>Export experience</Trans>
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => onOpenExperience("import")}>
+                  <Trans>Import experience</Trans>
+                </Button>
+              </div>
+            </section>
+          ) : null}
           <div className="space-y-6 pt-6">
             <div ref={modelRef}>
               <div className="mb-2 flex items-center justify-between text-xs font-medium text-muted-foreground pe-1">

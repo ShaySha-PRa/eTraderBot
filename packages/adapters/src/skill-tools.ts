@@ -7,7 +7,7 @@ import {
   parseSkillMd,
 } from "@rakazo/core";
 import type { PrismaClient } from "@rakazo/db";
-import { availableInSpace } from "@rakazo/db";
+import { availableInSpace, experienceSkillDto } from "@rakazo/db";
 import { BUILTIN_AGENT_SKILLS } from "./builtin-skills.js";
 
 export const SKILL_TOOL_NAMES = new Set([
@@ -23,6 +23,7 @@ const MAX_SKILL_NAME_CHARS = 80;
 const MAX_SKILL_DESCRIPTION_CHARS = 2000;
 
 type SkillOwner = {
+  botId?: string;
   spaceId: string;
   userId: string;
 };
@@ -108,7 +109,35 @@ export async function listAgentSkillRecords(
     omit: { files: true },
     orderBy: [{ name: "asc" }, { id: "asc" }],
   });
-  return mergeBuiltinSkills(builtinRecords(), rows.map(toRecord));
+  const copies = owner.botId
+    ? await prisma.experienceSkill.findMany({
+        where: {
+          spaceId: owner.spaceId,
+          userId: owner.userId,
+          botId: owner.botId,
+          enabledAt: { not: null },
+        },
+        orderBy: [{ name: "asc" }, { id: "asc" }],
+      })
+    : [];
+  // A later shared skill must not silently replace an enabled experience copy.
+  // Colliding copies are withheld until the user resolves the shared name.
+  const shared = mergeBuiltinSkills(builtinRecords(), rows.map(toRecord));
+  const names = new Set(shared.map((skill) => skill.name.toLowerCase()));
+  return [
+    ...shared,
+    ...copies
+      .map(experienceSkillDto)
+      .filter((skill) => !names.has(skill.name.toLowerCase()))
+      .map((skill) => ({
+        id: `handoff:${skill.id}`,
+        name: skill.name,
+        description: skill.description,
+        content: skill.content,
+        source: "user" as const,
+        readOnly: true,
+      })),
+  ];
 }
 
 async function findOwnedSkill(
@@ -141,6 +170,35 @@ export async function skillReadFromTool(
 ): Promise<Record<string, unknown>> {
   const skill = await findOwnedSkill(prisma, owner, input);
   if (!skill) return { error: "Skill not found." };
+  if (skill.id.startsWith("handoff:")) {
+    const row = owner.botId
+      ? await prisma.experienceSkill.findFirst({
+          where: {
+            id: skill.id.slice("handoff:".length),
+            spaceId: owner.spaceId,
+            userId: owner.userId,
+            botId: owner.botId,
+            enabledAt: { not: null },
+          },
+        })
+      : null;
+    if (!row) return { error: "Skill not found." };
+    const copy = experienceSkillDto(row);
+    const wanted = input.file?.trim().replace(/^\.\//, "");
+    if (wanted)
+      return !Object.hasOwn(copy.files, wanted)
+        ? { error: "Skill reference file not found." }
+        : { name: copy.name, file: wanted, content: copy.files[wanted] };
+    return {
+      name: copy.name,
+      description: copy.description,
+      content: copy.content,
+      source: "user",
+      readOnly: true,
+      files: Object.keys(copy.files),
+      importId: copy.importId,
+    };
+  }
   const row = skill.id.startsWith("builtin:")
     ? null
     : await prisma.agentSkill.findFirst({

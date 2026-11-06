@@ -1207,6 +1207,7 @@ function pinnedRoutineRunPrisma(modelId: string) {
     taughtSkill: { findMany: vi.fn(async () => []) },
     secret: { findMany: vi.fn(async () => []) },
     vaultCredential: { findMany: vi.fn(async () => []) },
+    experienceSkill: { findMany: vi.fn(async () => []) },
     agentSkill: { findMany: vi.fn(async () => []) },
     scratchpadItem: { findMany: vi.fn(async () => []) },
   };
@@ -1975,6 +1976,7 @@ describe("createRunExecutor", () => {
       thread: {
         findFirst: vi.fn(async () => ({ id: "group-thread-1" })),
       },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: {
         findMany: vi.fn(async () => []),
       },
@@ -2048,6 +2050,7 @@ describe("createRunExecutor", () => {
       thread: {
         findFirst: vi.fn(async () => ({ id: "group-thread-1" })),
       },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: {
         findMany: vi.fn(async () => []),
       },
@@ -2133,6 +2136,7 @@ describe("createRunExecutor", () => {
         bot: {
           findUnique: vi.fn(async () => ({ id: "bot-1", thread: { id: "thread-1" } })),
         },
+        experienceSkill: { findMany: vi.fn(async () => []) },
         agentSkill: { findMany: vi.fn(async () => []) },
         $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) =>
           callback({
@@ -2283,6 +2287,7 @@ describe("createRunExecutor", () => {
         })),
       },
       thread: { findFirst },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: { findMany: vi.fn(async () => []) },
       $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) =>
         callback({
@@ -2359,6 +2364,7 @@ describe("createRunExecutor", () => {
         })),
       },
       thread: { findFirst },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: { findMany: vi.fn(async () => []) },
       $transaction: vi.fn(async (callback: (tx: unknown) => Promise<unknown>) =>
         callback({
@@ -2442,6 +2448,7 @@ description: Prepare standup notes
           thread: { id: "thread-1" },
         })),
       },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: {
         findMany: vi.fn(async () => [
           {
@@ -2510,6 +2517,7 @@ description: Prepare standup notes
           thread: { id: "thread-1" },
         })),
       },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: {
         findMany: vi.fn(async () => []),
       },
@@ -2573,6 +2581,7 @@ description: Prepare standup notes
           thread: { id: "thread-1" },
         })),
       },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: {
         findMany: vi.fn(async () => []),
       },
@@ -2964,6 +2973,7 @@ description: Prepare standup notes
         },
         taughtSkill: { findMany: vi.fn(async () => []) },
         vaultCredential: { findMany: vi.fn(async () => []) },
+        experienceSkill: { findMany: vi.fn(async () => []) },
         agentSkill: { findMany: vi.fn(async () => []) },
         scratchpadItem: { findMany: vi.fn(async () => []) },
       } as unknown as PrismaClient;
@@ -3077,6 +3087,7 @@ description: Prepare standup notes
       taughtSkill: { findMany: vi.fn(async () => []) },
       secret: { findMany: vi.fn(async () => []) },
       vaultCredential: { findMany: vi.fn(async () => []) },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: { findMany: vi.fn(async () => []) },
       scratchpadItem: { findMany: vi.fn(async () => []) },
     } as unknown as PrismaClient;
@@ -3195,6 +3206,7 @@ description: Prepare standup notes
       taughtSkill: { findMany: vi.fn(async () => []) },
       secret: { findMany: vi.fn(async () => []) },
       vaultCredential: { findMany: vi.fn(async () => []) },
+      experienceSkill: { findMany: vi.fn(async () => []) },
       agentSkill: { findMany: vi.fn(async () => []) },
       scratchpadItem: { findMany: vi.fn(async () => []) },
     } as unknown as PrismaClient;

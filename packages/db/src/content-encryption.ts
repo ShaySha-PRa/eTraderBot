@@ -49,6 +49,31 @@ interface ModelSpec {
 
 /** Further content columns (external messages, steering, skills, …) add an entry here. */
 export const ENCRYPTED_MODELS: Record<string, ModelSpec> = {
+  ExperiencePackage: {
+    table: "experience_packages",
+    fields: { snapshot: { plainKeys: new Set() } },
+    space: { column: "spaceId" },
+    ownerRelation: "user",
+  },
+  ExperienceImport: {
+    table: "experience_imports",
+    fields: { snapshot: { plainKeys: new Set() }, receipt: { plainKeys: new Set() } },
+    space: { column: "spaceId" },
+    ownerRelation: "user",
+  },
+  ExperienceSkill: {
+    table: "experience_skills",
+    fields: { payload: { plainKeys: new Set() } },
+    space: { column: "spaceId" },
+    ownerRelation: "user",
+  },
+  ExperienceHandoffEvent: {
+    table: "experience_handoff_events",
+    fields: { payload: { plainKeys: new Set() } },
+    space: { column: "spaceId" },
+    ownerRelation: "user",
+  },
+
   Message: {
     table: "messages",
     fields: { blocks: { plainKeys: MESSAGE_BLOCK_PLAIN_KEYS } },

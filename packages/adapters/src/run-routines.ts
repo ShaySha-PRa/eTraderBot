@@ -179,6 +179,7 @@ export async function wakeRoutine(deps: ExecutorDeps, routineId: string, schedul
           routine.timezone,
         );
   const skillRecords = await listAgentSkillRecords(deps.prisma, {
+    botId: routine.botId,
     spaceId: routine.spaceId,
     userId: routine.userId,
   });

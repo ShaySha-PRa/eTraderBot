@@ -563,6 +563,7 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
             where: { botId: run.botId, spaceId: run.spaceId, status: "saved" },
           }),
           listAgentSkillRecords(deps.prisma, {
+            botId: run.botId,
             spaceId: run.spaceId,
             userId: run.userId,
           }),
