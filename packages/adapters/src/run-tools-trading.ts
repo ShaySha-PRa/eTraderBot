@@ -1,9 +1,42 @@
-import { WorkspaceReadCommandSchema } from "@rakazo/contracts";
+import { BusinessCycleCommandSchema, WorkspaceReadCommandSchema } from "@rakazo/contracts";
 import { TradingError } from "@rakazo/core";
-import { businessOverview, createWorkspaceAccessService } from "@rakazo/db";
+import {
+  businessOverview,
+  createBusinessCycleService,
+  createWorkspaceAccessService,
+} from "@rakazo/db";
 import type { ToolHandlers } from "./run-tool-gate.js";
 
 export const tradingTools = {
+  async business_cycle(ctx, call) {
+    try {
+      const input = BusinessCycleCommandSchema.parse(call.args);
+      const who = { spaceId: ctx.run.spaceId, userId: ctx.run.userId, botId: ctx.bot.id };
+      const service = createBusinessCycleService(
+        ctx.deps.prisma,
+        undefined,
+        ctx.deps.onTicketChange,
+      );
+      const value =
+        input.operation === "list"
+          ? await service.list(who)
+          : input.operation === "read"
+            ? await service.get(who, input.cycleId)
+            : input.operation === "assign"
+              ? await service.assign(who, input)
+              : input.operation === "analyze"
+                ? await service.analyze(who, input)
+                : input.operation === "settle"
+                  ? await service.settle(who, input.cycleId)
+                  : await service.complete(who, input.ticketId, input.result);
+      return call.finish(value);
+    } catch (error) {
+      return {
+        error: error instanceof TradingError ? error.message : "Business cycle request failed",
+        ...(error instanceof TradingError ? { code: error.code } : {}),
+      };
+    }
+  },
   async business_overview(ctx, call) {
     try {
       return call.finish(

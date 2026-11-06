@@ -24,6 +24,7 @@ import {
   tradingExecutionTerminal,
   validateTradingSnapshot,
 } from "@rakazo/core";
+import { assertBusinessSubmission, recordBusinessSubmission } from "./business-cycle-evidence.js";
 import type { Prisma, PrismaClient } from "./client.js";
 import { Prisma as PrismaRuntime } from "./client.js";
 import { createTradingAnalysisService } from "./trading.js";
@@ -226,6 +227,15 @@ export function createTradingControlService(
           return current;
       }
       if (tradingExecutionTerminal(current.receipt.status)) return current;
+      if (operation === "cancel")
+        await assertBusinessSubmission(
+          tx,
+          scope.id,
+          intentRow.analysisId,
+          scope.scope,
+          now,
+          "cancel",
+        );
       if (operation === "cancel" && botId) {
         const grant = execution.grantId
           ? await tx.tradingGrant.findUnique({ where: { id: execution.grantId } })
@@ -270,6 +280,18 @@ export function createTradingControlService(
           createdAt: now,
         },
       });
+      await recordBusinessSubmission(
+        tx,
+        intentRow.analysisId,
+        {
+          executionId: execution.id,
+          intentId: intentRow.id,
+          status: receipt.status,
+          stage: scope.scope.stage,
+          sequence: receipt.sequence,
+        },
+        now,
+      );
       await audit(
         tx,
         actor,
@@ -478,6 +500,7 @@ export function createTradingControlService(
           "Analysis belongs to another business scope",
         );
         const snapshot = validateTradingSnapshot(analysis.snapshot, now);
+        await assertBusinessSubmission(tx, scope.id, analysis.id, scope.scope, now, "prepare");
         const algorithmVersionId = tradingAlgorithmIdentity(
           scope.scope.subjectKind,
           analysis.parameters,
@@ -745,6 +768,7 @@ export function createTradingControlService(
           "Intent already executed; query its original request",
         );
         checkIntent(record, now);
+        await assertBusinessSubmission(tx, scope.id, row.analysisId, scope.scope, now);
         const version = await approvedVersion(tx, scope.id, row.versionId);
         tradingAssert(
           version.algorithmVersionId === record.intent.algorithmVersionId &&
@@ -826,6 +850,18 @@ export function createTradingControlService(
             createdAt: now,
           },
         });
+        await recordBusinessSubmission(
+          tx,
+          row.analysisId,
+          {
+            executionId: id,
+            intentId: row.id,
+            status: receipt.status,
+            stage: scope.scope.stage,
+            sequence: receipt.sequence,
+          },
+          now,
+        );
         await audit(tx, actor, scope.id, "execution.simulated", id, now);
         return executionDto({ ...execution, events: [] });
       });

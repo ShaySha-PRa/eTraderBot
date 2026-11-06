@@ -73,6 +73,8 @@ export function lastChatOf(
   seed: AppBootstrap | undefined,
   chat: ChatTarget | undefined,
 ): ChatTarget | undefined {
+  const supervisor = seed?.bots.find((bot) => bot.businessSupervisor);
+  if (supervisor) return { botId: supervisor.id };
   if (!seed || !chat) return undefined;
   if (chat.groupId) {
     return seed.groups.some((group) => group.id === chat.groupId) ? chat : undefined;

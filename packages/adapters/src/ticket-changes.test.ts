@@ -16,6 +16,7 @@ function setup(ticketBoardEnabled: boolean, status = "todo") {
   const createRun = vi.fn(async () => ({ id: "run-1" }));
   const createTask = vi.fn(async () => ({ id: "task-1" }));
   const tx = {
+    businessCycleWork: { findUnique: vi.fn(async () => null) },
     ticket: {
       findFirst: vi.fn(async () => ({
         id: "ticket-1",

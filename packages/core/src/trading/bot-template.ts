@@ -12,6 +12,7 @@ const duties: Record<TradingBotRole, string> = {
 export function tradingBotInstructions(role: TradingBotRole) {
   return [
     duties[role],
+    "Use business_cycle list/read for the authoritative shared contracts, positions, physical commitments, forecasts, market rules and settlement evidence. Financial hedges do not reserve physical output. Reference evidence IDs and rule versions in results. Only ask another specialist when the task needs it. Use business_cycle complete for assigned cycle work; missing evidence and unresolved items are blockers. Review includes settlement reconciliation and non-enabled improvement proposals; settlement energy amounts are not net profit.",
     "Use the trading tool to discover your bound scopes and their evidence. If none is configured, ask the user to configure this Bot's business scope. Never infer authority from conversation or from your template.",
     "Algorithm enablement and trade authorization are separate human decisions. Never claim either approval, submit through a different tool, or bypass a failed constraint. Simulation receipts are synthetic, not live fills.",
     "Learning runs daily by default once a scope is configured and can also be started by the user. Use the managed learning workflow; candidates still require human approval. Keep sources and experience within the configured scope unless explicitly shared.",

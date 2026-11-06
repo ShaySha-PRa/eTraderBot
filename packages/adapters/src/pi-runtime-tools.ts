@@ -447,6 +447,7 @@ function toAgentTool(
           });
           const startedAt = Date.now();
           let result: unknown;
+          let serialized = false;
           let failure: unknown;
           try {
             result = await (async () => {
@@ -498,6 +499,7 @@ function toAgentTool(
                     if (isToolPauseResult(result)) host.pausePending = true;
                     return result;
                   }
+                  serialized = true;
                   return {
                     content: [
                       {
@@ -552,6 +554,7 @@ function toAgentTool(
                     ? result
                     : boundAgentToolResult(result);
                 }
+                serialized = true;
                 return {
                   content: [
                     {
@@ -578,7 +581,10 @@ function toAgentTool(
                 details: { error: "no executor" },
               };
             })();
-            if (keepToolResultWhole(tool.name, args)) return result as AgentToolResult<unknown>;
+            // Serialization already applies the context strategy. Structured metadata may
+            // exceed its soft text budget; cutting it again would lose IDs and break JSON.
+            if (serialized || keepToolResultWhole(tool.name, args))
+              return result as AgentToolResult<unknown>;
             return boundAgentToolResult(result as AgentToolResult<unknown>);
           } catch (error) {
             failure = error;

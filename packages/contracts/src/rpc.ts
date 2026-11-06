@@ -43,6 +43,7 @@ import {
   VaultRevealed,
   VaultRevealInput,
 } from "./bot-secrets.js";
+import { businessCycleContract } from "./business-cycle.js";
 import { businessSupervisorContract } from "./business-supervisor.js";
 import {
   AccessGrantInputSchema,
@@ -340,6 +341,7 @@ export const appContract = {
   },
   workspaceAccess: workspaceAccessContract,
   businessSupervisor: businessSupervisorContract,
+  businessCycle: businessCycleContract,
   spaces: {
     list: oc.output(SpaceNavigationSchema),
     create: oc

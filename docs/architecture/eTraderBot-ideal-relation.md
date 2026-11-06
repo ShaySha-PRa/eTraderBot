@@ -57,3 +57,28 @@ flowchart TB
 ```
 
 经验与 Skill 支持业务协作和经授权的交接；影响交易决策的变化纳入受控算法或规则版本。新算法版本不继承旧交易授权。当前交付仍以合成数据、工程基线、参数候选和模拟执行为主，真实接口、独立强化学习及完整算法插件发布另行实施与验证。
+
+## 2026-11-05：已交付的模拟业务周期
+
+主管和四类专业 Bot 共同读取一个业务周期内的版本化证据。任务按需求分派并声明数据与前序任务依赖；图中的业务证据关系不是四个 Bot 的固定运行顺序。
+
+```mermaid
+flowchart LR
+  Contract[合同 · 金融敞口 / 物理承诺] --> Snapshot[预测与资产可用量]
+  Snapshot --> Analysis[中长期或现货候选]
+  Rule[教学规则版本 / 申报窗口] --> Gate[原审批与授权门禁]
+  Analysis --> Gate
+  Gate --> Receipt[模拟申报回执]
+  Receipt --> Clearing[模拟出清结果]
+  Clearing --> Delivery[模拟履约证据]
+  Delivery --> Meter[暂估 / 确认计量]
+  Contract --> Trial[内部结算试算]
+  Clearing --> Trial
+  Meter --> Trial
+  Bill[模拟账单] --> Trial
+  Trial --> Review[有据复盘 / 未启用改进建议]
+  Correction[追加更正] --> Meter
+  Correction -.重新核对.-> Trial
+```
+
+当前仅实现 P25 的显式教学模拟和基本电量约束。现行三省规则、正式账单、跨业务资产承诺、复杂储能物理约束及实盘仍未验收。固定版本经验交接保持 ADR 0005 待实施状态。

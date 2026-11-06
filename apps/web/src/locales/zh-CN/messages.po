@@ -228,6 +228,10 @@ msgstr "{hiddenSelectedCount, plural, one {搜索结果隐藏了 # 个已选模�
 msgid "{hours}h ago"
 msgstr "{hours} 小时前"
 
+#: src/pages/BusinessCycle.tsx
+msgid "{label} must be {limit} characters or fewer"
+msgstr "{label}不能超过 {limit} 个字符"
+
 #: src/components/markdown-copy.tsx
 msgid "{label}, empty"
 msgstr "{label}，空"
@@ -516,6 +520,10 @@ msgstr "运行中任务"
 msgid "Activity"
 msgstr "动态"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Actual energy (MWh)"
+msgstr "实际电量（MWh）"
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -691,6 +699,7 @@ msgstr "从其他应用导入的 Agent"
 msgid "Algorithm approver"
 msgstr "算法审批人"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Algorithm version"
 msgstr "算法版本"
@@ -814,6 +823,14 @@ msgstr "集成工具"
 msgid "Analysis"
 msgstr "分析"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Analysis and simulated submission"
+msgstr "分析与模拟申报"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Analyze shared evidence"
+msgstr "基于共享证据分析"
+
 #: src/lib/activity-list-filters.ts
 msgid "Another agent"
 msgstr "其他 Agent"
@@ -898,6 +915,10 @@ msgstr "外观"
 msgid "Appearance: {label}"
 msgstr "外观：{label}"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Append metering correction"
+msgstr "追加计量更正"
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "应用"
@@ -925,6 +946,7 @@ msgstr "审批"
 msgid "Approve"
 msgstr "批准"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Approve algorithm"
 msgstr "批准启用算法"
@@ -937,6 +959,7 @@ msgstr "请在屏幕上批准或拒绝。"
 msgid "Approve this server to let your agent use its tools."
 msgstr "批准此服务器后，Agent 才能使用它的工具。"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Approve trade"
 msgstr "批准交易"
@@ -963,6 +986,7 @@ msgstr "归档"
 msgid "archived"
 msgstr "已归档"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/shell/archived-chats.tsx
 msgid "Archived"
 msgstr "已归档"
@@ -987,6 +1011,14 @@ msgstr "休眠中"
 #: src/pages/shell/business-scope.tsx
 msgid "Asset ID"
 msgstr "资产标识"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assign necessary role"
+msgstr "分派所需角色"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee"
+msgstr "负责人"
 
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
@@ -1141,6 +1173,10 @@ msgstr "批次"
 msgid "Bearer token"
 msgstr "Bearer token"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Bill difference"
+msgstr "账单差额"
+
 #: src/pages/settings-nav.ts
 msgid "Billing"
 msgstr "账单"
@@ -1158,6 +1194,7 @@ msgid "Block"
 msgstr "阻止"
 
 #: src/lib/ticket-status.ts
+#: src/pages/BusinessCycle.tsx
 msgid "Blocked"
 msgstr "已阻塞"
 
@@ -1258,6 +1295,11 @@ msgstr "浏览 MCP 服务器"
 #: src/pages/shell/agent-import.tsx
 msgid "Built-in"
 msgstr "内置"
+
+#: src/pages/BusinessCycle.tsx
+#: src/pages/Shell.tsx
+msgid "Business cycle"
+msgstr "业务周期"
 
 #: src/pages/BusinessSupervisor.tsx
 #: src/pages/Shell.tsx
@@ -1386,6 +1428,10 @@ msgstr "已取消"
 #: src/pages/Trading.tsx
 msgid "Candidate analysis"
 msgstr "候选分析"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Candidate energy"
+msgstr "候选电量"
 
 #: src/pages/TradingLearning.tsx
 msgid "Candidate margin"
@@ -1570,6 +1616,10 @@ msgstr "清空对话"
 #: src/pages/ActivityList.tsx
 msgid "Clear filter {label}"
 msgstr "清除筛选 {label}"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Clearing"
+msgstr "出清结果"
 
 #: src/pages/shell/dialogs.tsx
 msgid "Clearing…"
@@ -1806,6 +1856,10 @@ msgstr "确认移除"
 msgid "Confirm the URL is reachable from this browser session, then test again."
 msgstr "请确认此浏览器会话可以访问该 URL，然后重新测试。"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Confirmed"
+msgstr "已确认"
+
 #: src/components/integrations/IntegrationSetup.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
@@ -1963,6 +2017,18 @@ msgstr "继续结账"
 msgid "Continue with {0}"
 msgstr "通过 {0} 继续"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Contract"
+msgstr "合同"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Contract coverage"
+msgstr "合同覆盖查询"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Contracts"
+msgstr "合同"
+
 #: src/lib/trading-bot-templates.ts
 msgid "Contracts, coverage and delivery exposure"
 msgstr "合约、持仓覆盖与交割敞口"
@@ -2013,9 +2079,17 @@ msgstr "复制推送令牌"
 msgid "Copy rows"
 msgstr "复制行"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Correction"
+msgstr "更正"
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Cost"
 msgstr "费用"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Costs"
+msgstr "成本"
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Could not add"
@@ -2111,6 +2185,7 @@ msgstr "无法连接电脑屏幕"
 #: src/lib/trading-actions.ts
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
+#: src/pages/BusinessCycle.tsx
 #: src/pages/shell/use-computer.tsx
 msgid "Could not continue"
 msgstr "无法继续"
@@ -2731,6 +2806,10 @@ msgstr "天"
 msgid "Day ahead"
 msgstr "日前"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Day-ahead deviation"
+msgstr "日前偏差"
+
 #: src/lib/trading-bot-templates.ts
 msgid "Day-ahead, intraday and real-time decisions"
 msgstr "日前、日内与实时交易决策"
@@ -2863,6 +2942,10 @@ msgstr "删除验证码"
 msgid "Delivery"
 msgstr "交割时段"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Delivery evidence"
+msgstr "履约证据"
+
 #: src/components/AskCard.tsx
 msgid "Denied"
 msgstr "已拒绝"
@@ -2870,6 +2953,10 @@ msgstr "已拒绝"
 #: src/components/AskCard.tsx
 msgid "Deny"
 msgstr "拒绝"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Depends on task"
+msgstr "依赖任务"
 
 #: src/pages/Board.tsx
 #: src/pages/shell/agent-import.tsx
@@ -2920,6 +3007,10 @@ msgstr "禁用工具"
 #: src/pages/PluginsOverlay.tsx
 msgid "Disabled"
 msgstr "已禁用"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Disagreements"
+msgstr "分歧"
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Discard recording"
@@ -3109,6 +3200,10 @@ msgstr "启用 {0}"
 msgid "Ends {day}"
 msgstr "将于 {day} 结束"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Energy settlement"
+msgstr "电能量结算"
+
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Engage when... Ignore..."
 msgstr "在…时参与，忽略…"
@@ -3152,10 +3247,18 @@ msgstr "环境变量"
 msgid "Environment variables: {names}"
 msgstr "环境变量：{names}"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Equivalent difference form"
+msgstr "等价差价结果"
+
 #: src/lib/roster-status.ts
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Error"
 msgstr "出错"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Estimated"
+msgstr "暂估"
 
 #: src/pages/shell/avatar-studio-popover.tsx
 msgid "eTraderBot"
@@ -3224,6 +3327,18 @@ msgstr "每月"
 #: src/pages/RoutineSchedule.tsx
 msgid "Every week"
 msgstr "每周"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Evidence changed. Check the latest versions and submit again"
+msgstr "证据已更新，请核对最新版本后重新提交"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Evidence history"
+msgstr "证据历史"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Evidence ID"
+msgstr "证据编号"
 
 #: src/pages/Trading.tsx
 msgid "Execute simulation"
@@ -3411,6 +3526,10 @@ msgstr "正在完成 MCP 连接…"
 #: src/pages/shell/business-scope.tsx
 msgid "For example: Shandong retail trading"
 msgstr "例如：山东售电业务"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Forecast"
+msgstr "预测"
 
 #: src/pages/WeatherInterface.tsx
 msgid "Forecast details"
@@ -3676,6 +3795,10 @@ msgstr "人工审批"
 msgid "Human cancellation only"
 msgstr "仅人工可撤单"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Human-recorded result"
+msgstr "人工记录结果"
+
 #: src/pages/WeatherInterface.tsx
 msgid "Humidity (%)"
 msgstr "湿度（%）"
@@ -3726,6 +3849,18 @@ msgstr "导入 Agent"
 msgid "Import data"
 msgstr "导入数据"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Import simulated metering"
+msgstr "导入模拟计量"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Import simulated results"
+msgstr "导入模拟出清与履约"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Improvement proposal (not enabled)"
+msgstr "改进提案（未启用）"
+
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr "进行中"
@@ -3753,6 +3888,10 @@ msgstr "包含 API 密钥"
 #: src/components/call/VoiceChatCard.tsx
 msgid "Incoming call"
 msgstr "来电"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Independent task"
+msgstr "独立任务"
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Inherit default"
@@ -3829,6 +3968,14 @@ msgstr "接口配置"
 #: src/pages/shell/business-scope.tsx
 msgid "Interface settings"
 msgstr "接口设置"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Internal settlement trial"
+msgstr "内部结算试算"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Internal trial"
+msgstr "内部试算"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "Internal weather model (simulation)"
@@ -4020,6 +4167,10 @@ msgstr "加载更多"
 msgid "Load older runs"
 msgstr "加载更早的运行记录"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Load P25 simulation"
+msgstr "载入 P25 模拟"
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Load web images automatically"
 msgstr "自动加载网络图片"
@@ -4179,6 +4330,10 @@ msgstr "市场标识"
 msgid "Market rules"
 msgstr "市场规则"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Market rules and windows"
+msgstr "市场规则与窗口"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Marketing"
 msgstr "营销"
@@ -4335,6 +4490,14 @@ msgstr "已发给 {peer}"
 msgid "Messaging"
 msgstr "消息"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Metering"
+msgstr "计量"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Metering status"
+msgstr "计量状态"
+
 #: src/lib/call-session.ts
 #: src/lib/dictation.ts
 msgid "Microphone failed"
@@ -4387,6 +4550,10 @@ msgstr "分钟"
 #: src/components/call/VoiceChatCard.tsx
 msgid "Missed call"
 msgstr "未接来电"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Missing"
+msgstr "待补充"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Mode"
@@ -4532,6 +4699,10 @@ msgstr "给这个例行任务命名"
 msgid "Name your Bot"
 msgstr "给 Bot 命名"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Needed to complete"
+msgstr "完成仍需"
+
 #: src/lib/roster-status.ts
 msgid "Needs an answer"
 msgstr "等你回答"
@@ -4544,6 +4715,10 @@ msgstr "需要 OAuth 客户端 ID"
 #: src/pages/ActivityList.tsx
 msgid "Needs input"
 msgstr "需要输入"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Needs recalculation"
+msgstr "需要重新核对"
 
 #: src/pages/ActivityList.tsx
 msgid "Needs takeover"
@@ -4558,6 +4733,10 @@ msgstr "需要接管"
 #: src/pages/shell/import-status.ts
 msgid "Needs: {names}"
 msgstr "需要：{names}"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Net profit"
+msgstr "净利润"
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Never ask"
@@ -4799,6 +4978,10 @@ msgstr "未添加：{0}"
 msgid "Not checked yet"
 msgstr "尚未检查"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Not established"
+msgstr "尚未确认"
+
 #: src/pages/shell/agent-import.tsx
 msgid "Not imported"
 msgstr "未导入"
@@ -4957,6 +5140,10 @@ msgstr "在完整窗口中打开"
 msgid "Open navigation"
 msgstr "打开导航"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Open spot Bot"
+msgstr "打开现货 Bot"
+
 #: src/pages/ScratchpadSection.tsx
 msgid "Open work"
 msgstr "待办"
@@ -5010,6 +5197,10 @@ msgstr "原消息不可用"
 msgid "Other data"
 msgstr "其他数据"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Other fees"
+msgstr "其他费用"
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Other model…"
@@ -5023,6 +5214,10 @@ msgstr "输出"
 #: src/pages/Board.tsx
 msgid "Owner"
 msgstr "所有者"
+
+#: src/pages/BusinessCycle.tsx
+msgid "P25 teaching simulation · Energy settlement is not net profit. This is not a regional market rule."
+msgstr "P25 教学模拟 · 电能量结算不是净利润，不代表地区现行规则。"
 
 #: src/components/markdown-copy.tsx
 msgid "Page {page} of {count}"
@@ -5153,6 +5348,10 @@ msgstr "电话"
 msgid "Photo"
 msgstr "照片"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Physical availability"
+msgstr "物理可用能力"
+
 #: src/pages/GroupPanel.tsx
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr "选 {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX} 个"
@@ -5218,6 +5417,7 @@ msgstr "POST 到"
 msgid "Preferences"
 msgstr "偏好设置"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Prepare intent"
 msgstr "准备交易意图"
@@ -5310,6 +5510,10 @@ msgstr "推送令牌（仅展示一次）"
 msgid "Pushed"
 msgstr "外部推送"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Quantity and price submission"
+msgstr "报量报价"
+
 #: src/pages/BusinessInterfaces.tsx
 msgid "Query parameters (JSON)"
 msgstr "查询参数（JSON）"
@@ -5359,9 +5563,17 @@ msgstr "资料只读授权"
 msgid "Ready"
 msgstr "就绪"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Ready to investigate"
+msgstr "可以开始调查"
+
 #: src/pages/Trading.tsx
 msgid "Real time"
 msgstr "实时"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Real-time deviation"
+msgstr "实时偏差"
 
 #: src/pages/PluginSubmissionsPanel.tsx
 msgid "Reason"
@@ -5413,6 +5625,10 @@ msgstr "推荐"
 msgid "Reconcile order"
 msgstr "核对订单"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Reconcile settlement"
+msgstr "核对结算"
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Reconnect"
@@ -5426,6 +5642,10 @@ msgstr "重新连接 OAuth"
 #: src/components/ComputerUpdateProgress.tsx
 msgid "Reconnecting"
 msgstr "正在重新连接"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Record sourced result"
+msgstr "记录有据结果"
 
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Recording may have started, but the view could not refresh"
@@ -5490,6 +5710,10 @@ msgstr "招聘与人事"
 #: src/pages/McpServersOverlay.tsx
 msgid "Redirect URI"
 msgstr "重定向 URI"
+
+#: src/pages/BusinessCycle.tsx
+msgid "References"
+msgstr "引用证据"
 
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
@@ -5697,9 +5921,21 @@ msgstr "请求方法"
 msgid "Request parameters"
 msgstr "请求参数"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Requested work"
+msgstr "任务类型"
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
 msgstr "请求"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Required evidence available"
+msgstr "所需证据已就绪"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Required evidence or a prerequisite result is still missing"
+msgstr "所需证据或前序任务结果尚未齐全"
 
 #: src/pages/shell/message-cards.tsx
 msgid "Research & writing"
@@ -5755,6 +5991,7 @@ msgid "Restart to update"
 msgstr "重启后更新"
 
 #: src/components/InstructionSettings.tsx
+#: src/pages/BusinessCycle.tsx
 #: src/pages/shell/archived-chats.tsx
 msgid "Restore"
 msgstr "恢复"
@@ -5782,6 +6019,14 @@ msgstr "结果不确定"
 #: src/pages/Trading.tsx
 msgid "Result uncertain; the reservation is retained."
 msgstr "结果尚未确认，占用额度继续保留。"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Results only / closed"
+msgstr "仅接收结果／不开放申报"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Results, metering and reconciliation"
+msgstr "结果、计量与结算核对"
 
 #: src/pages/shell/business-scope.tsx
 #: src/pages/Trading.tsx
@@ -5840,6 +6085,14 @@ msgstr "复盘 Bot"
 msgid "Review provider settings and test again."
 msgstr "请检查提供方设置并重新测试。"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Review result"
+msgstr "复盘结果"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Revision allowed"
+msgstr "允许修改报价"
+
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
@@ -5865,10 +6118,18 @@ msgstr "风控"
 msgid "Risk bot"
 msgstr "风控 Bot"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Risk check"
+msgstr "风控检查"
+
 #: src/pages/Shell.tsx
 #: src/pages/Trading.tsx
 msgid "Risk review"
 msgstr "风险检查"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Role tasks and dependencies"
+msgstr "角色任务与依赖"
 
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Room guidance"
@@ -6061,6 +6322,10 @@ msgstr "范围（可选）"
 #: src/pages/shell/use-computer.tsx
 msgid "Screen not connected"
 msgstr "屏幕未连接"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Sealed after submission"
+msgstr "申报后封存"
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/model-settings/model-picker.tsx
@@ -6258,6 +6523,14 @@ msgstr "设置：用量"
 msgid "Settled"
 msgstr "已核销"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Settlement evidence ready for review"
+msgstr "结算证据已齐，可进行复盘"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Settlement review"
+msgstr "结算复盘"
+
 #: src/pages/shell/import-setup-card.tsx
 msgid "Setup complete"
 msgstr "设置完成"
@@ -6299,6 +6572,10 @@ msgstr "将指定资料授权给普通 Bot 只读。撤销后停止后续读取�
 #: src/pages/shell/bot-panel.tsx
 msgid "Shared"
 msgstr "共享"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Shared evidence"
+msgstr "共享业务证据"
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Shared memory"
@@ -6399,6 +6676,10 @@ msgstr "注册"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Sign-in cancelled. Try again."
 msgstr "登录已取消。请重试。"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Simulated bill"
+msgstr "模拟账单"
 
 #: src/pages/WeatherInterface.tsx
 msgid "Simulated data"
@@ -6548,6 +6829,10 @@ msgstr "语音模型"
 msgid "Spot"
 msgstr "现货"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Spot analysis"
+msgstr "现货分析"
+
 #: src/lib/trading-bot-templates.ts
 msgid "Spot bot"
 msgstr "现货交易 Bot"
@@ -6663,6 +6948,10 @@ msgstr "主体标识"
 msgid "Subject type"
 msgstr "主体类型"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Submission receipt"
+msgstr "申报回执"
+
 #: src/pages/Trading.tsx
 msgid "Submission timeout"
 msgstr "提交超时"
@@ -6675,6 +6964,10 @@ msgstr "提交"
 #: src/pages/PluginsOverlay.tsx
 msgid "Submit a plugin"
 msgstr "提交插件"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Submit simulation"
+msgstr "提交模拟申报"
 
 #: src/components/ModelCredits.tsx
 #: src/pages/Paywall.tsx
@@ -6705,6 +6998,10 @@ msgstr "需要订阅"
 msgid "Sunday"
 msgstr "周日"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Supersedes"
+msgstr "更正自"
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Supports images"
@@ -6730,6 +7027,10 @@ msgstr "合成数据"
 #: src/pages/Trading.tsx
 msgid "Synthetic fill"
 msgstr "合成成交"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Synthetic source"
+msgstr "模拟来源"
 
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Shell.tsx
@@ -7020,6 +7321,10 @@ msgstr "该服务器的工具结果超出模型容量。请关闭该服务器的
 msgid "This subscription sign-in is not available in eTraderBot yet. Use a deployment credential or choose another provider."
 msgstr "此订阅登录在 eTraderBot 中尚不可用。请使用部署凭据或选择其他提供方。"
 
+#: src/pages/BusinessCycle.tsx
+msgid "This task is no longer available"
+msgstr "该任务已不可用"
+
 #: src/pages/Artifacts.tsx
 msgid "This week"
 msgstr "本周"
@@ -7203,6 +7508,7 @@ msgid "Type your answer"
 msgstr "输入你的回答"
 
 #: src/pages/BotContextMenu.tsx
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Shell.tsx
 msgid "Unassigned"
 msgstr "未分配"
@@ -7230,6 +7536,10 @@ msgstr "取消静音"
 #: src/pages/BotContextMenu.tsx
 msgid "Unpin"
 msgstr "取消置顶"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Unresolved"
+msgstr "未解决事项"
 
 #. placeholder {0}: pending.file.name
 #: src/pages/shell/use-composer-actions.ts
@@ -7485,6 +7795,10 @@ msgstr "语音请求超时。"
 msgid "Wait a moment and test again."
 msgstr "请稍候并重新测试。"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Waiting for evidence"
+msgstr "等待证据"
+
 #: src/pages/TradingLearning.tsx
 msgid "Waiting for input"
 msgstr "等待输入"
@@ -7676,6 +7990,10 @@ msgstr "如果没有自动跳转，可以关闭此标签页。"
 #: src/pages/McpOAuthCallback.tsx
 msgid "You can close this window."
 msgstr "可以关闭此窗口。"
+
+#: src/pages/BusinessCycle.tsx
+msgid "You can't record this result"
+msgstr "你无法记录此结果"
 
 #: src/components/call/VoiceChatCard.tsx
 msgid "You declined"

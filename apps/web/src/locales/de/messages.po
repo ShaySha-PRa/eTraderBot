@@ -228,6 +228,10 @@ msgstr ""
 msgid "{hours}h ago"
 msgstr "vor {hours} Std."
 
+#: src/pages/BusinessCycle.tsx
+msgid "{label} must be {limit} characters or fewer"
+msgstr ""
+
 #: src/components/markdown-copy.tsx
 msgid "{label}, empty"
 msgstr "{label}, leer"
@@ -516,6 +520,10 @@ msgstr ""
 msgid "Activity"
 msgstr "Aktivität"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Actual energy (MWh)"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/PluginsOverlay.tsx
@@ -691,6 +699,7 @@ msgstr ""
 msgid "Algorithm approver"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Algorithm version"
 msgstr ""
@@ -814,6 +823,14 @@ msgstr "Ein Integrationstool"
 msgid "Analysis"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Analysis and simulated submission"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Analyze shared evidence"
+msgstr ""
+
 #: src/lib/activity-list-filters.ts
 msgid "Another agent"
 msgstr "Ein anderer Agent"
@@ -898,6 +915,10 @@ msgstr "Erscheinungsbild"
 msgid "Appearance: {label}"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Append metering correction"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Apply"
 msgstr "Anwenden"
@@ -925,6 +946,7 @@ msgstr "Freigaben"
 msgid "Approve"
 msgstr "Genehmigen"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Approve algorithm"
 msgstr ""
@@ -937,6 +959,7 @@ msgstr "Genehmige oder lehne es auf dem Bildschirm ab."
 msgid "Approve this server to let your agent use its tools."
 msgstr "Genehmige diesen Server, damit dein Agent seine Tools verwenden kann."
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Approve trade"
 msgstr ""
@@ -963,6 +986,7 @@ msgstr "Archivieren"
 msgid "archived"
 msgstr "archiviert"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/shell/archived-chats.tsx
 msgid "Archived"
 msgstr "Archiviert"
@@ -986,6 +1010,14 @@ msgstr "Schläft"
 
 #: src/pages/shell/business-scope.tsx
 msgid "Asset ID"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assign necessary role"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee"
 msgstr ""
 
 #. placeholder {0}: preset.time
@@ -1141,6 +1173,10 @@ msgstr ""
 msgid "Bearer token"
 msgstr "Bearer-Token"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Bill difference"
+msgstr ""
+
 #: src/pages/settings-nav.ts
 msgid "Billing"
 msgstr ""
@@ -1158,6 +1194,7 @@ msgid "Block"
 msgstr "Blockieren"
 
 #: src/lib/ticket-status.ts
+#: src/pages/BusinessCycle.tsx
 msgid "Blocked"
 msgstr ""
 
@@ -1258,6 +1295,11 @@ msgstr ""
 #: src/pages/shell/agent-import.tsx
 msgid "Built-in"
 msgstr "Integriert"
+
+#: src/pages/BusinessCycle.tsx
+#: src/pages/Shell.tsx
+msgid "Business cycle"
+msgstr ""
 
 #: src/pages/BusinessSupervisor.tsx
 #: src/pages/Shell.tsx
@@ -1385,6 +1427,10 @@ msgstr "Abgebrochen"
 
 #: src/pages/Trading.tsx
 msgid "Candidate analysis"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Candidate energy"
 msgstr ""
 
 #: src/pages/TradingLearning.tsx
@@ -1569,6 +1615,10 @@ msgstr "Unterhaltung leeren"
 
 #: src/pages/ActivityList.tsx
 msgid "Clear filter {label}"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Clearing"
 msgstr ""
 
 #: src/pages/shell/dialogs.tsx
@@ -1806,6 +1856,10 @@ msgstr ""
 msgid "Confirm the URL is reachable from this browser session, then test again."
 msgstr "Prüfe, ob die URL aus dieser Browsersitzung erreichbar ist, und teste erneut."
 
+#: src/pages/BusinessCycle.tsx
+msgid "Confirmed"
+msgstr ""
+
 #: src/components/integrations/IntegrationSetup.tsx
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/memory-providers/HonchoSettingsForm.tsx
@@ -1963,6 +2017,18 @@ msgstr ""
 msgid "Continue with {0}"
 msgstr "Mit {0} fortfahren"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Contract"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Contract coverage"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Contracts"
+msgstr ""
+
 #: src/lib/trading-bot-templates.ts
 msgid "Contracts, coverage and delivery exposure"
 msgstr ""
@@ -2013,9 +2079,17 @@ msgstr ""
 msgid "Copy rows"
 msgstr "Zeilen kopieren"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Correction"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Cost"
 msgstr "Kosten"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Costs"
+msgstr ""
 
 #: src/pages/ScratchpadSection.tsx
 msgid "Could not add"
@@ -2111,6 +2185,7 @@ msgstr ""
 #: src/lib/trading-actions.ts
 #: src/lib/user-error.ts
 #: src/pages/Auth.tsx
+#: src/pages/BusinessCycle.tsx
 #: src/pages/shell/use-computer.tsx
 msgid "Could not continue"
 msgstr "Fortfahren fehlgeschlagen"
@@ -2731,6 +2806,10 @@ msgstr "Tag"
 msgid "Day ahead"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Day-ahead deviation"
+msgstr ""
+
 #: src/lib/trading-bot-templates.ts
 msgid "Day-ahead, intraday and real-time decisions"
 msgstr ""
@@ -2863,6 +2942,10 @@ msgstr "Löschcode"
 msgid "Delivery"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Delivery evidence"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Denied"
 msgstr "Abgelehnt"
@@ -2870,6 +2953,10 @@ msgstr "Abgelehnt"
 #: src/components/AskCard.tsx
 msgid "Deny"
 msgstr "Ablehnen"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Depends on task"
+msgstr ""
 
 #: src/pages/Board.tsx
 #: src/pages/shell/agent-import.tsx
@@ -2920,6 +3007,10 @@ msgstr "Tool deaktivieren"
 #: src/pages/PluginsOverlay.tsx
 msgid "Disabled"
 msgstr "Deaktiviert"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Disagreements"
+msgstr ""
 
 #: src/components/composer/HoldToTalk.tsx
 msgid "Discard recording"
@@ -3109,6 +3200,10 @@ msgstr "{0} aktivieren"
 msgid "Ends {day}"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Energy settlement"
+msgstr ""
+
 #: src/pages/ExternalConversationSettings.tsx
 msgid "Engage when... Ignore..."
 msgstr ""
@@ -3152,9 +3247,17 @@ msgstr "Umgebungsvariablen"
 msgid "Environment variables: {names}"
 msgstr "Umgebungsvariablen: {names}"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Equivalent difference form"
+msgstr ""
+
 #: src/lib/roster-status.ts
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Error"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Estimated"
 msgstr ""
 
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -3224,6 +3327,18 @@ msgstr "Jeden Monat"
 #: src/pages/RoutineSchedule.tsx
 msgid "Every week"
 msgstr "Jede Woche"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Evidence changed. Check the latest versions and submit again"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Evidence history"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Evidence ID"
+msgstr ""
 
 #: src/pages/Trading.tsx
 msgid "Execute simulation"
@@ -3410,6 +3525,10 @@ msgstr "MCP-Verbindung wird abgeschlossen…"
 
 #: src/pages/shell/business-scope.tsx
 msgid "For example: Shandong retail trading"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Forecast"
 msgstr ""
 
 #: src/pages/WeatherInterface.tsx
@@ -3676,6 +3795,10 @@ msgstr ""
 msgid "Human cancellation only"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Human-recorded result"
+msgstr ""
+
 #: src/pages/WeatherInterface.tsx
 msgid "Humidity (%)"
 msgstr ""
@@ -3726,6 +3849,18 @@ msgstr "Agent importieren"
 msgid "Import data"
 msgstr "Daten importieren"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Import simulated metering"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Import simulated results"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Improvement proposal (not enabled)"
+msgstr ""
+
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr ""
@@ -3753,6 +3888,10 @@ msgstr "API-Schlüssel einbeziehen"
 #: src/components/call/VoiceChatCard.tsx
 msgid "Incoming call"
 msgstr "Eingehender Anruf"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Independent task"
+msgstr ""
 
 #: src/pages/shell/bot-panel.tsx
 msgid "Inherit default"
@@ -3828,6 +3967,14 @@ msgstr ""
 #: src/pages/BusinessInterfaces.tsx
 #: src/pages/shell/business-scope.tsx
 msgid "Interface settings"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Internal settlement trial"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Internal trial"
 msgstr ""
 
 #: src/pages/BusinessInterfaces.tsx
@@ -4020,6 +4167,10 @@ msgstr ""
 msgid "Load older runs"
 msgstr "Ältere Ausführungen laden"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Load P25 simulation"
+msgstr ""
+
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Load web images automatically"
 msgstr "Webbilder automatisch laden"
@@ -4179,6 +4330,10 @@ msgstr ""
 msgid "Market rules"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Market rules and windows"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "Marketing"
 msgstr ""
@@ -4335,6 +4490,14 @@ msgstr "Nachricht an {peer} gesendet"
 msgid "Messaging"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Metering"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Metering status"
+msgstr ""
+
 #: src/lib/call-session.ts
 #: src/lib/dictation.ts
 msgid "Microphone failed"
@@ -4387,6 +4550,10 @@ msgstr "Minuten"
 #: src/components/call/VoiceChatCard.tsx
 msgid "Missed call"
 msgstr "Verpasster Anruf"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Missing"
+msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Mode"
@@ -4532,6 +4699,10 @@ msgstr ""
 msgid "Name your Bot"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Needed to complete"
+msgstr ""
+
 #: src/lib/roster-status.ts
 msgid "Needs an answer"
 msgstr ""
@@ -4544,6 +4715,10 @@ msgstr "Benötigt eine OAuth-Client-ID"
 #: src/pages/ActivityList.tsx
 msgid "Needs input"
 msgstr "Eingabe erforderlich"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Needs recalculation"
+msgstr ""
 
 #: src/pages/ActivityList.tsx
 msgid "Needs takeover"
@@ -4558,6 +4733,10 @@ msgstr ""
 #: src/pages/shell/import-status.ts
 msgid "Needs: {names}"
 msgstr "Benötigt: {names}"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Net profit"
+msgstr ""
 
 #: src/components/ApprovalRulesSettings.tsx
 msgid "Never ask"
@@ -4799,6 +4978,10 @@ msgstr ""
 msgid "Not checked yet"
 msgstr "Noch nicht geprüft"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Not established"
+msgstr ""
+
 #: src/pages/shell/agent-import.tsx
 msgid "Not imported"
 msgstr "Nicht importiert"
@@ -4957,6 +5140,10 @@ msgstr "In vollständigem Fenster öffnen"
 msgid "Open navigation"
 msgstr "Navigation öffnen"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Open spot Bot"
+msgstr ""
+
 #: src/pages/ScratchpadSection.tsx
 msgid "Open work"
 msgstr "Offene Arbeit"
@@ -5010,6 +5197,10 @@ msgstr "Originalnachricht nicht verfügbar"
 msgid "Other data"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Other fees"
+msgstr ""
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Other model…"
@@ -5023,6 +5214,10 @@ msgstr "Ausgabe"
 #: src/pages/Board.tsx
 msgid "Owner"
 msgstr "Inhaber"
+
+#: src/pages/BusinessCycle.tsx
+msgid "P25 teaching simulation · Energy settlement is not net profit. This is not a regional market rule."
+msgstr ""
 
 #: src/components/markdown-copy.tsx
 msgid "Page {page} of {count}"
@@ -5153,6 +5348,10 @@ msgstr "Telefonanruf"
 msgid "Photo"
 msgstr "Foto"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Physical availability"
+msgstr ""
+
 #: src/pages/GroupPanel.tsx
 msgid "Pick {GROUP_MEMBER_MIN}–{GROUP_MEMBER_MAX}"
 msgstr ""
@@ -5218,6 +5417,7 @@ msgstr ""
 msgid "Preferences"
 msgstr "Präferenzen"
 
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Trading.tsx
 msgid "Prepare intent"
 msgstr ""
@@ -5310,6 +5510,10 @@ msgstr ""
 msgid "Pushed"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Quantity and price submission"
+msgstr ""
+
 #: src/pages/BusinessInterfaces.tsx
 msgid "Query parameters (JSON)"
 msgstr ""
@@ -5359,8 +5563,16 @@ msgstr ""
 msgid "Ready"
 msgstr "Bereit"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Ready to investigate"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Real time"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Real-time deviation"
 msgstr ""
 
 #: src/pages/PluginSubmissionsPanel.tsx
@@ -5413,6 +5625,10 @@ msgstr ""
 msgid "Reconcile order"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Reconcile settlement"
+msgstr ""
+
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/pages/VoiceSettingsOverlay.tsx
 msgid "Reconnect"
@@ -5426,6 +5642,10 @@ msgstr "OAuth erneut verbinden"
 #: src/components/ComputerUpdateProgress.tsx
 msgid "Reconnecting"
 msgstr "Verbindung wird wiederhergestellt"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Record sourced result"
+msgstr ""
 
 #: src/components/teach/TeachComputerOverlay.tsx
 msgid "Recording may have started, but the view could not refresh"
@@ -5490,6 +5710,10 @@ msgstr ""
 #: src/pages/McpServersOverlay.tsx
 msgid "Redirect URI"
 msgstr "Weiterleitungs-URI"
+
+#: src/pages/BusinessCycle.tsx
+msgid "References"
+msgstr ""
 
 #: src/App.tsx
 #: src/components/ErrorBoundary.tsx
@@ -5697,8 +5921,20 @@ msgstr ""
 msgid "Request parameters"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Requested work"
+msgstr ""
+
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Requests"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Required evidence available"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Required evidence or a prerequisite result is still missing"
 msgstr ""
 
 #: src/pages/shell/message-cards.tsx
@@ -5755,6 +5991,7 @@ msgid "Restart to update"
 msgstr ""
 
 #: src/components/InstructionSettings.tsx
+#: src/pages/BusinessCycle.tsx
 #: src/pages/shell/archived-chats.tsx
 msgid "Restore"
 msgstr "Wiederherstellen"
@@ -5781,6 +6018,14 @@ msgstr ""
 
 #: src/pages/Trading.tsx
 msgid "Result uncertain; the reservation is retained."
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Results only / closed"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Results, metering and reconciliation"
 msgstr ""
 
 #: src/pages/shell/business-scope.tsx
@@ -5840,6 +6085,14 @@ msgstr ""
 msgid "Review provider settings and test again."
 msgstr "Prüfe die Anbietereinstellungen und teste erneut."
 
+#: src/pages/BusinessCycle.tsx
+msgid "Review result"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Revision allowed"
+msgstr ""
+
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/MessagingSettingsPanel.tsx
 #: src/pages/Trading.tsx
@@ -5865,9 +6118,17 @@ msgstr ""
 msgid "Risk bot"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Risk check"
+msgstr ""
+
 #: src/pages/Shell.tsx
 #: src/pages/Trading.tsx
 msgid "Risk review"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Role tasks and dependencies"
 msgstr ""
 
 #: src/pages/ExternalConversationSettings.tsx
@@ -6061,6 +6322,10 @@ msgstr "Bereiche (optional)"
 #: src/pages/shell/use-computer.tsx
 msgid "Screen not connected"
 msgstr "Bildschirm nicht verbunden"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Sealed after submission"
+msgstr ""
 
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/model-settings/model-picker.tsx
@@ -6258,6 +6523,14 @@ msgstr "Einstellungen: Nutzung"
 msgid "Settled"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Settlement evidence ready for review"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Settlement review"
+msgstr ""
+
 #: src/pages/shell/import-setup-card.tsx
 msgid "Setup complete"
 msgstr "Einrichtung abgeschlossen"
@@ -6299,6 +6572,10 @@ msgstr ""
 #: src/pages/shell/bot-panel.tsx
 msgid "Shared"
 msgstr "Geteilt"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Shared evidence"
+msgstr ""
 
 #: src/pages/KnowledgeSection.tsx
 msgid "Shared memory"
@@ -6398,6 +6675,10 @@ msgstr "Registrieren"
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Sign-in cancelled. Try again."
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Simulated bill"
 msgstr ""
 
 #: src/pages/WeatherInterface.tsx
@@ -6548,6 +6829,10 @@ msgstr "Sprachmodell"
 msgid "Spot"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Spot analysis"
+msgstr ""
+
 #: src/lib/trading-bot-templates.ts
 msgid "Spot bot"
 msgstr ""
@@ -6663,6 +6948,10 @@ msgstr ""
 msgid "Subject type"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Submission receipt"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Submission timeout"
 msgstr ""
@@ -6674,6 +6963,10 @@ msgstr "Absenden"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Submit a plugin"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Submit simulation"
 msgstr ""
 
 #: src/components/ModelCredits.tsx
@@ -6705,6 +6998,10 @@ msgstr ""
 msgid "Sunday"
 msgstr "Sonntag"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Supersedes"
+msgstr ""
+
 #: src/pages/model-settings/compatible-model-fields.tsx
 #: src/pages/Onboarding.tsx
 msgid "Supports images"
@@ -6729,6 +7026,10 @@ msgstr ""
 
 #: src/pages/Trading.tsx
 msgid "Synthetic fill"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Synthetic source"
 msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
@@ -7020,6 +7321,10 @@ msgstr ""
 msgid "This subscription sign-in is not available in eTraderBot yet. Use a deployment credential or choose another provider."
 msgstr "Diese Abonnementanmeldung ist in eTraderBot noch nicht verfügbar. Verwende Zugangsdaten der Bereitstellung oder wähle einen anderen Anbieter."
 
+#: src/pages/BusinessCycle.tsx
+msgid "This task is no longer available"
+msgstr ""
+
 #: src/pages/Artifacts.tsx
 msgid "This week"
 msgstr ""
@@ -7203,6 +7508,7 @@ msgid "Type your answer"
 msgstr "Gib deine Antwort ein"
 
 #: src/pages/BotContextMenu.tsx
+#: src/pages/BusinessCycle.tsx
 #: src/pages/Shell.tsx
 msgid "Unassigned"
 msgstr "Nicht zugewiesen"
@@ -7230,6 +7536,10 @@ msgstr "Stummschaltung aufheben"
 #: src/pages/BotContextMenu.tsx
 msgid "Unpin"
 msgstr "Lösen"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Unresolved"
+msgstr ""
 
 #. placeholder {0}: pending.file.name
 #: src/pages/shell/use-composer-actions.ts
@@ -7485,6 +7795,10 @@ msgstr ""
 msgid "Wait a moment and test again."
 msgstr "Warte kurz und teste erneut."
 
+#: src/pages/BusinessCycle.tsx
+msgid "Waiting for evidence"
+msgstr ""
+
 #: src/pages/TradingLearning.tsx
 msgid "Waiting for input"
 msgstr ""
@@ -7676,6 +7990,10 @@ msgstr "Du kannst diesen Tab schließen, wenn du nicht automatisch weitergeleite
 #: src/pages/McpOAuthCallback.tsx
 msgid "You can close this window."
 msgstr "Du kannst dieses Fenster schließen."
+
+#: src/pages/BusinessCycle.tsx
+msgid "You can't record this result"
+msgstr ""
 
 #: src/components/call/VoiceChatCard.tsx
 msgid "You declined"

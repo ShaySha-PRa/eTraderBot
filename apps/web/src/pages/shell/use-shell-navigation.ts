@@ -84,9 +84,11 @@ export function useShellNavigation() {
 }
 
 export function firstThreadRoute(
-  bots: readonly Pick<Bot, "id">[],
+  bots: readonly Pick<Bot, "id" | "businessSupervisor">[],
   groups: readonly Pick<Group, "id">[],
 ): string {
+  const supervisor = bots.find((bot) => bot.businessSupervisor);
+  if (supervisor) return `/app/${supervisor.id}`;
   if (bots[0]) return `/app/${bots[0].id}`;
   if (groups[0]) return `/app/g/${groups[0].id}`;
   return "/app";

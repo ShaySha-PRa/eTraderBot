@@ -79,6 +79,7 @@
 | 本速览页（done-todo） | 原计划 / 后加分列 | 本文件 |
 | 交易／通用工作区隔离及最小只读授权 | 后端、工具、迁移和多端入口已实现；原生设备与真实模型／接口未验收 | [V1.1 实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md) |
 | 每条业务线的主管 Bot | 固定协调身份、任务分配、结果与进度；真实模型效果未验收 | [主管说明](../implementation/eTraderBot-business-supervisor.md) |
+| 模拟业务周期与证据依赖协作 | P25 主流程及本轮缺陷定向验收通过；一次真实 Bot 复盘续跑通过，多 Bot 协作质量及正式账单接入未验收 | [业务周期说明](../implementation/eTraderBot-business-cycle.md)、[修复收尾验收](../implementation/eTraderBot-v1-acceptance.md#业务周期修复与定向复测收尾2026-11-05) |
 
 ### B2 待办／想做（后加）
 

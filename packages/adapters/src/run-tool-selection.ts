@@ -108,6 +108,7 @@ export function selectBuiltinToolsForRun(options: {
     (tool) =>
       !disabled.has(tool.name) &&
       (options.tradingEnabled || tool.name !== "trading") &&
+      (options.tradingEnabled || options.businessSupervisor || tool.name !== "business_cycle") &&
       (options.businessSupervisor || tool.name !== "business_overview") &&
       (options.trigger !== "created" || CREATED_RUN_TOOL_NAMES.has(tool.name)) &&
       (!FLEET_TOOL_NAMES_SET.has(tool.name) ||

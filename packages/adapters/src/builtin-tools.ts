@@ -4,6 +4,7 @@ import {
   BOT_INSTRUCTIONS_MAX_LENGTH,
   BOT_MEMORY_MAX_BYTES,
   BotSecretName,
+  BusinessCycleCommandSchema,
   botSecretDestinationSchema,
   FEEDBACK_DESCRIPTION_MAX_LENGTH,
   FEEDBACK_KINDS,
@@ -239,6 +240,12 @@ const fleetGroupTargetProperties = {
 };
 
 export const builtinAgentTools: ConnectorTool[] = [
+  {
+    name: "business_cycle",
+    description:
+      "Read shared versioned contracts, forecasts, physical commitments, market rules, clearing, metering and settlement for this business. List/read are available to its supervisor and specialists. Assign only necessary work: contract_coverage to mid_long_term, spot_analysis to spot, risk_check to risk, settlement_review to review; optional dependsOn lists prerequisite ticket IDs. Independent ready tasks can run concurrently; blocked tasks wait for evidence. Analyze requires a human-enabled baseline version for this desk and parameters, only for mid_long_term/spot; request human validation if none is enabled. Prepare/approve/execute remain separate through trading with human gates. Settle creates an internal teaching trial, only for review. Complete records sourced results, disagreements, unresolved issues and a non-enabled improvement proposal; only the assignee or human can complete. Never equate task completion with delivered energy or profit. No operation grants trading permission or imports market evidence.",
+    inputSchema: z.toJSONSchema(BusinessCycleCommandSchema),
+  },
   {
     name: "business_overview",
     description:

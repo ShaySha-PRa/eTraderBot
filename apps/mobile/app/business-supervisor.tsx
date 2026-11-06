@@ -44,6 +44,11 @@ export default function BusinessSupervisorScreen() {
         />
         <SettingsRow title={t("Blocked")} value={String(data?.counts.blocked ?? 0)} />
         <SettingsRow title={t("Review")} value={String(data?.counts.review ?? 0)} />
+        <SettingsRow
+          title={t("Business cycle")}
+          chevron="right"
+          onPress={() => router.push("/business-cycle")}
+        />
         <SettingsRow title={t("Board")} chevron="right" onPress={() => router.push("/board")} />
       </SettingsGroup>
       {data?.recentTasks.map((task) => (

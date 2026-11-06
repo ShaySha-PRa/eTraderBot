@@ -11,7 +11,9 @@ import {
   allocateTicketNumber,
   ensureBoard,
   findTicket,
+  guardBusinessTicketUpdate,
   listTicketComments,
+  reconcileBusinessWork,
   ticketBoardAvailable,
   toTicketCommentDto,
   toTicketDto,
@@ -234,6 +236,11 @@ export async function updateTicket(
     return { error: "Unknown bot." };
   const board = await ensureBoard(deps.prisma, input.spaceId);
   const result = await deps.prisma.$transaction(async (tx) => {
+    const cycleId = await guardBusinessTicketUpdate(tx, data.id, {
+      botId: input.botId,
+      status: data.status,
+      assigneeBotId: data.assigneeBotId,
+    });
     await tx.$queryRaw`SELECT id FROM tickets WHERE id = ${data.id} AND "spaceId" = ${input.spaceId} FOR UPDATE`;
     const current = await tx.ticket.findFirst({
       where: { id: data.id, spaceId: input.spaceId, boardId: board.id },
@@ -258,6 +265,7 @@ export async function updateTicket(
     });
     return {
       row,
+      cycleId,
       reassigned: data.assigneeBotId !== undefined && data.assigneeBotId !== current.assigneeBotId,
     };
   });
@@ -267,8 +275,15 @@ export async function updateTicket(
     boardId: board.id,
     ticketId: result.row.id,
     assigneeBotId: result.row.assigneeBotId,
-    wakeAssignee: result.reassigned && result.row.assigneeBotId !== input.botId,
+    // Cycle reconciliation first resolves blocking state and owns its readiness claim.
+    wakeAssignee: !result.cycleId && result.reassigned && result.row.assigneeBotId !== input.botId,
   });
+  if (result.cycleId) {
+    const changes = await deps.prisma.$transaction((tx) =>
+      reconcileBusinessWork(tx, result.cycleId!),
+    );
+    for (const change of changes) await deps.onTicketChange?.(change);
+  }
   return { ticket: toTicketDto(result.row, board.ticketPrefix) };
 }
 

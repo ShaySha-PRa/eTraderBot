@@ -38,6 +38,7 @@ import {
   recordComputerRunEnd,
   recordSecurityEvent,
   restoreBotUnderComputerQuota,
+  resumeBusinessBotWork,
   SpaceDeletionInProgressError,
   settingsTarget,
 } from "@rakazo/db";
@@ -551,19 +552,24 @@ export function botsRoutes(ctx: RouterContext) {
       }),
       restore: authed.bots.restore.handler(async ({ context, input }) => {
         const bot = await repos.getBot(context.actor, input.botId, { includeArchived: true });
-        if (!bot.archivedAt) return { ok: true as const };
         try {
-          if (bot.computer) {
+          if (bot.archivedAt && bot.computer) {
             await restoreBotUnderComputerQuota(deps.prisma, {
               userId: context.actor.userId,
               botId: bot.id,
               computerId: bot.computer.id,
             });
-          } else {
+          } else if (bot.archivedAt) {
             await deps.prisma.bot.update({ where: { id: bot.id }, data: { archivedAt: null } });
           }
         } catch (error) {
           throw mapSpaceLifecycleError(error);
+        }
+        if (bot.tradingRole) {
+          const changes = await deps.prisma.$transaction((tx) =>
+            resumeBusinessBotWork(tx, context.actor.spaceId, bot.id),
+          );
+          for (const change of changes) await deps.ticketChanges?.(change);
         }
         return { ok: true as const };
       }),

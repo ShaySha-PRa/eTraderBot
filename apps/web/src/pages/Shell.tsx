@@ -125,6 +125,9 @@ const BusinessInterfaces = lazyComponent(() =>
 const TradingApprovals = lazyComponent(() =>
   import("./Trading").then((module) => module.TradingApprovals),
 );
+const BusinessCyclePage = lazyComponent(() =>
+  import("./BusinessCycle").then((module) => module.BusinessCyclePage),
+);
 const BusinessSupervisor = lazyComponent(() =>
   import("./BusinessSupervisor").then((module) => module.BusinessSupervisor),
 );
@@ -344,12 +347,14 @@ function SpaceShell() {
   const active =
     inGroup || routeChat?.groupId
       ? undefined
-      : (scopedBots.find((b) => b.id === (botId ?? routeChat?.botId)) ?? scopedBots[0]);
+      : (scopedBots.find((b) => b.id === (botId ?? routeChat?.botId)) ??
+        scopedBots.find((b) => b.businessSupervisor) ??
+        scopedBots[0]);
   const tradingTemplates = useTradingBotTemplates();
   const workspace =
     (active?.tradingRole || active?.businessSupervisor) &&
-    ["trading", "learning"].includes(searchParams.get("workspace") ?? "")
-      ? (searchParams.get("workspace") as "trading" | "learning")
+    ["trading", "learning", "cycle"].includes(searchParams.get("workspace") ?? "")
+      ? (searchParams.get("workspace") as "trading" | "learning" | "cycle")
       : "chat";
   function openWorkspace(next: string) {
     const params = new URLSearchParams(searchParams);
@@ -1184,6 +1189,7 @@ function SpaceShell() {
                             : t`Trading`,
                     ],
                     ["learning", t`Learning`],
+                    ["cycle", t`Business cycle`],
                   ] as const
                 )
                   .filter(([value]) => !active.businessSupervisor || value !== "learning")
@@ -1204,6 +1210,10 @@ function SpaceShell() {
               <Suspense fallback={<PageLoading />}>
                 <TradingApprovals key={businessScope.id} businessScope={businessScope} />
               </Suspense>
+            ) : active && workspace === "cycle" ? (
+              <Suspense fallback={<PageLoading />}>
+                <BusinessCyclePage key={active.id} bot={active} roster={bots} />
+              </Suspense>
             ) : active?.businessSupervisor && workspace !== "chat" ? (
               <Suspense fallback={<PageLoading />}>
                 <BusinessSupervisor key={active.spaceId} />
@@ -1213,7 +1223,7 @@ function SpaceShell() {
                 <TradingPage
                   key={`${active.id}:${selectedScopeId}`}
                   bot={active}
-                  view={workspace}
+                  view={workspace === "learning" ? "learning" : "trading"}
                   businessScope={businessScope}
                   onChooseScope={focusBusinessScope}
                 />

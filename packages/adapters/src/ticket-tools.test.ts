@@ -152,6 +152,7 @@ function mutationDeps(ticketBoardEnabled = true) {
   let current = ticket();
   const changes = vi.fn(async (_change: { wakeAssignee: boolean }) => {});
   const tx = {
+    businessCycleWork: { findUnique: vi.fn(async () => null) },
     board: { update: vi.fn(async () => ({ nextNumber: 2 })) },
     ticket: {
       findFirst: vi.fn(async () => current),

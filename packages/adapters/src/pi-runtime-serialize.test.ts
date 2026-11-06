@@ -1,5 +1,33 @@
 import { describe, expect, it } from "vitest";
-import { serializeToolResult } from "./pi-runtime-tools.js";
+import { builtinAgentTools } from "./builtin-tools.js";
+import type { ToolHost } from "./pi-runtime-tools.js";
+import { serializeToolResult, toAgentTools } from "./pi-runtime-tools.js";
+
+async function deliveredBusinessResult(result: unknown, strategy?: "current" | "retrieval") {
+  const host = {
+    queue: { push() {} },
+    request: {
+      runId: "synthetic-tool-delivery",
+      contextStrategy: strategy,
+      executeTool: async () => result,
+    },
+    signal: new AbortController().signal,
+    depth: 0,
+    pausePending: false,
+    pendingShells: [],
+    toolCallSeq: { value: 0 },
+    toolCallBudget: { count: 0, exceeded: false, limit: 0, inFlight: 0 },
+  } as unknown as ToolHost;
+  const tool = toAgentTools(builtinAgentTools, host).find((t) => t.name === "use_tool")!;
+  const delivered = await tool.execute("read-cycle", {
+    name: "business_cycle",
+    arguments: { operation: "read", cycleId: "synthetic-cycle" },
+  });
+  return delivered.content
+    .filter((part) => part.type === "text")
+    .map((part) => part.text)
+    .join("");
+}
 
 describe("serializeToolResult", () => {
   const skill = {
@@ -55,5 +83,65 @@ describe("serializeToolResult", () => {
   it("still bounds other large tool results", () => {
     const text = serializeToolResult({ output: "x".repeat(20_000) }, "current", "shell", {});
     expect(text.length).toBeLessThan(20_000);
+  });
+
+  it.each([undefined, "retrieval"] as const)(
+    "delivers current evidence after large history without cutting serialized JSON (%s)",
+    async (strategy) => {
+      const history = Array.from({ length: 110 }, (_, index) => ({
+        id: `synthetic-history-${index}`,
+        streamKey: "metering",
+        revision: index + 1,
+        status: "confirmed",
+        references: [`synthetic-source-${index}`],
+        data: { kind: "metering", energyMwh: "80" },
+      }));
+      const corrected = {
+        id: "synthetic-meter-correction",
+        streamKey: "metering",
+        revision: 111,
+        status: "confirmed",
+        references: [history.at(-1)!.id],
+        data: { kind: "metering", energyMwh: "82" },
+      };
+      const result = {
+        evidence: [...history, corrected],
+        settlement: { energyAmountCny: "24320", references: [corrected.id], netProfitCny: null },
+        tasks: [
+          { ticketId: "synthetic-ticket", status: "review", unresolved: ["Verify correction"] },
+        ],
+      };
+      expect(JSON.stringify(result).length).toBeGreaterThan(12_000);
+      const actual = JSON.parse(await deliveredBusinessResult(result, strategy));
+      expect(actual.evidence).toEqual(result.evidence);
+      expect(actual.settlement).toEqual(result.settlement);
+      expect(actual.tasks).toEqual(result.tasks);
+    },
+  );
+
+  it("still shortens long prose before delivery while keeping the JSON and evidence ID", async () => {
+    const text = await deliveredBusinessResult({
+      id: "synthetic-evidence",
+      summary: "Long synthetic investigation text. ".repeat(2_000),
+    });
+    expect(text.length).toBeLessThan(12_000);
+    expect(JSON.parse(text)).toMatchObject({ id: "synthetic-evidence", contextTruncated: true });
+    expect(text).toContain("omitted evidence is unavailable");
+  });
+
+  it("keeps the legacy current-strategy text cap", async () => {
+    const text = await deliveredBusinessResult({ output: "x".repeat(20_000) }, "current");
+    expect(text).toHaveLength(12_001);
+    expect(text.endsWith("…")).toBe(true);
+  });
+
+  it("still bounds native text content supplied by a tool", async () => {
+    const text = await deliveredBusinessResult({
+      kind: "agent_tool_result",
+      content: [{ type: "text", text: "x".repeat(20_000) }],
+      details: {},
+    });
+    expect(text).toHaveLength(12_001);
+    expect(text.endsWith("…")).toBe(true);
   });
 });

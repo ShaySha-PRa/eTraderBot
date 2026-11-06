@@ -1961,6 +1961,7 @@ model Board {
 }
 
 model Ticket {
+  businessWork BusinessCycleWork?
   id              String    @id @default(cuid())
   boardId         String
   board           Board     @relation(fields: [boardId], references: [id], onDelete: Cascade)
@@ -2270,6 +2271,7 @@ model CapabilityInstallSpace {
 
 /// Immutable synthetic analysis evidence. Live execution authorization is a separate concern.
 model TradingAnalysis {
+  businessLink BusinessCycleAnalysis?
   id String @id
   spaceId String
   userId String
@@ -2490,6 +2492,7 @@ model TradingLearningRequest {
 }
 
 model TradingWorkspace {
+  businessCycles BusinessCycle[]
   weatherForecasts TradingWeatherForecast[]
   id String @id
   name String
@@ -2605,4 +2608,66 @@ model WorkspaceAccessAudit {
   createdAt DateTime @default(now())
   @@index([sourceSpaceId, createdAt])
   @@map("workspace_access_audit")
+}
+
+model BusinessCycle {
+  id String @id
+  workspaceId String
+  workspace TradingWorkspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  requestId String
+  name String
+  start DateTime
+  end DateTime
+  rule Json
+  createdAt DateTime @default(now())
+  evidence BusinessEvidence[]
+  analyses BusinessCycleAnalysis[]
+  work BusinessCycleWork[]
+  @@unique([workspaceId, requestId])
+  @@map("business_cycles")
+}
+model BusinessEvidence {
+  recordedByUserId String
+  recordedByBotId String?
+  id String @id
+  cycleId String
+  cycle BusinessCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  streamKey String
+  revision Int
+  supersedesId String? @unique
+  kind String
+  status String
+  origin String
+  source String
+  sourceRecordId String
+  receivedAt DateTime @default(now())
+  references Json
+  data Json
+  contentHash String
+  @@unique([cycleId, streamKey, revision])
+  @@unique([cycleId, source, sourceRecordId])
+  @@map("business_evidence")
+}
+model BusinessCycleAnalysis {
+  analysisId String @id
+  analysis TradingAnalysis @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  cycleId String
+  cycle BusinessCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  evidenceIds Json
+  ruleVersion String
+  @@map("business_cycle_analyses")
+}
+model BusinessCycleWork {
+  ticketId String @id
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  cycleId String
+  cycle BusinessCycle @relation(fields: [cycleId], references: [id], onDelete: Cascade)
+  requestId String
+  kind String
+  dependsOn Json
+  result Json?
+  resultEvidenceId String?
+  dispatched Boolean @default(false)
+  @@unique([cycleId, requestId])
+  @@map("business_cycle_work")
 }

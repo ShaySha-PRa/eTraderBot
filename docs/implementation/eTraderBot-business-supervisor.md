@@ -29,3 +29,9 @@ Web/Electron 在主管会话提供“聊天／业务总览”，总览包括任�
 测试入口：[数据库与派单](../../apps/api/src/business-supervisor.postgres.test.ts)、[浏览器场景](../../apps/web/e2e/business-supervisor.spec.ts)。最终验证统计见[实施记录](eTraderBot-v1-progress.md)。数据库验证任务分配的队列效果、权限拒绝、全量聚合、结果读取与不做任务不计完成；浏览器验证可操作页面和原交易流程。真实模型的任务拆解、总结质量与自主执行效果未验收。
 
 界面截图：[英文](../demo/etraderbot-business-supervisor-en.png)、[中文窄屏](../demo/etraderbot-business-supervisor-narrow-zh.png)。
+
+## 2026-11-05 增补：按证据依赖协作
+
+主管作为交易业务默认会话入口，专业 Bot 仍可直接打开。涉及业务周期时，通过 `business_cycle` 按需派单，任务关联固定业务周期、专业角色和前序任务；只唤醒所需角色，已具备资料的独立任务可并行。缺少前序结果、出清、履约、计量或结算则阻塞，资料到齐后沿用 Task/Run 唤醒。一般任务仍可使用原看板。
+
+主管可读取统一证据与各专业结果中的版本引用、分歧、未解决事项和改进建议；不能代替专业 Bot 完成有据结果，不能批准或执行交易。复盘完成需计量、履约和结算证据齐全；更正后旧结算及依赖复盘需要重新核对。计算正确和任务完成均不等于真实模型协作质量已经验收。详见[业务周期实施记录](eTraderBot-business-cycle.md)。

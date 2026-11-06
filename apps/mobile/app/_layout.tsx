@@ -478,6 +478,10 @@ function LayoutContent() {
                     <Stack.Screen name="board" options={glassHeaderOptions(t("Board"))} />
                     <Stack.Screen name="trading" options={glassHeaderOptions(t("Trading"))} />
                     <Stack.Screen
+                      name="business-cycle"
+                      options={glassHeaderOptions(t("Business cycle"))}
+                    />
+                    <Stack.Screen
                       name="business-supervisor"
                       options={glassHeaderOptions(t("Business overview"))}
                     />

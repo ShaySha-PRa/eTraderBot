@@ -37,6 +37,7 @@ import { accountRoutes } from "./routes/account.js";
 import { availabilityRoutes } from "./routes/availability.js";
 import { boardsRoutes } from "./routes/boards.js";
 import { botsRoutes } from "./routes/bots.js";
+import { businessCycleRoutes } from "./routes/business-cycle.js";
 import { businessSupervisorRoutes } from "./routes/business-supervisor.js";
 import { computerRoutes } from "./routes/computer.js";
 import { connectionsRoutes } from "./routes/connections.js";
@@ -168,5 +169,6 @@ export function createRouter(deps: RouterDeps) {
     ...tradingRoutes(ctx),
     ...workspaceAccessRoutes(ctx),
     ...businessSupervisorRoutes(ctx),
+    ...businessCycleRoutes(ctx),
   });
 }
