@@ -120,6 +120,8 @@ pnpm --filter @rakazo/desktop dev
 
 [基座阶段验收汇总](./docs/implementation/eTraderBot-foundation-acceptance.md)记录任务 01–09 的收尾：定向测试、独立浏览器验收，以及使用合成业务资料的真实模型团队演练。真实模型下的恢复与写入边界的确定性测试分开说明，已知测试失败和未验证范围予以保留；不代表全仓 CI 或可用于真实交易。
 
+[专项补验](./docs/implementation/eTraderBot-foundation-baseline-followup.md)已修复 testkit 类型错误及授权/checkpoint 两组基线失败（33/33、27/27），并通过受控时序的真实模型缓存工具撤权验证。完整 CI、原生端和 Graphile 多进程恢复仍未验证。
+
 [V1 验收记录](./docs/implementation/eTraderBot-v1-acceptance.md)保留较早的检查点：81 项交易 PostgreSQL 测试、17 项行级隔离测试、51 项单元／契约／移动组件测试，以及 5 项 Chromium 场景通过，当时的类型检查和 Web 构建也已通过。这些数字描述的是那个检查点，不是基座阶段或新的合并测试结果。
 
 常用验证命令：

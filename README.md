@@ -122,6 +122,8 @@ Open **Learning** to add materials, edit the daily schedule, or select **Learn n
 
 The [foundation acceptance summary](./docs/implementation/eTraderBot-foundation-acceptance.md) closes tasks 01–09 through targeted tests, independent browser acceptance, and a real-model team exercise using synthetic business data. It separates real-model recovery from deterministic tests at the write boundary and retains known test failures and unverified areas; it does not establish full-repository CI or production trading readiness.
 
+The [baseline follow-up](./docs/implementation/eTraderBot-foundation-baseline-followup.md) resolved the testkit type error and the authorization/checkpoint baseline failures (33/33 and 27/27). A controlled real-model cached-tool revocation check also passed. Full CI, native surfaces and Graphile multi-process recovery remain unverified.
+
 The [V1 acceptance record](./docs/implementation/eTraderBot-v1-acceptance.md) retains earlier checkpoints, including 81 trading PostgreSQL tests, 17 row-isolation tests, 51 unit/contract/mobile-component tests, and 5 Chromium scenarios passing. Their type checks and Web build also passed. Those counts describe that earlier checkpoint, not the foundation stage or a new combined test run.
 
 Useful commands:

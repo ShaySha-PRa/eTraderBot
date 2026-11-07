@@ -515,6 +515,76 @@ describeWithDatabase("API authorization and resource isolation", () => {
       ["spaceSettings/setOverride"],
       ["links/favicon"],
       ["runs/list"],
+      ["runs/forTicket"],
+      ["runs/detail"],
+      ["trading/participants"],
+      ["trading/bindBot"],
+      ["trading/unbindBot"],
+      ["trading/createDesk"],
+      ["trading/desks"],
+      ["trading/desk"],
+      ["trading/prepareIntent"],
+      ["trading/approveAlgorithm"],
+      ["trading/retireAlgorithm"],
+      ["trading/approveIntent"],
+      ["trading/createGrant"],
+      ["trading/revokeGrant"],
+      ["trading/executeSimulation"],
+      ["trading/configureSimulation"],
+      ["trading/reconcileExecution"],
+      ["trading/cancelSimulation"],
+      ["trading/executionByRequest"],
+      ["trading/learningState"],
+      ["trading/configureLearning"],
+      ["trading/addLearningSource"],
+      ["trading/captureLearningMessage"],
+      ["trading/startLearning"],
+      ["trading/shareLearningExperience"],
+      ["trading/workspaces"],
+      ["trading/createWorkspace"],
+      ["trading/createBusinessScope"],
+      ["trading/connectWorkspaceBot"],
+      ["trading/interfaces"],
+      ["trading/saveInterface"],
+      ["trading/removeInterface"],
+      ["trading/weatherForecasts"],
+      ["trading/pullWeather"],
+      ["trading/rotateWeatherPushToken"],
+      ["trading/revokeWeatherPushToken"],
+      ["trading/simulate"],
+      ["trading/get"],
+      ["trading/replay"],
+      ["trading/history"],
+      ["workspaceAccess/catalog"],
+      ["workspaceAccess/grants"],
+      ["workspaceAccess/grant"],
+      ["workspaceAccess/revoke"],
+      ["workspaceAccess/received"],
+      ["workspaceAccess/read"],
+      ["workspaceAccess/audit"],
+      ["businessSupervisor/overview"],
+      ["businessCycle/list"],
+      ["businessCycle/get"],
+      ["businessCycle/recovery"],
+      ["businessCycle/createDemo"],
+      ["businessCycle/importEvidence"],
+      ["businessCycle/demoResults"],
+      ["businessCycle/demoMetering"],
+      ["businessCycle/analyze"],
+      ["businessCycle/settle"],
+      ["businessCycle/assign"],
+      ["businessCycle/complete"],
+      ["experienceHandoff/catalog"],
+      ["experienceHandoff/create"],
+      ["experienceHandoff/get"],
+      ["experienceHandoff/packages"],
+      ["experienceHandoff/preview"],
+      ["experienceHandoff/confirm"],
+      ["experienceHandoff/history"],
+      ["experienceHandoff/importDetail"],
+      ["experienceHandoff/revoke"],
+      ["experienceHandoff/skills"],
+      ["experienceHandoff/updateSkill"],
       ["paymentWallet/status"],
       ["paymentWallet/connect"],
       ["paymentWallet/disconnect"],
@@ -796,7 +866,7 @@ describeWithDatabase("API authorization and resource isolation", () => {
       connectionId: ownerConnection.connectionId,
     });
     expect(
-      await handles.prisma.capabilityInstall.findUnique({ where: { id: ownerCapability.id } }),
+      await db.capabilityInstall.findUnique({ where: { id: ownerCapability.id } }),
     ).not.toBeNull();
     expect(
       await asSystem(handles.prisma).connection.findUniqueOrThrow({
@@ -1465,6 +1535,7 @@ describeWithDatabase("API authorization and resource isolation", () => {
     await expectSpaceModelDefault(actor.spaceId, "provider-a", "a/shared");
 
     // A customized Space starts from the account's models and then keeps its own.
+    // The separate Bot credential vault remains workspace-isolated in either model mode.
     await expect(
       rpc(
         app,
@@ -1473,7 +1544,7 @@ describeWithDatabase("API authorization and resource isolation", () => {
         { setting: "models", enabled: true },
         support.id,
       ),
-    ).resolves.toEqual(["models"]);
+    ).resolves.toEqual(["models", "credentials"]);
     await rpc(
       app,
       cookie,
@@ -1520,7 +1591,7 @@ describeWithDatabase("API authorization and resource isolation", () => {
         { setting: "models", enabled: false },
         support.id,
       ),
-    ).resolves.toEqual([]);
+    ).resolves.toEqual(["credentials"]);
     await expectSpaceModelDefault(support.id, "provider-a", "a/three");
     const listed = await rpc<ModelCredential[]>(app, cookie, "models/credentials");
     expect(JSON.stringify(listed)).not.toContain("fake-provider-a-key");
@@ -1898,7 +1969,8 @@ describeWithDatabase("API authorization and resource isolation", () => {
     ).resolves.toMatchObject({ status: 409 });
     const blockedCreate = await raw(app, cookie, "bots/create", botInput("Racing bot"), space.id);
     expect(blockedCreate.ok).toBe(false);
-    expect(blockedCreate.status).toBe(409);
+    // Workspace isolation treats a deleting workspace as unavailable before creating a Bot.
+    expect(blockedCreate.status).toBe(404);
     expect(await asSystem(handles.prisma).bot.count({ where: { spaceId: space.id } })).toBe(0);
     expect(
       await asSystem(handles.prisma).computer.findFirst({
@@ -2046,7 +2118,8 @@ describeWithDatabase("API authorization and resource isolation", () => {
         botInput("Blocked during teardown"),
         space.id,
       );
-      expect(blockedCreate.status).toBe(409);
+      expect(blockedCreate.status).toBe(404);
+      expect(await db.bot.count({ where: { spaceId: space.id } })).toBe(0);
     } finally {
       destroy.mockRestore();
       delete process.env.SPACE_TEARDOWN_TIMEOUT_MS;

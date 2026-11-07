@@ -43,6 +43,30 @@ function fixture(
     sourceMessageId: null as string | null,
   };
   const task = { id: run.taskId, prompt: "Read evidence then complete the fixture." };
+  const bot = {
+    id: run.botId,
+    spaceId: run.spaceId,
+    userId: run.userId,
+    archivedAt: null,
+    tradingRole: null,
+    businessSupervisor: false,
+    name: "Fixture",
+    title: "Fixture",
+    description: "Fixture",
+    modelProvider: model.provider,
+    modelId: model.id,
+    computerId: "fixture-computer",
+    computerSwitching: false,
+    memoryScope: null,
+    computer: {
+      id: "fixture-computer",
+      spaceId: run.spaceId,
+      userId: run.userId,
+      scope: "dedicated",
+      kind: "fake",
+      homeKey: "fixture-home",
+    },
+  };
   const replyBlocks = [
     {
       kind: "image",
@@ -138,26 +162,27 @@ function fixture(
         },
       },
       task: { findUniqueOrThrow: async () => task, updateMany: async () => ({ count: 1 }) },
+      runToolCall: {
+        ...empty,
+        upsert: async ({ create }: { create: { executionId: string } }) => ({
+          id: `fixture-tool-${create.executionId}`,
+        }),
+        updateMany: async () => ({ count: 1 }),
+      },
+      space: {
+        ...empty,
+        findUnique: async () => ({
+          id: run.spaceId,
+          kind: "general",
+          isolationPending: false,
+          deletingAt: null,
+        }),
+      },
       bot: {
         ...empty,
         update: async () => ({}),
-        findUniqueOrThrow: async () => ({
-          id: run.botId,
-          name: "Fixture",
-          title: "Fixture",
-          description: "Fixture",
-          modelProvider: model.provider,
-          modelId: model.id,
-          computerId: "fixture-computer",
-          computerSwitching: false,
-          memoryScope: null,
-          computer: {
-            id: "fixture-computer",
-            scope: "dedicated",
-            kind: "fake",
-            homeKey: "fixture-home",
-          },
-        }),
+        findFirst: async () => bot,
+        findUniqueOrThrow: async () => bot,
       },
       attempt: {
         ...empty,

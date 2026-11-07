@@ -107,3 +107,7 @@
 2. 进程重启：`pnpm exec tsx .scratch/etraderbot-foundation/04/restart-20261107/run.mts packages/testkit/src/run-recovery-process.postgres.test.ts`。约 16 分钟，需要 Docker；预期 3/3 通过。子进程日志位置可用 `RUN_RECOVERY_LOG_DIR=<绝对路径>` 指定。
 3. 进程内 4 项（含等待边界）：`pnpm exec tsx .scratch/etraderbot-foundation/04/restart-20261107/run.mts packages/testkit/src/run-recovery.postgres.test.ts packages/adapters/src/run-wakeup.postgres.test.ts packages/testkit/src/human-intervention.postgres.test.ts`，预期 3 个文件共 21 项通过。
 4. 代码复核：`git diff packages/adapters/src/executor.ts packages/adapters/src/run-wakeup.ts`。`executor.ts` 中 `toolTraceVersion` 一段来自 02，不属 04。
+
+## 后续基线修复（2026-11-07）
+
+上文两组基线失败保留为 04 实施时的结果。[专项补验](eTraderBot-foundation-baseline-followup.md)在当前工作树重新复现并修复了测试上下文、过时预期和夹具缺口：`authorization.test.ts` 的隔离 PostgreSQL 33/33、`executor-turn-checkpoint.test.ts` 的 27/27 均通过，testkit 整包类型检查通过。未修改生产恢复或权限逻辑；本次没有重跑 04 的真实进程套件，也不代表全仓 CI 通过。

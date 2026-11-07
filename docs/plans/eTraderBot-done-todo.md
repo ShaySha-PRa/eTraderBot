@@ -3,7 +3,7 @@
 一页速览。**原 v1 计划**与**后加项**分栏，避免混在一起。细节见各计划／`docs/implementation/eTraderBot-v1-progress.md`。\
 整理：2026-11-07（基座加固 01–09 收尾）
 
-**最新阶段：01–09 全部 done。** 完成范围、证据入口和保留限制见[基座阶段验收汇总](../implementation/eTraderBot-foundation-acceptance.md)。本次只更新记录；后续事项尚未启动。
+**最新阶段：01–09 全部 done，三项收尾补验也已完成。** 完成范围、证据入口和保留限制见[基座阶段验收汇总](../implementation/eTraderBot-foundation-acceptance.md)。仍列为待办的后续事项尚未启动。
 
 图例：`done` · `wip` · `todo` · `later` · `blocked`
 
@@ -85,14 +85,14 @@
 | 模拟业务周期与证据依赖协作 | P25 主流程及缺陷定向验收通过；09 补真实模型协作、负责人接续和中断恢复；质量、收益及正式账单接入未验收 | [业务周期说明](../implementation/eTraderBot-business-cycle.md)、[阶段汇总](../implementation/eTraderBot-foundation-acceptance.md) |
 | 固定版本经验交接包与独立导入 MVP | 同一用户跨业务导入、来源区分、冲突与过期预览恢复、Skill 人工启用及历史保留已验收；权限与重试幂等有隔离 RPC/PostgreSQL 测试，浏览器 HTTP 重试及移动/原生端仍未验收 | [后端与收尾记录](../implementation/eTraderBot-experience-handoff.md)、[前端记录](../implementation/eTraderBot-experience-handoff-frontend.md) |
 | 基座加固 01–09 | 九票按原范围 done；含导入 Skill 独立编辑、真实模型连续演练和只读 MCP 样例。精确去重与部分权限拒绝采用确定性自动化证据 | [阶段验收汇总](../implementation/eTraderBot-foundation-acceptance.md) |
+| 基座收尾专项补验 | testkit 类型通过，授权 33/33、checkpoint 27/27；真实模型缓存工具撤销分配后实际 refused。受控时序、进程内认证 HTTP，无浏览器补验 | [专项记录](../implementation/eTraderBot-foundation-baseline-followup.md) |
 
 ### B2 待办／想做（后加）
 
 | 优先级 | 项 | 状态 | 备注 |
 |---|---|---|---|
-| P1 | 既有测试失败与完整 CI 基线 | todo | authorization 4 项、executor-turn-checkpoint 27 项失败及较早 testkit／Expo／bot-secrets 检查限制仍保留；单独复现处理，不把历史定向通过当全量 CI |
+| P1 | 其余检查限制与完整 CI 基线 | todo | testkit 类型及 authorization／executor-turn-checkpoint 原失败已修复；较早 Expo／bot-secrets 限制仍待复核，定向通过不等于全量 CI |
 | P1 | Graphile 多进程恢复验证 | todo | 当前真实进程恢复使用 memory 唤醒驱动；生产默认多进程投递与恢复另验 |
-| P2 | 真实模型缓存工具撤权后的实际 refused | todo | 工具不可见、跨业务 RPC 404 与隔离执行器 refused 已分别记录，真实模型对应调用证据尚缺 |
 | P2 | 侧栏“文档”入口指向内部资料 | todo | 目标待确认：平台内文档页、本项目 GitHub 目录或既有文档站；尚未修改页面 |
 | P2 | 经验交接的 HTTP 请求级重试验收 | todo | 相同 confirm 的浏览器重放、并发与响应丢失后重试；隔离 RPC 通过不能替代这一项。跨使用者共享及原生端验收仍见 A3 |
 | — | 通用业务 Hook 插件框架与证据补查首例 | later | [Spec 已保存](../specs/eTraderBot-business-hooks-spec.md)，暂不启动；拆分见 B3，不计入当前已交付能力 |
@@ -122,7 +122,7 @@
 
 ## 近期建议顺序（可改）
 
-基座加固已经完成；先按 B2 单独安排基线失败及剩余验证，再确定一个具体业务的真实只读数据源接入。这里记录后续方向，不自动启动新任务。
+基座加固及上述三项专项补验已经完成；先按 B2 单独安排其余检查限制与完整 CI，再确定一个具体业务的真实只读数据源接入。这里记录后续方向，不自动启动新任务。
 
 **原计划线：** 外读适配 → 连通验证 → 真报盘联调；学习论文／案例按节奏插。\
 **后加线：** K0 选型 → K2 Registry 契约 →（可选）K3／K4。
