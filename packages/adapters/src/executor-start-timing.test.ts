@@ -145,7 +145,10 @@ describe("execution start timing", () => {
           leaseOwner: "worker-1",
           leaseFence: 1,
         },
-        data: { startedAt: startedAt ?? expect.any(Date) },
+        data: {
+          startedAt: startedAt ?? expect.any(Date),
+          ...(startedAt ? {} : { toolTraceVersion: 1 }),
+        },
       });
       expect(sink.events.filter((event) => event.message === "run.execution_started")).toHaveLength(
         1,

@@ -736,6 +736,10 @@ msgstr ""
 msgid "All business scopes"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "All runs"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 msgid "All statuses"
 msgstr ""
@@ -856,9 +860,10 @@ msgstr "कोई दूसरा असिस्टेंट"
 msgid "Another item in this import uses the same name"
 msgstr ""
 
-#: src/components/AskCard.tsx
+#: src/components/call/IncomingCall.tsx
+msgctxt "incoming call"
 msgid "Answer"
-msgstr "उत्तर"
+msgstr "कॉल उठाएँ"
 
 #: src/components/call/IncomingCall.tsx
 msgctxt "incoming call"
@@ -1037,10 +1042,6 @@ msgstr ""
 msgid "Assign necessary role"
 msgstr ""
 
-#: src/pages/BusinessCycle.tsx
-msgid "Assignee"
-msgstr ""
-
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -1058,6 +1059,14 @@ msgstr "फ़ाइल संलग्न करें"
 #: src/pages/shell/chat-shared.ts
 msgid "Attachment"
 msgstr "अटैचमेंट"
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt {code}"
+msgstr ""
 
 #: src/pages/Trading.tsx
 msgid "Audit history"
@@ -1234,6 +1243,7 @@ msgstr "लाइव डेस्कटॉप शुरू हो रहा ह�
 msgid "bot"
 msgstr "बॉट"
 
+#: src/components/TicketRuns.tsx
 #: src/lib/identity-display.ts
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -1259,6 +1269,10 @@ msgstr "बॉट देख रहा है, कार्रवाई नही
 
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Bot models"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Bot not recorded"
 msgstr ""
 
 #: src/pages/shell/computer-overlay.tsx
@@ -1734,8 +1748,8 @@ msgstr "क्लाउड"
 msgid "Cloud (%)"
 msgstr ""
 
-#: src/components/AskCard.tsx
-#: src/components/ConfirmIdentityDialog.tsx
+#: src/pages/Auth.tsx
+msgctxt "email sign-in"
 msgid "Code"
 msgstr "कोड"
 
@@ -2123,6 +2137,7 @@ msgstr "पंक्तियाँ कॉपी करें"
 msgid "Correction"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Cost"
 msgstr "लागत"
@@ -2393,6 +2408,10 @@ msgstr "मॉडल सेटिंग्स लोड नहीं हो स�
 msgid "Could not load run history"
 msgstr "रन का इतिहास लोड नहीं हो सका"
 
+#: src/components/TicketRuns.tsx
+msgid "Could not load runs"
+msgstr ""
+
 #: src/lib/account-security.ts
 #: src/pages/Auth.tsx
 msgid "Could not load sign-in options"
@@ -2443,8 +2462,10 @@ msgid "Could not reach the model server."
 msgstr "मॉडल सर्वर तक नहीं पहुँच सके।"
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/AskCard.tsx
 #: src/components/PasskeyOffer.tsx
 #: src/components/PasskeySettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/lib/computer-sandbox.ts
 #: src/lib/user-error.ts
 #: src/pages/AccountSettingsOverlay.tsx
@@ -3141,6 +3162,7 @@ msgid "Don’t have an account?"
 msgstr "खाता नहीं है?"
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/components/ToolActivityDisclosure.tsx
 #: src/lib/ticket-status.ts
 #: src/pages/ActivityList.tsx
@@ -3187,6 +3209,10 @@ msgstr "छवि खींचें, छोड़ें या पेस्ट 
 #: src/pages/BotContextMenu.tsx
 msgid "Duplicate"
 msgstr "डुप्लिकेट"
+
+#: src/components/TicketRuns.tsx
+msgid "Duration"
+msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Each name can be used once."
@@ -3466,8 +3492,8 @@ msgstr ""
 msgid "External push"
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Extra high"
 msgstr "अतिरिक्त उच्च"
 
@@ -3481,6 +3507,7 @@ msgid "failed"
 msgstr "असफल"
 
 #: src/components/SubagentCard.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Failed"
@@ -3789,9 +3816,8 @@ msgstr ""
 msgid "Hide transcript"
 msgstr "ट्रांसक्रिप्ट छिपाएँ"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "High"
 msgstr "उच्च"
 
@@ -3886,8 +3912,7 @@ msgstr "अगर आपने वह सुना, तो आवाज़ त�
 msgid "Ignore"
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "Image input is not configured for this model."
 msgstr "इस मॉडल के लिए चित्र इनपुट कॉन्फ़िगर नहीं है।"
 
@@ -3950,6 +3975,7 @@ msgstr ""
 msgid "Improvement proposal (not enabled)"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr ""
@@ -4260,6 +4286,7 @@ msgstr "पुराने संदेश लोड करें"
 msgid "Load more"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
 #: src/pages/RoutineRunHistory.tsx
 msgid "Load older runs"
 msgstr "पुराने रन लोड करें"
@@ -4304,6 +4331,7 @@ msgstr "आवाज़ प्रोवाइडर्स लोड हो र�
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
@@ -4335,9 +4363,8 @@ msgstr "लॉग आउट"
 msgid "Looks like it contains a key"
 msgstr "लगता है कि इसमें कोई कुंजी है"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Low"
 msgstr "निम्न"
 
@@ -4443,8 +4470,8 @@ msgstr ""
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Max"
 msgstr "अधिकतम"
 
@@ -4489,8 +4516,8 @@ msgstr "MCP सर्वर"
 msgid "MCP tool approval remains separate for each bot."
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Medium"
 msgstr "मध्यम"
 
@@ -4545,9 +4572,8 @@ msgstr "OpenClaw की सुविधाओं का ज़िक्र ह�
 msgid "Mentions: {mentions}"
 msgstr "ज़िक्र: {mentions}"
 
-#: src/pages/shell/chat-shared.ts
-#: src/pages/shell/composer.tsx
-#: src/pages/SpaceSearch.tsx
+#. js-lingui-explicit-id
+#: src/lib/browser-notifications.ts
 msgid "Message"
 msgstr "संदेश"
 
@@ -4614,8 +4640,8 @@ msgstr ""
 msgid "Migration required"
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Minimal"
 msgstr "न्यूनतम"
 
@@ -4680,10 +4706,30 @@ msgstr "मॉडल कनेक्शन"
 msgid "Model id"
 msgstr "मॉडल आईडी"
 
+#: src/components/TicketRuns.tsx
+msgid "Model key rejected"
+msgstr ""
+
 #: src/pages/model-settings/model-picker.tsx
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "मॉडल विकल्प"
+
+#: src/components/TicketRuns.tsx
+msgid "Model rate limited"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model returned nothing usable"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model sign-in failed"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model unavailable"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4928,6 +4974,10 @@ msgstr ""
 msgid "Next version of {packageTitle} v{version}"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "No access to the model"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "No analysis yet"
 msgstr ""
@@ -4971,6 +5021,10 @@ msgstr ""
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "No linked runs recorded"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -5055,8 +5109,16 @@ msgstr "अभी तक कोई स्किल नहीं"
 msgid "No submissions"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "No ticket link recorded"
+msgstr ""
+
 #: src/pages/Board.tsx
 msgid "No tickets yet"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "No tool calls recorded"
 msgstr ""
 
 #: src/pages/Trading.tsx
@@ -5112,6 +5174,10 @@ msgstr ""
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
 msgstr "अभी नहीं"
+
+#: src/components/TicketRuns.tsx
+msgid "Not recorded"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
@@ -5319,6 +5385,10 @@ msgstr ""
 #: src/pages/Onboarding.tsx
 msgid "Other model…"
 msgstr "अन्य मॉडल…"
+
+#: src/components/TicketRuns.tsx
+msgid "Out of model credit"
+msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
@@ -5867,6 +5937,10 @@ msgstr ""
 msgid "Refreshing…"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Refused"
+msgstr ""
+
 #: src/pages/shell/business-scope.tsx
 msgid "Region"
 msgstr ""
@@ -6155,6 +6229,10 @@ msgstr ""
 msgid "Result uncertain; the reservation is retained."
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Result unknown"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Results only / closed"
 msgstr ""
@@ -6193,6 +6271,10 @@ msgstr "फिर कोशिश करें"
 #: src/pages/PeerMessagesOverlay.tsx
 msgid "Retry now"
 msgstr "अभी पुनः प्रयास करें"
+
+#: src/components/TicketRuns.tsx
+msgid "Retry of #{retried}"
+msgstr ""
 
 #: src/pages/shell/use-computer.tsx
 msgid "Retry screen"
@@ -6300,6 +6382,18 @@ msgstr "पंक्ति"
 msgid "Rules"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Run"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}, {botName}, {status}, {startedAt}"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Run analysis"
 msgstr ""
@@ -6308,12 +6402,20 @@ msgstr ""
 msgid "Run at"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Run failed"
+msgstr ""
+
 #: src/pages/TradingLearning.tsx
 msgid "Run finished without a learning report. Review the conversation and retry."
 msgstr ""
 
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Run ID"
 msgstr ""
 
 #: src/pages/shell/use-routine-editor.ts
@@ -6335,6 +6437,7 @@ msgstr "चल रहा है"
 msgid "Running…"
 msgstr "चल रहा है…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Runs"
 msgstr "रन"
@@ -6757,6 +6860,10 @@ msgstr ""
 msgid "Show transcript"
 msgstr "ट्रांसक्रिप्ट दिखाएँ"
 
+#: src/components/TicketRuns.tsx
+msgid "Showing only the first tool calls"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Side"
 msgstr ""
@@ -6970,6 +7077,10 @@ msgstr "बोल रहा है"
 msgid "Speech model"
 msgstr "वाक् मॉडल"
 
+#: src/components/TicketRuns.tsx
+msgid "Spending limit reached"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Spot"
 msgstr ""
@@ -7019,6 +7130,10 @@ msgstr "रिकॉर्डिंग शुरू करें"
 msgid "Start your plan now?"
 msgstr "अपना प्लान अभी शुरू करें?"
 
+#: src/components/TicketRuns.tsx
+msgid "Started"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Starting"
@@ -7031,6 +7146,7 @@ msgstr "शुरू हो रहा है"
 msgid "Starting…"
 msgstr "शुरू हो रहा है…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Board.tsx
 msgid "Status"
@@ -7058,6 +7174,10 @@ msgstr "बोलना रोकें"
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Stop teaching"
 msgstr "सिखाना रोकें"
+
+#: src/components/TicketRuns.tsx
+msgid "Stopped"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/browser-notifications.ts
@@ -7431,8 +7551,7 @@ msgstr "यह इंपोर्ट पहले ही इस्तेमा�
 msgid "this Mac"
 msgstr "यह Mac"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "यह मॉडल चित्र नहीं पढ़ सकता। चित्रों का समर्थन करने वाला मॉडल चुनें।"
 
@@ -7485,6 +7604,10 @@ msgstr ""
 msgid "This reset link is invalid or expired"
 msgstr "यह रीसेट लिंक अमान्य है या इसकी समय-सीमा समाप्त हो गई है"
 
+#: src/components/TicketRuns.tsx
+msgid "This run is no longer available"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "This server cannot be assigned without a bot."
 msgstr "बॉट के बिना यह सर्वर असाइन नहीं किया जा सकता।"
@@ -7517,6 +7640,10 @@ msgstr ""
 #: src/lib/cron.ts
 msgid "Thursday"
 msgstr "गुरुवार"
+
+#: src/components/TicketRuns.tsx
+msgid "Ticket"
+msgstr ""
 
 #: src/pages/RoutineSchedule.tsx
 msgid "Time of day"
@@ -7564,6 +7691,10 @@ msgstr "आज"
 msgid "Tokens"
 msgstr "टोकन"
 
+#: src/components/TicketRuns.tsx
+msgid "Too much context for the model"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Tool arguments (JSON)"
 msgstr "टूल आर्ग्युमेंट (JSON)"
@@ -7580,6 +7711,11 @@ msgstr "टूल आर्ग्युमेंट JSON होने चाह�
 msgid "Tool name"
 msgstr "टूल का नाम"
 
+#: src/components/TicketRuns.tsx
+msgid "Tool summary not recorded"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
@@ -7668,6 +7804,7 @@ msgstr "दुरुपयोग रोकने के लिए ट्रा�
 msgid "Trusted sites"
 msgstr "विश्वसनीय साइटें"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Onboarding.tsx
 msgid "Try again"
@@ -7709,6 +7846,10 @@ msgstr "पूर्ववत करें"
 
 #: src/pages/PluginsOverlay.tsx
 msgid "Uninstall"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Unknown"
 msgstr ""
 
 #: src/pages/MessagingSettingsPanel.tsx
@@ -7982,6 +8123,10 @@ msgstr ""
 msgid "Wait a moment and test again."
 msgstr "थोड़ी देर रुकें और फिर से परीक्षण करें।"
 
+#: src/components/TicketRuns.tsx
+msgid "Waiting for approval"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Waiting for evidence"
 msgstr ""
@@ -8201,6 +8346,10 @@ msgstr ""
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"
 msgstr "नियंत्रण आपके पास है"
+
+#: src/components/TicketRuns.tsx
+msgid "You no longer have access"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

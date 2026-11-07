@@ -925,8 +925,11 @@ model Task {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   runs      Run[]
+  ticketId  String?
+  ticket    Ticket? @relation(fields: [ticketId], references: [id], onDelete: SetNull)
 
   @@index([spaceId, botId])
+  @@index([ticketId])
   @@map("tasks")
 }
 
@@ -965,6 +968,8 @@ model Run {
   wakeAt               DateTime?
   // Server-side first visible output, preserved across attempts and resumes.
   firstResponseAt      DateTime?
+  // Null for legacy runs without complete per-call instrumentation.
+  toolTraceVersion     Int?
   startedAt            DateTime?
   completedAt          DateTime?
   botOutcomeReturnedAt DateTime?
@@ -976,6 +981,7 @@ model Run {
   effects              ExternalEffect[]
   steeringMessages     SteeringMessage[]
   externalMessage      ExternalMessage?
+  toolCalls            RunToolCall[]
 
   @@unique([spaceId, clientNonce])
   @@index([status, wakeAt])
@@ -1028,9 +1034,30 @@ model Attempt {
   error      String?
   startedAt  DateTime  @default(now())
   finishedAt DateTime?
+  toolCalls  RunToolCall[]
 
   @@index([runId])
   @@map("attempts")
+}
+
+// Minimal execution facts only. Never store arguments, result bodies or exception text here.
+model RunToolCall {
+  id          String   @id @default(cuid())
+  spaceId     String
+  userId      String
+  runId       String
+  run         Run      @relation(fields: [runId], references: [id], onDelete: Cascade)
+  attemptId   String
+  attempt     Attempt  @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  executionId String
+  name        String
+  status      String
+  startedAt   DateTime @default(now())
+  finishedAt  DateTime?
+
+  @@unique([attemptId, executionId])
+  @@index([spaceId, userId, runId, startedAt, id])
+  @@map("run_tool_calls")
 }
 
 // Deliberately independent of chat/user cascades: the worker must still be able
@@ -1568,6 +1595,7 @@ model UsageRecord {
   createdAt          DateTime @default(now())
 
   @@index([spaceId, userId, createdAt])
+  @@index([spaceId, userId, runId])
   @@map("usage_records")
 }
 
@@ -1982,6 +2010,7 @@ model Ticket {
   updatedAt       DateTime  @updatedAt
   completedAt       DateTime?
   comments        TicketComment[]
+  tasks           Task[]
 
   @@unique([boardId, number])
   @@index([spaceId, status])

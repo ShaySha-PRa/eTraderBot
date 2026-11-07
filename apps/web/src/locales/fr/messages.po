@@ -736,6 +736,10 @@ msgstr "Tous les bots"
 msgid "All business scopes"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "All runs"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 msgid "All statuses"
 msgstr ""
@@ -856,7 +860,8 @@ msgstr "Autre assistant"
 msgid "Another item in this import uses the same name"
 msgstr ""
 
-#: src/components/AskCard.tsx
+#: src/components/call/IncomingCall.tsx
+msgctxt "incoming call"
 msgid "Answer"
 msgstr "Répondre"
 
@@ -1037,10 +1042,6 @@ msgstr ""
 msgid "Assign necessary role"
 msgstr ""
 
-#: src/pages/BusinessCycle.tsx
-msgid "Assignee"
-msgstr ""
-
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -1058,6 +1059,14 @@ msgstr "Joindre un fichier"
 #: src/pages/shell/chat-shared.ts
 msgid "Attachment"
 msgstr "Pièce jointe"
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt {code}"
+msgstr ""
 
 #: src/pages/Trading.tsx
 msgid "Audit history"
@@ -1234,6 +1243,7 @@ msgstr "Démarrage du bureau en direct…"
 msgid "bot"
 msgstr "bot"
 
+#: src/components/TicketRuns.tsx
 #: src/lib/identity-display.ts
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -1259,6 +1269,10 @@ msgstr "Le bot observe, il n'agit pas"
 
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Bot models"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Bot not recorded"
 msgstr ""
 
 #: src/pages/shell/computer-overlay.tsx
@@ -1734,8 +1748,8 @@ msgstr "Cloud"
 msgid "Cloud (%)"
 msgstr ""
 
-#: src/components/AskCard.tsx
-#: src/components/ConfirmIdentityDialog.tsx
+#: src/pages/Auth.tsx
+msgctxt "email sign-in"
 msgid "Code"
 msgstr "Code"
 
@@ -2123,6 +2137,7 @@ msgstr "Copier les lignes"
 msgid "Correction"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Cost"
 msgstr "Coût"
@@ -2393,6 +2408,10 @@ msgstr "Impossible de charger les paramètres du modèle"
 msgid "Could not load run history"
 msgstr "Impossible de charger l’historique des exécutions"
 
+#: src/components/TicketRuns.tsx
+msgid "Could not load runs"
+msgstr ""
+
 #: src/lib/account-security.ts
 #: src/pages/Auth.tsx
 msgid "Could not load sign-in options"
@@ -2443,8 +2462,10 @@ msgid "Could not reach the model server."
 msgstr "Impossible de joindre le serveur du modèle."
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/AskCard.tsx
 #: src/components/PasskeyOffer.tsx
 #: src/components/PasskeySettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/lib/computer-sandbox.ts
 #: src/lib/user-error.ts
 #: src/pages/AccountSettingsOverlay.tsx
@@ -3141,6 +3162,7 @@ msgid "Don’t have an account?"
 msgstr "Vous n'avez pas de compte ?"
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/components/ToolActivityDisclosure.tsx
 #: src/lib/ticket-status.ts
 #: src/pages/ActivityList.tsx
@@ -3187,6 +3209,10 @@ msgstr "Glissez, déposez ou collez une image"
 #: src/pages/BotContextMenu.tsx
 msgid "Duplicate"
 msgstr "Dupliquer"
+
+#: src/components/TicketRuns.tsx
+msgid "Duration"
+msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Each name can be used once."
@@ -3466,8 +3492,8 @@ msgstr ""
 msgid "External push"
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Extra high"
 msgstr "Très élevé"
 
@@ -3481,6 +3507,7 @@ msgid "failed"
 msgstr "échoué"
 
 #: src/components/SubagentCard.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Failed"
@@ -3789,9 +3816,8 @@ msgstr "Masquer le mot de passe"
 msgid "Hide transcript"
 msgstr "Masquer la transcription"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "High"
 msgstr "Élevé"
 
@@ -3886,8 +3912,7 @@ msgstr "Si vous avez entendu cela, la voix est prête."
 msgid "Ignore"
 msgstr "Ignorer"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "Image input is not configured for this model."
 msgstr "La saisie d’images n’est pas configurée pour ce modèle."
 
@@ -3950,6 +3975,7 @@ msgstr ""
 msgid "Improvement proposal (not enabled)"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr ""
@@ -4260,6 +4286,7 @@ msgstr "Charger les messages précédents"
 msgid "Load more"
 msgstr "Charger plus"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/RoutineRunHistory.tsx
 msgid "Load older runs"
 msgstr "Charger les exécutions précédentes"
@@ -4304,6 +4331,7 @@ msgstr "Chargement des fournisseurs vocaux…"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
@@ -4335,9 +4363,8 @@ msgstr "Se déconnecter"
 msgid "Looks like it contains a key"
 msgstr "Semble contenir une clé"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Low"
 msgstr "Faible"
 
@@ -4443,8 +4470,8 @@ msgstr ""
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Max"
 msgstr "Max"
 
@@ -4489,8 +4516,8 @@ msgstr "Serveurs MCP"
 msgid "MCP tool approval remains separate for each bot."
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Medium"
 msgstr "Moyen"
 
@@ -4545,9 +4572,8 @@ msgstr "Mentionne des fonctions d’OpenClaw"
 msgid "Mentions: {mentions}"
 msgstr "Mentionne : {mentions}"
 
-#: src/pages/shell/chat-shared.ts
-#: src/pages/shell/composer.tsx
-#: src/pages/SpaceSearch.tsx
+#. js-lingui-explicit-id
+#: src/lib/browser-notifications.ts
 msgid "Message"
 msgstr "Message"
 
@@ -4614,8 +4640,8 @@ msgstr ""
 msgid "Migration required"
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Minimal"
 msgstr "Minimal"
 
@@ -4680,10 +4706,30 @@ msgstr "Connexions aux modèles"
 msgid "Model id"
 msgstr "ID du modèle"
 
+#: src/components/TicketRuns.tsx
+msgid "Model key rejected"
+msgstr ""
+
 #: src/pages/model-settings/model-picker.tsx
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "Options du modèle"
+
+#: src/components/TicketRuns.tsx
+msgid "Model rate limited"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model returned nothing usable"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model sign-in failed"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model unavailable"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4928,6 +4974,10 @@ msgstr ""
 msgid "Next version of {packageTitle} v{version}"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "No access to the model"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "No analysis yet"
 msgstr ""
@@ -4971,6 +5021,10 @@ msgstr "Aucun bot ne correspond"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "No linked runs recorded"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -5055,8 +5109,16 @@ msgstr "Aucune compétence pour le moment"
 msgid "No submissions"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "No ticket link recorded"
+msgstr ""
+
 #: src/pages/Board.tsx
 msgid "No tickets yet"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "No tool calls recorded"
 msgstr ""
 
 #: src/pages/Trading.tsx
@@ -5112,6 +5174,10 @@ msgstr "Pas dans le catalogue de plugins"
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
 msgstr "Pas maintenant"
+
+#: src/components/TicketRuns.tsx
+msgid "Not recorded"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
@@ -5319,6 +5385,10 @@ msgstr ""
 #: src/pages/Onboarding.tsx
 msgid "Other model…"
 msgstr "Autre modèle…"
+
+#: src/components/TicketRuns.tsx
+msgid "Out of model credit"
+msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
@@ -5867,6 +5937,10 @@ msgstr "Actualiser la vue"
 msgid "Refreshing…"
 msgstr "Actualisation en cours…"
 
+#: src/components/TicketRuns.tsx
+msgid "Refused"
+msgstr ""
+
 #: src/pages/shell/business-scope.tsx
 msgid "Region"
 msgstr ""
@@ -6155,6 +6229,10 @@ msgstr ""
 msgid "Result uncertain; the reservation is retained."
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Result unknown"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Results only / closed"
 msgstr ""
@@ -6193,6 +6271,10 @@ msgstr "Réessayer"
 #: src/pages/PeerMessagesOverlay.tsx
 msgid "Retry now"
 msgstr "Réessayer maintenant"
+
+#: src/components/TicketRuns.tsx
+msgid "Retry of #{retried}"
+msgstr ""
 
 #: src/pages/shell/use-computer.tsx
 msgid "Retry screen"
@@ -6300,6 +6382,18 @@ msgstr "Ligne"
 msgid "Rules"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Run"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}, {botName}, {status}, {startedAt}"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Run analysis"
 msgstr ""
@@ -6308,6 +6402,10 @@ msgstr ""
 msgid "Run at"
 msgstr "Exécuter à"
 
+#: src/components/TicketRuns.tsx
+msgid "Run failed"
+msgstr ""
+
 #: src/pages/TradingLearning.tsx
 msgid "Run finished without a learning report. Review the conversation and retry."
 msgstr ""
@@ -6315,6 +6413,10 @@ msgstr ""
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
 msgstr "Historique des exécutions"
+
+#: src/components/TicketRuns.tsx
+msgid "Run ID"
+msgstr ""
 
 #: src/pages/shell/use-routine-editor.ts
 msgid "Run time must be in the future."
@@ -6335,6 +6437,7 @@ msgstr "En cours"
 msgid "Running…"
 msgstr "Exécution en cours…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Runs"
 msgstr "Exécutions"
@@ -6757,6 +6860,10 @@ msgstr ""
 msgid "Show transcript"
 msgstr "Afficher la transcription"
 
+#: src/components/TicketRuns.tsx
+msgid "Showing only the first tool calls"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Side"
 msgstr ""
@@ -6970,6 +7077,10 @@ msgstr "Parle"
 msgid "Speech model"
 msgstr "Modèle de parole"
 
+#: src/components/TicketRuns.tsx
+msgid "Spending limit reached"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Spot"
 msgstr ""
@@ -7019,6 +7130,10 @@ msgstr "Démarrer l'enregistrement"
 msgid "Start your plan now?"
 msgstr "Démarrer votre abonnement maintenant ?"
 
+#: src/components/TicketRuns.tsx
+msgid "Started"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Starting"
@@ -7031,6 +7146,7 @@ msgstr "Démarrage"
 msgid "Starting…"
 msgstr "Démarrage en cours…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Board.tsx
 msgid "Status"
@@ -7058,6 +7174,10 @@ msgstr "Arrêter la lecture"
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Stop teaching"
 msgstr "Arrêter l'enseignement"
+
+#: src/components/TicketRuns.tsx
+msgid "Stopped"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/browser-notifications.ts
@@ -7431,8 +7551,7 @@ msgstr "Cet import a déjà été utilisé. Choisissez à nouveau les fichiers."
 msgid "this Mac"
 msgstr "ce Mac"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "Ce modèle ne peut pas lire les images. Choisissez un modèle qui les prend en charge."
 
@@ -7485,6 +7604,10 @@ msgstr ""
 msgid "This reset link is invalid or expired"
 msgstr "Ce lien de réinitialisation est invalide ou a expiré"
 
+#: src/components/TicketRuns.tsx
+msgid "This run is no longer available"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "This server cannot be assigned without a bot."
 msgstr "Ce serveur ne peut pas être assigné sans bot."
@@ -7517,6 +7640,10 @@ msgstr "Cette semaine"
 #: src/lib/cron.ts
 msgid "Thursday"
 msgstr "jeudi"
+
+#: src/components/TicketRuns.tsx
+msgid "Ticket"
+msgstr ""
 
 #: src/pages/RoutineSchedule.tsx
 msgid "Time of day"
@@ -7564,6 +7691,10 @@ msgstr "Aujourd'hui"
 msgid "Tokens"
 msgstr "Jetons"
 
+#: src/components/TicketRuns.tsx
+msgid "Too much context for the model"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Tool arguments (JSON)"
 msgstr "Arguments de l’outil (JSON)"
@@ -7580,6 +7711,11 @@ msgstr "Les arguments doivent être au format JSON"
 msgid "Tool name"
 msgstr "Nom de l’outil"
 
+#: src/components/TicketRuns.tsx
+msgid "Tool summary not recorded"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
@@ -7668,6 +7804,7 @@ msgstr "Les essais ont moins d'heures pour éviter les abus."
 msgid "Trusted sites"
 msgstr "Sites de confiance"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Onboarding.tsx
 msgid "Try again"
@@ -7710,6 +7847,10 @@ msgstr "Annuler"
 #: src/pages/PluginsOverlay.tsx
 msgid "Uninstall"
 msgstr "Désinstaller"
+
+#: src/components/TicketRuns.tsx
+msgid "Unknown"
+msgstr ""
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Unlink"
@@ -7982,6 +8123,10 @@ msgstr ""
 msgid "Wait a moment and test again."
 msgstr "Patientez un instant et testez à nouveau."
 
+#: src/components/TicketRuns.tsx
+msgid "Waiting for approval"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Waiting for evidence"
 msgstr ""
@@ -8201,6 +8346,10 @@ msgstr ""
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"
 msgstr "Vous avez le contrôle"
+
+#: src/components/TicketRuns.tsx
+msgid "You no longer have access"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

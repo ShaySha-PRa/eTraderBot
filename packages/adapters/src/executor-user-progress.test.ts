@@ -125,6 +125,10 @@ async function runTurn(
   const savedEvents: AppendEventInput[] = [];
   let failMessage = options.failMessageOnce;
   const prisma = {
+    runToolCall: {
+      upsert: vi.fn(async () => ({ id: "trace-1" })),
+      updateMany: vi.fn(async () => ({ count: 1 })),
+    },
     user: { findUnique: vi.fn(async () => null) },
     run: {
       findUnique: vi.fn(async () => run),

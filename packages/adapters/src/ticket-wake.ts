@@ -32,6 +32,7 @@ export async function wakeTicketAssignee(
         botId: bot.id,
         threadId: bot.thread.id,
         userId: bot.userId,
+        ticketId: ticket.id,
         prompt: `Work on ticket ${ticket.board.ticketPrefix}-${ticket.number}. Read it with ticket_get. Keep progress in ticket comments and update its status with ticket_update. Use ask or approval cards when user input is needed.`,
         status: "queued",
       },

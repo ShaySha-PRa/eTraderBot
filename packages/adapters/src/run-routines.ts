@@ -381,7 +381,7 @@ export async function retryRoutineRun(deps: ExecutorDeps, runId: string) {
   }
   const task = await deps.prisma.task.findUnique({
     where: { id: failed.taskId },
-    select: { prompt: true },
+    select: { prompt: true, ticketId: true },
   });
   if (!task) {
     await notifyAbandonedRetry();
@@ -431,6 +431,7 @@ export async function retryRoutineRun(deps: ExecutorDeps, runId: string) {
           threadId: failed.threadId,
           userId: failed.userId,
           prompt: task.prompt,
+          ticketId: task.ticketId,
           status: "queued",
         },
       });

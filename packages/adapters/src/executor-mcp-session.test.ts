@@ -21,7 +21,7 @@ const publicResolver = async () => [{ address: "203.0.113.10", family: 4 as cons
  * `get_resume` only knows it in that same session. A resume in a fresh session is
  * answered with the JSON-RPC error a real server sends: "Paused execution is unknown".
  */
-function statefulMcpServer() {
+function statefulMcpServer(options: { toolError?: boolean } = {}) {
   const sessions = new Set<string>();
   const paused = new Map<string, string>();
   const toolCalls: Array<{ session: string | null; tool: string }> = [];
@@ -83,6 +83,11 @@ function statefulMcpServer() {
       const tool = message.params?.name ?? "";
       toolCalls.push({ session, tool });
       if (tool === "get_pause") {
+        if (options.toolError) {
+          return respond({
+            result: { isError: true, content: [{ type: "text", text: "synthetic-private-error" }] },
+          });
+        }
         const executionId = `exec-of-${session}`;
         paused.set(session, executionId);
         return respond({
@@ -155,6 +160,10 @@ async function executorHarness(server: ReturnType<typeof statefulMcpServer>) {
   });
   const events: AppendEventInput[] = [];
   const prisma = {
+    runToolCall: {
+      upsert: vi.fn(async () => ({ id: "trace-1" })),
+      updateMany: vi.fn(async () => ({ count: 1 })),
+    },
     user: { findUnique: vi.fn(async () => null) },
     run: {
       findUnique: vi.fn(async () => run),
@@ -327,6 +336,21 @@ async function executorHarness(server: ReturnType<typeof statefulMcpServer>) {
 }
 
 describe("run-scoped MCP sessions across attempts", () => {
+  it("records an MCP error result as a failed tool without copying its error text", async () => {
+    const server = statefulMcpServer({ toolError: true });
+    const { executor, run, attempts, toolResults, prisma } = await executorHarness(server);
+    attempts.push(async function* (request: AgentRunRequest) {
+      toolResults.push(await request.executeTool?.("get_pause", {}, "call-1"));
+      yield { type: "done", text: "Error observed" };
+    });
+    await executor.continueRun(run.id, "worker-1");
+    expect(toolResults[0]).toMatchObject({ isError: true });
+    expect(prisma.runToolCall.updateMany).toHaveBeenCalledWith({
+      where: { id: "trace-1", status: "pending" },
+      data: { status: "failed", finishedAt: expect.any(Date) },
+    });
+  });
+
   it("keeps the session when the attempt ends on an ask, so the resumed attempt resumes the paused execution", async () => {
     const server = statefulMcpServer();
     const { executor, run, attempts, toolResults, pauseRunForInput } =

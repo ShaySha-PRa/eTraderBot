@@ -425,7 +425,11 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
         // time, and only stamp execution once this attempt can use its computer.
         const executionStarted = await deps.prisma.run.updateMany({
           where: { id: runId, status: "running", leaseOwner: workerId, leaseFence: fence },
-          data: { startedAt: executionStartedAt },
+          data: {
+            startedAt: executionStartedAt,
+            // Resuming a legacy run cannot retroactively make its earlier tools recorded.
+            ...(current.startedAt == null ? { toolTraceVersion: 1 } : {}),
+          },
         });
         if (executionStarted.count !== 1) {
           await releaseComputerExecutionLease(deps.prisma, computerLease).catch(() => undefined);

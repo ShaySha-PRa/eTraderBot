@@ -488,7 +488,9 @@ function retryHarness(scenario: RetryScenario = {}) {
       ),
     },
     task: {
-      findUnique: vi.fn(async () => (scenario.missingTask ? null : { prompt: "Sweep the inbox" })),
+      findUnique: vi.fn(async () =>
+        scenario.missingTask ? null : { prompt: "Sweep the inbox", ticketId: "ticket-1" },
+      ),
     },
     $transaction: vi.fn(async (work: (client: typeof tx) => Promise<unknown>) => work(tx)),
     bot: { findUniqueOrThrow: vi.fn(async () => ({ name: "Assistant" })) },
@@ -673,6 +675,7 @@ describe("running a routine retry", () => {
         threadId: "thread-1",
         userId: "user-1",
         prompt: "Sweep the inbox",
+        ticketId: "ticket-1",
         status: "queued",
       },
     });

@@ -162,6 +162,11 @@ import { PaymentWalletStatusSchema } from "./payments.js";
 import { MessageReactionSchema } from "./reactions.js";
 import { RoutineWatchSchema } from "./routine-watch.js";
 import {
+  RunsForTicketInputSchema,
+  RunsForTicketOutputSchema,
+  RunTraceDetailSchema,
+} from "./run-trace.js";
+import {
   ROUTINE_HISTORY_PAGE_SIZE,
   RoutineHistorySchema,
   RoutineRunCursorSchema,
@@ -1293,6 +1298,8 @@ export const appContract = {
   },
   runs: {
     list: oc.input(z.object({ filter: z.enum(["active", "recent"]) })).output(RunsListOutputSchema),
+    forTicket: oc.input(RunsForTicketInputSchema).output(RunsForTicketOutputSchema),
+    detail: oc.input(z.object({ runId: Id })).output(RunTraceDetailSchema),
   },
   /** The signed-in user's wallet; absent when the deployment offers none. */
   paymentWallet: {

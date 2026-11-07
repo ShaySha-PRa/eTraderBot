@@ -736,6 +736,10 @@ msgstr "All bots"
 msgid "All business scopes"
 msgstr "All business scopes"
 
+#: src/components/TicketRuns.tsx
+msgid "All runs"
+msgstr "All runs"
+
 #: src/pages/ActivityList.tsx
 msgid "All statuses"
 msgstr "All statuses"
@@ -856,7 +860,8 @@ msgstr "Another assistant"
 msgid "Another item in this import uses the same name"
 msgstr "Another item in this import uses the same name"
 
-#: src/components/AskCard.tsx
+#: src/components/call/IncomingCall.tsx
+msgctxt "incoming call"
 msgid "Answer"
 msgstr "Answer"
 
@@ -1037,10 +1042,6 @@ msgstr "Asset ID"
 msgid "Assign necessary role"
 msgstr "Assign necessary role"
 
-#: src/pages/BusinessCycle.tsx
-msgid "Assignee"
-msgstr "Assignee"
-
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -1058,6 +1059,14 @@ msgstr "Attach file"
 #: src/pages/shell/chat-shared.ts
 msgid "Attachment"
 msgstr "Attachment"
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt"
+msgstr "Attempt"
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt {code}"
+msgstr "Attempt {code}"
 
 #: src/pages/Trading.tsx
 msgid "Audit history"
@@ -1234,6 +1243,7 @@ msgstr "Booting live desktop…"
 msgid "bot"
 msgstr "bot"
 
+#: src/components/TicketRuns.tsx
 #: src/lib/identity-display.ts
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -1260,6 +1270,10 @@ msgstr "Bot is watching, not acting"
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Bot models"
 msgstr "Bot models"
+
+#: src/components/TicketRuns.tsx
+msgid "Bot not recorded"
+msgstr "Bot not recorded"
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "Bot screen"
@@ -1734,8 +1748,8 @@ msgstr "Cloud"
 msgid "Cloud (%)"
 msgstr "Cloud (%)"
 
-#: src/components/AskCard.tsx
-#: src/components/ConfirmIdentityDialog.tsx
+#: src/pages/Auth.tsx
+msgctxt "email sign-in"
 msgid "Code"
 msgstr "Code"
 
@@ -2123,6 +2137,7 @@ msgstr "Copy rows"
 msgid "Correction"
 msgstr "Correction"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Cost"
 msgstr "Cost"
@@ -2393,6 +2408,10 @@ msgstr "Could not load model settings"
 msgid "Could not load run history"
 msgstr "Could not load run history"
 
+#: src/components/TicketRuns.tsx
+msgid "Could not load runs"
+msgstr "Could not load runs"
+
 #: src/lib/account-security.ts
 #: src/pages/Auth.tsx
 msgid "Could not load sign-in options"
@@ -2443,8 +2462,10 @@ msgid "Could not reach the model server."
 msgstr "Could not reach the model server."
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/AskCard.tsx
 #: src/components/PasskeyOffer.tsx
 #: src/components/PasskeySettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/lib/computer-sandbox.ts
 #: src/lib/user-error.ts
 #: src/pages/AccountSettingsOverlay.tsx
@@ -3141,6 +3162,7 @@ msgid "Don’t have an account?"
 msgstr "Don’t have an account?"
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/components/ToolActivityDisclosure.tsx
 #: src/lib/ticket-status.ts
 #: src/pages/ActivityList.tsx
@@ -3187,6 +3209,10 @@ msgstr "Drag, drop, or paste an image"
 #: src/pages/BotContextMenu.tsx
 msgid "Duplicate"
 msgstr "Duplicate"
+
+#: src/components/TicketRuns.tsx
+msgid "Duration"
+msgstr "Duration"
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Each name can be used once."
@@ -3466,8 +3492,8 @@ msgstr "External memory can't be exported or imported"
 msgid "External push"
 msgstr "External push"
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Extra high"
 msgstr "Extra high"
 
@@ -3481,6 +3507,7 @@ msgid "failed"
 msgstr "failed"
 
 #: src/components/SubagentCard.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Failed"
@@ -3789,9 +3816,8 @@ msgstr "Hide password"
 msgid "Hide transcript"
 msgstr "Hide transcript"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "High"
 msgstr "High"
 
@@ -3886,8 +3912,7 @@ msgstr "If you heard that, voice is ready."
 msgid "Ignore"
 msgstr "Ignore"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "Image input is not configured for this model."
 msgstr "Image input is not configured for this model."
 
@@ -3950,6 +3975,7 @@ msgstr "Imported Skills"
 msgid "Improvement proposal (not enabled)"
 msgstr "Improvement proposal (not enabled)"
 
+#: src/components/TicketRuns.tsx
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr "In progress"
@@ -4260,6 +4286,7 @@ msgstr "Load earlier messages"
 msgid "Load more"
 msgstr "Load more"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/RoutineRunHistory.tsx
 msgid "Load older runs"
 msgstr "Load older runs"
@@ -4304,6 +4331,7 @@ msgstr "Loading voice providers…"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
@@ -4335,9 +4363,8 @@ msgstr "Log out"
 msgid "Looks like it contains a key"
 msgstr "Looks like it contains a key"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Low"
 msgstr "Low"
 
@@ -4443,8 +4470,8 @@ msgstr "Material"
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Max"
 msgstr "Max"
 
@@ -4489,8 +4516,8 @@ msgstr "MCP servers"
 msgid "MCP tool approval remains separate for each bot."
 msgstr "MCP tool approval remains separate for each bot."
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Medium"
 msgstr "Medium"
 
@@ -4545,9 +4572,8 @@ msgstr "Mentions OpenClaw features"
 msgid "Mentions: {mentions}"
 msgstr "Mentions: {mentions}"
 
-#: src/pages/shell/chat-shared.ts
-#: src/pages/shell/composer.tsx
-#: src/pages/SpaceSearch.tsx
+#. js-lingui-explicit-id
+#: src/lib/browser-notifications.ts
 msgid "Message"
 msgstr "Message"
 
@@ -4614,8 +4640,8 @@ msgstr "Mid / long term bot"
 msgid "Migration required"
 msgstr "Migration required"
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Minimal"
 msgstr "Minimal"
 
@@ -4680,10 +4706,30 @@ msgstr "Model connections"
 msgid "Model id"
 msgstr "Model id"
 
+#: src/components/TicketRuns.tsx
+msgid "Model key rejected"
+msgstr "Model key rejected"
+
 #: src/pages/model-settings/model-picker.tsx
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "Model options"
+
+#: src/components/TicketRuns.tsx
+msgid "Model rate limited"
+msgstr "Model rate limited"
+
+#: src/components/TicketRuns.tsx
+msgid "Model returned nothing usable"
+msgstr "Model returned nothing usable"
+
+#: src/components/TicketRuns.tsx
+msgid "Model sign-in failed"
+msgstr "Model sign-in failed"
+
+#: src/components/TicketRuns.tsx
+msgid "Model unavailable"
+msgstr "Model unavailable"
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4928,6 +4974,10 @@ msgstr "Next settings sections"
 msgid "Next version of {packageTitle} v{version}"
 msgstr "Next version of {packageTitle} v{version}"
 
+#: src/components/TicketRuns.tsx
+msgid "No access to the model"
+msgstr "No access to the model"
+
 #: src/pages/Trading.tsx
 msgid "No analysis yet"
 msgstr "No analysis yet"
@@ -4972,6 +5022,10 @@ msgstr "No bots match"
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
 msgstr "No interfaces configured for this business scope."
+
+#: src/components/TicketRuns.tsx
+msgid "No linked runs recorded"
+msgstr "No linked runs recorded"
 
 #: src/components/AskCard.tsx
 msgid "No longer active"
@@ -5055,9 +5109,17 @@ msgstr "No skills yet"
 msgid "No submissions"
 msgstr "No submissions"
 
+#: src/components/TicketRuns.tsx
+msgid "No ticket link recorded"
+msgstr "No ticket link recorded"
+
 #: src/pages/Board.tsx
 msgid "No tickets yet"
 msgstr "No tickets yet"
+
+#: src/components/TicketRuns.tsx
+msgid "No tool calls recorded"
+msgstr "No tool calls recorded"
 
 #: src/pages/Trading.tsx
 msgid "No trading stages configured yet."
@@ -5112,6 +5174,10 @@ msgstr "Not in the plugin catalog"
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
 msgstr "Not now"
+
+#: src/components/TicketRuns.tsx
+msgid "Not recorded"
+msgstr "Not recorded"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
@@ -5319,6 +5385,10 @@ msgstr "Other fees"
 #: src/pages/Onboarding.tsx
 msgid "Other model…"
 msgstr "Other model…"
+
+#: src/components/TicketRuns.tsx
+msgid "Out of model credit"
+msgstr "Out of model credit"
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
@@ -5867,6 +5937,10 @@ msgstr "Refresh view"
 msgid "Refreshing…"
 msgstr "Refreshing…"
 
+#: src/components/TicketRuns.tsx
+msgid "Refused"
+msgstr "Refused"
+
 #: src/pages/shell/business-scope.tsx
 msgid "Region"
 msgstr "Region"
@@ -6155,6 +6229,10 @@ msgstr "Result uncertain"
 msgid "Result uncertain; the reservation is retained."
 msgstr "Result uncertain; the reservation is retained."
 
+#: src/components/TicketRuns.tsx
+msgid "Result unknown"
+msgstr "Result unknown"
+
 #: src/pages/BusinessCycle.tsx
 msgid "Results only / closed"
 msgstr "Results only / closed"
@@ -6193,6 +6271,10 @@ msgstr "Retry"
 #: src/pages/PeerMessagesOverlay.tsx
 msgid "Retry now"
 msgstr "Retry now"
+
+#: src/components/TicketRuns.tsx
+msgid "Retry of #{retried}"
+msgstr "Retry of #{retried}"
 
 #: src/pages/shell/use-computer.tsx
 msgid "Retry screen"
@@ -6300,6 +6382,18 @@ msgstr "Row"
 msgid "Rules"
 msgstr "Rules"
 
+#: src/components/TicketRuns.tsx
+msgid "Run"
+msgstr "Run"
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}"
+msgstr "Run {code}"
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}, {botName}, {status}, {startedAt}"
+msgstr "Run {code}, {botName}, {status}, {startedAt}"
+
 #: src/pages/Trading.tsx
 msgid "Run analysis"
 msgstr "Run analysis"
@@ -6308,6 +6402,10 @@ msgstr "Run analysis"
 msgid "Run at"
 msgstr "Run at"
 
+#: src/components/TicketRuns.tsx
+msgid "Run failed"
+msgstr "Run failed"
+
 #: src/pages/TradingLearning.tsx
 msgid "Run finished without a learning report. Review the conversation and retry."
 msgstr "Run finished without a learning report. Review the conversation and retry."
@@ -6315,6 +6413,10 @@ msgstr "Run finished without a learning report. Review the conversation and retr
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
 msgstr "Run history"
+
+#: src/components/TicketRuns.tsx
+msgid "Run ID"
+msgstr "Run ID"
 
 #: src/pages/shell/use-routine-editor.ts
 msgid "Run time must be in the future."
@@ -6335,6 +6437,7 @@ msgstr "Running"
 msgid "Running…"
 msgstr "Running…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Runs"
 msgstr "Runs"
@@ -6757,6 +6860,10 @@ msgstr "Show tool activity"
 msgid "Show transcript"
 msgstr "Show transcript"
 
+#: src/components/TicketRuns.tsx
+msgid "Showing only the first tool calls"
+msgstr "Showing only the first tool calls"
+
 #: src/pages/Trading.tsx
 msgid "Side"
 msgstr "Side"
@@ -6970,6 +7077,10 @@ msgstr "Speaking"
 msgid "Speech model"
 msgstr "Speech model"
 
+#: src/components/TicketRuns.tsx
+msgid "Spending limit reached"
+msgstr "Spending limit reached"
+
 #: src/pages/Trading.tsx
 msgid "Spot"
 msgstr "Spot"
@@ -7019,6 +7130,10 @@ msgstr "Start recording"
 msgid "Start your plan now?"
 msgstr "Start your plan now?"
 
+#: src/components/TicketRuns.tsx
+msgid "Started"
+msgstr "Started"
+
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Starting"
@@ -7031,6 +7146,7 @@ msgstr "Starting"
 msgid "Starting…"
 msgstr "Starting…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Board.tsx
 msgid "Status"
@@ -7058,6 +7174,10 @@ msgstr "Stop speaking"
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Stop teaching"
 msgstr "Stop teaching"
+
+#: src/components/TicketRuns.tsx
+msgid "Stopped"
+msgstr "Stopped"
 
 #. js-lingui-explicit-id
 #: src/lib/browser-notifications.ts
@@ -7431,8 +7551,7 @@ msgstr "This import was already used. Choose the files again."
 msgid "this Mac"
 msgstr "this Mac"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "This model cannot read images. Choose a model that supports images."
 
@@ -7485,6 +7604,10 @@ msgstr "This removes the connection from every space."
 msgid "This reset link is invalid or expired"
 msgstr "This reset link is invalid or expired"
 
+#: src/components/TicketRuns.tsx
+msgid "This run is no longer available"
+msgstr "This run is no longer available"
+
 #: src/pages/shell/message-cards.tsx
 msgid "This server cannot be assigned without a bot."
 msgstr "This server cannot be assigned without a bot."
@@ -7517,6 +7640,10 @@ msgstr "This week"
 #: src/lib/cron.ts
 msgid "Thursday"
 msgstr "Thursday"
+
+#: src/components/TicketRuns.tsx
+msgid "Ticket"
+msgstr "Ticket"
 
 #: src/pages/RoutineSchedule.tsx
 msgid "Time of day"
@@ -7564,6 +7691,10 @@ msgstr "Today"
 msgid "Tokens"
 msgstr "Tokens"
 
+#: src/components/TicketRuns.tsx
+msgid "Too much context for the model"
+msgstr "Too much context for the model"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Tool arguments (JSON)"
 msgstr "Tool arguments (JSON)"
@@ -7580,6 +7711,11 @@ msgstr "Tool arguments must be JSON"
 msgid "Tool name"
 msgstr "Tool name"
 
+#: src/components/TicketRuns.tsx
+msgid "Tool summary not recorded"
+msgstr "Tool summary not recorded"
+
+#: src/components/TicketRuns.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
@@ -7668,6 +7804,7 @@ msgstr "Trials get fewer hours to prevent abuse."
 msgid "Trusted sites"
 msgstr "Trusted sites"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Onboarding.tsx
 msgid "Try again"
@@ -7710,6 +7847,10 @@ msgstr "Undo"
 #: src/pages/PluginsOverlay.tsx
 msgid "Uninstall"
 msgstr "Uninstall"
+
+#: src/components/TicketRuns.tsx
+msgid "Unknown"
+msgstr "Unknown"
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Unlink"
@@ -7982,6 +8123,10 @@ msgstr "Voice request timed out."
 msgid "Wait a moment and test again."
 msgstr "Wait a moment and test again."
 
+#: src/components/TicketRuns.tsx
+msgid "Waiting for approval"
+msgstr "Waiting for approval"
+
 #: src/pages/BusinessCycle.tsx
 msgid "Waiting for evidence"
 msgstr "Waiting for evidence"
@@ -8201,6 +8346,10 @@ msgstr "You don't have access to this Bot or workspace"
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"
 msgstr "You have control"
+
+#: src/components/TicketRuns.tsx
+msgid "You no longer have access"
+msgstr "You no longer have access"
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

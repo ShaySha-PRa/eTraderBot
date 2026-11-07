@@ -30,6 +30,10 @@ type ExecuteTool = (
 
 /** Every database call, by model and method, so a test can check what was written anywhere. */
 function recordingPrisma(models: Record<string, Record<string, unknown>>, calls: unknown[]) {
+  models.runToolCall = {
+    upsert: async () => ({ id: "trace-1" }),
+    updateMany: async () => ({ count: 1 }),
+  };
   const fallback: Record<string, (...args: unknown[]) => unknown> = {
     findMany: async () => [],
     findFirst: async () => null,

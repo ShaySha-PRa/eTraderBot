@@ -10,6 +10,15 @@ import { beforeEach, expect, it, vi } from "vitest";
 
 const api = vi.hoisted(() => ({
   boards: { subscribe: vi.fn() },
+  runs: {
+    forTicket: vi.fn(
+      async (): Promise<{ runs: unknown[]; nextCursor: null }> => ({
+        runs: [],
+        nextCursor: null,
+      }),
+    ),
+    detail: vi.fn(),
+  },
   bots: { list: vi.fn() },
   tickets: {
     list: vi.fn(),
@@ -30,7 +39,10 @@ vi.mock("./WindowChrome", () => ({ WindowChrome: () => null }));
 vi.mock("@lingui/react/macro", () => {
   const t = (parts: TemplateStringsArray, ...values: unknown[]) =>
     parts.reduce((text, part, index) => text + part + String(values[index] ?? ""), "");
-  return { useLingui: () => ({ t }), Trans: ({ children }: { children: ReactNode }) => children };
+  return {
+    useLingui: () => ({ t, i18n: { locale: "en" } }),
+    Trans: ({ children }: { children: ReactNode }) => children,
+  };
 });
 vi.mock("@rakazo/chat-ui/web", () => ({
   ChatMarkdown: ({ children }: { children?: ReactNode }) => (
@@ -49,6 +61,7 @@ vi.mock("@rakazo/ui-web", async (importOriginal) => {
     Input: (props: ComponentProps<"input">) => <input {...props} />,
     NativeSelect: (props: ComponentProps<"select">) => <select {...props} />,
     NativeSelectOption: (props: ComponentProps<"option">) => <option {...props} />,
+    Spinner: (props: ComponentProps<"svg">) => <svg role="status" {...props} />,
     Textarea: (props: ComponentProps<"textarea">) => <textarea {...props} />,
   };
 });
@@ -287,6 +300,54 @@ it("saves only edits and refreshes comments for the open ticket", async () => {
         .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true })),
     );
     expect(api.tickets.update).toHaveBeenCalledWith({ id: "ticket-1", title: "Ship today" });
+  } finally {
+    await page.cleanup();
+  }
+});
+
+it("refreshes the open ticket's runs when the board changes", async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  api.bots.list.mockResolvedValue([bot("bot-1", "Helper")]);
+  api.tickets.list.mockResolvedValue({
+    tickets: [ticket("Ship", "ticket-1", "todo", "RAK-1", "bot-1")],
+  });
+  api.tickets.comments.mockReset().mockResolvedValue([]);
+  api.runs.forTicket.mockReset().mockResolvedValue({ runs: [], nextCursor: null });
+  const live = liveStream();
+  const page = await renderBoard(live.stream);
+  try {
+    await act(async () =>
+      (
+        page.container.querySelector('[data-testid="board-card-ticket-1"]') as HTMLButtonElement
+      ).click(),
+    );
+    await settle();
+    const runs = () => page.container.querySelector('[data-testid="ticket-runs"]')?.textContent;
+    expect(runs()).toContain("No linked runs recorded");
+    api.runs.forTicket.mockResolvedValue({
+      runs: [
+        {
+          runId: "run-1",
+          taskId: "task-1",
+          botId: "bot-1",
+          botName: "Helper",
+          threadId: "thread-1",
+          status: "running",
+          trigger: "tickets",
+          createdAt: new Date().toISOString(),
+          startedAt: null,
+          completedAt: null,
+          retryOfRunId: null,
+          reason: null,
+        },
+      ],
+      nextCursor: null,
+    });
+    await act(async () => live.event("ticket-1"));
+    await settle();
+    await settle();
+    expect(runs()).toContain("Helper");
+    expect(runs()).toContain("Running");
   } finally {
     await page.cleanup();
   }

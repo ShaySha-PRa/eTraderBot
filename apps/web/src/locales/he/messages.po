@@ -736,6 +736,10 @@ msgstr "כל הבוטים"
 msgid "All business scopes"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "All runs"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 msgid "All statuses"
 msgstr "כל הסטטוסים"
@@ -856,7 +860,8 @@ msgstr "עוזר אחר"
 msgid "Another item in this import uses the same name"
 msgstr ""
 
-#: src/components/AskCard.tsx
+#: src/components/call/IncomingCall.tsx
+msgctxt "incoming call"
 msgid "Answer"
 msgstr "תשובה"
 
@@ -1037,10 +1042,6 @@ msgstr ""
 msgid "Assign necessary role"
 msgstr ""
 
-#: src/pages/BusinessCycle.tsx
-msgid "Assignee"
-msgstr ""
-
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -1058,6 +1059,14 @@ msgstr "צירוף קובץ"
 #: src/pages/shell/chat-shared.ts
 msgid "Attachment"
 msgstr "קובץ מצורף"
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt {code}"
+msgstr ""
 
 #: src/pages/Trading.tsx
 msgid "Audit history"
@@ -1234,6 +1243,7 @@ msgstr "מפעיל שולחן עבודה חי…"
 msgid "bot"
 msgstr "בוט"
 
+#: src/components/TicketRuns.tsx
 #: src/lib/identity-display.ts
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -1259,6 +1269,10 @@ msgstr "הבוט צופה ולא פועל"
 
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Bot models"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Bot not recorded"
 msgstr ""
 
 #: src/pages/shell/computer-overlay.tsx
@@ -1734,8 +1748,8 @@ msgstr "ענן"
 msgid "Cloud (%)"
 msgstr ""
 
-#: src/components/AskCard.tsx
-#: src/components/ConfirmIdentityDialog.tsx
+#: src/pages/Auth.tsx
+msgctxt "email sign-in"
 msgid "Code"
 msgstr "קוד"
 
@@ -2123,6 +2137,7 @@ msgstr "העתקת שורות"
 msgid "Correction"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Cost"
 msgstr "עלות"
@@ -2393,6 +2408,10 @@ msgstr "לא ניתן לטעון את הגדרות המודל"
 msgid "Could not load run history"
 msgstr "לא ניתן לטעון את היסטוריית ההרצות"
 
+#: src/components/TicketRuns.tsx
+msgid "Could not load runs"
+msgstr ""
+
 #: src/lib/account-security.ts
 #: src/pages/Auth.tsx
 msgid "Could not load sign-in options"
@@ -2443,8 +2462,10 @@ msgid "Could not reach the model server."
 msgstr "אין גישה לשרת המודל."
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/AskCard.tsx
 #: src/components/PasskeyOffer.tsx
 #: src/components/PasskeySettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/lib/computer-sandbox.ts
 #: src/lib/user-error.ts
 #: src/pages/AccountSettingsOverlay.tsx
@@ -3141,6 +3162,7 @@ msgid "Don’t have an account?"
 msgstr "אין חשבון?"
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/components/ToolActivityDisclosure.tsx
 #: src/lib/ticket-status.ts
 #: src/pages/ActivityList.tsx
@@ -3187,6 +3209,10 @@ msgstr "אפשר לגרור, לשחרר או להדביק תמונה"
 #: src/pages/BotContextMenu.tsx
 msgid "Duplicate"
 msgstr "שכפול"
+
+#: src/components/TicketRuns.tsx
+msgid "Duration"
+msgstr ""
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Each name can be used once."
@@ -3466,8 +3492,8 @@ msgstr ""
 msgid "External push"
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Extra high"
 msgstr "גבוה מאוד"
 
@@ -3481,6 +3507,7 @@ msgid "failed"
 msgstr "נכשל"
 
 #: src/components/SubagentCard.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Failed"
@@ -3789,11 +3816,10 @@ msgstr "הסתרת הסיסמה"
 msgid "Hide transcript"
 msgstr "הסתרת התמליל"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "High"
-msgstr "גבוהה"
+msgstr "גבוה"
 
 #. js-lingui-explicit-id
 #: src/lib/model-catalog.ts
@@ -3886,8 +3912,7 @@ msgstr "אם שמעת את זה, הקול מוכן."
 msgid "Ignore"
 msgstr "התעלמות"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "Image input is not configured for this model."
 msgstr "קלט תמונה לא מוגדר עבור המודל הזה."
 
@@ -3950,6 +3975,7 @@ msgstr ""
 msgid "Improvement proposal (not enabled)"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr "בתהליך"
@@ -4260,6 +4286,7 @@ msgstr "טעינת הודעות קודמות"
 msgid "Load more"
 msgstr "טעינת עוד"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/RoutineRunHistory.tsx
 msgid "Load older runs"
 msgstr "טעינת הרצות ישנות יותר"
@@ -4304,6 +4331,7 @@ msgstr "טוען ספקי קול…"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
@@ -4335,9 +4363,8 @@ msgstr "התנתקות"
 msgid "Looks like it contains a key"
 msgstr "נראה שמכיל מפתח"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Low"
 msgstr "נמוך"
 
@@ -4443,8 +4470,8 @@ msgstr ""
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Max"
 msgstr "מקסימלי"
 
@@ -4489,8 +4516,8 @@ msgstr "שרתי MCP"
 msgid "MCP tool approval remains separate for each bot."
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Medium"
 msgstr "בינוני"
 
@@ -4545,9 +4572,8 @@ msgstr "מזכיר תכונות של OpenClaw"
 msgid "Mentions: {mentions}"
 msgstr "מזכיר: {mentions}"
 
-#: src/pages/shell/chat-shared.ts
-#: src/pages/shell/composer.tsx
-#: src/pages/SpaceSearch.tsx
+#. js-lingui-explicit-id
+#: src/lib/browser-notifications.ts
 msgid "Message"
 msgstr "הודעה"
 
@@ -4614,8 +4640,8 @@ msgstr ""
 msgid "Migration required"
 msgstr ""
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Minimal"
 msgstr "מינימלי"
 
@@ -4680,10 +4706,30 @@ msgstr "חיבורים למודלים"
 msgid "Model id"
 msgstr "מזהה מודל"
 
+#: src/components/TicketRuns.tsx
+msgid "Model key rejected"
+msgstr ""
+
 #: src/pages/model-settings/model-picker.tsx
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "אפשרויות מודל"
+
+#: src/components/TicketRuns.tsx
+msgid "Model rate limited"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model returned nothing usable"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model sign-in failed"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Model unavailable"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4928,6 +4974,10 @@ msgstr ""
 msgid "Next version of {packageTitle} v{version}"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "No access to the model"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "No analysis yet"
 msgstr ""
@@ -4971,6 +5021,10 @@ msgstr "אין בוטים תואמים"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "No linked runs recorded"
 msgstr ""
 
 #: src/components/AskCard.tsx
@@ -5055,9 +5109,17 @@ msgstr "עדיין אין מיומנויות"
 msgid "No submissions"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "No ticket link recorded"
+msgstr ""
+
 #: src/pages/Board.tsx
 msgid "No tickets yet"
 msgstr "עדיין אין כרטיסים"
+
+#: src/components/TicketRuns.tsx
+msgid "No tool calls recorded"
+msgstr ""
 
 #: src/pages/Trading.tsx
 msgid "No trading stages configured yet."
@@ -5112,6 +5174,10 @@ msgstr "לא נמצא בקטלוג התוספים"
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
 msgstr "לא עכשיו"
+
+#: src/components/TicketRuns.tsx
+msgid "Not recorded"
+msgstr ""
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
@@ -5319,6 +5385,10 @@ msgstr ""
 #: src/pages/Onboarding.tsx
 msgid "Other model…"
 msgstr "מודל אחר…"
+
+#: src/components/TicketRuns.tsx
+msgid "Out of model credit"
+msgstr ""
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
@@ -5867,6 +5937,10 @@ msgstr "רענון התצוגה"
 msgid "Refreshing…"
 msgstr "מרענן…"
 
+#: src/components/TicketRuns.tsx
+msgid "Refused"
+msgstr ""
+
 #: src/pages/shell/business-scope.tsx
 msgid "Region"
 msgstr ""
@@ -6155,6 +6229,10 @@ msgstr ""
 msgid "Result uncertain; the reservation is retained."
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Result unknown"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Results only / closed"
 msgstr ""
@@ -6193,6 +6271,10 @@ msgstr "לנסות שוב"
 #: src/pages/PeerMessagesOverlay.tsx
 msgid "Retry now"
 msgstr "לנסות שוב עכשיו"
+
+#: src/components/TicketRuns.tsx
+msgid "Retry of #{retried}"
+msgstr ""
 
 #: src/pages/shell/use-computer.tsx
 msgid "Retry screen"
@@ -6300,6 +6382,18 @@ msgstr "שורה"
 msgid "Rules"
 msgstr ""
 
+#: src/components/TicketRuns.tsx
+msgid "Run"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}, {botName}, {status}, {startedAt}"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Run analysis"
 msgstr ""
@@ -6308,6 +6402,10 @@ msgstr ""
 msgid "Run at"
 msgstr "הרצה ב-"
 
+#: src/components/TicketRuns.tsx
+msgid "Run failed"
+msgstr ""
+
 #: src/pages/TradingLearning.tsx
 msgid "Run finished without a learning report. Review the conversation and retry."
 msgstr ""
@@ -6315,6 +6413,10 @@ msgstr ""
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
 msgstr "היסטוריית הרצות"
+
+#: src/components/TicketRuns.tsx
+msgid "Run ID"
+msgstr ""
 
 #: src/pages/shell/use-routine-editor.ts
 msgid "Run time must be in the future."
@@ -6335,6 +6437,7 @@ msgstr "פועל"
 msgid "Running…"
 msgstr "מריץ…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Runs"
 msgstr "הרצות"
@@ -6757,6 +6860,10 @@ msgstr "הצגת פעילות כלים"
 msgid "Show transcript"
 msgstr "הצגת תמליל"
 
+#: src/components/TicketRuns.tsx
+msgid "Showing only the first tool calls"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Side"
 msgstr ""
@@ -6970,6 +7077,10 @@ msgstr ""
 msgid "Speech model"
 msgstr "מודל דיבור"
 
+#: src/components/TicketRuns.tsx
+msgid "Spending limit reached"
+msgstr ""
+
 #: src/pages/Trading.tsx
 msgid "Spot"
 msgstr ""
@@ -7019,6 +7130,10 @@ msgstr "התחלת הקלטה"
 msgid "Start your plan now?"
 msgstr "להתחיל את התוכנית עכשיו?"
 
+#: src/components/TicketRuns.tsx
+msgid "Started"
+msgstr ""
+
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Starting"
@@ -7031,6 +7146,7 @@ msgstr "מתחיל"
 msgid "Starting…"
 msgstr "מתחיל…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Board.tsx
 msgid "Status"
@@ -7058,6 +7174,10 @@ msgstr "הפסקת ההקראה"
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Stop teaching"
 msgstr "הפסקת הלימוד"
+
+#: src/components/TicketRuns.tsx
+msgid "Stopped"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/browser-notifications.ts
@@ -7431,8 +7551,7 @@ msgstr "הייבוא הזה כבר נוצל. יש לבחור את הקבצים �
 msgid "this Mac"
 msgstr "ה-Mac הזה"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "המודל הזה לא יכול לקרוא תמונות. בחרו מודל שתומך בתמונות."
 
@@ -7485,6 +7604,10 @@ msgstr "פעולה זו מסירה את החיבור מכל המרחבים."
 msgid "This reset link is invalid or expired"
 msgstr "קישור האיפוס אינו תקין או שפג תוקפו"
 
+#: src/components/TicketRuns.tsx
+msgid "This run is no longer available"
+msgstr ""
+
 #: src/pages/shell/message-cards.tsx
 msgid "This server cannot be assigned without a bot."
 msgstr "לא ניתן להקצות את השרת הזה בלי בוט."
@@ -7517,6 +7640,10 @@ msgstr "השבוע"
 #: src/lib/cron.ts
 msgid "Thursday"
 msgstr "יום חמישי"
+
+#: src/components/TicketRuns.tsx
+msgid "Ticket"
+msgstr ""
 
 #: src/pages/RoutineSchedule.tsx
 msgid "Time of day"
@@ -7564,6 +7691,10 @@ msgstr "היום"
 msgid "Tokens"
 msgstr "טוקנים"
 
+#: src/components/TicketRuns.tsx
+msgid "Too much context for the model"
+msgstr ""
+
 #: src/pages/RoutineEditor.tsx
 msgid "Tool arguments (JSON)"
 msgstr ""
@@ -7580,6 +7711,11 @@ msgstr ""
 msgid "Tool name"
 msgstr "שם הכלי"
 
+#: src/components/TicketRuns.tsx
+msgid "Tool summary not recorded"
+msgstr ""
+
+#: src/components/TicketRuns.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
@@ -7668,6 +7804,7 @@ msgstr "בתקופת ניסיון יש פחות שעות כדי למנוע ני�
 msgid "Trusted sites"
 msgstr "אתרים מהימנים"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Onboarding.tsx
 msgid "Try again"
@@ -7710,6 +7847,10 @@ msgstr "ביטול"
 #: src/pages/PluginsOverlay.tsx
 msgid "Uninstall"
 msgstr "הסרת התקנה"
+
+#: src/components/TicketRuns.tsx
+msgid "Unknown"
+msgstr ""
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Unlink"
@@ -7982,6 +8123,10 @@ msgstr ""
 msgid "Wait a moment and test again."
 msgstr "יש להמתין רגע ולבדוק שוב."
 
+#: src/components/TicketRuns.tsx
+msgid "Waiting for approval"
+msgstr ""
+
 #: src/pages/BusinessCycle.tsx
 msgid "Waiting for evidence"
 msgstr ""
@@ -8201,6 +8346,10 @@ msgstr ""
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"
 msgstr "השליטה אצלך"
+
+#: src/components/TicketRuns.tsx
+msgid "You no longer have access"
+msgstr ""
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

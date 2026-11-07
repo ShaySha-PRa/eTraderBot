@@ -109,6 +109,10 @@ async function runRoutine(
     yield { type: "done" as const, text: "Inbox is clear." };
   });
   const prisma = {
+    runToolCall: {
+      upsert: vi.fn(async () => ({ id: "trace-1" })),
+      updateMany: vi.fn(async () => ({ count: 1 })),
+    },
     run: {
       findUnique: vi.fn(async () => run),
       findUniqueOrThrow: vi.fn(async () => run),

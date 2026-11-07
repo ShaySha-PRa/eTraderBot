@@ -16,6 +16,7 @@ import {
   listSpaceArtifacts,
 } from "../artifacts.js";
 import { requireIdentityConfirmation } from "../identity-confirmation.js";
+import { runsForTicket, runTraceDetail } from "../run-trace.js";
 import { listSpaceRuns } from "../runs.js";
 import { querySpaceSearch } from "../search.js";
 import { loadAllMessages } from "../thread-message-pages.js";
@@ -266,6 +267,12 @@ export function contentRoutes(ctx: RouterContext) {
       list: authed.runs.list.handler(async ({ context, input }) => ({
         runs: await listSpaceRuns(deps.prisma, context.actor, input.filter),
       })),
+      forTicket: authed.runs.forTicket.handler(({ context, input }) =>
+        runsForTicket(deps.prisma, context.actor, input),
+      ),
+      detail: authed.runs.detail.handler(({ context, input }) =>
+        runTraceDetail(deps.prisma, context.actor, input.runId),
+      ),
     },
   };
 }

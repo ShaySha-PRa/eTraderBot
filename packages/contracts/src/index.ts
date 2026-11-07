@@ -38,6 +38,7 @@ export * from "./payments.js";
 export * from "./reactions.js";
 export * from "./routine-watch.js";
 export * from "./rpc.js";
+export * from "./run-trace.js";
 export * from "./runs.js";
 export * from "./search.js";
 export * from "./security-events.js";

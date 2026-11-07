@@ -26,6 +26,7 @@ import { skipToken, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeft } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { Link } from "react-router-dom";
+import { TicketRuns } from "../components/TicketRuns";
 import { useSpaceQueries } from "../lib/query";
 import { formatRelativeTime } from "../lib/relative-time";
 import { rpc } from "../lib/rpc";
@@ -79,6 +80,8 @@ export function BoardPage({ embedded = false }: { embedded?: boolean } = {}) {
           for await (const event of stream) {
             if (!active) return;
             refreshComments(event.ticketId);
+            // A ticket change can start or settle its runs.
+            void queryClient.invalidateQueries({ queryKey: queries.runs.key() });
             await fetchFresh(queryClient, ticketsOptions);
           }
         } catch (cause) {
@@ -361,6 +364,7 @@ function TicketDialog({
             </Button>
           </div>
         </form>
+        {ticket ? <TicketRuns ticketId={ticket.id} /> : null}
         {ticket ? (
           <div data-testid="ticket-comments" className="space-y-3 border-t pt-3">
             {comments.map((row) => (

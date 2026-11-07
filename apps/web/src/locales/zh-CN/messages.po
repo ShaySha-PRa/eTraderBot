@@ -736,6 +736,10 @@ msgstr "全部 Bot"
 msgid "All business scopes"
 msgstr "全部业务范围"
 
+#: src/components/TicketRuns.tsx
+msgid "All runs"
+msgstr "全部运行"
+
 #: src/pages/ActivityList.tsx
 msgid "All statuses"
 msgstr "全部状态"
@@ -856,9 +860,10 @@ msgstr "其他助手"
 msgid "Another item in this import uses the same name"
 msgstr "本次导入中另一项使用了相同名称"
 
-#: src/components/AskCard.tsx
+#: src/components/call/IncomingCall.tsx
+msgctxt "incoming call"
 msgid "Answer"
-msgstr "回答"
+msgstr "接听"
 
 #: src/components/call/IncomingCall.tsx
 msgctxt "incoming call"
@@ -1037,10 +1042,6 @@ msgstr "资产标识"
 msgid "Assign necessary role"
 msgstr "分派所需角色"
 
-#: src/pages/BusinessCycle.tsx
-msgid "Assignee"
-msgstr "负责人"
-
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -1058,6 +1059,14 @@ msgstr "附加文件"
 #: src/pages/shell/chat-shared.ts
 msgid "Attachment"
 msgstr "附件"
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt"
+msgstr "尝试"
+
+#: src/components/TicketRuns.tsx
+msgid "Attempt {code}"
+msgstr "尝试 {code}"
 
 #: src/pages/Trading.tsx
 msgid "Audit history"
@@ -1234,6 +1243,7 @@ msgstr "正在启动实时桌面…"
 msgid "bot"
 msgstr "Bot"
 
+#: src/components/TicketRuns.tsx
 #: src/lib/identity-display.ts
 #: src/pages/IntegrationSetup.tsx
 #: src/pages/MessagingSettingsPanel.tsx
@@ -1260,6 +1270,10 @@ msgstr "Bot 只看不操作"
 #: src/pages/model-settings/space-bots-model.tsx
 msgid "Bot models"
 msgstr "Bot 模型"
+
+#: src/components/TicketRuns.tsx
+msgid "Bot not recorded"
+msgstr "未记录 Bot"
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "Bot screen"
@@ -1734,10 +1748,10 @@ msgstr "云端"
 msgid "Cloud (%)"
 msgstr "云量（%）"
 
-#: src/components/AskCard.tsx
-#: src/components/ConfirmIdentityDialog.tsx
+#: src/pages/Auth.tsx
+msgctxt "email sign-in"
 msgid "Code"
-msgstr "代码"
+msgstr "验证码"
 
 #: src/pages/Auth.tsx
 msgctxt "email sign-in"
@@ -2123,6 +2137,7 @@ msgstr "复制行"
 msgid "Correction"
 msgstr "更正"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Cost"
 msgstr "费用"
@@ -2393,6 +2408,10 @@ msgstr "无法加载模型设置"
 msgid "Could not load run history"
 msgstr "无法加载运行历史记录"
 
+#: src/components/TicketRuns.tsx
+msgid "Could not load runs"
+msgstr "无法加载运行记录"
+
 #: src/lib/account-security.ts
 #: src/pages/Auth.tsx
 msgid "Could not load sign-in options"
@@ -2443,8 +2462,10 @@ msgid "Could not reach the model server."
 msgstr "无法连接到模型服务器。"
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/AskCard.tsx
 #: src/components/PasskeyOffer.tsx
 #: src/components/PasskeySettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/lib/computer-sandbox.ts
 #: src/lib/user-error.ts
 #: src/pages/AccountSettingsOverlay.tsx
@@ -3141,6 +3162,7 @@ msgid "Don’t have an account?"
 msgstr "还没有账户？"
 
 #: src/components/AccountDataSettings.tsx
+#: src/components/TicketRuns.tsx
 #: src/components/ToolActivityDisclosure.tsx
 #: src/lib/ticket-status.ts
 #: src/pages/ActivityList.tsx
@@ -3187,6 +3209,10 @@ msgstr "拖放或粘贴图片"
 #: src/pages/BotContextMenu.tsx
 msgid "Duplicate"
 msgstr "复制"
+
+#: src/components/TicketRuns.tsx
+msgid "Duration"
+msgstr "耗时"
 
 #: src/pages/McpServersOverlay.tsx
 msgid "Each name can be used once."
@@ -3466,8 +3492,8 @@ msgstr "外部记忆不能导出或导入"
 msgid "External push"
 msgstr "外部推送"
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Extra high"
 msgstr "极高"
 
@@ -3481,6 +3507,7 @@ msgid "failed"
 msgstr "失败"
 
 #: src/components/SubagentCard.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Failed"
@@ -3789,9 +3816,8 @@ msgstr "隐藏密码"
 msgid "Hide transcript"
 msgstr "隐藏文字记录"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "High"
 msgstr "高"
 
@@ -3886,8 +3912,7 @@ msgstr "如果听到了，说明语音已就绪。"
 msgid "Ignore"
 msgstr "忽略"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "Image input is not configured for this model."
 msgstr "此模型尚未配置图片输入。"
 
@@ -3950,6 +3975,7 @@ msgstr "导入的技能"
 msgid "Improvement proposal (not enabled)"
 msgstr "改进提案（未启用）"
 
+#: src/components/TicketRuns.tsx
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr "进行中"
@@ -4260,6 +4286,7 @@ msgstr "加载更早的消息"
 msgid "Load more"
 msgstr "加载更多"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/RoutineRunHistory.tsx
 msgid "Load older runs"
 msgstr "加载更早的运行记录"
@@ -4304,6 +4331,7 @@ msgstr "正在加载语音提供方…"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
+#: src/components/TicketRuns.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
@@ -4335,9 +4363,8 @@ msgstr "退出登录"
 msgid "Looks like it contains a key"
 msgstr "似乎包含密钥"
 
-#: src/lib/ticket-priority.ts
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Low"
 msgstr "低"
 
@@ -4443,10 +4470,10 @@ msgstr "资料"
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr "资料仅用于当前业务范围。请明确添加聊天反馈；支持上传不超过 64 KB 的文本、Markdown、CSV 或 JSON 文件。"
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Max"
-msgstr "最大"
+msgstr "最高"
 
 #. js-lingui-explicit-id
 #: src/lib/model-catalog.ts
@@ -4489,8 +4516,8 @@ msgstr "MCP 服务器"
 msgid "MCP tool approval remains separate for each bot."
 msgstr "每个 Bot 的 MCP 工具权限仍需单独批准。"
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Medium"
 msgstr "中"
 
@@ -4545,9 +4572,8 @@ msgstr "提到了 OpenClaw 功能"
 msgid "Mentions: {mentions}"
 msgstr "提到：{mentions}"
 
-#: src/pages/shell/chat-shared.ts
-#: src/pages/shell/composer.tsx
-#: src/pages/SpaceSearch.tsx
+#. js-lingui-explicit-id
+#: src/lib/browser-notifications.ts
 msgid "Message"
 msgstr "消息"
 
@@ -4614,8 +4640,8 @@ msgstr "中长期交易 Bot"
 msgid "Migration required"
 msgstr "需要迁移"
 
-#: src/pages/model-settings/compatible-model-fields.tsx
-#: src/pages/Onboarding.tsx
+#. js-lingui-explicit-id
+#: src/lib/model-catalog.ts
 msgid "Minimal"
 msgstr "最低"
 
@@ -4680,10 +4706,30 @@ msgstr "模型连接"
 msgid "Model id"
 msgstr "模型 ID"
 
+#: src/components/TicketRuns.tsx
+msgid "Model key rejected"
+msgstr "模型密钥被拒绝"
+
 #: src/pages/model-settings/model-picker.tsx
 #: src/pages/model-settings/role-model-picker.tsx
 msgid "Model options"
 msgstr "模型选项"
+
+#: src/components/TicketRuns.tsx
+msgid "Model rate limited"
+msgstr "模型请求受限"
+
+#: src/components/TicketRuns.tsx
+msgid "Model returned nothing usable"
+msgstr "模型未返回可用结果"
+
+#: src/components/TicketRuns.tsx
+msgid "Model sign-in failed"
+msgstr "模型登录失败"
+
+#: src/components/TicketRuns.tsx
+msgid "Model unavailable"
+msgstr "模型不可用"
 
 #: src/pages/ModelSettingsOverlay.tsx
 #: src/pages/settings-nav.ts
@@ -4928,6 +4974,10 @@ msgstr "下一组设置项"
 msgid "Next version of {packageTitle} v{version}"
 msgstr "{packageTitle} v{version} 的下一版本"
 
+#: src/components/TicketRuns.tsx
+msgid "No access to the model"
+msgstr "无权使用该模型"
+
 #: src/pages/Trading.tsx
 msgid "No analysis yet"
 msgstr "尚无分析结果"
@@ -4972,6 +5022,10 @@ msgstr "没有匹配的 Bot"
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
 msgstr "此业务范围尚未配置接口。"
+
+#: src/components/TicketRuns.tsx
+msgid "No linked runs recorded"
+msgstr "未记录关联运行"
 
 #: src/components/AskCard.tsx
 msgid "No longer active"
@@ -5055,9 +5109,17 @@ msgstr "暂无技能"
 msgid "No submissions"
 msgstr "暂无提交"
 
+#: src/components/TicketRuns.tsx
+msgid "No ticket link recorded"
+msgstr "未记录工单关联"
+
 #: src/pages/Board.tsx
 msgid "No tickets yet"
 msgstr "还没有工单"
+
+#: src/components/TicketRuns.tsx
+msgid "No tool calls recorded"
+msgstr "未记录工具调用"
 
 #: src/pages/Trading.tsx
 msgid "No trading stages configured yet."
@@ -5112,6 +5174,10 @@ msgstr "不在插件目录中"
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
 msgstr "暂不"
+
+#: src/components/TicketRuns.tsx
+msgid "Not recorded"
+msgstr "未记录"
 
 #: src/pages/shell/agent-import.tsx
 #: src/pages/shell/import-status.ts
@@ -5319,6 +5385,10 @@ msgstr "其他费用"
 #: src/pages/Onboarding.tsx
 msgid "Other model…"
 msgstr "其他模型…"
+
+#: src/components/TicketRuns.tsx
+msgid "Out of model credit"
+msgstr "模型额度已用完"
 
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Output"
@@ -5867,6 +5937,10 @@ msgstr "刷新画面"
 msgid "Refreshing…"
 msgstr "正在刷新…"
 
+#: src/components/TicketRuns.tsx
+msgid "Refused"
+msgstr "已拒绝"
+
 #: src/pages/shell/business-scope.tsx
 msgid "Region"
 msgstr "地区"
@@ -6155,6 +6229,10 @@ msgstr "结果不确定"
 msgid "Result uncertain; the reservation is retained."
 msgstr "结果尚未确认，占用额度继续保留。"
 
+#: src/components/TicketRuns.tsx
+msgid "Result unknown"
+msgstr "结果未知"
+
 #: src/pages/BusinessCycle.tsx
 msgid "Results only / closed"
 msgstr "仅接收结果／不开放申报"
@@ -6193,6 +6271,10 @@ msgstr "重试"
 #: src/pages/PeerMessagesOverlay.tsx
 msgid "Retry now"
 msgstr "立即重试"
+
+#: src/components/TicketRuns.tsx
+msgid "Retry of #{retried}"
+msgstr "重试自 #{retried}"
 
 #: src/pages/shell/use-computer.tsx
 msgid "Retry screen"
@@ -6300,6 +6382,18 @@ msgstr "行"
 msgid "Rules"
 msgstr "规则"
 
+#: src/components/TicketRuns.tsx
+msgid "Run"
+msgstr "运行"
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}"
+msgstr "运行 {code}"
+
+#: src/components/TicketRuns.tsx
+msgid "Run {code}, {botName}, {status}, {startedAt}"
+msgstr "运行 {code}，{botName}，{status}，{startedAt}"
+
 #: src/pages/Trading.tsx
 msgid "Run analysis"
 msgstr "运行分析"
@@ -6308,6 +6402,10 @@ msgstr "运行分析"
 msgid "Run at"
 msgstr "运行时间"
 
+#: src/components/TicketRuns.tsx
+msgid "Run failed"
+msgstr "运行失败"
+
 #: src/pages/TradingLearning.tsx
 msgid "Run finished without a learning report. Review the conversation and retry."
 msgstr "任务已结束，但未生成学习报告。请检查会话后重试。"
@@ -6315,6 +6413,10 @@ msgstr "任务已结束，但未生成学习报告。请检查会话后重试。
 #: src/pages/RoutineRunHistory.tsx
 msgid "Run history"
 msgstr "运行记录"
+
+#: src/components/TicketRuns.tsx
+msgid "Run ID"
+msgstr "运行 ID"
 
 #: src/pages/shell/use-routine-editor.ts
 msgid "Run time must be in the future."
@@ -6335,6 +6437,7 @@ msgstr "运行中"
 msgid "Running…"
 msgstr "正在运行…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 msgid "Runs"
 msgstr "运行"
@@ -6757,6 +6860,10 @@ msgstr "显示工具活动"
 msgid "Show transcript"
 msgstr "显示文字记录"
 
+#: src/components/TicketRuns.tsx
+msgid "Showing only the first tool calls"
+msgstr "仅显示前面部分工具调用"
+
 #: src/pages/Trading.tsx
 msgid "Side"
 msgstr "方向"
@@ -6970,6 +7077,10 @@ msgstr "正在说话"
 msgid "Speech model"
 msgstr "语音模型"
 
+#: src/components/TicketRuns.tsx
+msgid "Spending limit reached"
+msgstr "已达支出上限"
+
 #: src/pages/Trading.tsx
 msgid "Spot"
 msgstr "现货"
@@ -7019,6 +7130,10 @@ msgstr "开始录制"
 msgid "Start your plan now?"
 msgstr "立即开始你的套餐？"
 
+#: src/components/TicketRuns.tsx
+msgid "Started"
+msgstr "开始时间"
+
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Starting"
@@ -7031,6 +7146,7 @@ msgstr "正在开始"
 msgid "Starting…"
 msgstr "正在开始…"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Board.tsx
 msgid "Status"
@@ -7058,6 +7174,10 @@ msgstr "停止朗读"
 #: src/components/teach/TeachRecordingChrome.tsx
 msgid "Stop teaching"
 msgstr "停止示范"
+
+#: src/components/TicketRuns.tsx
+msgid "Stopped"
+msgstr "已停止"
 
 #. js-lingui-explicit-id
 #: src/lib/browser-notifications.ts
@@ -7431,8 +7551,7 @@ msgstr "此导入已使用过。请重新选择文件。"
 msgid "this Mac"
 msgstr "这台 Mac"
 
-#. js-lingui-explicit-id
-#: src/lib/run-error.ts
+#: src/lib/user-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "此模型无法读取图片。请选择支持图片的模型。"
 
@@ -7485,6 +7604,10 @@ msgstr "这会从所有工作区移除这个连接。"
 msgid "This reset link is invalid or expired"
 msgstr "此重置链接无效或已过期"
 
+#: src/components/TicketRuns.tsx
+msgid "This run is no longer available"
+msgstr "此运行已不可用"
+
 #: src/pages/shell/message-cards.tsx
 msgid "This server cannot be assigned without a bot."
 msgstr "没有 Bot 就无法分配此服务器。"
@@ -7517,6 +7640,10 @@ msgstr "本周"
 #: src/lib/cron.ts
 msgid "Thursday"
 msgstr "周四"
+
+#: src/components/TicketRuns.tsx
+msgid "Ticket"
+msgstr "工单"
 
 #: src/pages/RoutineSchedule.tsx
 msgid "Time of day"
@@ -7564,6 +7691,10 @@ msgstr "今天"
 msgid "Tokens"
 msgstr "Token"
 
+#: src/components/TicketRuns.tsx
+msgid "Too much context for the model"
+msgstr "上下文超出模型限制"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Tool arguments (JSON)"
 msgstr "工具参数（JSON）"
@@ -7580,6 +7711,11 @@ msgstr "工具参数必须是 JSON"
 msgid "Tool name"
 msgstr "工具名称"
 
+#: src/components/TicketRuns.tsx
+msgid "Tool summary not recorded"
+msgstr "未记录工具摘要"
+
+#: src/components/TicketRuns.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
@@ -7668,6 +7804,7 @@ msgstr "为防止滥用，试用期的时长较少。"
 msgid "Trusted sites"
 msgstr "受信任的网站"
 
+#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Onboarding.tsx
 msgid "Try again"
@@ -7710,6 +7847,10 @@ msgstr "撤销"
 #: src/pages/PluginsOverlay.tsx
 msgid "Uninstall"
 msgstr "卸载"
+
+#: src/components/TicketRuns.tsx
+msgid "Unknown"
+msgstr "未知"
 
 #: src/pages/MessagingSettingsPanel.tsx
 msgid "Unlink"
@@ -7982,6 +8123,10 @@ msgstr "语音请求超时。"
 msgid "Wait a moment and test again."
 msgstr "请稍候并重新测试。"
 
+#: src/components/TicketRuns.tsx
+msgid "Waiting for approval"
+msgstr "等待批准"
+
 #: src/pages/BusinessCycle.tsx
 msgid "Waiting for evidence"
 msgstr "等待证据"
@@ -8201,6 +8346,10 @@ msgstr "你无权访问此 Bot 或工作区"
 #: src/pages/shell/computer-overlay.tsx
 msgid "You have control"
 msgstr "你已接管"
+
+#: src/components/TicketRuns.tsx
+msgid "You no longer have access"
+msgstr "你已无权访问"
 
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts

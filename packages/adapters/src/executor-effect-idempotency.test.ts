@@ -151,6 +151,10 @@ function fixture(runId = "run-1") {
     ),
   };
   const prisma = {
+    runToolCall: {
+      upsert: vi.fn(async () => ({ id: "trace-1" })),
+      updateMany: vi.fn(async () => ({ count: 1 })),
+    },
     $transaction: vi.fn(async (write: (tx: unknown) => unknown) => write(prisma)),
     $queryRaw: vi.fn(async () => []),
     user: { findUnique: vi.fn(async () => null) },
