@@ -11,6 +11,7 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { mcpIdentifierConflictText } from "../../lib/mcp-identifier-conflict";
 import { useSpaceQueries } from "../../lib/query";
 import { rpc } from "../../lib/rpc";
 import { errorText } from "../../lib/user-error";
@@ -76,17 +77,22 @@ export function AvailabilityControl({
   const { t } = useLingui();
   const spaces = useOwnSpaces();
   const [saving, setSaving] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // The failure is kept, not its words, so its message follows the interface language.
+  const [failure, setFailure] = useState<{ cause: unknown } | null>(null);
   if (spaces.length < 2 || !availability) return null;
+  const error = failure
+    ? ((kind === "mcpServer" ? mcpIdentifierConflictText(failure.cause) : null) ??
+      errorText(failure.cause, t`Could not change where this is available`))
+    : null;
 
   async function save(next: SpaceAvailability) {
     setSaving(true);
-    setError(null);
+    setFailure(null);
     try {
       await rpc.availability.set({ kind, id, ...next });
       await onChanged();
     } catch (err) {
-      setError(errorText(err, t`Could not change where this is available`));
+      setFailure({ cause: err });
     } finally {
       setSaving(false);
     }

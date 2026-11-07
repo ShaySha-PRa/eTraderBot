@@ -5,7 +5,6 @@ import {
   messageHasVisibleBlocks,
   renderableMessageBlocks,
   shouldRenderToolCard,
-  toolStepCount,
 } from "./tool-activity-view";
 
 const stepsBlock: MessageBlock = { kind: "steps", steps: [{ label: "Shell", count: 2 }] };
@@ -13,13 +12,6 @@ const stepsNoDuration: MessageBlock = { kind: "steps", steps: [{ label: "Shell",
 const textBlock: MessageBlock = { kind: "text", text: "Here you go." };
 const liveActivity: MessageBlock = { kind: "progress", text: "Using shell", activity: true };
 const narration: MessageBlock = { kind: "progress", text: "Let me check that." };
-
-describe("tool step count", () => {
-  it("sums each row's count", () => {
-    expect(toolStepCount([{ count: 1 }, { count: 3 }])).toBe(4);
-    expect(toolStepCount([])).toBe(0);
-  });
-});
 
 describe("tool card render decisions", () => {
   it("renders only steps blocks, and only when the preference is on", () => {

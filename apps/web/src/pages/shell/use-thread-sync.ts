@@ -244,6 +244,14 @@ export function useThreadSync({
     return snap;
   }
 
+  /** An open tool card reads its run's recorded calls again when the run settles or waits. */
+  function refreshRunDetail(runId: string | null | undefined) {
+    if (!runId) return;
+    void queryClient.invalidateQueries({
+      queryKey: queries.runs.detail.queryKey({ input: { runId } }),
+    });
+  }
+
   /** An open run history that already lists the finished run shows its outcome without its poll. */
   function refreshRoutineHistory(runId: string | null | undefined) {
     if (!runId) return;
@@ -391,6 +399,8 @@ export function useThreadSync({
           void refreshComputerScreen(active.id).catch(() => undefined);
         }
         if (isRunTerminalEvent(event)) refreshRoutineHistory(event.runId);
+        if (isRunTerminalEvent(event) || event.type === "run.waiting_input")
+          refreshRunDetail(event.runId);
       },
     });
     return () => {
@@ -470,6 +480,8 @@ export function useThreadSync({
           void snapshotRefresh.invalidate().catch(() => undefined);
         }
         if (isRunTerminalEvent(event)) refreshRoutineHistory(event.runId);
+        if (isRunTerminalEvent(event) || event.type === "run.waiting_input")
+          refreshRunDetail(event.runId);
       },
     });
     return () => {

@@ -1,7 +1,7 @@
 import { ORPCError } from "@orpc/server";
 import type { Actor, RpcInput, RunTraceDetail, RunTraceRow } from "@rakazo/contracts";
 import { RunToolStatusSchema, RunTraceRowSchema, TicketStatusSchema } from "@rakazo/contracts";
-import { normalizeRunError } from "@rakazo/core";
+import { normalizeRunError, safeReadonlySourceSummary } from "@rakazo/core";
 import type { Prisma, PrismaClient } from "@rakazo/db";
 
 const traceSelect = {
@@ -171,21 +171,25 @@ export async function runTraceDetail(
     toolTrace: {
       recorded: row.toolTraceVersion === 1,
       truncated: calls.length > 200,
-      calls: calls.slice(0, 200).map((call) => ({
-        id: call.id,
-        attemptId: call.attemptId,
-        name: call.name,
-        status:
+      calls: calls.slice(0, 200).map((call) => {
+        const status =
           call.status === "pending" &&
           (["completed", "failed", "cancelled"].includes(row.status) ||
             call.attempt.status !== "running" ||
             call.attempt.fence !== row.leaseFence)
             ? "ambiguous"
-            : RunToolStatusSchema.parse(call.status),
-        startedAt: call.startedAt.toISOString(),
-        finishedAt: call.finishedAt?.toISOString() ?? null,
-        durationMs: elapsed(call.finishedAt, call.startedAt),
-      })),
+            : RunToolStatusSchema.parse(call.status);
+        return {
+          id: call.id,
+          attemptId: call.attemptId,
+          name: call.name,
+          status,
+          resultSummary: safeReadonlySourceSummary(call.resultSummary, actor.spaceId, status),
+          startedAt: call.startedAt.toISOString(),
+          finishedAt: call.finishedAt?.toISOString() ?? null,
+          durationMs: elapsed(call.finishedAt, call.startedAt),
+        };
+      }),
     },
   };
 }

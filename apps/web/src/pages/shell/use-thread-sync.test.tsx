@@ -55,6 +55,7 @@ it.each([false, true])(
       queries: {
         threads: { get: { queryKey: vi.fn(() => ["thread"]) } },
         routines: { list: { queryOptions: vi.fn() }, history: { key: vi.fn(() => ["history"]) } },
+        runs: { detail: { queryKey: vi.fn(() => ["runs", "detail"]) } },
         skills: { list: { queryOptions: vi.fn() } },
       },
       thread: {

@@ -126,6 +126,28 @@ describe("dispatchTool audit outcomes", () => {
     ]);
   });
 
+  it("keeps a dispatched call without a returned outcome ambiguous", async () => {
+    const base = dispatchContext(false);
+    const update = vi.fn(async () => ({ count: 1 }));
+    base.deps.prisma.runToolCall.updateMany = update;
+    const ctx = {
+      ...base,
+      deps: {
+        ...base.deps,
+        connector: {
+          async *execute() {
+            yield { type: "result", data: undefined };
+          },
+        },
+      },
+    };
+    expect(await applyTool(ctx as never, "read_example", {}, "missing-outcome")).toBeUndefined();
+    expect(update).toHaveBeenCalledWith({
+      where: { id: "trace-1", status: "pending" },
+      data: { status: "ambiguous", finishedAt: expect.any(Date) },
+    });
+  });
+
   it("records every owner-settings refusal of update_preferences as a failure", async () => {
     const ctx = dispatchContext(true);
     const first = await applyTool(

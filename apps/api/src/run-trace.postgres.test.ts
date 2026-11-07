@@ -353,6 +353,9 @@ describe.skipIf(!enabled).sequential("run traceability (PostgreSQL)", () => {
     expect((await f.rpc.runs.detail({ runId })).toolTrace.calls.map((c) => c.status)).toEqual(
       statuses,
     );
+    expect(
+      (await f.rpc.runs.detail({ runId })).toolTrace.calls.every((c) => c.resultSummary === null),
+    ).toBe(true);
     expect(await other.tenant(() => db.prisma.runToolCall.count({ where: { runId } }))).toBe(0);
     await expect(
       other.tenant(() =>
@@ -374,6 +377,7 @@ describe.skipIf(!enabled).sequential("run traceability (PostgreSQL)", () => {
       status: "ambiguous",
       finishedAt: null,
       durationMs: null,
+      resultSummary: null,
     });
     for (const kind of ["input", "takeover"] as const) {
       await f.tenant(() =>
@@ -392,6 +396,99 @@ describe.skipIf(!enabled).sequential("run traceability (PostgreSQL)", () => {
     expect(
       await f.tenant(() => db.prisma.runToolCall.count({ where: { runId, status: "pending" } })),
     ).toBe(1);
+  });
+
+  it("reads only whitelisted persisted summaries and never backfills missing historical outcomes", async () => {
+    const f = await fixture();
+    await f.wake();
+    const runId = f.jobs[0]!;
+    const marker = "synthetic-private-marker";
+    const safe = {
+      kind: "readonly_source",
+      schemaVersion: 1,
+      outcome: "success",
+      candidateOnly: true,
+      source: {
+        kind: "synthetic",
+        sourceId: "synthetic-load-example",
+        workspaceId: f.actor.spaceId,
+        version: "synthetic-load-v1",
+        generatedAt: "2026-11-07T16:00:00+08:00",
+        timezone: "Asia/Shanghai",
+      },
+      date: "2026-11-08",
+      periods: [
+        { start: "2026-11-08T00:00:00+08:00", end: "2026-11-08T01:00:00+08:00", forecastMWh: 12.5 },
+      ],
+    };
+    const attempt = await f.tenant(() =>
+      db.prisma.attempt.create({ data: { runId, fence: 1, status: "completed" } }),
+    );
+    const rows = await f.tenant(async () => {
+      const base = {
+        spaceId: f.actor.spaceId,
+        userId: f.actor.userId,
+        runId,
+        attemptId: attempt.id,
+        name: "mcp__example__read_synthetic_load",
+        status: "completed",
+      };
+      return Promise.all([
+        db.prisma.runToolCall.create({
+          data: {
+            ...base,
+            executionId: "safe",
+            resultSummary: {
+              ...safe,
+              arguments: { credential: marker },
+              error: marker,
+              source: { ...safe.source, authorization: marker },
+              periods: safe.periods.map((p) => ({ ...p, raw: marker })),
+            },
+          },
+        }),
+        db.prisma.runToolCall.create({
+          data: {
+            ...base,
+            executionId: "foreign",
+            resultSummary: { ...safe, source: { ...safe.source, workspaceId: "foreign-business" } },
+          },
+        }),
+        db.prisma.runToolCall.create({ data: { ...base, executionId: "legacy" } }),
+        db.prisma.runToolCall.create({
+          data: { ...base, executionId: "unknown", status: "pending", resultSummary: safe },
+        }),
+      ]);
+    });
+    const trace = await f.rpc.runs.detail({ runId });
+    expect(trace.toolTrace.recorded).toBe(false);
+    expect(trace.toolTrace.calls.find((c) => c.id === rows[0]!.id)!.resultSummary).toEqual(safe);
+    for (const row of rows.slice(1))
+      expect(trace.toolTrace.calls.find((c) => c.id === row.id)!.resultSummary).toBeNull();
+    expect(trace.toolTrace.calls.find((c) => c.id === rows[3]!.id)!.status).toBe("ambiguous");
+    expect(JSON.stringify(trace)).not.toContain(marker);
+    // Sanitized readback must not rewrite the stored historical record.
+    expect(
+      JSON.stringify(
+        await f.tenant(() => db.prisma.runToolCall.findUnique({ where: { id: rows[0]!.id } })),
+      ),
+    ).toContain(marker);
+    await expect(
+      f.tenant(() =>
+        db.prisma.runToolCall.create({
+          data: {
+            spaceId: f.actor.spaceId,
+            userId: f.actor.userId,
+            runId,
+            attemptId: attempt.id,
+            executionId: "oversize",
+            name: "read_example",
+            status: "completed",
+            resultSummary: { raw: "x".repeat(9000) },
+          },
+        }),
+      ),
+    ).rejects.toThrow();
   });
 
   it("bounds tool summaries and preserves a run when its linked ticket is removed", async () => {

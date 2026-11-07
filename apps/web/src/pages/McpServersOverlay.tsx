@@ -50,6 +50,7 @@ import {
 } from "../components/integrations/space-availability";
 import { McpServerHealthLine } from "../components/McpServerHealthLine";
 import { connectMcpOauth, MCP_OAUTH_CHANNEL, mcpOAuthRedirectUri } from "../lib/mcp-connect";
+import { mcpIdentifierConflictText } from "../lib/mcp-identifier-conflict";
 import { useSpaceQueries } from "../lib/query";
 import { rpc } from "../lib/rpc";
 import { errorCode, errorText } from "../lib/user-error";
@@ -126,10 +127,19 @@ export function McpServersOverlay({
   const [args, setArgs] = useState("");
   const [verbatimResults, setVerbatimResults] = useState(false);
   const [envRows, setEnvRows] = useState<EnvRow[]>(() => [emptyEnvRow()]);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setActionError] = useState<string | null>(null);
+  /** A failed save, kept so its message follows the interface language. */
+  const [saveFailure, setSaveFailure] = useState<{ cause: unknown; editing: boolean } | null>(null);
+  /** Any newer outcome replaces an earlier save failure. */
+  const setError = (message: string | null) => {
+    setSaveFailure(null);
+    setActionError(message);
+  };
   const [saving, setSaving] = useState(false);
   const [oauthPending, setOauthPending] = useState<string | null>(null);
   const [testingIds, setTestingIds] = useState<Set<string>>(() => new Set());
+  /** A restricted server created off whose Bot access or switch-on did not finish. */
+  const [unfinished, setUnfinished] = useState<string | null>(null);
   const queries = useSpaceQueries();
   const queryClient = useQueryClient();
   const serversOptions = queries.mcp.servers.list.queryOptions();
@@ -165,7 +175,15 @@ export function McpServersOverlay({
   // replace() overwrites a bot's whole list, so changes wait for a read of every assignment.
   const assignmentsReady = assignmentsQuery.isSuccess && !assignmentsQuery.isFetching;
   const loadFailed = serversQuery.isError || botsQuery.isError || assignmentsQuery.isError;
-  const shownError = error ?? (loadFailed ? t`Could not load MCP servers` : null);
+  const saveFailureText = saveFailure
+    ? (mcpIdentifierConflictText(saveFailure.cause) ??
+      errorText(
+        saveFailure.cause,
+        saveFailure.editing ? t`Could not save` : t`Could not add MCP server`,
+      ))
+    : null;
+  const shownError =
+    error ?? saveFailureText ?? (loadFailed ? t`Could not load MCP servers` : null);
 
   /** Reads everything again with requests sent after a change. */
   async function refresh() {
@@ -212,7 +230,9 @@ export function McpServersOverlay({
   );
 
   function resetForm() {
+    setSaveFailure(null);
     setEditing(null);
+    setUnfinished(null);
     setAdding(false);
     setFormAccess({ allBots: true, botIds: [] });
     if (!stdioEnabled) setTransport("streamable_http");
@@ -265,6 +285,7 @@ export function McpServersOverlay({
   async function saveServer() {
     if (transport === "stdio" && duplicateNames.size > 0) return;
     setError(null);
+    setSaveFailure(null);
     if (!name.trim()) {
       setError(t`Add a server name.`);
       return;
@@ -332,23 +353,43 @@ export function McpServersOverlay({
               verbatimResults,
             };
       if (editing) {
+        const finishing = unfinished === editing.id;
         await rpc.mcp.servers.update({
           id: editing.id,
           config: {
             ...config,
             slug: editing.slug,
             description: editing.description,
-            enabled: editing.enabled,
+            enabled: finishing ? false : editing.enabled,
           },
         });
-        if (!sameAccess(formAccess, accessOf(editing)))
+        if (finishing || !sameAccess(formAccess, accessOf(editing)))
           await rpc.mcp.servers.agents({ id: editing.id, ...formAccess });
+        if (finishing) await enable(editing, config);
+        setUnfinished(null);
         await refresh();
         resetForm();
         return;
       }
-      const created = await rpc.mcp.servers.create(config);
-      if (!formAccess.allBots) await rpc.mcp.servers.agents({ id: created.id, ...formAccess });
+      // A server for chosen Bots starts off and is switched on only once its Bots are set, so
+      // it is never briefly usable by every Bot.
+      const restricted = !formAccess.allBots;
+      const created = await rpc.mcp.servers.create(
+        restricted ? { ...config, enabled: false } : config,
+      );
+      if (restricted) {
+        try {
+          await rpc.mcp.servers.agents({ id: created.id, ...formAccess });
+          await enable(created, config);
+        } catch (err) {
+          // Keep the form on the saved, still-off server so Save finishes it rather than adding
+          // a second copy.
+          setEditing(created);
+          setUnfinished(created.id);
+          await refresh();
+          throw err;
+        }
+      }
       await refresh();
       resetForm();
       // A remote server is checked in the background; wait for that check so a server
@@ -357,10 +398,38 @@ export function McpServersOverlay({
       if (created.health.status === "unknown" && !created.health.checkedAt)
         void testServer(created, false);
     } catch (err) {
-      setError(errorText(err, editing ? t`Could not save` : t`Could not add MCP server`));
+      // The form keeps what was typed; the message says why, in the interface language.
+      setSaveFailure({ cause: err, editing: Boolean(editing) });
     } finally {
       setSaving(false);
     }
+  }
+
+  /** Switches a saved server on without sending stored values back: blanks keep them. */
+  function enable(server: McpServer, config: Parameters<typeof rpc.mcp.servers.create>[0]) {
+    const keep = (keys: readonly string[]) => Object.fromEntries(keys.map((key) => [key, ""]));
+    return rpc.mcp.servers.update({
+      id: server.id,
+      config:
+        config.transport === "stdio"
+          ? {
+              ...config,
+              slug: server.slug,
+              env: keep(server.envKeys),
+              files: keep(server.fileKeys),
+              secret: undefined,
+              oauthClient: config.oauthClient && { ...config.oauthClient, clientSecret: undefined },
+              enabled: true,
+            }
+          : {
+              ...config,
+              slug: server.slug,
+              headers: keep(server.headerKeys),
+              secret: undefined,
+              oauthClient: config.oauthClient && { ...config.oauthClient, clientSecret: undefined },
+              enabled: true,
+            },
+    });
   }
 
   function updateEnvRow(id: number, patch: Partial<EnvRow>) {
@@ -832,9 +901,10 @@ export function McpServersOverlay({
       <li
         key={server.id}
         data-testid="mcp-server"
-        className="flex items-start justify-between gap-3 py-3"
+        // At phone width the controls move under the name instead of squeezing it to nothing.
+        className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2 py-3"
       >
-        <div className="min-w-0 space-y-0.5">
+        <div className="min-w-0 flex-1 basis-40 space-y-0.5">
           <div className="flex items-baseline gap-2">
             <span className="truncate text-sm font-medium text-foreground">{server.name}</span>
             {working && server.health.toolCount !== null ? (
@@ -848,7 +918,7 @@ export function McpServersOverlay({
           </p>
           <McpServerHealthLine health={server.health} checking={testing} />
         </div>
-        <div className="flex shrink-0 items-center gap-1">
+        <div className="flex min-w-0 max-w-full flex-wrap items-center justify-end gap-1">
           {server.installId ? null : (
             <AvailabilityControl
               kind="mcpServer"

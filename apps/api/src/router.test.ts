@@ -1547,7 +1547,7 @@ describe("MCP pre-registered OAuth client", () => {
     });
   });
 
-  it("reports a second server with the same name as a conflict", async () => {
+  it("reports a second server with the same identifier as a conflict", async () => {
     const { client, prisma } = harness();
     vi.mocked(prisma.mcpServer.create).mockRejectedValueOnce(
       Object.assign(new Error("Unique constraint failed"), { code: "P2002" }),
@@ -1562,7 +1562,7 @@ describe("MCP pre-registered OAuth client", () => {
       }),
     ).rejects.toMatchObject({
       code: "CONFLICT",
-      message: "An MCP server with that name already exists.",
+      message: "An MCP server with that identifier already exists.",
     });
   });
 

@@ -1,11 +1,6 @@
 import type { MessageBlock } from "@rakazo/contracts";
 import { isRetiredImportSetup, isToolActivityBlock } from "@rakazo/core";
 
-/** Number of tool calls behind a steps block: the sum of each row's count. */
-export function toolStepCount(steps: readonly { count: number }[]): number {
-  return steps.reduce((total, step) => total + step.count, 0);
-}
-
 /**
  * Only a `steps` block becomes a card, and only when the preference is on.
  * A `progress` block marked `activity: true` never renders, in either mode.

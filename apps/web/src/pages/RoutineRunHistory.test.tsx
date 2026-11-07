@@ -11,10 +11,11 @@ import { afterEach, expect, it, vi } from "vitest";
 
 const routines = vi.hoisted(() => ({ history: vi.fn() }));
 const threads = vi.hoisted(() => ({ get: () => new Promise(() => {}) }));
+const runs = vi.hoisted(() => ({ detail: vi.fn() }));
 vi.mock("../lib/rpc", () => ({
-  rpc: { routines, threads },
-  rpcForSpace: () => ({ routines, threads }),
-  createSpaceRpc: () => ({ routines, threads }),
+  rpc: { routines, threads, runs },
+  rpcForSpace: () => ({ routines, threads, runs }),
+  createSpaceRpc: () => ({ routines, threads, runs }),
   selectedSpaceId: () => null,
 }));
 vi.mock("@rakazo/core", async (original) => ({

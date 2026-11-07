@@ -11,6 +11,7 @@ import { McpServersOverlay } from "./McpServersOverlay";
 
 const mocks = vi.hoisted(() => ({
   list: vi.fn(),
+  create: vi.fn(),
   test: vi.fn(),
   update: vi.fn(),
   agents: vi.fn(),
@@ -129,8 +130,17 @@ vi.mock("@rakazo/ui-web", async () => {
     ],
     [
       "Input",
-      ({ id, value, placeholder }: { id?: string; value?: string; placeholder?: string }) =>
-        createElement("input", { id, value, placeholder, readOnly: true }),
+      ({
+        id,
+        value,
+        placeholder,
+        onChange,
+      }: {
+        id?: string;
+        value?: string;
+        placeholder?: string;
+        onChange?: (event: unknown) => void;
+      }) => createElement("input", { id, value, placeholder, onChange, readOnly: !onChange }),
     ],
     ["Textarea", () => null],
     [
@@ -622,5 +632,204 @@ it("says when reopening could not refresh, while still showing the cached server
     expect(host.textContent).toContain("cached");
   } finally {
     await act(async () => second.unmount());
+  }
+});
+
+/** Types into a controlled input the way a person does. */
+async function typeInto(input: HTMLInputElement, value: string) {
+  await act(async () => {
+    Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value")!.set!.call(input, value);
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+}
+
+function created(enabled: boolean): McpServer {
+  return {
+    id: "srv_new",
+    slug: "readonly-example",
+    name: "Readonly example",
+    description: "",
+    transport: "streamable_http",
+    endpoint: "http://127.0.0.1:8098/mcp",
+    command: null,
+    hasArgs: false,
+    envKeys: [],
+    fileKeys: [],
+    headerKeys: [],
+    oauthStatus: "none",
+    oauthClientId: null,
+    hasSecret: true,
+    allBots: true,
+    health: { status: "ok", checkedAt: "2026-11-07T00:00:00Z" },
+    enabled,
+  } as unknown as McpServer;
+}
+
+async function addServer(host: HTMLElement, narrowTo: string | null) {
+  const button = (text: string) =>
+    Array.from(host.querySelectorAll("button")).filter((item) => item.textContent === text);
+  await vi.waitFor(() => expect(button("Add server")[0]).toBeDefined());
+  await act(async () => button("Add server")[0]!.click());
+  await vi.waitFor(() => expect(host.querySelector("#mcp-name")).not.toBeNull());
+  await typeInto(host.querySelector<HTMLInputElement>("#mcp-name")!, "Readonly example");
+  await typeInto(
+    host.querySelector<HTMLInputElement>("#mcp-endpoint")!,
+    "http://127.0.0.1:8098/mcp",
+  );
+  if (narrowTo) {
+    const option = (name: string) =>
+      Array.from(host.querySelectorAll<HTMLButtonElement>("button[aria-checked]")).find(
+        (item) => item.textContent === name,
+      );
+    await vi.waitFor(() => expect(option(narrowTo)?.disabled).toBeFalsy());
+    // Deselecting every other Bot leaves only the target.
+    for (const item of Array.from(host.querySelectorAll<HTMLButtonElement>("button[aria-checked]")))
+      if (item.textContent !== narrowTo && item.textContent !== "All bots")
+        await act(async () => item.click());
+  }
+}
+
+function submit(host: HTMLElement, text: string) {
+  const buttons = Array.from(host.querySelectorAll("button")).filter(
+    (item) => item.textContent === text,
+  );
+  return act(async () => buttons.at(-1)!.click());
+}
+
+it("adds a server for chosen Bots switched off, gives it those Bots, then switches it on without stored values", async () => {
+  mocks.list.mockReset().mockResolvedValue([]);
+  mocks.create.mockReset().mockResolvedValue(created(false));
+  mocks.agents.mockResolvedValue({ server: created(false), assignments: [] });
+  mocks.update.mockReset().mockResolvedValue(created(true));
+  access.bots.mockResolvedValue([
+    { id: "bot_1", name: "Ada", color: "#F97316" },
+    { id: "bot_2", name: "Grace", color: "#6366F1" },
+  ]);
+  const host = document.createElement("div");
+  const root = createRoot(host);
+  try {
+    await act(async () => root.render(overlay(undefined, false)));
+    await addServer(host, "Ada");
+    await submit(host, "Add server");
+    await vi.waitFor(() => expect(mocks.update).toHaveBeenCalled());
+    expect(mocks.create).toHaveBeenCalledWith(expect.objectContaining({ enabled: false }));
+    expect(mocks.agents).toHaveBeenCalledWith({ id: "srv_new", allBots: false, botIds: ["bot_1"] });
+    expect(mocks.update).toHaveBeenCalledWith({
+      id: "srv_new",
+      config: expect.objectContaining({ enabled: true, secret: undefined, headers: {} }),
+    });
+    const order = [mocks.create, mocks.agents, mocks.update].map(
+      (fn) => fn.mock.invocationCallOrder[0]!,
+    );
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+  } finally {
+    await act(async () => root.unmount());
+  }
+});
+
+it("adds a server for every Bot switched on in one step", async () => {
+  mocks.list.mockReset().mockResolvedValue([]);
+  mocks.create.mockReset().mockResolvedValue(created(true));
+  mocks.update.mockReset();
+  const host = document.createElement("div");
+  const root = createRoot(host);
+  try {
+    await act(async () => root.render(overlay(undefined, false)));
+    await addServer(host, null);
+    await submit(host, "Add server");
+    await vi.waitFor(() => expect(mocks.create).toHaveBeenCalled());
+    expect(mocks.create).toHaveBeenCalledWith(expect.objectContaining({ enabled: true }));
+    expect(mocks.agents).not.toHaveBeenCalled();
+    expect(mocks.update).not.toHaveBeenCalled();
+  } finally {
+    await act(async () => root.unmount());
+  }
+});
+
+it("keeps an unfinished restricted server off and finishes it on the next save instead of adding another", async () => {
+  mocks.list.mockReset().mockResolvedValue([]);
+  mocks.create.mockReset().mockResolvedValue(created(false));
+  mocks.agents
+    .mockRejectedValueOnce(new Error("Disconnected"))
+    .mockResolvedValue({ server: created(false), assignments: [] });
+  mocks.update.mockReset().mockResolvedValue(created(true));
+  access.bots.mockResolvedValue([
+    { id: "bot_1", name: "Ada", color: "#F97316" },
+    { id: "bot_2", name: "Grace", color: "#6366F1" },
+  ]);
+  const host = document.createElement("div");
+  const root = createRoot(host);
+  try {
+    await act(async () => root.render(overlay(undefined, false)));
+    await addServer(host, "Ada");
+    await submit(host, "Add server");
+    await vi.waitFor(() => expect(mocks.agents).toHaveBeenCalledTimes(1));
+    // Never switched on while its Bots were not set.
+    expect(mocks.update).not.toHaveBeenCalled();
+    await vi.waitFor(() =>
+      expect(
+        Array.from(host.querySelectorAll("button")).some((b) => b.textContent === "Save"),
+      ).toBe(true),
+    );
+    await submit(host, "Save");
+    await vi.waitFor(() =>
+      expect(mocks.update).toHaveBeenLastCalledWith({
+        id: "srv_new",
+        config: expect.objectContaining({ enabled: true, secret: undefined }),
+      }),
+    );
+    expect(mocks.create).toHaveBeenCalledTimes(1);
+    expect(mocks.agents).toHaveBeenLastCalledWith({
+      id: "srv_new",
+      allBots: false,
+      botIds: ["bot_1"],
+    });
+    // The first update in the finishing save keeps it off until its Bots are set.
+    expect(mocks.update.mock.calls[0]![0].config.enabled).toBe(false);
+  } finally {
+    await act(async () => root.unmount());
+  }
+});
+
+it("says the connection identifier is taken, keeps the form, and leaves other conflicts as they are", async () => {
+  mocks.list.mockReset().mockResolvedValue([]);
+  mocks.create
+    .mockReset()
+    .mockRejectedValueOnce(
+      Object.assign(new Error("An MCP server with that identifier already exists."), {
+        code: "CONFLICT",
+      }),
+    )
+    .mockRejectedValueOnce(
+      Object.assign(new Error("The stored credential changed. Reload and try again."), {
+        code: "CONFLICT",
+      }),
+    );
+  const host = document.createElement("div");
+  const root = createRoot(host);
+  try {
+    await act(async () => root.render(overlay(undefined, false)));
+    await addServer(host, null);
+    await submit(host, "Add server");
+    await vi.waitFor(() =>
+      expect(host.textContent).toContain(
+        "A connection already uses this identifier. Choose another name or use the existing connection.",
+      ),
+    );
+    expect(host.textContent).not.toContain("An MCP server with that identifier already exists.");
+    expect(host.textContent).not.toMatch(/[Dd]elete/);
+    // What was typed stays for another try.
+    expect(host.querySelector<HTMLInputElement>("#mcp-name")?.value).toBe("Readonly example");
+    expect(host.querySelector<HTMLInputElement>("#mcp-endpoint")?.value).toBe(
+      "http://127.0.0.1:8098/mcp",
+    );
+
+    await submit(host, "Add server");
+    await vi.waitFor(() =>
+      expect(host.textContent).toContain("The stored credential changed. Reload and try again."),
+    );
+    expect(host.textContent).not.toContain("A connection already uses this identifier.");
+  } finally {
+    await act(async () => root.unmount());
   }
 });

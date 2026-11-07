@@ -13,6 +13,11 @@ vi.mock("@lingui/react/macro", () => ({
     (value === 1 ? one : other).replace("#", String(value)),
 }));
 
+// The run's recorded calls are their own component; here only when it is asked for matters.
+vi.mock("./run-tool-trace", () => ({
+  RunToolCalls: ({ runId }: { runId: string }) => <div data-testid="run-tool-calls">{runId}</div>,
+}));
+
 /** The words a reader sees, with each element's text as its own word. */
 const visibleText = (html: string) =>
   html
@@ -30,17 +35,12 @@ import {
 
 function markup(props: {
   live: boolean;
-  stepCount: number;
   durationMs?: number;
   steps?: Array<{ label: string; count: number }>;
 }) {
   return renderToStaticMarkup(
-    <ToolActivityDisclosure
-      live={props.live}
-      stepCount={props.stepCount}
-      durationMs={props.durationMs}
-    >
-      <ToolSteps steps={props.steps ?? [{ label: "Shell", count: props.stepCount }]} />
+    <ToolActivityDisclosure live={props.live} durationMs={props.durationMs}>
+      <ToolSteps steps={props.steps ?? [{ label: "Shell", count: 2 }]} />
     </ToolActivityDisclosure>,
   );
 }
@@ -57,7 +57,7 @@ function mountCard() {
   const render = (live: boolean, stepCount = 2) =>
     flushSync(() =>
       root.render(
-        <ToolActivityDisclosure live={live} stepCount={stepCount}>
+        <ToolActivityDisclosure live={live}>
           <ToolSteps steps={stepsOf(stepCount)} />
         </ToolActivityDisclosure>,
       ),
@@ -68,36 +68,32 @@ function mountCard() {
 }
 
 describe("ToolActivityDisclosure", () => {
-  it("labels a finished card with the tool count and duration", () => {
-    const html = markup({ live: false, stepCount: 2, durationMs: 12000 });
-    expect(visibleText(html)).toContain("Done 2 tools 12s");
-  });
-
-  it("uses the singular for one tool", () => {
-    expect(visibleText(markup({ live: false, stepCount: 1, durationMs: 850 }))).toContain(
-      "Done 1 tool 850ms",
-    );
-    expect(visibleText(markup({ live: true, stepCount: 1 }))).toContain("Working… 1 tool");
+  it("labels a finished card neutrally with its duration, never as done or as a tool count", () => {
+    const text = visibleText(markup({ live: false, durationMs: 12000 }));
+    expect(text).toContain("Tool activity 12s");
+    // Steps are not calls and a finished run is not a successful one.
+    expect(text).not.toMatch(/\bDone\b|\d+ tools?\b/);
   });
 
   it("omits the duration when it is not usable", () => {
-    const html = markup({ live: false, stepCount: 3 });
-    expect(visibleText(html)).toContain("Done 3 tools");
-    expect(visibleText(html)).not.toMatch(/Done 3 tools \d/);
+    const text = visibleText(markup({ live: false }));
+    expect(text).toContain("Tool activity");
+    expect(text).not.toMatch(/Tool activity \d/);
   });
 
-  it("shows the live label while working", () => {
-    const html = markup({ live: true, stepCount: 2 });
-    expect(visibleText(html)).toContain("Working… 2 tools");
+  it("shows the live label while working, without a tool count", () => {
+    const html = markup({ live: true });
+    expect(visibleText(html)).toContain("Working…");
+    expect(visibleText(html)).not.toMatch(/\d+ tools?\b/);
     expect(html).toContain('data-live="true"');
   });
 
   it("starts open while working", () => {
-    expect(markup({ live: true, stepCount: 2 })).toMatch(OPEN_TRIGGER);
+    expect(markup({ live: true })).toMatch(OPEN_TRIGGER);
   });
 
   it("is collapsed once done and expands to the tool rows", () => {
-    const html = markup({ live: false, stepCount: 2 });
+    const html = markup({ live: false });
     expect(html).toContain('aria-expanded="false"');
     expect(html).not.toMatch(OPEN_TRIGGER);
     expect(html).toContain("Shell ×2");
@@ -110,7 +106,7 @@ describe("ToolActivityDisclosure", () => {
 
     card.render(false);
     expect(card.details()?.getAttribute("aria-expanded")).toBe("false");
-    expect(card.summary()?.textContent).toContain("Done2 tools");
+    expect(card.summary()?.textContent).toContain("Tool activity");
     card.unmount();
   });
 
@@ -122,7 +118,7 @@ describe("ToolActivityDisclosure", () => {
 
     card.render(true, 3);
     expect(card.details()?.getAttribute("aria-expanded")).toBe("false");
-    expect(card.summary()?.textContent).toContain("Working…3 tools");
+    expect(card.summary()?.textContent).toContain("Working…");
 
     card.render(false, 3);
     expect(card.details()?.getAttribute("aria-expanded")).toBe("false");
@@ -187,7 +183,7 @@ describe("ToolSteps", () => {
         ]}
       />,
     );
-    expect(visibleText(html)).toBe("✓ Read calendar The meeting is with Anna . ✓ Save event");
+    expect(visibleText(html)).toBe("• Read calendar The meeting is with Anna . • Save event");
     expect(html).toContain("<strong>Anna</strong>");
   });
 });
@@ -195,23 +191,21 @@ describe("ToolSteps", () => {
 describe("StandaloneToolActivity", () => {
   it("renders as a plain line, not a chat bubble", () => {
     const html = renderToStaticMarkup(
-      <StandaloneToolActivity live={false} steps={stepsOf(2)} stepCount={2} durationMs={4000} />,
+      <StandaloneToolActivity live={false} steps={stepsOf(2)} durationMs={4000} />,
     );
     expect(html).toContain('data-testid="tool-activity-line"');
-    expect(visibleText(html)).toContain("Done 2 tools 4s");
+    expect(visibleText(html)).toContain("Tool activity 4s");
     expect(html).not.toContain("bg-muted");
     expect(html).not.toContain("rounded-[20px]");
   });
 
   it("is open with a windowed list while live, and lists every step once done", () => {
     const steps = stepsOf(9);
-    const live = renderToStaticMarkup(<StandaloneToolActivity live steps={steps} stepCount={9} />);
+    const live = renderToStaticMarkup(<StandaloneToolActivity live steps={steps} />);
     expect(live).toMatch(OPEN_TRIGGER);
     expect(live).toContain("+3 earlier steps");
 
-    const done = renderToStaticMarkup(
-      <StandaloneToolActivity live={false} steps={steps} stepCount={9} />,
-    );
+    const done = renderToStaticMarkup(<StandaloneToolActivity live={false} steps={steps} />);
     expect(done).not.toMatch(OPEN_TRIGGER);
     expect(done).not.toContain("earlier");
     for (let i = 0; i < 9; i++) expect(done).toContain(`step-${i}<`);
@@ -224,7 +218,7 @@ describe("ToolOnlyNarration", () => {
       <ToolOnlyNarration live blocks={[{ kind: "steps", steps: stepsOf(2) }]} />,
     );
     expect(html).toContain('data-testid="tool-activity-line"');
-    expect(visibleText(html)).toContain("Working… 2 tools");
+    expect(visibleText(html)).toContain("Working…");
     expect(html).toMatch(OPEN_TRIGGER);
     expect(html).not.toContain("bg-muted");
   });
@@ -240,7 +234,43 @@ describe("ToolOnlyNarration", () => {
       />,
     );
     expect(html.match(/data-testid="tool-activity-line"/g)).toHaveLength(2);
-    expect(visibleText(html)).toContain("Done 3 tools 12s");
+    expect(visibleText(html)).toContain("Tool activity 12s");
     expect(html).not.toMatch(OPEN_TRIGGER);
+  });
+});
+
+describe("run record in the tool card", () => {
+  function mount(live: boolean, runId?: string) {
+    const container = document.createElement("div");
+    const root = createRoot(container);
+    flushSync(() =>
+      root.render(
+        <ToolActivityDisclosure live={live} runId={runId}>
+          <ToolSteps steps={stepsOf(1)} />
+        </ToolActivityDisclosure>,
+      ),
+    );
+    const record = () => container.querySelector('[data-testid="run-tool-calls"]');
+    const toggle = () => container.querySelector<HTMLButtonElement>("button[aria-expanded]")!;
+    return { record, toggle, unmount: () => root.unmount() };
+  }
+
+  it("reads a finished run's calls only once the card is opened", () => {
+    const card = mount(false, "run-1");
+    expect(card.record()).toBeNull();
+    flushSync(() => card.toggle().click());
+    expect(card.record()?.textContent).toBe("run-1");
+    card.unmount();
+  });
+
+  it("does not read the record while the run is live or without a run", () => {
+    const live = mount(true, "run-1");
+    expect(live.toggle().getAttribute("aria-expanded")).toBe("true");
+    expect(live.record()).toBeNull();
+    live.unmount();
+    const none = mount(false);
+    flushSync(() => none.toggle().click());
+    expect(none.record()).toBeNull();
+    none.unmount();
   });
 });

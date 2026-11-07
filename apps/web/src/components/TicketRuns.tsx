@@ -1,7 +1,6 @@
 import { t as tr } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import type { RunStatus, RunToolStatus, RunTraceDetail, RunTraceRow } from "@rakazo/contracts";
-import { isRetryableError, isServerUnreachable } from "@rakazo/core";
+import type { RunTraceDetail, RunTraceRow } from "@rakazo/contracts";
 import { Button, Spinner } from "@rakazo/ui-web";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { ChevronLeft } from "lucide-react";
@@ -9,32 +8,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSpaceQueries } from "../lib/query";
 import { useTicketStatusLabels } from "../lib/ticket-status";
-import { errorCode } from "../lib/user-error";
 import { statusLabel, statusTone } from "../pages/ActivityList";
+import {
+  ACTIVE,
+  formatDuration,
+  LoadError,
+  poll,
+  shortCode,
+  TIME_ZONE,
+  ToolTrace,
+} from "./run-tool-trace";
 
 type Cursor = { runId: string; createdAt: string };
-
-/** Business times are read in China Standard Time whatever the browser's zone. */
-const TIME_ZONE = "Asia/Shanghai";
-const ACTIVE: ReadonlySet<RunStatus> = new Set([
-  "queued",
-  "leased",
-  "running",
-  "waiting_input",
-  "waiting_takeover",
-]);
-const POLL_MS = 5_000;
-
-/**
- * A short code for a run or attempt: the random tail of its ID, so ones started in the same
- * second still read differently, and the code never changes with paging or list position.
- */
-function shortCode(id: string): string {
-  return id.slice(-8);
-}
-
-const poll = (active: boolean, error: unknown) =>
-  error && !isRetryableError(error) ? false : active ? POLL_MS : false;
 
 /** Runs started for one ticket, newest first, with one run's detail opened in place. */
 export function TicketRuns({ ticketId }: { ticketId: string }) {
@@ -226,114 +211,6 @@ function RunDetail({ runId, onBack }: { runId: string; onBack: () => void }) {
   );
 }
 
-type ToolCall = RunTraceDetail["toolTrace"]["calls"][number];
-
-/** Calls grouped by the attempt that made them, attempts in order of their first recorded call. */
-function byAttempt(calls: ToolCall[]): { attemptId: string; calls: ToolCall[] }[] {
-  const groups = new Map<string, ToolCall[]>();
-  for (const call of calls)
-    groups.set(call.attemptId, [...(groups.get(call.attemptId) ?? []), call]);
-  return [...groups].map(([attemptId, calls]) => ({ attemptId, calls }));
-}
-
-function ToolTrace({ trace }: { trace: RunTraceDetail["toolTrace"] }) {
-  const { t } = useLingui();
-  const attempts = byAttempt(trace.calls);
-  // A run resumed in a new attempt keeps the earlier attempt's calls, including late refusals;
-  // grouping shows which attempt each status belongs to instead of one list that reads as final.
-  const grouped = attempts.length > 1;
-  return (
-    <div className="space-y-1">
-      <h4 className="font-medium">
-        <Trans>Tools</Trans>
-      </h4>
-      {!trace.recorded ? (
-        <p className="text-muted-foreground">
-          <Trans>Tool summary not recorded</Trans>
-        </p>
-      ) : trace.calls.length === 0 ? (
-        <p className="text-muted-foreground">
-          <Trans>No tool calls recorded</Trans>
-        </p>
-      ) : null}
-      {grouped ? (
-        attempts.map((attempt) => {
-          const code = shortCode(attempt.attemptId);
-          return (
-            <section
-              key={attempt.attemptId}
-              data-testid="tool-attempt"
-              aria-label={t`Attempt ${code}`}
-              className="space-y-1 pt-1"
-            >
-              <h5 className="text-xs text-muted-foreground">
-                {t`Attempt`} <span className="font-mono">#{code}</span>
-              </h5>
-              <ToolCalls calls={attempt.calls} timed />
-            </section>
-          );
-        })
-      ) : trace.calls.length > 0 ? (
-        <ToolCalls calls={trace.calls} />
-      ) : null}
-      {trace.truncated ? (
-        <p className="text-muted-foreground">
-          <Trans>Showing only the first tool calls</Trans>
-        </p>
-      ) : null}
-    </div>
-  );
-}
-
-/** With several attempts, each call's start time shows when a late result arrived. */
-function ToolCalls({ calls, timed = false }: { calls: ToolCall[]; timed?: boolean }) {
-  const { i18n } = useLingui();
-  return (
-    <ul className="space-y-1">
-      {calls.map((call) => (
-        <li key={call.id} className="flex min-w-0 items-center justify-between gap-2">
-          <span className="truncate font-mono text-xs">{call.name}</span>
-          <span className="shrink-0 text-xs text-muted-foreground">
-            {timed ? (
-              <>
-                <time dateTime={call.startedAt}>{formatClock(call.startedAt, i18n.locale)}</time>
-                {" · "}
-              </>
-            ) : null}
-            <span className={toolTone(call.status)}>{toolStatusText(call.status)}</span>
-            {call.durationMs === null ? null : ` · ${formatDuration(call.durationMs, i18n.locale)}`}
-          </span>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function LoadError({ error, onRetry }: { error: unknown; onRetry: () => void }) {
-  const { t } = useLingui();
-  const code = errorCode(error);
-  const text =
-    code === "NOT_FOUND"
-      ? t`This run is no longer available`
-      : code === "FORBIDDEN"
-        ? t`You no longer have access`
-        : isServerUnreachable(error)
-          ? t`Could not reach the server`
-          : t`Could not load runs`;
-  return (
-    <div className="flex items-center gap-2">
-      <p role="alert" className="text-destructive">
-        {text}
-      </p>
-      {code === "NOT_FOUND" || code === "FORBIDDEN" ? null : (
-        <Button variant="outline" size="sm" onClick={onRetry}>
-          <Trans>Try again</Trans>
-        </Button>
-      )}
-    </div>
-  );
-}
-
 /** Waiting reasons repeat the status, so only stops and failures add a reason. */
 function reasonText(reason: RunTraceRow["reason"]): string | null {
   switch (reason) {
@@ -364,30 +241,6 @@ function reasonText(reason: RunTraceRow["reason"]): string | null {
   }
 }
 
-function toolStatusText(status: RunToolStatus): string {
-  switch (status) {
-    case "pending":
-      return tr`In progress`;
-    case "waiting":
-      return tr`Waiting for approval`;
-    case "completed":
-      return tr`Done`;
-    case "failed":
-      return tr`Failed`;
-    case "refused":
-      return tr`Refused`;
-    case "ambiguous":
-      return tr`Result unknown`;
-  }
-}
-
-function toolTone(status: RunToolStatus): string {
-  if (status === "failed" || status === "refused") return "text-destructive";
-  if (status === "waiting" || status === "ambiguous") return "text-warning";
-  if (status === "completed") return "text-success";
-  return "";
-}
-
 function formatTime(iso: string, locale: string): string {
   return new Intl.DateTimeFormat(locale, {
     timeZone: TIME_ZONE,
@@ -398,34 +251,6 @@ function formatTime(iso: string, locale: string): string {
     second: "2-digit",
     timeZoneName: "short",
   }).format(new Date(iso));
-}
-
-/** Time of day in Shanghai, to the second, for calls within one run. */
-function formatClock(iso: string, locale: string): string {
-  return new Intl.DateTimeFormat(locale, {
-    timeZone: TIME_ZONE,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hourCycle: "h23",
-  }).format(new Date(iso));
-}
-
-function formatDuration(ms: number, locale: string): string {
-  const seconds = ms / 1000;
-  return seconds < 60
-    ? new Intl.NumberFormat(locale, {
-        style: "unit",
-        unit: "second",
-        unitDisplay: "narrow",
-        maximumFractionDigits: 1,
-      }).format(seconds)
-    : new Intl.NumberFormat(locale, {
-        style: "unit",
-        unit: "minute",
-        unitDisplay: "narrow",
-        maximumFractionDigits: 1,
-      }).format(seconds / 60);
 }
 
 /** Recorded cost so far; null when any record lacks one, so a gap never reads as zero. */

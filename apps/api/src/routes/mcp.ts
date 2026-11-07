@@ -407,10 +407,10 @@ export function mcpRoutes(ctx: RouterContext) {
               insertMcpServer(tx, context.actor, input, stored, { everywhere: true }),
             )
             .catch((error: unknown) => {
-              // The slug comes from the name, so this is a second server with the same name.
+              // Distinct display names can still specify the same identifier.
               if (isUniqueViolation(error)) {
                 throw new ORPCError("CONFLICT", {
-                  message: "An MCP server with that name already exists.",
+                  message: "An MCP server with that identifier already exists.",
                 });
               }
               throw error;

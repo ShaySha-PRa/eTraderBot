@@ -25,7 +25,7 @@ function overlaps(a: SpaceAvailability, b: SpaceAvailability): boolean {
 
 const CONFLICT_MESSAGE = {
   skill: "A skill with that name already exists in one of these spaces.",
-  mcpServer: "An MCP server with that name already exists in one of these spaces.",
+  mcpServer: "An MCP server with that identifier already exists in one of these spaces.",
 } as const;
 
 /**

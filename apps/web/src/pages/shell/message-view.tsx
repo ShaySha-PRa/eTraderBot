@@ -31,7 +31,6 @@ import {
   isToolOnlyNarration,
   renderableMessageBlocks,
   shouldRenderToolCard,
-  toolStepCount,
 } from "../../lib/tool-activity-view";
 import { ReplyLine } from "./chat-context";
 import { FALLBACK_BOT_COLOR, previewMessageText } from "./chat-shared";
@@ -214,7 +213,11 @@ export const MessageView = memo(function MessageView({
         <>
           {messageContext}
           <div className="relative">
-            <ToolOnlyNarration blocks={visibleNarrationBlocks} live={isLive} />
+            <ToolOnlyNarration
+              blocks={visibleNarrationBlocks}
+              live={isLive}
+              runId={message.runId}
+            />
             {hoverActions}
           </div>
         </>
@@ -236,8 +239,12 @@ export const MessageView = memo(function MessageView({
                     <ToolActivityDisclosure
                       key={i}
                       live={isLive}
-                      stepCount={toolStepCount(block.steps)}
                       durationMs={block.durationMs}
+                      runId={
+                        i === visibleNarrationBlocks.findLastIndex((b) => b.kind === "steps")
+                          ? message.runId
+                          : undefined
+                      }
                     >
                       <ToolSteps
                         steps={block.steps}
@@ -298,8 +305,10 @@ export const MessageView = memo(function MessageView({
                 key={i}
                 live={isLive}
                 steps={block.steps}
-                stepCount={toolStepCount(block.steps)}
                 durationMs={block.durationMs}
+                runId={
+                  i === blocks.findLastIndex((b) => b.kind === "steps") ? message.runId : undefined
+                }
               />
             );
           }

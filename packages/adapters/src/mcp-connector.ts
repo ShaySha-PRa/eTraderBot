@@ -640,7 +640,7 @@ export class McpConnector implements ConnectorProvider {
       return;
     }
     if (!context.botId) {
-      yield { type: "error", message: "MCP tools require a bot context" };
+      yield { type: "error", message: "MCP tools require a bot context", code: "FORBIDDEN" };
       return;
     }
     const usable = mcpAvailableToBot(context);
@@ -673,7 +673,7 @@ export class McpConnector implements ConnectorProvider {
       (!assignment.allowAllTools &&
         !(assignment.allowedTools as unknown[]).includes(call.route.toolName))
     ) {
-      yield { type: "error", message: "MCP tool is not assigned to this bot" };
+      yield { type: "error", message: "MCP tool is not assigned to this bot", code: "FORBIDDEN" };
       return;
     }
     // Capture material before callTool so a concurrent eviction/replace cannot

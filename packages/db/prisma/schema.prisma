@@ -1052,6 +1052,8 @@ model RunToolCall {
   executionId String
   name        String
   status      String
+  // Whitelisted, bounded display data only. Legacy/unsupported tool results remain null.
+  resultSummary Json?
   startedAt   DateTime @default(now())
   finishedAt  DateTime?
 

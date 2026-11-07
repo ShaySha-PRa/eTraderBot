@@ -415,7 +415,6 @@ msgstr "{title}，{label}"
 msgid "{title}, saved as {savedAs}"
 msgstr "{title}，儲存為 {savedAs}"
 
-#: src/components/ToolActivityDisclosure.tsx
 #: src/pages/PluginsOverlay.tsx
 msgid "{toolCount, plural, one {# tool} other {# tools}}"
 msgstr "{toolCount, plural, one {# 個工具} other {# 個工具}}"
@@ -440,6 +439,10 @@ msgstr "什麼都做一點"
 #: src/pages/RoutineEditor.tsx
 msgid "A command's output"
 msgstr "命令的輸出"
+
+#: src/lib/mcp-identifier-conflict.ts
+msgid "A connection already uses this identifier. Choose another name or use the existing connection."
+msgstr "已有連線使用此識別碼，請更換名稱或使用現有連線"
 
 #. placeholder {0}: oauth.verificationUri.replace(/^https:\/\//, "")
 #: src/pages/model-settings/connection-controls.tsx
@@ -1034,6 +1037,10 @@ msgstr "成品"
 msgid "Ask"
 msgstr "詢問"
 
+#: src/components/run-tool-trace.tsx
+msgid "Asking again will not help until this is fixed"
+msgstr "在問題修復前重試無效"
+
 #: src/pages/shell/computer-panel.tsx
 msgid "Asleep"
 msgstr "休眠中"
@@ -1076,11 +1083,11 @@ msgstr "附加檔案"
 msgid "Attachment"
 msgstr "附件"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Attempt"
 msgstr "嘗試"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Attempt {code}"
 msgstr "嘗試 {code}"
 
@@ -1353,6 +1360,10 @@ msgstr "內建"
 msgid "Business cycle"
 msgstr "业务周期"
 
+#: src/components/run-tool-trace.tsx
+msgid "Business ID"
+msgstr "業務 ID"
+
 #: src/pages/BusinessSupervisor.tsx
 #: src/pages/Shell.tsx
 msgid "Business overview"
@@ -1481,6 +1492,10 @@ msgstr "已取消"
 #: src/pages/Trading.tsx
 msgid "Candidate analysis"
 msgstr ""
+
+#: src/components/run-tool-trace.tsx
+msgid "Candidate data only, not recorded as business evidence"
+msgstr "僅為候選資料，未記錄為業務證據"
 
 #: src/pages/BusinessCycle.tsx
 msgid "Candidate energy"
@@ -2425,7 +2440,7 @@ msgstr "無法載入模型設定"
 msgid "Could not load run history"
 msgstr "無法載入執行歷史紀錄"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Could not load runs"
 msgstr "無法載入執行紀錄"
 
@@ -2482,7 +2497,7 @@ msgstr "無法連線到模型伺服器。"
 #: src/components/AskCard.tsx
 #: src/components/PasskeyOffer.tsx
 #: src/components/PasskeySettings.tsx
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 #: src/lib/computer-sandbox.ts
 #: src/lib/user-error.ts
 #: src/pages/AccountSettingsOverlay.tsx
@@ -2880,6 +2895,10 @@ msgstr "深色"
 msgid "Data"
 msgstr ""
 
+#: src/components/run-tool-trace.tsx
+msgid "Date"
+msgstr "日期"
+
 #: src/lib/billing.ts
 #: src/lib/cron.ts
 msgid "day"
@@ -3179,8 +3198,7 @@ msgid "Don’t have an account?"
 msgstr "還沒有帳號？"
 
 #: src/components/AccountDataSettings.tsx
-#: src/components/TicketRuns.tsx
-#: src/components/ToolActivityDisclosure.tsx
+#: src/components/run-tool-trace.tsx
 #: src/lib/ticket-status.ts
 #: src/pages/ActivityList.tsx
 #: src/pages/shell/avatar-studio-popover.tsx
@@ -3344,10 +3362,15 @@ msgstr "環境變數：{names}"
 msgid "Equivalent difference form"
 msgstr "等价差价结果"
 
+#: src/components/run-tool-trace.tsx
 #: src/lib/roster-status.ts
 #: src/pages/shell/sidebar-roster.tsx
 msgid "Error"
 msgstr "錯誤"
+
+#: src/components/run-tool-trace.tsx
+msgid "Error details"
+msgstr "錯誤詳情"
 
 #: src/pages/BusinessCycle.tsx
 msgid "Estimated"
@@ -3524,8 +3547,8 @@ msgstr "極高"
 msgid "failed"
 msgstr "失敗"
 
+#: src/components/run-tool-trace.tsx
 #: src/components/SubagentCard.tsx
-#: src/components/TicketRuns.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/TradingLearning.tsx
 msgid "Failed"
@@ -3712,6 +3735,10 @@ msgstr ""
 #: src/pages/shell/business-scope.tsx
 msgid "General workspace"
 msgstr ""
+
+#: src/components/run-tool-trace.tsx
+msgid "Generated"
+msgstr "產生時間"
 
 #: src/pages/shell/business-scope.tsx
 #: src/pages/Trading.tsx
@@ -3995,7 +4022,7 @@ msgstr "匯入的技能"
 msgid "Improvement proposal (not enabled)"
 msgstr "改进提案（未启用）"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 #: src/lib/ticket-status.ts
 msgid "In progress"
 msgstr "進行中"
@@ -4363,6 +4390,7 @@ msgstr "正在載入語音供應商…"
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
 #: src/components/PageLoading.tsx
+#: src/components/run-tool-trace.tsx
 #: src/components/TicketRuns.tsx
 #: src/pages/AdminAccessPage.tsx
 #: src/pages/Artifacts.tsx
@@ -5163,7 +5191,7 @@ msgstr "未記錄工單關聯"
 msgid "No tickets yet"
 msgstr "尚無工作項目"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "No tool calls recorded"
 msgstr "未記錄工具呼叫"
 
@@ -5571,6 +5599,10 @@ msgstr ""
 
 #: src/pages/WeatherInterface.tsx
 msgid "Period"
+msgstr "時段"
+
+#: src/components/run-tool-trace.tsx
+msgid "Periods"
 msgstr "時段"
 
 #: src/pages/shell/bot-panel.tsx
@@ -5983,7 +6015,7 @@ msgstr "重新整理畫面"
 msgid "Refreshing…"
 msgstr "重新整理中…"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Refused"
 msgstr "已拒絕"
 
@@ -6279,7 +6311,7 @@ msgstr "结果不确定"
 msgid "Result uncertain; the reservation is retained."
 msgstr "结果尚未确认，占用额度继续保留。"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Result unknown"
 msgstr "結果未知"
 
@@ -6911,7 +6943,7 @@ msgstr "顯示工具活動"
 msgid "Show transcript"
 msgstr "顯示文字紀錄"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Showing only the first tool calls"
 msgstr "僅顯示前面部分工具呼叫"
 
@@ -7108,9 +7140,14 @@ msgstr "已依 {column} 遞增排序"
 msgid "Sorted by {column}, descending"
 msgstr "已依 {column} 遞減排序"
 
+#: src/components/run-tool-trace.tsx
 #: src/pages/ExperienceHandoff.tsx
 msgid "Source"
 msgstr "來源"
+
+#: src/components/run-tool-trace.tsx
+msgid "Source details"
+msgstr "來源詳情"
 
 #: src/pages/TradingLearning.tsx
 msgid "Source reference"
@@ -7348,6 +7385,10 @@ msgstr "切換"
 msgid "Switching…"
 msgstr "正在切換…"
 
+#: src/components/run-tool-trace.tsx
+msgid "Synthetic"
+msgstr "合成"
+
 #: src/pages/Trading.tsx
 msgid "Synthetic data"
 msgstr ""
@@ -7469,6 +7510,10 @@ msgstr "模型回傳了無法使用的回覆，請再試一次。"
 msgid "The provider is rate-limiting requests."
 msgstr "供應商正在限制請求頻率。"
 
+#: src/components/run-tool-trace.tsx
+msgid "The request was not valid"
+msgstr "請求無效"
+
 #: src/lib/computer-screen.ts
 msgid "The screen connection closed."
 msgstr "螢幕連線已關閉。"
@@ -7488,6 +7533,26 @@ msgstr "所選內容已變更，請重新整理後再選擇"
 #: src/pages/MemorySettingsOverlay.tsx
 msgid "The selected memory provider is not available in this build."
 msgstr "所選記憶供應商在此版本中不可用。"
+
+#: src/components/run-tool-trace.tsx
+msgid "The source answered in an unexpected format"
+msgstr "資料來源回傳格式不符"
+
+#: src/components/run-tool-trace.tsx
+msgid "The source could not be reached"
+msgstr "無法連線資料來源"
+
+#: src/components/run-tool-trace.tsx
+msgid "The source has no data for that request"
+msgstr "資料來源沒有該請求的資料"
+
+#: src/components/run-tool-trace.tsx
+msgid "The source rejected its configured credential"
+msgstr "資料來源拒絕了設定的憑證"
+
+#: src/components/run-tool-trace.tsx
+msgid "The source took too long to answer"
+msgstr "資料來源回應逾時"
 
 #: src/pages/ExperienceHandoff.tsx
 msgid "The target changed. Preview again before importing"
@@ -7672,7 +7737,7 @@ msgstr "這將從每個空間移除該連線。"
 msgid "This reset link is invalid or expired"
 msgstr "此重設連結無效或已過期"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "This run is no longer available"
 msgstr "此執行已無法使用"
 
@@ -7767,6 +7832,10 @@ msgstr "Token"
 msgid "Too much context for the model"
 msgstr "上下文超出模型限制"
 
+#: src/components/ToolActivityDisclosure.tsx
+msgid "Tool activity"
+msgstr "工具活動"
+
 #: src/pages/RoutineEditor.tsx
 msgid "Tool arguments (JSON)"
 msgstr "工具參數（JSON）"
@@ -7783,11 +7852,11 @@ msgstr "工具參數必須是 JSON"
 msgid "Tool name"
 msgstr "工具名稱"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Tool summary not recorded"
 msgstr "未記錄工具摘要"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 #: src/pages/PluginsOverlay.tsx
 #: src/pages/shell/bot-panel.tsx
 msgid "Tools"
@@ -7876,7 +7945,7 @@ msgstr "為防止濫用，試用期的時數較少。"
 msgid "Trusted sites"
 msgstr "受信任的網站"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 #: src/pages/ActivityList.tsx
 #: src/pages/Onboarding.tsx
 msgid "Try again"
@@ -8172,6 +8241,7 @@ msgstr "驗證並新增"
 msgid "Verifying…"
 msgstr "正在驗證…"
 
+#: src/components/run-tool-trace.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/ExperienceHandoff.tsx
 msgid "Version"
@@ -8200,7 +8270,7 @@ msgstr ""
 msgid "Wait a moment and test again."
 msgstr "請稍候並重新測試。"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "Waiting for approval"
 msgstr "等待批准"
 
@@ -8399,6 +8469,10 @@ msgstr "昨天"
 msgid "You"
 msgstr "你"
 
+#: src/components/run-tool-trace.tsx
+msgid "You can ask again"
+msgstr "可以重新請求"
+
 #: src/pages/McpOAuthCallback.tsx
 msgid "You can close this tab if it does not redirect automatically."
 msgstr "如果沒有自動重新導向，可以關閉此分頁。"
@@ -8424,7 +8498,7 @@ msgstr "你無權存取此 Bot 或工作區"
 msgid "You have control"
 msgstr "你已接管"
 
-#: src/components/TicketRuns.tsx
+#: src/components/run-tool-trace.tsx
 msgid "You no longer have access"
 msgstr "你已無權存取"
 

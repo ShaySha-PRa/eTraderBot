@@ -1,6 +1,6 @@
-import type { AgentToolExecutionObserver } from "@rakazo/adapter-kit";
-import type { RunToolStatus } from "@rakazo/contracts";
-import { toolResultTaintsRun } from "@rakazo/core";
+import type { AgentToolExecutionObserver, ConnectorRoute } from "@rakazo/adapter-kit";
+import type { RunToolStatus, SafeReadonlySourceSummary } from "@rakazo/contracts";
+import { readonlySourceResultSummary, toolResultTaintsRun } from "@rakazo/core";
 import { requireIsolatedBot } from "@rakazo/db";
 import { getLogger } from "@rakazo/logging";
 import {
@@ -95,11 +95,15 @@ export async function applyTool(
   });
   let dispatched = false;
   let status: RunToolStatus = "ambiguous";
+  let summary: SafeReadonlySourceSummary | null = null;
+  let readonlySample = false;
   try {
-    const result = await dispatchTool(ctx, name, args, executionId, observer, () => {
+    const result = await dispatchTool(ctx, name, args, executionId, observer, (route) => {
       dispatched = true;
+      readonlySample = route?.connectorId === "mcp" && route.toolName === "read_synthetic_load";
     });
     status = toolTraceStatus(result, dispatched);
+    if (readonlySample) summary = readonlySourceResultSummary(result, ctx.run.spaceId, status);
     return result;
   } catch (error) {
     // A thrown call may already have reached an external destination; do not claim rollback.
@@ -110,7 +114,7 @@ export async function applyTool(
     await ctx.deps.prisma.runToolCall
       .updateMany({
         where: { id: trace.id, status: "pending" },
-        data: { status, finishedAt: new Date() },
+        data: { status, finishedAt: new Date(), ...(summary ? { resultSummary: summary } : {}) },
       })
       .catch(() =>
         getLogger().warn("run.tool_trace_finish_failed", {
@@ -125,6 +129,7 @@ export async function applyTool(
 }
 
 function toolTraceStatus(result: unknown, dispatched: boolean): RunToolStatus {
+  if (result === undefined) return "ambiguous";
   if (isInternalTermination(result) && isToolPauseResult(result)) return "waiting";
   if (result && typeof result === "object") {
     if ("uncertain" in result && result.uncertain === true) return "ambiguous";
@@ -152,7 +157,7 @@ async function dispatchTool(
   args: Record<string, unknown>,
   executionId: string,
   observer: AgentToolExecutionObserver | undefined,
-  onDispatch: () => void,
+  onDispatch: (route: ConnectorRoute | undefined) => void,
 ) {
   await requireActiveToolRun(ctx);
   const persisted = await requireIsolatedBot(ctx.deps.prisma, {
@@ -196,7 +201,7 @@ async function dispatchTool(
   if ("result" in gate) return gate.result;
   // Approval/model/provider checks may have waited while the user stopped this run.
   await requireActiveToolRun(ctx);
-  onDispatch();
+  onDispatch(gate.call.connectorCall.route);
   if (!gate.call.applied) return toolHandler(gate.call.name)(ctx, gate.call);
   let outcome: "success" | "failure" = "failure";
   try {

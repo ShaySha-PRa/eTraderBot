@@ -2,6 +2,7 @@ import * as z from "zod";
 import { TicketStatusSchema } from "./board.js";
 import { Id, IsoDate, RunStatus } from "./ids.js";
 import { RUN_ERROR_KINDS, RunTriggerSchema } from "./runs.js";
+import { SafeReadonlySourceSummarySchema } from "./tool-result-summary.js";
 
 /** Safe categories only: never expose raw provider errors, prompts or tool payloads. */
 export const RunTraceReasonSchema = z.enum([
@@ -53,6 +54,8 @@ export const RunToolTraceSchema = z.object({
   startedAt: IsoDate,
   finishedAt: IsoDate.nullable(),
   durationMs: z.number().nonnegative().nullable(),
+  /** Absent/null means not recorded or not eligible; never infer a result from steps. */
+  resultSummary: SafeReadonlySourceSummarySchema.nullable().optional(),
 });
 export const RunTraceDetailSchema = RunTraceRowSchema.extend({
   ticket: z

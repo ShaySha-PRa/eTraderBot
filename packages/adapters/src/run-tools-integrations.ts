@@ -47,7 +47,10 @@ export async function connectorTool(ctx: RunContext, call: ToolCall) {
         }
       }
       if (event.type === "error") {
-        result = { error: event.message };
+        result = {
+          error: event.message,
+          ...(event.code === "FORBIDDEN" ? { code: event.code } : {}),
+        };
         for (const logId of event.logIds ?? []) {
           await deps.events.append({
             spaceId: run.spaceId,

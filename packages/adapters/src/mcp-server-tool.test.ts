@@ -32,6 +32,20 @@ describe("parseMcpServerToolArgs", () => {
     expect(parsed?.slug).toBe("brex");
   });
 
+  it("uses the same distinct Chinese identifiers as the settings entry point", () => {
+    const names = ["08 基线分配", "08 合成只读样例"];
+    const slugs = names.map((name) => {
+      const parsed = parseMcpServerToolArgs({
+        name,
+        transport: "streamable_http",
+        endpoint: "https://synthetic.example.test/mcp",
+      });
+      expect(parsed?.slug).toBe(deriveMcpSlug(name));
+      return parsed?.slug;
+    });
+    expect(slugs[0]).not.toBe(slugs[1]);
+  });
+
   it("rejects missing names, bad transports, and non-http endpoints", () => {
     expect(
       parseMcpServerToolArgs({ transport: "streamable_http", endpoint: "https://x.test" }),

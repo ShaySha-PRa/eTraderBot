@@ -236,7 +236,8 @@ export async function addMcpServerFromTool(
   } catch (error) {
     if (isUniqueViolation(error)) {
       return {
-        error: `An MCP server named "${parsed.name}" already exists. Ask the user to remove it first or pick another name.`,
+        error:
+          "An MCP server with this identifier already exists. Choose another name or use the existing connection.",
       };
     }
     throw error;
