@@ -52,7 +52,7 @@ Saving other interface configurations does **not** establish connectivity. Weath
 
 ## Run from source
 
-The current V1 checkpoint is on `feat/etraderbot-v1`. Use this repository's source to run these features; the upstream Rakazo images and app-store downloads are separate releases.
+Run these features from this repository's `main` branch; the upstream Rakazo images and app-store downloads are separate releases.
 
 ### Prerequisites
 
@@ -61,7 +61,7 @@ The current V1 checkpoint is on `feat/etraderbot-v1`. Use this repository's sour
 - Docker Engine or Docker Desktop, the Compose plugin, and OpenSSL.
 
 ```bash
-git clone --branch feat/etraderbot-v1 https://github.com/ShaySha-PRa/eTraderBot.git
+git clone https://github.com/ShaySha-PRa/eTraderBot.git
 cd eTraderBot
 cp .env.example .env
 pnpm install --frozen-lockfile

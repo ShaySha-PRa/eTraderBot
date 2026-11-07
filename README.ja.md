@@ -35,7 +35,7 @@ Bot の権限はサーバー側で確認され、名前や指示文を変えて�
 
 ## ソースから起動
 
-V1 は `feat/etraderbot-v1` ブランチにあります。[英語版の起動手順](./README.md#run-from-source)または[中国語版](./README.zh-CN.md#本地启动)に従い、本リポジトリを clone して `.env` を設定し、PostgreSQL と `pnpm dev` を起動してください。
+V1 は `main` ブランチにあります。[英語版の起動手順](./README.md#run-from-source)または[中国語版](./README.zh-CN.md#本地启动)に従い、本リポジトリを clone して `.env` を設定し、PostgreSQL と `pnpm dev` を起動してください。
 
 必要環境は `package.json` に対応する Node.js、pnpm 9、Docker と Compose、OpenSSL です。既定の画面は [http://localhost:5173/app](http://localhost:5173/app) で、ポートが使用中の場合は起動時に別の URL が表示されます。Bot との会話やモデルによる学習には、アプリ内でのモデル接続が必要です。
 

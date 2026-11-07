@@ -52,7 +52,7 @@ eTraderBot 面向售电公司、发电企业和独立储能交易场景。先创
 
 ## 本地启动
 
-当前 V1 位于 `feat/etraderbot-v1` 分支，请从本仓库源码运行。上游 Rakazo 的预构建镜像和应用商店下载属于另一套发布产物。
+请从本仓库 `main` 分支的源码运行。上游 Rakazo 的预构建镜像和应用商店下载属于另一套发布产物。
 
 ### 环境要求
 
@@ -61,7 +61,7 @@ eTraderBot 面向售电公司、发电企业和独立储能交易场景。先创
 - Docker Engine 或 Docker Desktop、Compose 插件、OpenSSL。
 
 ```bash
-git clone --branch feat/etraderbot-v1 https://github.com/ShaySha-PRa/eTraderBot.git
+git clone https://github.com/ShaySha-PRa/eTraderBot.git
 cd eTraderBot
 cp .env.example .env
 pnpm install --frozen-lockfile
