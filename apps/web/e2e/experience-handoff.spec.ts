@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import type { Bot } from "@rakazo/contracts";
+import type { Bot, HandoffPackage } from "@rakazo/contracts";
 import { captureScreenshot, completeOnboarding, openBotPanelTab, rpc, signup } from "./helpers";
 import { createBusinessScope } from "./trading-business-helpers";
 
@@ -56,6 +56,7 @@ test("exports a fixed experience package and imports it into another business's 
   await expect(created).toHaveCount(1);
   await expect(created).toHaveAttribute("open", "");
   await expect(created).toContainText("Spot deviation playbook · v1");
+  const packageId = (await created.getAttribute("data-testid"))!.replace("handoff-package-", "");
   await expect(created).toContainText("Synthetic generator business");
   await expect(created).toContainText("Not validated on real data");
   await expect(created).toContainText("deviation-review");
@@ -151,11 +152,120 @@ test("exports a fixed experience package and imports it into another business's 
   await skill.getByRole("switch").click();
   await expect(skill).toContainText("Enabled");
 
+  // Edit this Bot's own copy; enablement stays as it was.
+  type Copy = { id: string; revision: number; content: string; enabledAt: string | null };
+  const original = "Compare cleared and metered energy before proposing changes.";
+  await skill.getByRole("button", { name: "Edit", exact: true }).click();
+  // Found by element so it survives a language switch; its name is checked in each language.
+  const editor = skill.locator("textarea");
+  await expect(editor).toHaveAccessibleName("SKILL.md for deviation-review-handoff");
+  await expect(editor).toHaveValue(new RegExp(original));
+  await editor.fill(
+    (await editor.inputValue()).replace(original, "Target edit: check metering first."),
+  );
+  await skill.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(editor).toHaveCount(0);
+  await expect(skill).toContainText("Enabled");
+  let [saved] = await rpc<Copy[]>(page, "experienceHandoff/skills", { botId: targetBot.id });
+  expect(saved!.content).toContain("Target edit: check metering first.");
+  expect(saved!.enabledAt).not.toBeNull();
+  // The fixed package keeps the source text.
+  const fixed = await rpc<HandoffPackage>(page, "experienceHandoff/get", { packageId });
+  const packaged = fixed.snapshot.items.find((item) => item.kind === "skill")!.content;
+  expect(packaged).toContain(original);
+  expect(packaged).not.toContain("Target edit");
+
+  // Another page saves first: the newer text is not overwritten and the draft is kept.
+  await skill.getByRole("button", { name: "Edit", exact: true }).click();
+  const draft = saved!.content.replace("Target edit: check metering first.", "My draft text.");
+  await editor.fill(draft);
+  await rpc(page, "experienceHandoff/updateSkill", {
+    skillId: saved!.id,
+    expectedRevision: saved!.revision,
+    content: saved!.content.replace("Target edit:", "Saved elsewhere:"),
+  });
+  await skill.getByRole("button", { name: "Save", exact: true }).click();
+  const newer = skill.getByTestId("imported-skill-newer");
+  await expect(newer).toContainText("This Skill changed elsewhere. Your draft is kept");
+  await newer.locator("summary").click();
+  await expect(newer).toContainText("Saved elsewhere: check metering first.");
+  await expect(editor).toHaveValue(draft);
+  [saved] = await rpc<Copy[]>(page, "experienceHandoff/skills", { botId: targetBot.id });
+  expect(saved!.content).toContain("Saved elsewhere");
+
+  // The rest of the edit happens in Chinese on a phone-width screen.
+  const switcher = page.getByTestId("language-switcher");
+  await switcher.getByRole("button", { name: "中文", exact: true }).click();
+  await expect(newer).toContainText("此技能已在别处被修改，你的草稿已保留");
+  await expect(editor).toHaveAccessibleName("deviation-review-handoff 的 SKILL.md");
+  await page.setViewportSize({ width: 390, height: 844 });
+  const measured = await page.evaluate(() => ({
+    innerWidth,
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    devicePixelRatio,
+  }));
+  await testInfo.attach("narrow-viewport", {
+    body: JSON.stringify(measured),
+    contentType: "application/json",
+  });
+  console.log(`narrow viewport: ${JSON.stringify(measured)}`);
+  expect(measured.innerWidth).toBe(390);
+  expect(measured.clientWidth).toBe(390);
+  expect(measured.scrollWidth).toBeLessThanOrEqual(390);
+  const fits = async () => {
+    const box = (await editor.boundingBox())!;
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(390);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      390,
+    );
+  };
+  await fits();
+  await newer.scrollIntoViewIfNeeded();
+  await captureScreenshot(page, testInfo, "experience-skill-conflict-narrow-zh");
+
+  // Keep the draft: the handled conflict leaves no stale refusal and the draft stays.
+  await skill.getByRole("button", { name: "保留我的草稿", exact: true }).click();
+  await expect(skill.getByRole("alert")).toHaveCount(0);
+  await expect(editor).toHaveValue(draft);
+  // Finish the edit on the phone screen, then save it over the newer copy, knowingly.
+  const narrowDraft = `${draft.trimEnd()}\n\n窄屏补充：先核对计量更正。\n`;
+  await editor.fill(narrowDraft);
+  await fits();
+  await editor.scrollIntoViewIfNeeded();
+  await captureScreenshot(page, testInfo, "experience-skill-kept-narrow-zh");
+  await skill.getByRole("button", { name: "保存", exact: true }).click();
+  await expect(editor).toHaveCount(0);
+  await expect(skill).toContainText("已启用");
+  await expect(skill.getByRole("alert")).toHaveCount(0);
+  [saved] = await rpc<Copy[]>(page, "experienceHandoff/skills", { botId: targetBot.id });
+  expect(saved!.content).toContain("My draft text.");
+  expect(saved!.content).toContain("窄屏补充：先核对计量更正。");
+  expect(saved!.enabledAt).not.toBeNull();
+  // Reopening shows the saved text.
+  await skill.getByRole("button", { name: "编辑", exact: true }).click();
+  await expect(editor).toHaveValue(/窄屏补充：先核对计量更正。/);
+  await fits();
+  await skill.getByRole("button", { name: "取消", exact: true }).click();
+  await skill.scrollIntoViewIfNeeded();
+  await captureScreenshot(page, testInfo, "experience-skill-saved-narrow-zh");
+  await switcher.getByRole("button", { name: "English", exact: true }).click();
+  await page.setViewportSize({ width: 1440, height: 1000 });
+
   // History traces the import back to the package exactly as imported.
   const entry = importer.locator('details[data-testid^="handoff-import-"]');
   await expect(entry).toContainText("Synthetic source spot → Synthetic target spot · v1");
   await entry.locator("summary").click();
   await expect(entry).toContainText("Synthetic generator business");
+  // The import-time snapshot is unchanged by later edits to the copy.
+  const importId = (await entry.getAttribute("data-testid"))!.replace("handoff-import-", "");
+  const detail = await rpc<{ package: HandoffPackage }>(page, "experienceHandoff/importDetail", {
+    importId,
+  });
+  const snapshot = detail.package.snapshot.items.find((item) => item.kind === "skill")!.content;
+  expect(snapshot).toContain(original);
+  expect(snapshot).not.toMatch(/Target edit|Saved elsewhere|My draft text|窄屏补充/);
   await captureScreenshot(page, testInfo, "experience-import-done-en");
 
   await page

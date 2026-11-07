@@ -218,6 +218,13 @@ describe.skipIf(!enabled).sequential("fixed-version experience handoff (PostgreS
     expect(catalog).toContainEqual(
       expect.objectContaining({ id: `handoff:${skillId}`, content: copy.content }),
     );
+    // Omitting file reads the main SKILL.md; file selects an auxiliary reference.
+    const main = await runAsTenant(owner, () =>
+      skillReadFromTool(db.prisma, owner, { skillId: `handoff:${skillId}` }),
+    );
+    expect(main).toMatchObject({ content: copy.content, readOnly: true, importId: receipt.id });
+    expect(main.content).toContain("Target independent text");
+    expect(main.content).not.toContain("Check evidence before summarizing.");
     expect(
       await runAsTenant(f.to.actor, () =>
         skillReadFromTool(
@@ -248,6 +255,9 @@ describe.skipIf(!enabled).sequential("fixed-version experience handoff (PostgreS
         ?.content,
     ).not.toContain("Target independent text");
     await f.general.rpc.updateSkill({ skillId, expectedRevision: 2, enabled: false });
+    expect(
+      await runAsTenant(owner, () => listAgentSkillRecords(db.prisma, owner)),
+    ).not.toContainEqual(expect.objectContaining({ id: `handoff:${skillId}` }));
     expect(
       await runAsTenant(owner, () =>
         skillReadFromTool(db.prisma, owner, { skillId: `handoff:${skillId}` }),
@@ -526,6 +536,134 @@ describe.skipIf(!enabled).sequential("fixed-version experience handoff (PostgreS
       status: 403,
     });
   });
+  describe.each([false, true])("Skill content authorization (enabled=%s)", (active) => {
+    it.each([
+      "unconfirmed identity",
+      "another owner in the same workspace",
+      "wrong workspace",
+      "revoked workspace membership",
+      "workspace owner downgraded to member",
+      "archived Bot",
+      "Bot reassigned to another owner",
+    ])("refuses %s without changing the copy or history", async (scenario) => {
+      const f = await fixture(),
+        { pkg, confirmation } = await f.prepare();
+      const receipt = await f.to.rpc.confirm(confirmation);
+      const skillId = receipt.items.find((i) => i.kind === "skill")!.targetId!;
+      let copy = (await f.to.rpc.skills({ botId: f.to.bot.id }))[0]!;
+      if (active)
+        copy = await f.to.rpc.updateSkill({ skillId, expectedRevision: 1, enabled: true });
+      const enabledAt = copy.enabledAt;
+      // Positive control: valid content-only edits preserve the existing activation state.
+      copy = await f.to.rpc.updateSkill({
+        skillId,
+        expectedRevision: copy.revision,
+        content: buildSkillMd({
+          name: copy.name,
+          description: "Authorized target edit",
+          body: "Retain this authorized target text.",
+        }),
+      });
+      expect(copy.content).toContain("Retain this authorized target text.");
+      expect(copy.enabledAt).toEqual(enabledAt);
+      expect(copy.revision).toBe(active ? 3 : 2);
+      const detail = await f.to.rpc.importDetail({ importId: receipt.id });
+      // Inspect persisted state even after the original caller loses read access.
+      const snapshot = () =>
+        system(async () => ({
+          copy: await db.prisma.experienceSkill.findUniqueOrThrow({ where: { id: skillId } }),
+          receipt: await db.prisma.experienceImport.findUniqueOrThrow({
+            where: { id: receipt.id },
+          }),
+          package: await db.prisma.experiencePackage.findUniqueOrThrow({ where: { id: pkg.id } }),
+          events: await db.prisma.experienceHandoffEvent.findMany({
+            where: { packageId: pkg.id },
+            orderBy: { id: "asc" },
+          }),
+        }));
+      const before = await snapshot();
+      let rpc = f.to.rpc;
+      let rejection = { code: "FORBIDDEN", status: 403 };
+      if (scenario === "unconfirmed identity") {
+        rpc = client(f.to.actor, false);
+        rejection = { code: "IDENTITY_CONFIRMATION_REQUIRED", status: 403 };
+      } else if (
+        scenario === "another owner in the same workspace" ||
+        scenario === "Bot reassigned to another owner"
+      ) {
+        const other = await fixture();
+        await system(async () => {
+          const space = await db.prisma.space.findUniqueOrThrow({
+            where: { id: f.to.actor.spaceId },
+          });
+          await db.prisma.member.create({
+            data: {
+              id: randomUUID(),
+              organizationId: space.organizationId,
+              userId: other.to.actor.userId,
+              role: "member",
+              createdAt: new Date(),
+            },
+          });
+          await db.prisma.spaceMember.create({
+            data: {
+              id: randomUUID(),
+              organizationId: space.organizationId,
+              spaceId: space.id,
+              userId: other.to.actor.userId,
+              role: "owner",
+              createdAt: new Date(),
+            },
+          });
+          if (scenario === "Bot reassigned to another owner")
+            await db.prisma.bot.update({
+              where: { id: f.to.bot.id },
+              data: { userId: other.to.actor.userId },
+            });
+        });
+        if (scenario === "another owner in the same workspace") {
+          rpc = client({ ...other.to.actor, spaceId: f.to.actor.spaceId });
+          rejection = { code: "NOT_FOUND", status: 404 };
+        }
+      } else if (scenario === "wrong workspace") {
+        rpc = f.general.rpc;
+        rejection = { code: "NOT_FOUND", status: 404 };
+      } else if (scenario === "revoked workspace membership") {
+        await system(() =>
+          db.prisma.spaceMember.deleteMany({
+            where: { spaceId: f.to.actor.spaceId, userId: f.to.actor.userId },
+          }),
+        );
+      } else if (scenario === "workspace owner downgraded to member") {
+        await system(() =>
+          db.prisma.spaceMember.updateMany({
+            where: { spaceId: f.to.actor.spaceId, userId: f.to.actor.userId },
+            data: { role: "member" },
+          }),
+        );
+      } else if (scenario === "archived Bot") {
+        await system(() =>
+          db.prisma.bot.update({ where: { id: f.to.bot.id }, data: { archivedAt: new Date() } }),
+        );
+      }
+      await expect(
+        rpc.updateSkill({
+          skillId,
+          expectedRevision: copy.revision,
+          content: buildSkillMd({
+            name: copy.name,
+            description: "Unauthorized target edit",
+            body: "This text must never replace the authorized content.",
+          }),
+        }),
+      ).rejects.toMatchObject(rejection);
+      // Exact row/event comparisons include payload, revision, enabledAt and timestamps.
+      expect(await snapshot()).toEqual(before);
+      expect(await f.from.rpc.get({ packageId: pkg.id })).toEqual(pkg);
+      // Import history remains readable through the still-authorized source workspace.
+      expect(await f.from.rpc.importDetail({ importId: receipt.id })).toEqual(detail);
+    });
+  });
   it("keeps an imported historical snapshot readable after source access is lost, with no new source reads", async () => {
     const f = await fixture(),
       { pkg, confirmation } = await f.prepare();
@@ -713,6 +851,9 @@ describe.skipIf(!enabled).sequential("fixed-version experience handoff (PostgreS
       content: copy.content,
     });
     const owner = { ...f.to.actor, botId: f.to.bot.id };
+    expect(
+      await runAsTenant(owner, () => listAgentSkillRecords(db.prisma, owner)),
+    ).not.toContainEqual(expect.objectContaining({ id: `handoff:${id}` }));
     expect(
       await runAsTenant(owner, () =>
         skillReadFromTool(db.prisma, owner, { skillId: `handoff:${id}` }),

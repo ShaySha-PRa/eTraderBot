@@ -675,3 +675,236 @@ it("uses generic catalog labels when an older server omits source types", async 
   );
   expect(names).toEqual(["Memory MEMORY.md", "Skill legacy-skill"]);
 });
+
+const skillMd = (body: string, name = "deviation-review") =>
+  `---\nname: ${name}\ndescription: Check deviations\n---\n${body}\n`;
+
+function copy(overrides: Record<string, unknown> = {}) {
+  return {
+    id: "skill-copy-1",
+    botId: "target-bot",
+    importId: "import-1",
+    itemKey: "skill-1",
+    name: "deviation-review",
+    description: "Check deviations",
+    content: skillMd("Imported text"),
+    files: {},
+    revision: 1,
+    enabledAt: "2026-11-05T02:00:00.000Z",
+    blockedReason: null,
+    ...overrides,
+  };
+}
+
+const row = () => $('[data-testid="imported-skill-deviation-review"]')!;
+const editor = () => row().querySelector<HTMLTextAreaElement>("textarea")!;
+const conflict = (message: string) =>
+  Object.assign(new Error(message), { code: "CONFLICT", data: { reason: "CONFLICT" } });
+
+async function openEditor() {
+  await render(target, "import");
+  await click(button("Edit", row()));
+}
+
+it("edits this Bot's copy against the revision it read, without touching enablement", async () => {
+  api.experienceHandoff.skills.mockResolvedValue([copy()]);
+  api.experienceHandoff.updateSkill.mockImplementation(async (input: { content: string }) => {
+    api.experienceHandoff.skills.mockResolvedValue([copy({ content: input.content, revision: 2 })]);
+    return copy({ content: input.content, revision: 2 });
+  });
+  await openEditor();
+  expect(editor().value).toBe(skillMd("Imported text"));
+  await type(editor(), skillMd("Edited for this Bot"));
+  await click(button("Save", row()));
+
+  expect(api.experienceHandoff.updateSkill).toHaveBeenCalledTimes(1);
+  // Enablement is left alone: saving text never sends `enabled`.
+  expect(api.experienceHandoff.updateSkill.mock.calls[0]![0]).toEqual({
+    skillId: "skill-copy-1",
+    expectedRevision: 1,
+    content: skillMd("Edited for this Bot"),
+  });
+  expect(row().querySelector("textarea")).toBeNull();
+  await click(button("Edit", row()));
+  expect(editor().value).toBe(skillMd("Edited for this Bot"));
+});
+
+it("catches an invalid SKILL.md or a renamed Skill before sending", async () => {
+  api.experienceHandoff.skills.mockResolvedValue([copy()]);
+  await openEditor();
+  await type(editor(), "No frontmatter here");
+  await click(button("Save", row()));
+  expect(row().textContent).toContain("Needs SKILL.md frontmatter with a name and description");
+  expect(editor().getAttribute("aria-invalid")).toBe("true");
+  await type(editor(), skillMd("Body", "renamed-skill"));
+  await click(button("Save", row()));
+  expect(row().textContent).toContain("Keep the name deviation-review");
+  expect(api.experienceHandoff.updateSkill).not.toHaveBeenCalled();
+  expect(editor().value).toBe(skillMd("Body", "renamed-skill"));
+});
+
+it("keeps the draft when another page saved first, then lets it be saved over the newer copy", async () => {
+  api.experienceHandoff.skills.mockResolvedValue([copy()]);
+  api.experienceHandoff.updateSkill.mockImplementationOnce(async () => {
+    // Another page saved revision 2 meanwhile.
+    api.experienceHandoff.skills.mockResolvedValue([
+      copy({ content: skillMd("Saved elsewhere"), revision: 2 }),
+    ]);
+    throw conflict("Imported Skill changed; reload before editing");
+  });
+  await openEditor();
+  await type(editor(), skillMd("My draft"));
+  await click(button("Save", row()));
+
+  const newer = row().querySelector('[data-testid="imported-skill-newer"]')!;
+  expect(newer.textContent).toContain("This Skill changed elsewhere. Your draft is kept");
+  expect(newer.textContent).toContain("Saved elsewhere");
+  expect(editor().value).toBe(skillMd("My draft"));
+  // Nothing is saved until the user chooses how to resolve it.
+  expect(button("Save", row())!.disabled).toBe(true);
+
+  api.experienceHandoff.updateSkill.mockResolvedValueOnce(
+    copy({ content: skillMd("My draft"), revision: 3 }),
+  );
+  await click(button("Keep my draft", row()));
+  await click(button("Save", row()));
+  expect(api.experienceHandoff.updateSkill).toHaveBeenLastCalledWith({
+    skillId: "skill-copy-1",
+    expectedRevision: 2,
+    content: skillMd("My draft"),
+  });
+});
+
+it("can reload the newer copy into the editor instead", async () => {
+  api.experienceHandoff.skills.mockResolvedValue([copy()]);
+  api.experienceHandoff.updateSkill.mockImplementationOnce(async () => {
+    api.experienceHandoff.skills.mockResolvedValue([
+      copy({ content: skillMd("Saved elsewhere"), revision: 2 }),
+    ]);
+    throw conflict("Imported Skill changed; reload before editing");
+  });
+  await openEditor();
+  await type(editor(), skillMd("My draft"));
+  await click(button("Save", row()));
+  await click(button("Use latest version", row()));
+  expect(editor().value).toBe(skillMd("Saved elsewhere"));
+  // The handled conflict leaves no stale refusal behind.
+  expect(row().querySelector('[role="alert"]')).toBeNull();
+  api.experienceHandoff.updateSkill.mockResolvedValueOnce(copy({ revision: 3 }));
+  await click(button("Save", row()));
+  expect(api.experienceHandoff.updateSkill).toHaveBeenLastCalledWith(
+    expect.objectContaining({ expectedRevision: 2 }),
+  );
+});
+
+it("explains a taken name, keeps the draft, and saves after this copy is disabled", async () => {
+  api.experienceHandoff.skills.mockResolvedValue([copy()]);
+  api.experienceHandoff.updateSkill
+    .mockRejectedValueOnce(conflict("A Skill with this name is already available"))
+    .mockImplementationOnce(async () => {
+      api.experienceHandoff.skills.mockResolvedValue([copy({ revision: 2, enabledAt: null })]);
+      return copy({ revision: 2, enabledAt: null });
+    })
+    .mockResolvedValueOnce(copy({ revision: 3, enabledAt: null }));
+  await openEditor();
+  await type(editor(), skillMd("My draft"));
+  await click(button("Save", row()));
+  expect(row().textContent).toContain(
+    "Another Skill already uses this name. Disable this copy to save it",
+  );
+  expect(editor().value).toBe(skillMd("My draft"));
+
+  // Turning this copy off from the same row does not outdate the draft.
+  await click(row().querySelector<HTMLInputElement>('[role="switch"]'));
+  expect(api.experienceHandoff.updateSkill.mock.calls[1]![0]).toEqual({
+    skillId: "skill-copy-1",
+    expectedRevision: 1,
+    enabled: false,
+  });
+  expect(editor().value).toBe(skillMd("My draft"));
+  await click(button("Save", row()));
+  expect(api.experienceHandoff.updateSkill.mock.calls[2]![0]).toEqual({
+    skillId: "skill-copy-1",
+    expectedRevision: 2,
+    content: skillMd("My draft"),
+  });
+});
+
+it("keeps the draft and says why when saving fails", async () => {
+  api.experienceHandoff.skills.mockResolvedValue([copy()]);
+  api.experienceHandoff.updateSkill.mockRejectedValueOnce(
+    Object.assign(new Error("Imported Skill is unavailable"), {
+      code: "NOT_FOUND",
+      data: { reason: "NOT_FOUND" },
+    }),
+  );
+  await openEditor();
+  await type(editor(), skillMd("My draft"));
+  await click(button("Save", row()));
+  expect(row().querySelector('[role="alert"]')?.textContent).toBe(
+    "This package or Bot is no longer available",
+  );
+  expect(editor().value).toBe(skillMd("My draft"));
+  await switchLanguage("zh-CN");
+  expect(row().querySelector('[role="alert"]')?.textContent).toBe(
+    "[zh-CN] This package or Bot is no longer available",
+  );
+});
+
+it("clears a resolved conflict after Keep my draft and still refuses a save outdated again", async () => {
+  api.experienceHandoff.skills.mockResolvedValue([copy()]);
+  api.experienceHandoff.updateSkill
+    .mockImplementationOnce(async () => {
+      api.experienceHandoff.skills.mockResolvedValue([
+        copy({ content: skillMd("Saved elsewhere"), revision: 2 }),
+      ]);
+      throw conflict("Imported Skill changed; reload before editing");
+    })
+    .mockImplementationOnce(async () => {
+      // A third save landed after the user chose to keep the draft.
+      api.experienceHandoff.skills.mockResolvedValue([
+        copy({ content: skillMd("Saved again"), revision: 3 }),
+      ]);
+      throw conflict("Imported Skill changed; reload before editing");
+    })
+    .mockImplementationOnce(async (input: { content: string }) => {
+      api.experienceHandoff.skills.mockResolvedValue([
+        copy({ content: input.content, revision: 4 }),
+      ]);
+      return copy({ content: input.content, revision: 4 });
+    });
+  await openEditor();
+  await type(editor(), skillMd("My draft"));
+  await click(button("Save", row()));
+  expect(row().textContent).toContain("This Skill changed elsewhere. Your draft is kept");
+
+  await click(button("Keep my draft", row()));
+  // The handled conflict and its refusal are gone; the draft stays and can be saved.
+  expect(row().querySelector('[role="alert"]')).toBeNull();
+  expect(row().textContent).not.toContain("This changed meanwhile");
+  expect(editor().value).toBe(skillMd("My draft"));
+  expect(button("Save", row())!.disabled).toBe(false);
+
+  await click(button("Save", row()));
+  expect(api.experienceHandoff.updateSkill.mock.calls[1]![0]).toEqual({
+    skillId: "skill-copy-1",
+    expectedRevision: 2,
+    content: skillMd("My draft"),
+  });
+  // Outdated again: refused, never written over revision 3, and the draft survives.
+  const newer = row().querySelector('[data-testid="imported-skill-newer"]')!;
+  expect(newer.textContent).toContain("Saved again");
+  expect(editor().value).toBe(skillMd("My draft"));
+  expect(button("Save", row())!.disabled).toBe(true);
+
+  await click(button("Keep my draft", row()));
+  expect(row().querySelector('[role="alert"]')).toBeNull();
+  await click(button("Save", row()));
+  expect(api.experienceHandoff.updateSkill.mock.calls[2]![0]).toEqual({
+    skillId: "skill-copy-1",
+    expectedRevision: 3,
+    content: skillMd("My draft"),
+  });
+  expect(row().querySelector("textarea")).toBeNull();
+  expect(row().querySelector('[role="alert"]')).toBeNull();
+});

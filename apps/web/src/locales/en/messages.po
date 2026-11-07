@@ -860,6 +860,10 @@ msgstr "Another assistant"
 msgid "Another item in this import uses the same name"
 msgstr "Another item in this import uses the same name"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Another Skill already uses this name. Disable this copy to save it"
+msgstr "Another Skill already uses this name. Disable this copy to save it"
+
 #: src/components/AskCard.tsx
 msgid "Answer"
 msgstr "Answer"
@@ -1422,6 +1426,7 @@ msgstr "Can't read images"
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -3232,6 +3237,7 @@ msgstr "Each name can be used once."
 #: src/components/AskCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 msgid "Edit"
 msgstr "Edit"
@@ -4180,6 +4186,14 @@ msgstr "just now"
 msgid "Keep memories"
 msgstr "Keep memories"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Keep my draft"
+msgstr "Keep my draft"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Keep the name {skillName}"
+msgstr "Keep the name {skillName}"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Keep tool results whole"
 msgstr "Keep tool results whole"
@@ -4214,6 +4228,10 @@ msgstr "Last check {0}: no changes"
 #: src/components/DesktopUpdates.tsx
 msgid "Later"
 msgstr "Later"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Latest version"
+msgstr "Latest version"
 
 #: src/pages/TradingLearning.tsx
 msgid "Learn now"
@@ -4882,6 +4900,10 @@ msgstr "Needs input"
 #: src/pages/BusinessCycle.tsx
 msgid "Needs recalculation"
 msgstr "Needs recalculation"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Needs SKILL.md frontmatter with a name and description"
+msgstr "Needs SKILL.md frontmatter with a name and description"
 
 #: src/pages/ActivityList.tsx
 msgid "Needs takeover"
@@ -6486,6 +6508,7 @@ msgstr "Saturday"
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Board.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -6994,6 +7017,10 @@ msgstr "Skill {0}"
 #: src/pages/shell/agent-import.tsx
 msgid "Skill {position}"
 msgstr "Skill {position}"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "SKILL.md for {skillName}"
+msgstr "SKILL.md for {skillName}"
 
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -7664,6 +7691,10 @@ msgstr "This server is already connected. Disconnect it first to authorize again
 #: src/lib/run-error.ts
 msgid "This server's tool result does not fit the model. Turn off Keep tool results whole for that server, or choose another model."
 msgstr "This server's tool result does not fit the model. Turn off Keep tool results whole for that server, or choose another model."
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Skill changed elsewhere. Your draft is kept"
+msgstr "This Skill changed elsewhere. Your draft is kept"
 
 #: src/pages/model-settings/connection-controls.tsx
 msgid "This subscription sign-in is not available in eTraderBot yet. Use a deployment credential or choose another provider."

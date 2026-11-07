@@ -860,6 +860,10 @@ msgstr "Другой ассистент"
 msgid "Another item in this import uses the same name"
 msgstr ""
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Another Skill already uses this name. Disable this copy to save it"
+msgstr ""
+
 #: src/components/AskCard.tsx
 msgid "Answer"
 msgstr "Ответ"
@@ -1422,6 +1426,7 @@ msgstr "Не может читать изображения"
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -3232,6 +3237,7 @@ msgstr "Каждое имя можно использовать только о�
 #: src/components/AskCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 msgid "Edit"
 msgstr "Изменить"
@@ -4180,6 +4186,14 @@ msgstr "только что"
 msgid "Keep memories"
 msgstr "Сохранить память"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Keep my draft"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Keep the name {skillName}"
+msgstr ""
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Keep tool results whole"
 msgstr ""
@@ -4214,6 +4228,10 @@ msgstr "Последняя проверка {0}: без изменений"
 #: src/components/DesktopUpdates.tsx
 msgid "Later"
 msgstr "Позже"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Latest version"
+msgstr ""
 
 #: src/pages/TradingLearning.tsx
 msgid "Learn now"
@@ -4881,6 +4899,10 @@ msgstr "Требуется ввод данных"
 
 #: src/pages/BusinessCycle.tsx
 msgid "Needs recalculation"
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Needs SKILL.md frontmatter with a name and description"
 msgstr ""
 
 #: src/pages/ActivityList.tsx
@@ -6486,6 +6508,7 @@ msgstr "суббота"
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Board.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -6994,6 +7017,10 @@ msgstr "Навык {0}"
 #: src/pages/shell/agent-import.tsx
 msgid "Skill {position}"
 msgstr "Навык {position}"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "SKILL.md for {skillName}"
+msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -7663,6 +7690,10 @@ msgstr "Этот сервер уже подключен. Сначала откл
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "This server's tool result does not fit the model. Turn off Keep tool results whole for that server, or choose another model."
+msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Skill changed elsewhere. Your draft is kept"
 msgstr ""
 
 #: src/pages/model-settings/connection-controls.tsx

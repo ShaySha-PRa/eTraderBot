@@ -8,6 +8,7 @@ import type {
   HandoffReceipt,
 } from "@rakazo/contracts";
 import { isIdentityConfirmationRequired } from "@rakazo/contracts";
+import { parseSkillMd } from "@rakazo/core";
 import {
   Badge,
   Button,
@@ -118,7 +119,9 @@ function useHandoffAction() {
     : failure.reason
       ? (refusals[failure.reason] ?? t`Could not continue`)
       : errorText(failure.cause, t`Could not continue`);
-  return { run, pending, error, identityDialog };
+  /** Drops a shown failure once the user has dealt with it. */
+  const clear = () => setFailure(null);
+  return { run, pending, error, clear, identityDialog };
 }
 
 /** Why a planned item cannot be copied under its name; preview reports these per item. */
@@ -697,61 +700,225 @@ type HandoffSkill = NonNullable<
 
 /** Imported Skills stay off until the user enables them, unlike imported memory. */
 function ImportedSkills({ bot, skills }: { bot: Bot; skills: HandoffSkill[] }) {
+  if (!skills.length) return null;
+  return (
+    <section className="space-y-2" data-testid="imported-skills">
+      <SectionHeading>
+        <Trans>Imported Skills</Trans>
+      </SectionHeading>
+      {skills.map((skill) => (
+        <ImportedSkillRow key={skill.id} bot={bot} skill={skill} />
+      ))}
+    </section>
+  );
+}
+
+/**
+ * One imported Skill: its state, the enable switch, and editing of this Bot's own copy. Edits go
+ * through `updateSkill` with the revision read when editing began; a newer save elsewhere is never
+ * overwritten silently, and the draft survives every refusal.
+ */
+function ImportedSkillRow({ bot, skill }: { bot: Bot; skill: HandoffSkill }) {
   const { t } = useLingui();
   const ids = useId();
   const api = useSpaceRpc(),
     queries = useSpaceQueries(),
     cache = useQueryClient();
-  const { run, pending, error, identityDialog } = useHandoffAction();
-  if (!skills.length) return null;
+  const { run, pending, error, clear, identityDialog } = useHandoffAction();
+  const skillsKey = queries.experienceHandoff.skills.queryKey({ input: { botId: bot.id } });
+  // `draft` is null while not editing; `basis` is the revision the draft was written against.
+  const [draft, setDraft] = useState<string | null>(null);
+  const [basis, setBasis] = useState(skill.revision);
+  const [invalid, setInvalid] = useState<"format" | "name" | null>(null);
+  // Set when another save landed first: the newer copy, kept apart from the draft.
+  const [newer, setNewer] = useState<HandoffSkill | null>(null);
+  const [nameTaken, setNameTaken] = useState(false);
+  const editing = draft !== null;
+  const skillName = skill.name;
+  const editorId = `${ids}-${skill.id}-content`;
+
+  function edit(value: string | null) {
+    setDraft(value);
+    setInvalid(null);
+    setNameTaken(false);
+  }
+  async function save() {
+    if (draft === null) return;
+    // The shared SKILL.md parser catches what the server would refuse, before a round trip.
+    const parsed = parseSkillMd(draft);
+    if ("error" in parsed) return setInvalid("format");
+    if (parsed.name !== skill.name) return setInvalid("name");
+    setInvalid(null);
+    setNameTaken(false);
+    const saved = await run(
+      () =>
+        api.experienceHandoff.updateSkill({
+          skillId: skill.id,
+          expectedRevision: basis,
+          content: draft,
+        }),
+      true,
+      (reason) => {
+        if (reason === "CONFLICT") void explainConflict();
+      },
+    );
+    if (!saved) return;
+    edit(null);
+    setNewer(null);
+    await cache.invalidateQueries({ queryKey: skillsKey });
+  }
+  /** CONFLICT means either a newer revision exists or the enabled copy's name is now taken. */
+  async function explainConflict() {
+    const latest = (await cache.fetchQuery({
+      ...queries.experienceHandoff.skills.queryOptions({ input: { botId: bot.id } }),
+      staleTime: 0,
+    })) as HandoffSkill[];
+    const current = latest.find((row) => row.id === skill.id);
+    if (current && current.revision !== basis) setNewer(current);
+    else setNameTaken(true);
+  }
+
   return (
-    <section className="space-y-2" data-testid="imported-skills">
+    <div
+      className="space-y-2 rounded border p-3 text-sm"
+      data-testid={`imported-skill-${skill.name}`}
+    >
       {identityDialog}
-      <SectionHeading>
-        <Trans>Imported Skills</Trans>
-      </SectionHeading>
-      <ErrorLine text={error} />
-      {skills.map((skill) => (
-        <div
-          key={skill.id}
-          className="flex items-start justify-between gap-3 rounded border p-3 text-sm"
-          data-testid={`imported-skill-${skill.name}`}
-        >
-          <div className="min-w-0">
-            <p className="break-words font-medium" id={`${ids}-${skill.id}`}>
-              {skill.name}
-            </p>
-            {skill.description ? (
-              <p className="break-words text-muted-foreground">{skill.description}</p>
-            ) : null}
-            <p className="text-muted-foreground">
-              {!skill.enabledAt
-                ? t`Waiting to be enabled`
-                : skill.blockedReason
-                  ? t`Paused: a shared Skill uses this name`
-                  : t`Enabled`}
-            </p>
-          </div>
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="break-words font-medium" id={`${ids}-${skill.id}`}>
+            {skill.name}
+          </p>
+          {skill.description ? (
+            <p className="break-words text-muted-foreground">{skill.description}</p>
+          ) : null}
+          <p className="text-muted-foreground">
+            {!skill.enabledAt
+              ? t`Waiting to be enabled`
+              : skill.blockedReason
+                ? t`Paused: a shared Skill uses this name`
+                : t`Enabled`}
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          {editing ? null : (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setBasis(skill.revision);
+                setNewer(null);
+                edit(skill.content);
+              }}
+            >
+              <Trans>Edit</Trans>
+            </Button>
+          )}
           <Switch
             aria-labelledby={`${ids}-${skill.id}`}
             checked={Boolean(skill.enabledAt)}
             disabled={pending}
             onCheckedChange={(enabled) =>
               void run(async () => {
-                await api.experienceHandoff.updateSkill({
+                const updated = await api.experienceHandoff.updateSkill({
                   skillId: skill.id,
                   expectedRevision: skill.revision,
                   enabled,
                 });
-                await cache.invalidateQueries({
-                  queryKey: queries.experienceHandoff.skills.queryKey({ input: { botId: bot.id } }),
-                });
+                // This row's own toggle must not outdate its draft; only when nothing else changed
+                // since the draft began, so another page's newer text is never skipped over.
+                if (editing && basis === skill.revision) setBasis(updated.revision);
+                setNameTaken(false);
+                await cache.invalidateQueries({ queryKey: skillsKey });
               }, true)
             }
           />
         </div>
-      ))}
-    </section>
+      </div>
+      {editing ? (
+        <div className="grid gap-2">
+          <Textarea
+            id={editorId}
+            aria-label={t`SKILL.md for ${skillName}`}
+            aria-invalid={invalid ? true : undefined}
+            aria-describedby={
+              invalid || nameTaken || newer || error ? `${editorId}-error` : undefined
+            }
+            className="min-h-48 font-mono text-xs"
+            value={draft}
+            onChange={(e) => edit(e.target.value)}
+          />
+          <div id={`${editorId}-error`} className="space-y-2">
+            {invalid === "format" ? (
+              <ErrorLine text={t`Needs SKILL.md frontmatter with a name and description`} />
+            ) : invalid === "name" ? (
+              <ErrorLine text={t`Keep the name ${skillName}`} />
+            ) : nameTaken ? (
+              <ErrorLine
+                text={t`Another Skill already uses this name. Disable this copy to save it`}
+              />
+            ) : newer ? (
+              <div className="space-y-2" data-testid="imported-skill-newer">
+                <ErrorLine text={t`This Skill changed elsewhere. Your draft is kept`} />
+                <details className="rounded bg-muted/40 p-2">
+                  <summary className="cursor-pointer">{t`Latest version`}</summary>
+                  <pre className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap break-words text-xs">
+                    {newer.content}
+                  </pre>
+                </details>
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setBasis(newer.revision);
+                      edit(newer.content);
+                      setNewer(null);
+                      // The conflict is resolved; its refusal no longer applies.
+                      clear();
+                    }}
+                  >
+                    <Trans>Use latest version</Trans>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      // Write the draft against the newer revision; saving still asks again.
+                      setBasis(newer.revision);
+                      setNewer(null);
+                      clear();
+                    }}
+                  >
+                    <Trans>Keep my draft</Trans>
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <ErrorLine text={error} />
+            )}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <Button size="sm" disabled={pending || Boolean(newer)} onClick={() => void save()}>
+              <Trans>Save</Trans>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              disabled={pending}
+              onClick={() => {
+                edit(null);
+                setNewer(null);
+              }}
+            >
+              <Trans>Cancel</Trans>
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <ErrorLine text={error} />
+      )}
+    </div>
   );
 }
 

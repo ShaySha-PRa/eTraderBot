@@ -861,6 +861,10 @@ msgstr "其他助理"
 msgid "Another item in this import uses the same name"
 msgstr "本次匯入中另一項使用了相同名稱"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Another Skill already uses this name. Disable this copy to save it"
+msgstr "另一個技能已使用此名稱。停用此副本後才能儲存"
+
 #: src/components/AskCard.tsx
 msgid "Answer"
 msgstr "回答"
@@ -1423,6 +1427,7 @@ msgstr "無法讀取影像"
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Artifacts.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/KnowledgeSection.tsx
 #: src/pages/McpServersOverlay.tsx
 #: src/pages/model-settings/connection-controls.tsx
@@ -3233,6 +3238,7 @@ msgstr "每個名稱只能使用一次。"
 #: src/components/AskCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/BusinessInterfaces.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/McpServersOverlay.tsx
 msgid "Edit"
 msgstr "編輯"
@@ -4181,6 +4187,14 @@ msgstr "剛剛"
 msgid "Keep memories"
 msgstr "保留記憶"
 
+#: src/pages/ExperienceHandoff.tsx
+msgid "Keep my draft"
+msgstr "保留我的草稿"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Keep the name {skillName}"
+msgstr "請保留名稱 {skillName}"
+
 #: src/pages/McpServersOverlay.tsx
 msgid "Keep tool results whole"
 msgstr ""
@@ -4215,6 +4229,10 @@ msgstr "上次檢查 {0}：無變化"
 #: src/components/DesktopUpdates.tsx
 msgid "Later"
 msgstr "稍後"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Latest version"
+msgstr "最新版本"
 
 #: src/pages/TradingLearning.tsx
 msgid "Learn now"
@@ -4883,6 +4901,10 @@ msgstr "需要輸入"
 #: src/pages/BusinessCycle.tsx
 msgid "Needs recalculation"
 msgstr "需要重新核对"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "Needs SKILL.md frontmatter with a name and description"
+msgstr "SKILL.md 需要包含名稱和說明的開頭資訊"
 
 #: src/pages/ActivityList.tsx
 msgid "Needs takeover"
@@ -6487,6 +6509,7 @@ msgstr "週六"
 #: src/components/teach/SkillDraftCard.tsx
 #: src/pages/AccountSettingsOverlay.tsx
 #: src/pages/Board.tsx
+#: src/pages/ExperienceHandoff.tsx
 #: src/pages/ExternalConversationSettings.tsx
 #: src/pages/GroupPanel.tsx
 #: src/pages/KnowledgeSection.tsx
@@ -6995,6 +7018,10 @@ msgstr "技能 {0}"
 #: src/pages/shell/agent-import.tsx
 msgid "Skill {position}"
 msgstr "技能 {position}"
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "SKILL.md for {skillName}"
+msgstr "{skillName} 的 SKILL.md"
 
 #: src/components/integrations/plugin-marketplace.tsx
 #: src/components/integrations/skills-dialog.tsx
@@ -7665,6 +7692,10 @@ msgstr "此伺服器已連線。請先中斷再重新授權。"
 #: src/lib/run-error.ts
 msgid "This server's tool result does not fit the model. Turn off Keep tool results whole for that server, or choose another model."
 msgstr ""
+
+#: src/pages/ExperienceHandoff.tsx
+msgid "This Skill changed elsewhere. Your draft is kept"
+msgstr "此技能已在別處被修改，你的草稿已保留"
 
 #: src/pages/model-settings/connection-controls.tsx
 msgid "This subscription sign-in is not available in eTraderBot yet. Use a deployment credential or choose another provider."
