@@ -1,7 +1,9 @@
 # eTraderBot 已完成 · 待办
 
 一页速览。**原 v1 计划**与**后加项**分栏，避免混在一起。细节见各计划／`docs/implementation/eTraderBot-v1-progress.md`。\
-整理：2026-11-06（America/Los_Angeles）
+整理：2026-11-07（基座加固 01–09 收尾）
+
+**最新阶段：01–09 全部 done。** 完成范围、证据入口和保留限制见[基座阶段验收汇总](../implementation/eTraderBot-foundation-acceptance.md)。本次只更新记录；后续事项尚未启动。
 
 图例：`done` · `wip` · `todo` · `later` · `blocked`
 
@@ -19,7 +21,7 @@
 | Bot 工具＋Web／移动交易入口 | done | 批 3 |
 | 每日／手动学习＋参数候选 | done | 批 4；仅固定算法参数 |
 | 四角色 Bot 模板＋工作区内嵌 | done | 批 5 |
-| 业务范围工作区＋接口**配置** | done | 批 6；未连通外读／外执 |
+| 业务范围工作区＋接口**配置** | done | 批 6；后续天气接入及只读 MCP 样例另有验收，公司交易接口仍待联调 |
 | 真实数据／真报盘联调 | later | 等外部适配与字段映射 |
 | 论文级算法／多改进案例 | todo | 现为工程基线＋参数候选 |
 | 壳大改／第二套编排替代 rakazo | — | **不做**（已否决） |
@@ -79,14 +81,19 @@
 | 知识层计划文档 | 选型未定；账本／Registry／RAG／Ontology 边界已写 | `eTraderBot-knowledge-layer-plan.md` |
 | 本速览页（done-todo） | 原计划 / 后加分列 | 本文件 |
 | 交易／通用工作区隔离及最小只读授权 | 后端、工具、迁移和多端入口已实现；原生设备与真实模型／接口未验收 | [V1.1 实施说明](../implementation/eTraderBot-v1.1-workspace-isolation.md) |
-| 每条业务线的主管 Bot | 固定协调身份、任务分配、结果与进度；真实模型效果未验收 | [主管说明](../implementation/eTraderBot-business-supervisor.md) |
-| 模拟业务周期与证据依赖协作 | P25 主流程及本轮缺陷定向验收通过；一次真实 Bot 复盘续跑通过，多 Bot 协作质量及正式账单接入未验收 | [业务周期说明](../implementation/eTraderBot-business-cycle.md)、[修复收尾验收](../implementation/eTraderBot-v1-acceptance.md#业务周期修复与定向复测收尾2026-11-05) |
+| 每条业务线的主管 Bot | 固定协调身份、任务分配、结果与进度；09 真实模型自主派单已补验，模型质量评价仍未完成 | [主管说明](../implementation/eTraderBot-business-supervisor.md)、[阶段汇总](../implementation/eTraderBot-foundation-acceptance.md) |
+| 模拟业务周期与证据依赖协作 | P25 主流程及缺陷定向验收通过；09 补真实模型协作、负责人接续和中断恢复；质量、收益及正式账单接入未验收 | [业务周期说明](../implementation/eTraderBot-business-cycle.md)、[阶段汇总](../implementation/eTraderBot-foundation-acceptance.md) |
 | 固定版本经验交接包与独立导入 MVP | 同一用户跨业务导入、来源区分、冲突与过期预览恢复、Skill 人工启用及历史保留已验收；权限与重试幂等有隔离 RPC/PostgreSQL 测试，浏览器 HTTP 重试及移动/原生端仍未验收 | [后端与收尾记录](../implementation/eTraderBot-experience-handoff.md)、[前端记录](../implementation/eTraderBot-experience-handoff-frontend.md) |
+| 基座加固 01–09 | 九票按原范围 done；含导入 Skill 独立编辑、真实模型连续演练和只读 MCP 样例。精确去重与部分权限拒绝采用确定性自动化证据 | [阶段验收汇总](../implementation/eTraderBot-foundation-acceptance.md) |
 
 ### B2 待办／想做（后加）
 
 | 优先级 | 项 | 状态 | 备注 |
 |---|---|---|---|
+| P1 | 既有测试失败与完整 CI 基线 | todo | authorization 4 项、executor-turn-checkpoint 27 项失败及较早 testkit／Expo／bot-secrets 检查限制仍保留；单独复现处理，不把历史定向通过当全量 CI |
+| P1 | Graphile 多进程恢复验证 | todo | 当前真实进程恢复使用 memory 唤醒驱动；生产默认多进程投递与恢复另验 |
+| P2 | 真实模型缓存工具撤权后的实际 refused | todo | 工具不可见、跨业务 RPC 404 与隔离执行器 refused 已分别记录，真实模型对应调用证据尚缺 |
+| P2 | 侧栏“文档”入口指向内部资料 | todo | 目标待确认：平台内文档页、本项目 GitHub 目录或既有文档站；尚未修改页面 |
 | P2 | 经验交接的 HTTP 请求级重试验收 | todo | 相同 confirm 的浏览器重放、并发与响应丢失后重试；隔离 RPC 通过不能替代这一项。跨使用者共享及原生端验收仍见 A3 |
 | — | 通用业务 Hook 插件框架与证据补查首例 | later | [Spec 已保存](../specs/eTraderBot-business-hooks-spec.md)，暂不启动；拆分见 B3，不计入当前已交付能力 |
 | P0 | 拍板知识层：RAG / Ontology / 并行；内置 vs MCP | todo | K0；填 knowledge-layer §8 |
@@ -114,6 +121,8 @@
 ---
 
 ## 近期建议顺序（可改）
+
+基座加固已经完成；先按 B2 单独安排基线失败及剩余验证，再确定一个具体业务的真实只读数据源接入。这里记录后续方向，不自动启动新任务。
 
 **原计划线：** 外读适配 → 连通验证 → 真报盘联调；学习论文／案例按节奏插。\
 **后加线：** K0 选型 → K2 Registry 契约 →（可选）K3／K4。

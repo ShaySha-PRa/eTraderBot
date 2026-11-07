@@ -120,7 +120,9 @@ Open **Learning** to add materials, edit the daily schedule, or select **Learn n
 
 ## Validation and remaining work
 
-The [current acceptance record](./docs/implementation/eTraderBot-v1-acceptance.md) reports 81 trading PostgreSQL tests, 17 row-isolation tests, 51 unit/contract/mobile-component tests, and 5 Chromium scenarios passing. Type checks and the Web build also passed. These are targeted checks of the documented checkpoint, not a full-repository CI result.
+The [foundation acceptance summary](./docs/implementation/eTraderBot-foundation-acceptance.md) closes tasks 01–09 through targeted tests, independent browser acceptance, and a real-model team exercise using synthetic business data. It separates real-model recovery from deterministic tests at the write boundary and retains known test failures and unverified areas; it does not establish full-repository CI or production trading readiness.
+
+The [V1 acceptance record](./docs/implementation/eTraderBot-v1-acceptance.md) retains earlier checkpoints, including 81 trading PostgreSQL tests, 17 row-isolation tests, 51 unit/contract/mobile-component tests, and 5 Chromium scenarios passing. Their type checks and Web build also passed. Those counts describe that earlier checkpoint, not the foundation stage or a new combined test run.
 
 Useful commands:
 
@@ -140,6 +142,7 @@ Remaining work includes company adapter connectivity and mapping, live execution
 
 | Document | Purpose |
 | --- | --- |
+| [Foundation acceptance](./docs/implementation/eTraderBot-foundation-acceptance.md) | Tasks 01–09, evidence levels, known failures, and remaining validation |
 | [V1 spec](./docs/specs/eTraderBot-v1-spec.md) | Confirmed scope, permissions, and deferred work |
 | [Implementation progress](./docs/implementation/eTraderBot-v1-progress.md) | Delivered batches and remaining milestones |
 | [Acceptance matrix](./docs/implementation/eTraderBot-v1-acceptance.md) | V01–V14 evidence and validation limits |

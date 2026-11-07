@@ -1,6 +1,6 @@
 # 02 运行追踪最小接口
 
-契约：`packages/contracts/src/run-trace.ts`，由 `@rakazo/contracts` 导出。复用 `appContract.runs`；原 `runs.list` 不变。后端持久化、查询及隔离回归已完成，前端使用此契约接入；实现及验证边界见 [02 后端记录](../implementation/eTraderBot-foundation-completed.md)。
+契约：`packages/contracts/src/run-trace.ts`，由 `@rakazo/contracts` 导出。复用 `appContract.runs`；原 `runs.list` 不变。后端持久化、查询及隔离回归已完成，前端使用此契约接入；实现及验证边界见 [02 后端记录](../implementation/eTraderBot-foundation-02-run-traceability.md)。
 
 ## 查询
 
@@ -40,10 +40,12 @@
 
 写入及读回均投影白名单，固定枚举以外不接收任意描述；workspaceId 最长 128 且须匹配当前 Run 业务，ISO 日期 10 字符、时间最长 35 字符，最多 24 时段，有限非负数值、时段边界校验，JSON 最多 8 KiB。凭据、参数和原始错误 message 不进入显示摘要。新迁移仅添加可空 JSONB 列及数据库长度约束，不改写旧记录。
 
-当前用户和业务权限不变。按用户 / 业务 / runId 隔离前端缓存，切换或撤权时不保留旧业务展示；使用原线程事件刷新、展开详情轮询兜底。浏览器与后端证据分别记录。详见 [08 补充交付](../implementation/eTraderBot-foundation-08-readonly-tool-example.md)。
+当前用户和业务权限不变。按用户 / 业务 / runId 隔离前端缓存，切换或撤权时不保留旧业务展示；使用原线程事件刷新、展开详情轮询兜底。前端工作交原 Claude，不能把本后端验证写成浏览器验收。详见 [08 补充交付](../implementation/eTraderBot-foundation-08-tool-display-backend.md)。
 
 ## 权限、错误和前端协作
 
 后端重查当前工作区成员资格、Run 的 userId 和 spaceId。工单列表只返回调用者自己的可读 Run，不因看板可见而暴露他人的运行。越区或不存在资源统一 `NOT_FOUND`，无当前成员资格 `FORBIDDEN`；ORPC `data.reason` 同名。遵循现有租户隔离，不放宽 Bot 的交易或审批权限。
 
 不新增订阅协议：复用原看板／线程运行事件触发查询失效，并对打开的运行详情做现有 Query 轮询补偿。展示时区沿用业务要求 Asia/Shanghai。Web/Electron 共用前端；移动端若本轮不提供原生入口，记录明确降级。
+
+CLI 负责 contracts、db、adapters、API、隔离回归；Claude 负责 Web 展示、查询接入、中英文及窄屏验证。CLI 不运行浏览器，集成测试使用独立 Testcontainers 数据库和 API/Web 配置端口 3551/5621。不得使用 Desktop 现有验收库、附件或测试结果目录。04/05 不属于本轮，不提交或推送。

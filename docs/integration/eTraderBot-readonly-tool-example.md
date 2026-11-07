@@ -110,3 +110,5 @@ MCP 响应包含 `structuredContent` 和相同 JSON 的 text。既有连接器�
 5. 查询 `2026-11-09`，应得到 `SOURCE_NO_DATA`。分开启动两个组件时停止 source，保留 mcp，再读应得到 `SOURCE_UNREACHABLE`；重新启动 source，再次读应恢复，不自动写证据。不要停止他人的服务。
 6. 超时和格式不符已由真实本地 HTTP fixture + MCP 客户端定向回归；若要浏览器复测，在**独立临时源**中延迟返回超过 timeoutMs 或返回非法 JSON，让 `sourceUrl` 指向它，保持 MCP 组件运行。不得改验收业务证据或共享服务制造故障。
 7. 打开保留的旧 Run：无 trace 覆盖标记或摘要时显示未记录，不能从 steps / Bot 文字回填来源或成功状态。失败、拒绝、等待和未知结果都不能显示成功图标；错误摘要只显示错误码的本地化说明，不渲染原始正文。检查网络响应和页面均无模拟凭据、原始参数及错误正文。切换业务或失去成员资格后不能继续展示缓存的旧业务资料。
+
+配置与消息展示由 Claude 在已有页面接入；本轮后端补充不代表页面已完成。等 Claude 更新后再进行以上整票验收。没有新建原生页面，Electron 共用 Web；移动端缺少对应展示入口时不得用旧 steps 声称成功或已展示来源，未经验证不能宣称移动端验收通过。交付状态见 [08 实施记录](../implementation/eTraderBot-foundation-08-readonly-tool-example.md) 与 [后端展示补充](../implementation/eTraderBot-foundation-08-tool-display-backend.md)。

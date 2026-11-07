@@ -118,7 +118,9 @@ pnpm --filter @rakazo/desktop dev
 
 ## 验证与后续工作
 
-[当前验收记录](./docs/implementation/eTraderBot-v1-acceptance.md)包括：81 项交易 PostgreSQL 测试、17 项行级隔离测试、51 项单元／契约／移动组件测试，以及 5 项 Chromium 场景通过；类型检查和 Web 构建也已通过。这是当前版本的定向验证，不代表全仓 CI 或真实交易验收。
+[基座阶段验收汇总](./docs/implementation/eTraderBot-foundation-acceptance.md)记录任务 01–09 的收尾：定向测试、独立浏览器验收，以及使用合成业务资料的真实模型团队演练。真实模型下的恢复与写入边界的确定性测试分开说明，已知测试失败和未验证范围予以保留；不代表全仓 CI 或可用于真实交易。
+
+[V1 验收记录](./docs/implementation/eTraderBot-v1-acceptance.md)保留较早的检查点：81 项交易 PostgreSQL 测试、17 项行级隔离测试、51 项单元／契约／移动组件测试，以及 5 项 Chromium 场景通过，当时的类型检查和 Web 构建也已通过。这些数字描述的是那个检查点，不是基座阶段或新的合并测试结果。
 
 常用验证命令：
 
@@ -138,6 +140,7 @@ pnpm --filter @rakazo/web build
 
 | 文档 | 内容 |
 | --- | --- |
+| [基座阶段验收](./docs/implementation/eTraderBot-foundation-acceptance.md) | 任务 01–09、证据层级、已知失败与待验证项 |
 | [V1 Spec](./docs/specs/eTraderBot-v1-spec.md) | 已确认范围、权限与暂缓项 |
 | [实施进度](./docs/implementation/eTraderBot-v1-progress.md) | 已完成批次与剩余阶段 |
 | [验收矩阵](./docs/implementation/eTraderBot-v1-acceptance.md) | V01–V14 证据与验证边界 |
