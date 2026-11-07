@@ -13,6 +13,7 @@ import type {
   ThreadSnapshot,
 } from "@rakazo/contracts";
 import { currentBusinessEvidence } from "@rakazo/core";
+import { toolEffectIdempotencyKey } from "@rakazo/core/node/approval-effect-key";
 import type { Pool } from "@rakazo/db";
 import {
   createBusinessCycleService,
@@ -305,6 +306,90 @@ async function blockedBackend(owner: Pool, pattern: string): Promise<number> {
 }
 
 describe.skipIf(!enabled).sequential("04 run recovery after interruption", () => {
+  it("09-D1 manager assigns through the real tool boundary with one persisted request and no authority transfer", async () => {
+    const f = await fixture();
+    try {
+      const manager = await f.db.bot.findFirstOrThrow({
+        where: { spaceId: f.actor.spaceId, businessSupervisor: true },
+      });
+      const requestId = randomUUID();
+      const args = {
+        operation: "assign",
+        cycleId: f.cycle.cycle.id,
+        requestId,
+        kind: "contract_coverage",
+      };
+      const outputs: unknown[] = [];
+      f.plans.set(manager.id, async function* (request) {
+        outputs.push(await request.executeTool!("business_cycle", args, "assign-first"));
+        outputs.push(await request.executeTool!("business_cycle", args, "assign-repeat"));
+        outputs.push(
+          await request.executeTool!(
+            "business_cycle",
+            { ...args, kind: "risk_check" },
+            "assign-conflict",
+          ),
+        );
+        yield { type: "done", text: "Synthetic assignment ended" };
+      });
+      const accepted = await f.rpc<{ runId: string }>("threads/send", {
+        botId: manager.id,
+        text: "Synthetic manager assignment",
+        clientNonce: randomUUID(),
+      });
+      await expect
+        .poll(() => f.db.run.findUnique({ where: { id: accepted.runId } }).then((r) => r?.status), {
+          timeout: 15000,
+        })
+        .toBe("completed");
+      expect(outputs[0]).toMatchObject({
+        tasks: [
+          expect.objectContaining({ kind: "contract_coverage", assigneeBotId: f.specialist.id }),
+        ],
+      });
+      expect(outputs[1]).toMatchObject({
+        tasks: [expect.objectContaining({ kind: "contract_coverage" })],
+      });
+      expect(outputs[2]).toMatchObject({ code: "IDEMPOTENCY_CONFLICT" });
+      const works = await f.db.businessCycleWork.findMany({
+        where: { cycleId: f.cycle.cycle.id, requestId },
+      });
+      expect(works).toHaveLength(1);
+      const ticket = await f.db.ticket.findUniqueOrThrow({ where: { id: works[0]!.ticketId } });
+      expect(ticket).toMatchObject({ createdByBotId: manager.id, assigneeBotId: f.specialist.id });
+      await f.runFor(ticket.id);
+      expect(await f.db.task.count({ where: { ticketId: ticket.id } })).toBe(1);
+      const effects = await f.db.externalEffect.findMany({
+        where: { runId: accepted.runId, kind: "business_cycle" },
+      });
+      expect(
+        effects
+          .filter((e) => e.status === "completed")
+          .map((e) => e.idempotencyKey)
+          .sort(),
+      ).toEqual(
+        [
+          toolEffectIdempotencyKey(accepted.runId, "business_cycle", args),
+          toolEffectIdempotencyKey(accepted.runId, "business_cycle", args, 1),
+        ].sort(),
+      );
+      expect(new Set(effects.map((e) => e.idempotencyKey)).size).toBe(effects.length);
+      const trace = await f.rpc<RunTraceDetail>("runs/detail", { runId: accepted.runId });
+      expect(trace.toolTrace.calls.map((c) => c.status)).toEqual([
+        "completed",
+        "completed",
+        "failed",
+      ]);
+      expect(
+        await f.db.tradingExecution.count({ where: { desk: { spaceId: f.actor.spaceId } } }),
+      ).toBe(0);
+      expect(
+        (await f.db.bot.findUniqueOrThrow({ where: { id: manager.id } })).tradingRole,
+      ).toBeNull();
+    } finally {
+      await f.close();
+    }
+  });
   it.each(["before_write", "after_write"] as const)(
     "recovers a business result interrupted %s without a second side effect, and other bots keep working",
     async (moment) => {

@@ -16,7 +16,8 @@ const origin = process.env.RUN_RECOVERY_ORIGIN!;
 const emit = (event: Record<string, unknown>) =>
   process.stdout.write(`${JSON.stringify({ pid: process.pid, ...event })}\n`);
 
-type Plan = Record<string, { ticketId: string; result: unknown }>;
+type Plan = Record<string, { ticketId: string; result: unknown; askBeforeComplete?: boolean }>;
+const asked = new Set<string>();
 const scripted = new ScriptedAgentRuntime();
 const runtime: AgentRuntime = {
   describe: () => ({
@@ -31,6 +32,12 @@ const runtime: AgentRuntime = {
     while (!work) {
       work = (JSON.parse(await readFile(planFile, "utf8")) as Plan)[request.botId];
       if (!work) await sleep(100);
+    }
+    if (work.askBeforeComplete && !asked.has(request.runId)) {
+      asked.add(request.runId);
+      emit({ event: "ask", runId: request.runId });
+      yield { type: "ask", text: "Continue with the confirmed synthetic contracts?" };
+      return;
     }
     const result = await request.executeTool!(
       "business_cycle",

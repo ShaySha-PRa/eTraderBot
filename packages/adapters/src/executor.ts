@@ -323,6 +323,16 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
       });
       if (leased.count !== 1) return;
 
+      // A killed process cannot run its attempt's finally block. Once a newer fence is
+      // owned, its older running attempts can no longer execute. Preserve waiting and
+      // terminal attempts, and never rewrite their tool-call history.
+      if (run.leaseFence > 0) {
+        await deps.prisma.attempt.updateMany({
+          where: { runId, fence: { lt: fence }, status: "running" },
+          data: { status: "interrupted", finishedAt: now },
+        });
+      }
+
       const current = await deps.prisma.run.findUniqueOrThrow({
         where: { id: runId },
       });

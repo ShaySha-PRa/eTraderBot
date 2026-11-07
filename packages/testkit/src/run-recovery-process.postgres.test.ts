@@ -11,6 +11,7 @@ import type {
   BusinessCycleState,
   BusinessWorkResult,
   RunTraceDetail,
+  ThreadSnapshot,
 } from "@rakazo/contracts";
 import { currentBusinessEvidence } from "@rakazo/core";
 import type { Pool } from "@rakazo/db";
@@ -282,12 +283,160 @@ async function scenario() {
     start,
     rpc,
     persisted,
-    release: () => writeFile(planFile, JSON.stringify({ [bot.id]: { ticketId, result } })),
+    release: (askBeforeComplete = false) =>
+      writeFile(planFile, JSON.stringify({ [bot.id]: { ticketId, result, askBeforeComplete } })),
     close,
   };
 }
 
 describe.skipIf(!enabled).sequential("04 run recovery across a real process restart", () => {
+  it(
+    "09-D2 closes a killed attempt before a recovered human wait, then answers without duplicating the committed result",
+    async () => {
+      const s = await scenario();
+      try {
+        const botLock = await holdRowLock(s.owner, `SELECT id FROM bots WHERE id = $1 FOR UPDATE`, [
+          s.bot.id,
+        ]);
+        await s.release();
+        await waitForBlockedBackend(s.owner, "%FROM bots%FOR SHARE%");
+        const intended = await s.persisted();
+        const effectKey = intended.effects[0]!.idempotencyKey;
+        const effectLock = await holdRowLock(
+          s.owner,
+          `SELECT id FROM external_effects WHERE "idempotencyKey" = $1 FOR UPDATE`,
+          [effectKey],
+        );
+        await botLock.release();
+        await waitForBlockedBackend(s.owner, "%UPDATE%external_effects%");
+        expect((await s.persisted()).evidence).toBe(1);
+        s.first.child.proc.kill("SIGKILL");
+        await s.first.child.exited;
+        await expect
+          .poll(
+            async () =>
+              (
+                await s.owner.query(
+                  `SELECT 1 FROM pg_stat_activity WHERE datname=current_database() AND usename='rakazo_app' AND wait_event_type='Lock'`,
+                )
+              ).rowCount,
+            { timeout: 30_000 },
+          )
+          .toBe(0);
+        await effectLock.release();
+        expect(s.first.child.proc.signalCode).toBe("SIGKILL");
+        const originalCalls = await s.db.runToolCall.findMany({ where: { runId: s.run.id } });
+        const originalEvidence = await s.db.businessEvidence.findMany({
+          where: { streamKey: `review:${s.ticketId}` },
+        });
+        const originalComments = await s.db.ticketComment.findMany({
+          where: { ticketId: s.ticketId },
+        });
+        const originalWork = await s.db.businessCycleWork.findUniqueOrThrow({
+          where: { ticketId: s.ticketId },
+        });
+        expect(originalEvidence).toHaveLength(1);
+        expect(originalComments).toHaveLength(1);
+        await s.release(true);
+        const second = await s.start(`${s.run.id}-waiting-recovery`);
+        // No lease mutation or fake clock. The dead process never runs its finally block.
+        await expect
+          .poll(
+            () => s.db.run.findUniqueOrThrow({ where: { id: s.run.id } }).then((r) => r.status),
+            { timeout: LEASE_RECOVERY_MS, interval: 5000 },
+          )
+          .toBe("waiting_input");
+        const waiting = await s.db.attempt.findMany({
+          where: { runId: s.run.id },
+          orderBy: { fence: "asc" },
+        });
+        expect(waiting.map((a) => a.status)).toEqual(["interrupted", "waiting_input"]);
+        expect(waiting[0]!.finishedAt).not.toBeNull();
+        expect(waiting[0]!.fence).toBeLessThan(waiting[1]!.fence);
+        expect(await s.db.runToolCall.findMany({ where: { attemptId: waiting[0]!.id } })).toEqual(
+          originalCalls,
+        );
+        const waitingTrace = await s.rpc<RunTraceDetail>(second.base, "runs/detail", {
+          runId: s.run.id,
+        });
+        expect(waitingTrace.toolTrace.calls[0]).toMatchObject({
+          attemptId: waiting[0]!.id,
+          status: "ambiguous",
+        });
+        const snapshot = await s.rpc<ThreadSnapshot>(second.base, "threads/get", {
+          botId: s.bot.id,
+        });
+        const question = snapshot.messages.find(
+          (m) => m.runId === s.run.id && m.blocks.some((b) => b.kind === "ask"),
+        )!;
+        expect(question).toBeDefined();
+        await s.rpc(second.base, "threads/answer", {
+          botId: s.bot.id,
+          runId: s.run.id,
+          messageId: question.id,
+          answer: "Use the confirmed synthetic contracts",
+          clientNonce: randomUUID(),
+        });
+        await expect
+          .poll(
+            () => s.db.run.findUniqueOrThrow({ where: { id: s.run.id } }).then((r) => r.status),
+            { timeout: 30_000 },
+          )
+          .toBe("completed");
+        const attempts = await s.db.attempt.findMany({
+          where: { runId: s.run.id },
+          orderBy: { fence: "asc" },
+        });
+        expect(attempts.map((a) => a.status)).toEqual([
+          "interrupted",
+          "waiting_input",
+          "completed",
+        ]);
+        expect(attempts.every((a) => a.finishedAt !== null)).toBe(true);
+        expect(attempts[0]).toEqual(waiting[0]);
+        expect(attempts[1]).toEqual(waiting[1]);
+        expect(attempts[2]!.fence).toBeGreaterThan(attempts[1]!.fence);
+        expect(
+          await s.db.businessEvidence.findMany({ where: { streamKey: `review:${s.ticketId}` } }),
+        ).toEqual(originalEvidence);
+        expect(await s.db.ticketComment.findMany({ where: { ticketId: s.ticketId } })).toEqual(
+          originalComments,
+        );
+        expect(
+          await s.db.businessCycleWork.findUniqueOrThrow({ where: { ticketId: s.ticketId } }),
+        ).toEqual(originalWork);
+        const after = await s.persisted();
+        expect(after.effects).toEqual([{ idempotencyKey: effectKey, status: "completed" }]);
+        expect(after.runs).toEqual([{ id: s.run.id, taskId: s.run.taskId }]);
+        expect(after.evidence).toBe(1);
+        expect(after.comments).toBe(1);
+        const trace = await s.rpc<RunTraceDetail>(second.base, "runs/detail", { runId: s.run.id });
+        expect(trace.toolTrace.calls.map((c) => [c.attemptId, c.status])).toEqual([
+          [attempts[0]!.id, "ambiguous"],
+          [attempts[2]!.id, "completed"],
+        ]);
+        process.stdout.write(
+          `${JSON.stringify({
+            case: "09-D2",
+            firstPid: s.first.child.proc.pid,
+            secondPid: second.child.proc.pid,
+            attempts: attempts.map((a) => ({
+              fence: a.fence,
+              status: a.status,
+              finishedAt: a.finishedAt,
+            })),
+            effects: after.effects,
+            evidenceId: originalEvidence[0]!.id,
+            commentId: originalComments[0]!.id,
+            requestId: originalWork.requestId,
+          })}\n`,
+        );
+      } finally {
+        await s.close();
+      }
+    },
+    LEASE_RECOVERY_MS + 120_000,
+  );
   it.each(["before_write", "after_write"] as const)(
     "a new process recovers a run whose process was killed %s, with one business write",
     async (moment) => {

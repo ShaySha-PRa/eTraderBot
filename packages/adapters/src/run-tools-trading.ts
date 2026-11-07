@@ -11,7 +11,8 @@ import type { ToolHandlers } from "./run-tool-gate.js";
 export const tradingTools = {
   async business_cycle(ctx, call) {
     const parsed = BusinessCycleCommandSchema.safeParse(call.args);
-    if (!parsed.success) return { error: "Business cycle request failed" };
+    // This check precedes every service call, so no business write could have happened.
+    if (!parsed.success) return { error: "Business cycle request failed", code: "INVALID_INPUT" };
     const input = parsed.data;
     let value: unknown;
     try {
@@ -27,9 +28,18 @@ export const tradingTools = {
           : input.operation === "read"
             ? await service.get(who, input.cycleId)
             : input.operation === "assign"
-              ? await service.assign(who, input)
+              ? await service.assign(who, {
+                  cycleId: input.cycleId,
+                  requestId: input.requestId,
+                  kind: input.kind,
+                  dependsOn: input.dependsOn,
+                })
               : input.operation === "analyze"
-                ? await service.analyze(who, input)
+                ? await service.analyze(who, {
+                    cycleId: input.cycleId,
+                    deskId: input.deskId,
+                    margin: input.margin,
+                  })
                 : input.operation === "settle"
                   ? await service.settle(who, input.cycleId)
                   : await service.complete(
@@ -40,7 +50,8 @@ export const tradingTools = {
                     );
     } catch (error) {
       if (error instanceof TradingError) return { error: error.message, code: error.code };
-      // A write lost to an infrastructure failure may still have committed.
+      // A write lost to infrastructure or post-commit readback validation may have committed.
+      // In particular, a service-side ZodError is not proof that nothing was written.
       return input.operation === "list" || input.operation === "read"
         ? { error: "Business cycle request failed" }
         : uncertainEffectResult("business_cycle", call.args);
