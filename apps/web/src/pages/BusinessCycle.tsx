@@ -1,3 +1,4 @@
+import { t as tr } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type {
   Bot,
@@ -23,6 +24,7 @@ import {
 } from "@rakazo/ui-web";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useId, useState } from "react";
+import { useBoardEvents } from "../lib/board-events";
 import { readBusinessResultDrafts, writeBusinessResultDrafts } from "../lib/business-result-draft";
 import { useSpaceQueries } from "../lib/query";
 import { selectedSpaceId } from "../lib/rpc";
@@ -169,6 +171,35 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
     await act(action, human);
     await cache.invalidateQueries({ queryKey: queries.businessCycle.key() });
     await cache.invalidateQueries({ queryKey: queries.businessSupervisor.key() });
+  }
+  // Another screen's change (a Bot archived, a ticket reassigned) refreshes this cycle at once;
+  // the cycle's own polling still covers a missed or disconnected stream.
+  useBoardEvents(
+    {
+      onEvent: () => void cache.invalidateQueries({ queryKey: queries.businessCycle.key() }),
+    },
+    queries,
+  );
+  /** Assignee gaps read as words; evidence gaps keep their stream names as before. */
+  const blockerText = (blocker: string) =>
+    blocker === "assignee:archived"
+      ? t`Assignee archived`
+      : blocker === "assignee:missing"
+        ? t`No assignee`
+        : blocker;
+  const [restoreErrors, setRestoreErrors] = useState<Record<string, unknown>>({});
+  /** Hands an archived or missing assignee's task to a server-listed replacement. */
+  function restore(ticketId: string, assigneeBotId: string) {
+    setRestoreErrors(({ [ticketId]: _, ...rest }) => rest);
+    return run(async () => {
+      try {
+        await api.tickets.update({ id: ticketId, assigneeBotId });
+      } catch (cause) {
+        if (isIdentityConfirmationRequired(cause)) throw cause;
+        // The refusal stays beside this task; the server decides who may take it over.
+        setRestoreErrors((all) => ({ ...all, [ticketId]: cause }));
+      }
+    }, true);
   }
   const fieldLabels: Record<keyof TaskDraft, string> = {
     summary: t`Human-recorded result`,
@@ -655,18 +686,13 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
                   id = `${fieldId}-${task.ticketId}`,
                   // Start gaps decide whether work can begin; `blockers` still gate completion.
                   start = task.startBlockers ?? task.blockers,
-                  assignee = roster.find((b) => b.id === task.assigneeBotId),
-                  // Active lists omit archived Bots, so a set but unlisted assignee is archived.
-                  ownerMissing = !task.assigneeBotId || !assignee,
-                  candidates = ownerMissing
-                    ? roster.filter(
-                        (b) =>
-                          b.tradingRole === businessWorkRequirements[task.kind].role &&
-                          !b.businessSupervisor &&
-                          !b.archivedAt,
-                      )
-                    : [],
-                  owner = owners[task.ticketId] ?? candidates[0]?.id ?? "";
+                  listed = roster.find((b) => b.id === task.assigneeBotId),
+                  // Only the server says whether an assignee is archived or missing; a Bot absent
+                  // from the shell's active list is a reason to ask, not an answer.
+                  needsRecovery =
+                    !task.assigneeBotId ||
+                    !listed ||
+                    [...start, ...task.blockers].some((b) => b.startsWith("assignee:"));
                 return (
                   <details
                     key={key}
@@ -674,44 +700,32 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
                     data-testid={`cycle-task-${task.ticketId}`}
                   >
                     <summary>
-                      {task.ref} · {workNames[task.kind]} · {task.status} ·{" "}
-                      {!task.assigneeBotId ? t`Unassigned` : (assignee?.name ?? t`Archived`)}
+                      {task.ref} · {workNames[task.kind]} · {task.status}
+                      {needsRecovery ? (
+                        <RecoveryAssigneeName ticketId={task.ticketId} />
+                      ) : (
+                        ` · ${listed.name}`
+                      )}
                     </summary>
                     <p className="mt-2 break-all">
                       {start.length
-                        ? `${t`Blocked`}: ${start.join(", ")}`
+                        ? `${t`Blocked`}: ${start.map(blockerText).join(", ")}`
                         : task.blockers.length && task.status !== "done"
-                          ? `${t`Ready to investigate`} · ${t`Needed to complete`}: ${task.blockers.join(", ")}`
+                          ? `${t`Ready to investigate`} · ${t`Needed to complete`}: ${task.blockers.map(blockerText).join(", ")}`
                           : t`Required evidence available`}
                     </p>
-                    {candidates.length ? (
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        <NativeSelect
-                          aria-label={t`Assignee`}
-                          value={owner}
-                          onChange={(e) =>
-                            setOwners((all) => ({ ...all, [task.ticketId]: e.target.value }))
-                          }
-                        >
-                          {candidates.map((b) => (
-                            <NativeSelectOption key={b.id} value={b.id}>
-                              {b.name}
-                            </NativeSelectOption>
-                          ))}
-                        </NativeSelect>
-                        <Button
-                          variant="outline"
-                          disabled={pending || !owner}
-                          onClick={() =>
-                            void run(
-                              () => api.tickets.update({ id: task.ticketId, assigneeBotId: owner }),
-                              true,
-                            )
-                          }
-                        >
-                          <Trans>Restore</Trans>
-                        </Button>
-                      </div>
+                    {needsRecovery ? (
+                      <AssigneeRecovery
+                        ticketId={task.ticketId}
+                        owner={owners[task.ticketId]}
+                        onOwner={(id) => {
+                          setOwners((all) => ({ ...all, [task.ticketId]: id }));
+                          setRestoreErrors(({ [task.ticketId]: _, ...rest }) => rest);
+                        }}
+                        pending={pending}
+                        error={restoreErrors[task.ticketId]}
+                        onRestore={(id) => restore(task.ticketId, id)}
+                      />
                     ) : null}
                     {task.result ? (
                       <div className="mt-2 space-y-1">
@@ -820,4 +834,120 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
       </div>
     </div>
   );
+}
+
+/**
+ * The assignee as the server sees it, and the replacements it currently allows. Candidates are a
+ * reading, not a grant: the update is checked again when sent.
+ */
+function AssigneeRecovery({
+  ticketId,
+  owner,
+  onOwner,
+  pending,
+  error,
+  onRestore,
+}: {
+  ticketId: string;
+  owner: string | undefined;
+  onOwner: (id: string) => void;
+  pending: boolean;
+  error: unknown;
+  onRestore: (assigneeBotId: string) => Promise<unknown>;
+}) {
+  const { t } = useLingui();
+  const queries = useSpaceQueries();
+  const recovery = useQuery({
+    ...queries.businessCycle.recovery.queryOptions({ input: { ticketId } }),
+    refetchInterval: 5000,
+  });
+  const data = recovery.data;
+  if (!data)
+    return recovery.isError ? (
+      <p role="alert" className="mt-2 text-destructive">
+        {errorText(recovery.error, t`Could not continue`)}
+      </p>
+    ) : null;
+  const choice = data.candidates.some((c) => c.id === owner) ? owner : data.candidates[0]?.id;
+  const assignee = data.assignee;
+  const name = assignee?.name ?? "";
+  return (
+    <div className="mt-2 space-y-2" data-testid="assignee-recovery">
+      <p>
+        {!assignee
+          ? t`No assignee`
+          : assignee.archivedAt
+            ? t`Assignee archived: ${name}`
+            : t`Assignee: ${name}`}
+      </p>
+      {data.canReplace ? (
+        data.candidates.length ? (
+          <div className="flex flex-wrap gap-2">
+            <NativeSelect
+              aria-label={t`Replacement`}
+              value={choice}
+              onChange={(e) => onOwner(e.target.value)}
+            >
+              {data.candidates.map((b) => (
+                <NativeSelectOption key={b.id} value={b.id}>
+                  {b.name}
+                </NativeSelectOption>
+              ))}
+            </NativeSelect>
+            <Button
+              variant="outline"
+              disabled={pending || !choice}
+              onClick={() => choice && void onRestore(choice)}
+            >
+              <Trans>Restore</Trans>
+            </Button>
+          </div>
+        ) : (
+          <p className="text-muted-foreground">
+            <Trans>No eligible Bot for this role yet</Trans>
+          </p>
+        )
+      ) : null}
+      {error !== undefined ? (
+        <p role="alert" className="text-destructive">
+          {restoreErrorText(error)}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+/** The summary's assignee, from the same server reading as the recovery controls. */
+function RecoveryAssigneeName({ ticketId }: { ticketId: string }) {
+  const { t } = useLingui();
+  const queries = useSpaceQueries();
+  const { data } = useQuery({
+    ...queries.businessCycle.recovery.queryOptions({ input: { ticketId } }),
+    refetchInterval: 5000,
+  });
+  if (!data) return null;
+  const assignee = data.assignee;
+  return (
+    <>
+      {" · "}
+      {!assignee
+        ? t`Unassigned`
+        : assignee.archivedAt
+          ? `${assignee.name} (${t`Archived`})`
+          : assignee.name}
+    </>
+  );
+}
+
+function restoreErrorText(cause: unknown): string {
+  const data = cause && typeof cause === "object" && "data" in cause ? cause.data : undefined;
+  const reason =
+    data && typeof data === "object" && "reason" in data
+      ? (data as { reason: unknown }).reason
+      : null;
+  const code = errorCode(cause);
+  if (reason === "FORBIDDEN" || code === "FORBIDDEN") return tr`This Bot can't take over this task`;
+  if (code === "NOT_FOUND") return tr`This Bot is no longer available`;
+  if (code === "UNAUTHORIZED") return tr`You no longer have access to this business`;
+  return errorText(cause, tr`Could not continue`);
 }

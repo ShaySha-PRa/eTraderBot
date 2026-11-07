@@ -1041,6 +1041,18 @@ msgstr "Asset ID"
 msgid "Assign necessary role"
 msgstr "Assign necessary role"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee archived"
+msgstr "Assignee archived"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee archived: {name}"
+msgstr "Assignee archived: {name}"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee: {name}"
+msgstr "Assignee: {name}"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -4993,6 +5005,10 @@ msgstr "No apps match your search."
 msgid "No artifacts found."
 msgstr "No artifacts found."
 
+#: src/pages/BusinessCycle.tsx
+msgid "No assignee"
+msgstr "No assignee"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "No auth"
 msgstr "No auth"
@@ -5021,6 +5037,10 @@ msgstr "No bots in this business scope yet."
 #: src/pages/shell/bot-picker.tsx
 msgid "No bots match"
 msgstr "No bots match"
+
+#: src/pages/BusinessCycle.tsx
+msgid "No eligible Bot for this role yet"
+msgstr "No eligible Bot for this role yet"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
@@ -6102,6 +6122,10 @@ msgstr "Replace push token"
 #: src/components/VaultSettings.tsx
 msgid "Replace value"
 msgstr "Replace value"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Replacement"
+msgstr "Replacement"
 
 #: src/pages/shell/message-hover-actions.tsx
 #: src/pages/shell/quote-selection-button.tsx
@@ -7484,6 +7508,14 @@ msgstr "This bot"
 #: src/pages/ExperienceHandoff.tsx
 msgid "This Bot already has something with this name"
 msgstr "This Bot already has something with this name"
+
+#: src/pages/BusinessCycle.tsx
+msgid "This Bot can't take over this task"
+msgstr "This Bot can't take over this task"
+
+#: src/pages/BusinessCycle.tsx
+msgid "This Bot is no longer available"
+msgstr "This Bot is no longer available"
 
 #: src/pages/shell/computer-view.tsx
 msgid "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."

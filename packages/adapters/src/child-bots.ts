@@ -16,6 +16,7 @@ import {
 import { ACTIVE_RUN_STATUSES } from "@rakazo/core";
 import type { Prisma, PrismaClient } from "@rakazo/db";
 import {
+  archiveBusinessBotWork,
   cancelRunsInTransaction,
   clearEndedRunState,
   computerScopeKey,
@@ -39,6 +40,7 @@ import {
 import { removeAgentHome, removeAgentHomeFolders } from "./home.js";
 import { removePiBotSessions } from "./pi-session.js";
 import { isSandboxGoneError } from "./sandbox-errors.js";
+import type { TicketChangeNotifier } from "./ticket-changes.js";
 
 export function confirmSpawnedBotName(confirmName: string, botName: string) {
   if (confirmName !== botName) {
@@ -210,6 +212,7 @@ type BotLifecycleDeps = {
   jobs: JobPublisher;
   dataDir?: string;
   artifacts?: ArtifactStore;
+  onTicketChange?: TicketChangeNotifier;
   messagingInstallations?: {
     removeForBot(bot: { id: string; spaceId: string; userId: string }): Promise<void>;
   };
@@ -221,6 +224,7 @@ type LifecycleBot = {
   name: string;
   userId: string;
   archivedAt: Date | null;
+  tradingRole?: string | null;
   computerId?: string | null;
   webhookSecretId?: string | null;
 };
@@ -349,6 +353,14 @@ export async function archiveBot(
       data: { archivedAt: bot.archivedAt ?? now, pinned: false },
     });
   });
+  // Reconcile after the archive transaction releases its Bot locks: result writes
+  // take the cycle lock before their live-identity locks (05), so do not invert that order.
+  if (bot.tradingRole) {
+    const changes = await deps.prisma.$transaction((tx) =>
+      archiveBusinessBotWork(tx, bot.spaceId, bot.id),
+    );
+    for (const change of changes) await deps.onTicketChange?.(change);
+  }
   await Promise.allSettled([
     ...activeRuns.map((run) => deps.jobs.cancel(runJobKey(run.id))),
     ...activeRoutines.map((routine) => deps.jobs.cancel(routineJobKey(routine.id))),

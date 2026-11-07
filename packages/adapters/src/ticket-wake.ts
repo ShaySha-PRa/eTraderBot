@@ -26,6 +26,15 @@ export async function wakeTicketAssignee(
     if (!bot?.thread) return null;
     // A claim is meaningful only when this transaction can create its Task and Run.
     if (!(await claimBusinessTicketWake(tx, ticket))) return null;
+    const businessWork = await tx.businessCycleWork.findUnique({
+      where: { ticketId: ticket.id },
+      select: { cycleId: true },
+    });
+    // The replacement has its own chat. Give it the durable cycle association,
+    // not a stale copy of the former Bot's conversation or editable description.
+    const continuation = businessWork
+      ? ` Use business_cycle read with cycleId ${businessWork.cycleId} before continuing. Read the latest evidence and prior results, including unresolved issues and historical reviews. Submit with the current expectedResultEvidenceId. Changing assignee grants no credentials, algorithm approval or trading authority.`
+      : "";
     const task = await tx.task.create({
       data: {
         spaceId: input.spaceId,
@@ -33,7 +42,7 @@ export async function wakeTicketAssignee(
         threadId: bot.thread.id,
         userId: bot.userId,
         ticketId: ticket.id,
-        prompt: `Work on ticket ${ticket.board.ticketPrefix}-${ticket.number}. Read it with ticket_get. Keep progress in ticket comments and update its status with ticket_update. Use ask or approval cards when user input is needed.`,
+        prompt: `Work on ticket ${ticket.board.ticketPrefix}-${ticket.number}. Read it with ticket_get. Keep progress in ticket comments and update its status with ticket_update. Use ask or approval cards when user input is needed.${continuation}`,
         status: "queued",
       },
     });

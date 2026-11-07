@@ -9,7 +9,8 @@ import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 
 const api = vi.hoisted(() => ({
-  businessCycle: { list: vi.fn(), get: vi.fn(), complete: vi.fn() },
+  businessCycle: { list: vi.fn(), get: vi.fn(), complete: vi.fn(), recovery: vi.fn() },
+  boards: { subscribe: vi.fn() },
   businessSupervisor: {},
   tickets: { update: vi.fn() },
   trading: { desks: vi.fn(), desk: vi.fn() },
@@ -24,6 +25,10 @@ vi.mock("../lib/rpc", () => ({
 }));
 /** The interface language; switching it re-renders like the real provider does. */
 const language = vi.hoisted(() => ({ locale: "en", listeners: new Set<() => void>() }));
+vi.mock("@lingui/core/macro", () => ({
+  t: (parts: TemplateStringsArray, ...values: unknown[]) =>
+    (language.locale === "en" ? "" : `[${language.locale}] `) + String.raw(parts, ...values),
+}));
 vi.mock("@lingui/react/macro", async () => {
   const { useSyncExternalStore } = await import("react");
   const subscribe = (listener: () => void) => {
@@ -124,6 +129,40 @@ function cycleState(cycleId: string) {
   } as unknown as BusinessCycleState;
 }
 
+/** The space's ticket-change stream; `event()` delivers one change. */
+function boardStream() {
+  let deliver: ((result: IteratorResult<{ ticketId?: string }>) => void) | undefined;
+  return {
+    stream: {
+      [Symbol.asyncIterator]: () => ({
+        next: () =>
+          new Promise<IteratorResult<{ ticketId?: string }>>((resolve) => {
+            deliver = resolve;
+          }),
+      }),
+    },
+    event: (ticketId: string) => deliver?.({ done: false, value: { ticketId } }),
+  };
+}
+let live: ReturnType<typeof boardStream>;
+
+/** The server's recovery reading for one task. */
+function recovery(
+  ticketId: string,
+  assignee: { id: string; name: string; archivedAt: string | null } | null,
+  candidates: { id: string; name: string }[] = [],
+  canReplace = assignee === null || assignee.archivedAt !== null,
+) {
+  return {
+    ticketId,
+    cycleId: "cycle-1",
+    requiredRole: "risk",
+    assignee,
+    canReplace,
+    candidates: canReplace ? candidates : [],
+  };
+}
+
 let client: QueryClient;
 let view:
   | { container: HTMLElement; update: () => Promise<void>; cleanup: () => Promise<void> }
@@ -146,6 +185,16 @@ beforeEach(() => {
     cycleState(cycleId),
   );
   api.businessCycle.complete.mockReset();
+  // By default the server reports each task's assignee as active, or none when unset.
+  api.businessCycle.recovery.mockReset().mockImplementation(async ({ ticketId }) => {
+    const found = Object.values(server)
+      .flat()
+      .find((t) => t.ticketId === ticketId);
+    const id = found?.assigneeBotId ?? null;
+    return recovery(ticketId, id ? { id, name: id, archivedAt: null } : null);
+  });
+  live = boardStream();
+  api.boards.subscribe.mockReset().mockResolvedValue(live.stream);
   roster = [];
   api.trading.desks.mockResolvedValue([]);
 });
@@ -362,6 +411,8 @@ it("keeps text and its evidence basis typed while the submission is in flight", 
 it("marks a task whose assignee was removed", async () => {
   server["cycle-1"] = [task("contract", "contract_coverage", "todo", null)];
   const container = await render();
+  // The assignee comes from the server's recovery reading, after the cycle loads.
+  await settle();
   expect(container.querySelector('[data-testid="cycle-task-contract"] summary')?.textContent).toBe(
     "CONTRACT · Contract coverage · todo · Unassigned",
   );
@@ -430,7 +481,7 @@ it("records an investigation with unresolved items and keeps it in review", asyn
   expect(values("review")).toEqual(blank);
 });
 
-it("restores a missing assignee with an eligible specialist and keeps the result", async () => {
+it("restores a missing assignee with a server-listed specialist and keeps the result", async () => {
   const result = {
     summary: "Earlier risk result",
     evidenceIds: ["cycle-1-contracts"],
@@ -439,42 +490,150 @@ it("restores a missing assignee with an eligible specialist and keeps the result
     improvementProposal: null,
   };
   server["cycle-1"] = [task("risk", "risk_check", "review", null, { result })];
+  // The shell roster holds more Bots; only the server's candidates are offered.
   roster = [
     { id: "risk-2", name: "Risk two", tradingRole: "risk", archivedAt: null },
-    { id: "spot", name: "Spot", tradingRole: "spot", archivedAt: null },
+    { id: "risk-3", name: "Risk three", tradingRole: "risk", archivedAt: null },
     { id: "chief", name: "Chief", businessSupervisor: true, tradingRole: null, archivedAt: null },
   ];
+  api.businessCycle.recovery.mockResolvedValue(
+    recovery("risk", null, [{ id: "risk-2", name: "Risk two" }]),
+  );
   api.tickets.update.mockImplementation(async ({ assigneeBotId }: { assigneeBotId: string }) => {
     server["cycle-1"] = [task("risk", "risk_check", "todo", assigneeBotId, { result })];
   });
   await render();
+  await settle();
   expect(taskText("risk")).toContain("RISK · Risk check · review · Unassigned");
-  const select = view!.container.querySelector<HTMLSelectElement>(
-    '[data-testid="cycle-task-risk"] select[aria-label="Assignee"]',
-  )!;
+  expect(taskText("risk")).toContain("No assignee");
+  const select = replacementSelect("risk")!;
   expect([...select.options].map((o) => o.textContent)).toEqual(["Risk two"]);
-  const restore = [
-    ...view!.container.querySelectorAll<HTMLButtonElement>(
-      '[data-testid="cycle-task-risk"] button',
-    ),
-  ].find((b) => b.textContent === "Restore")!;
-  await act(async () => restore.click());
+  await act(async () => restoreButton("risk")!.click());
   await settle();
   expect(api.tickets.update).toHaveBeenCalledWith({ id: "risk", assigneeBotId: "risk-2" });
+  // Same ticket and cycle; the earlier result and unresolved items stay.
   expect(taskText("risk")).toContain("RISK · Risk check · todo · Risk two");
   expect(taskText("risk")).toContain("Earlier risk result");
-  expect(view!.container.querySelector('[data-testid="cycle-task-risk"] select')).toBeNull();
+  expect(taskText("risk")).toContain("Pending");
+  expect(replacementSelect("risk")).toBeNull();
 });
 
-it("treats an archived assignee as missing", async () => {
-  server["cycle-1"] = [task("risk", "risk_check", "todo", "gone")];
-  roster = [{ id: "risk-2", name: "Risk two", tradingRole: "risk", archivedAt: null }];
+it("calls an assignee archived only when the server says so", async () => {
+  server["cycle-1"] = [
+    task("risk", "risk_check", "todo", "gone", { blockers: ["assignee:archived"] }),
+    task("contract", "contract_coverage", "todo", "elsewhere"),
+  ];
+  api.businessCycle.recovery.mockImplementation(async ({ ticketId }: { ticketId: string }) =>
+    ticketId === "risk"
+      ? recovery("risk", { id: "gone", name: "Old risk", archivedAt: "2026-11-07T00:00:00Z" }, [
+          { id: "risk-2", name: "Risk two" },
+        ])
+      : // Absent from the shell roster, but the server says this assignee is active.
+        recovery("contract", { id: "elsewhere", name: "Contract desk", archivedAt: null }),
+  );
   await render();
-  expect(taskText("risk")).toContain("RISK · Risk check · todo · Archived");
-  expect(
-    view!.container.querySelector('[data-testid="cycle-task-risk"] select[aria-label="Assignee"]'),
-  ).not.toBeNull();
+  await settle();
+  expect(taskText("risk")).toContain("RISK · Risk check · todo · Old risk (Archived)");
+  expect(taskText("risk")).toContain("Assignee archived: Old risk");
+  expect(replacementSelect("risk")).not.toBeNull();
+  expect(taskText("contract")).toContain("CONTRACT · Contract coverage · todo · Contract desk");
+  expect(taskText("contract")).not.toContain("Archived");
+  expect(replacementSelect("contract")).toBeNull();
 });
+
+it("does not allow a restore without an eligible Bot", async () => {
+  server["cycle-1"] = [task("risk", "risk_check", "todo", null)];
+  api.businessCycle.recovery.mockResolvedValue(recovery("risk", null, []));
+  await render();
+  await settle();
+  expect(taskText("risk")).toContain("No eligible Bot for this role yet");
+  expect(restoreButton("risk")).toBeUndefined();
+});
+
+it("shows a refused restore beside the task in the interface language and keeps the choice", async () => {
+  server["cycle-1"] = [task("risk", "risk_check", "todo", null)];
+  api.businessCycle.recovery.mockResolvedValue(
+    recovery("risk", null, [{ id: "risk-2", name: "Risk two" }]),
+  );
+  api.tickets.update.mockRejectedValueOnce(
+    Object.assign(new Error("Replacement must be an active same-role Bot"), {
+      code: "FORBIDDEN",
+      data: { reason: "FORBIDDEN" },
+    }),
+  );
+  await render();
+  await settle();
+  await act(async () => restoreButton("risk")!.click());
+  await settle();
+  expect(taskAlert("risk")?.textContent).toBe("This Bot can't take over this task");
+  expect(taskText("risk")).not.toContain("Replacement must be");
+  expect(pageAlerts()).toHaveLength(0);
+  expect(replacementSelect("risk")?.value).toBe("risk-2");
+  await switchLanguage("zh-CN");
+  expect(taskAlert("risk")?.textContent).toBe("[zh-CN] This Bot can't take over this task");
+});
+
+it("keeps a restored task blocked while its prerequisite evidence is missing", async () => {
+  server["cycle-1"] = [
+    task("spot", "spot_analysis", "blocked", null, { startBlockers: ["assignee:missing", "risk"] }),
+  ];
+  api.businessCycle.recovery.mockResolvedValue(
+    recovery("spot", null, [{ id: "spot-2", name: "Spot two" }]),
+  );
+  roster = [{ id: "spot-2", name: "Spot two", tradingRole: "spot", archivedAt: null }];
+  api.tickets.update.mockImplementation(async () => {
+    server["cycle-1"] = [
+      task("spot", "spot_analysis", "blocked", "spot-2", { startBlockers: ["risk"] }),
+    ];
+  });
+  await render();
+  await settle();
+  await act(async () => restoreButton("spot")!.click());
+  await settle();
+  expect(taskText("spot")).toContain("SPOT · Spot analysis · blocked · Spot two");
+  expect(taskText("spot")).toContain("Blocked: risk");
+});
+
+it("refreshes the cycle and its assignee when another screen archives the Bot", async () => {
+  server["cycle-1"] = [task("risk", "risk_check", "todo", "risk-1")];
+  roster = [{ id: "risk-1", name: "Risk one", tradingRole: "risk", archivedAt: null }];
+  await render();
+  expect(taskText("risk")).toContain("RISK · Risk check · todo · Risk one");
+  expect(api.businessCycle.recovery).not.toHaveBeenCalled();
+
+  // Archived elsewhere: the server marks the task, and the board stream announces the change.
+  server["cycle-1"] = [
+    task("risk", "risk_check", "blocked", "risk-1", { startBlockers: ["assignee:archived"] }),
+  ];
+  api.businessCycle.recovery.mockResolvedValue(
+    recovery("risk", { id: "risk-1", name: "Risk one", archivedAt: "2026-11-07T00:00:00Z" }, [
+      { id: "risk-2", name: "Risk two" },
+    ]),
+  );
+  const reads = api.businessCycle.get.mock.calls.length;
+  await act(async () => live.event("risk"));
+  await settle();
+  await settle();
+  expect(api.businessCycle.get.mock.calls.length).toBeGreaterThan(reads);
+  expect(taskText("risk")).toContain("RISK · Risk check · blocked · Risk one (Archived)");
+  expect(taskText("risk")).toContain("Blocked: Assignee archived");
+  expect(taskText("risk")).not.toContain("assignee:archived");
+  expect([...replacementSelect("risk")!.options].map((o) => o.textContent)).toEqual(["Risk two"]);
+});
+
+function replacementSelect(ticketId: string) {
+  return view!.container.querySelector<HTMLSelectElement>(
+    `[data-testid="cycle-task-${ticketId}"] select[aria-label="Replacement"]`,
+  );
+}
+
+function restoreButton(ticketId: string) {
+  return [
+    ...view!.container.querySelectorAll<HTMLButtonElement>(
+      `[data-testid="cycle-task-${ticketId}"] button`,
+    ),
+  ].find((b) => b.textContent === "Restore");
+}
 
 it("shows each submission stage as its own evidence", async () => {
   extraEvidence = [
@@ -495,45 +654,6 @@ it("shows each submission stage as its own evidence", async () => {
     view!.container.querySelector(`[data-testid="evidence-${key}"] summary`)?.textContent;
   expect(summary("submission")).toContain("Submission receipt · day_ahead · v1");
   expect(summary("submission:mid_long_term")).toContain("Submission receipt · mid_long_term · v1");
-});
-
-it("follows the shell roster when an assignee is archived while open", async () => {
-  const result = {
-    summary: "Earlier contract result",
-    evidenceIds: ["cycle-1-contracts"],
-    disagreements: [],
-    unresolved: [],
-    improvementProposal: null,
-  };
-  server["cycle-1"] = [task("contract", "contract_coverage", "done", "mlt", { result })];
-  roster = [
-    { id: "mlt", name: "Contract specialist", tradingRole: "mid_long_term", archivedAt: null },
-  ];
-  await render();
-  expect(taskText("contract")).toContain(
-    "CONTRACT · Contract coverage · done · Contract specialist",
-  );
-  expect(view!.container.querySelector('select[aria-label="Assignee"]')).toBeNull();
-
-  // Archiving drops the Bot from the shell roster; the open page updates without a reload.
-  roster = [];
-  await view!.update();
-  expect(taskText("contract")).toContain("CONTRACT · Contract coverage · done · Archived");
-  expect(view!.container.querySelector('select[aria-label="Assignee"]')).toBeNull();
-
-  // A replacement with the same role appears as the only candidate; the result stays.
-  roster = [
-    { id: "spot", name: "Spot", tradingRole: "spot", archivedAt: null },
-    { id: "mlt-2", name: "Replacement", tradingRole: "mid_long_term", archivedAt: null },
-  ];
-  await view!.update();
-  const options = [
-    ...view!.container.querySelectorAll(
-      '[data-testid="cycle-task-contract"] select[aria-label="Assignee"] option',
-    ),
-  ].map((o) => o.textContent);
-  expect(options).toEqual(["Replacement"]);
-  expect(taskText("contract")).toContain("Earlier contract result");
 });
 
 function taskAlert(ticketId: string) {

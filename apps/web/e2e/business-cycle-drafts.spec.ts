@@ -203,8 +203,8 @@ test("a task whose specialist was deleted can be restored to an eligible Bot", a
     tradingRole: "mid_long_term",
     tradingWorkspaceId: scope.id,
   });
-  // Only an active Bot with the task's specialist role is offered.
-  const owner = contract.getByLabel("Assignee", { exact: true });
+  // Only the server's candidates (an active Bot with the task's specialist role) are offered.
+  const owner = contract.getByLabel("Replacement", { exact: true });
   await expect(owner.locator("option")).toHaveText([replacement.name]);
   await captureScreenshot(page, testInfo, "business-cycle-owner-missing-en");
   await contract.getByRole("button", { name: "Restore", exact: true }).click();
@@ -222,7 +222,7 @@ test("a task whose specialist was deleted can be restored to an eligible Bot", a
 
   // Archiving the assignee elsewhere updates the open page without a reload.
   await rpc(page, "bots/archive", { botId: replacement.id });
-  await expect(contract.locator("summary")).toContainText("· Archived");
+  await expect(contract.locator("summary")).toContainText(`${replacement.name} (Archived)`);
   const second = await rpc<Bot>(page, "bots/create", {
     name: "Synthetic owner second",
     tradingRole: "mid_long_term",

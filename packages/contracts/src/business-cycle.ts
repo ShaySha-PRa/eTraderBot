@@ -5,6 +5,7 @@ import {
   TradingUnsignedDecimalSchema as energy,
   TradingScopeSchema,
 } from "./trading.js";
+import { TradingBotRoleSchema } from "./trading-bot-template.js";
 import { TradingAnalysisSchema } from "./trading-rpc.js";
 
 const id = z.string().min(1).max(128);
@@ -197,9 +198,18 @@ export const BusinessAssignInputSchema = z.strictObject({
   kind: BusinessWorkKindSchema,
   dependsOn: z.array(id).max(20).default([]),
 });
+export const BusinessRecoverySchema = z.object({
+  ticketId: id,
+  cycleId: id,
+  requiredRole: TradingBotRoleSchema,
+  assignee: z.object({ id, name: z.string(), archivedAt: instant.nullable() }).nullable(),
+  canReplace: z.boolean(),
+  candidates: z.array(z.object({ id, name: z.string() })),
+});
 export const businessCycleContract = {
   list: oc.input(z.strictObject({})).output(z.array(BusinessCycleSchema)),
   get: oc.input(z.strictObject({ cycleId: id })).output(BusinessCycleStateSchema),
+  recovery: oc.input(z.strictObject({ ticketId: id })).output(BusinessRecoverySchema),
   createDemo: oc.input(z.strictObject({ requestId: id })).output(BusinessCycleStateSchema),
   importEvidence: oc.input(BusinessImportInputSchema).output(BusinessEvidenceSchema),
   demoResults: oc

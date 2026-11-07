@@ -34,6 +34,9 @@ export function businessCycleRoutes(ctx: RouterContext) {
       get: ctx.authed.businessCycle.get.handler(({ context, input }) =>
         result(() => service.get(context.actor, input.cycleId)),
       ),
+      recovery: ctx.authed.businessCycle.recovery.handler(({ context, input }) =>
+        result(() => service.recovery(context.actor, input.ticketId)),
+      ),
       createDemo: ctx.authed.businessCycle.createDemo.handler(async ({ context, input }) => {
         await requireIdentityConfirmation(ctx.deps.auth, context);
         return result(() => service.createDemo(context.actor, input.requestId));

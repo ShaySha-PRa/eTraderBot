@@ -8,11 +8,10 @@ import {
   latestBusinessEvidence,
   tradingAssert,
 } from "@rakazo/core";
-import { businessIdentity, cycleEvidence } from "./business-cycle-evidence.js";
+import { cycleEvidence, lockBusinessResultIdentity } from "./business-cycle-evidence.js";
 import type { BusinessCycleWork, Prisma, PrismaClient, Ticket } from "./client.js";
 import { Prisma as PrismaRuntime } from "./client.js";
 import { currentDbContext } from "./row-security.js";
-import { requireIsolatedBot } from "./workspace-isolation.js";
 
 type Db = Prisma.TransactionClient | PrismaClient;
 export type BusinessTicketChange = {
@@ -68,7 +67,7 @@ export async function businessWorkBlockers(
 export async function cycleWorkState(db: Db, cycleId: string, evidence: BusinessEvidence[]) {
   const work = await db.businessCycleWork.findMany({
     where: { cycleId },
-    include: { ticket: { include: { board: true } } },
+    include: { ticket: { include: { board: true, assigneeBot: true } } },
     orderBy: { ticket: { number: "asc" } },
   });
   return Promise.all(
@@ -83,13 +82,20 @@ export async function cycleWorkState(db: Db, cycleId: string, evidence: Business
         requiredEvidence: businessWorkRequirements[row.kind as BusinessWorkKind].evidence,
         blockers: [
           ...(await businessWorkBlockers(db, row, evidence, "complete")),
-          ...(!row.ticket.assigneeBotId && !["done", "closed"].includes(row.ticket.status)
-            ? ["assignee:missing"]
+          ...((!row.ticket.assigneeBotId || row.ticket.assigneeBot?.archivedAt) &&
+          !["done", "closed"].includes(row.ticket.status)
+            ? [row.ticket.assigneeBotId ? "assignee:archived" : "assignee:missing"]
             : []),
         ],
         startBlockers: [
           ...(await businessWorkBlockers(db, row, evidence)),
-          ...(!row.ticket.assigneeBotId ? ["assignee:missing"] : []),
+          ...(!["done", "closed"].includes(row.ticket.status)
+            ? !row.ticket.assigneeBotId
+              ? ["assignee:missing"]
+              : row.ticket.assigneeBot?.archivedAt
+                ? ["assignee:archived"]
+                : []
+            : []),
         ],
         result: row.result ? BusinessWorkResultSchema.parse(row.result) : null,
         resultEvidenceId:
@@ -184,7 +190,7 @@ export async function reconcileBusinessWork(
 
 /** Shared ticket update gate for RPC and tool calls; completion uses a versioned result. */
 export async function guardBusinessTicketUpdate(
-  db: Db,
+  db: Prisma.TransactionClient,
   ticketId: string,
   input: { botId?: string; status?: string; assigneeBotId?: string },
 ) {
@@ -210,7 +216,7 @@ export async function guardBusinessTicketUpdate(
     "Task belongs to another business",
   );
   const who = { spaceId: work.ticket.spaceId, userId: context.userId, botId: input.botId };
-  const { bot } = await businessIdentity(db, who);
+  const { bot } = await lockBusinessResultIdentity(db, who);
   if (input.botId) {
     tradingAssert(
       bot?.businessSupervisor || input.botId === work.ticket.assigneeBotId,
@@ -219,6 +225,8 @@ export async function guardBusinessTicketUpdate(
     );
   }
   if (input.assigneeBotId && input.assigneeBotId !== work.ticket.assigneeBotId) {
+    if (work.ticket.assigneeBotId)
+      await db.$queryRaw`SELECT id FROM bots WHERE id=${work.ticket.assigneeBotId} FOR SHARE`;
     const former = work.ticket.assigneeBotId
       ? await db.bot.findUnique({ where: { id: work.ticket.assigneeBotId } })
       : null;
@@ -232,9 +240,12 @@ export async function guardBusinessTicketUpdate(
       "FORBIDDEN",
       "Only the owner or business supervisor can recover an assignee",
     );
-    const replacement = await requireIsolatedBot(db, { ...who, botId: input.assigneeBotId });
+    const { bot: replacement } = await lockBusinessResultIdentity(db, {
+      ...who,
+      botId: input.assigneeBotId,
+    });
     tradingAssert(
-      replacement.tradingRole === businessWorkRequirements[work.kind as BusinessWorkKind].role &&
+      replacement?.tradingRole === businessWorkRequirements[work.kind as BusinessWorkKind].role &&
         !replacement.businessSupervisor,
       "FORBIDDEN",
       "Replacement must have this task's specialist role in the same business",
@@ -293,4 +304,19 @@ export async function resumeBusinessBotWork(db: Db, spaceId: string, botId: stri
   for (const cycleId of [...new Set(work.map((row) => row.cycleId))].sort())
     changes.push(...(await reconcileBusinessWork(db, cycleId)));
   return changes;
+}
+
+/** Archival changes availability, not authorship. Notify even completed historical tickets. */
+export async function archiveBusinessBotWork(db: Db, spaceId: string, botId: string) {
+  const work = await db.businessCycleWork.findMany({
+    where: { ticket: { spaceId, assigneeBotId: botId } },
+    select: { cycleId: true, ticketId: true },
+  });
+  const changes: BusinessTicketChange[] = [];
+  for (const cycleId of [...new Set(work.map((row) => row.cycleId))].sort()) {
+    const tickets = work.filter((row) => row.cycleId === cycleId).map((row) => row.ticketId);
+    changes.push(...(await reconcileBusinessWork(db, cycleId, tickets)));
+  }
+  // Archiving must never create executable work. Normal restore/evidence changes own wakes.
+  return changes.map((change) => ({ ...change, wakeAssignee: false }));
 }

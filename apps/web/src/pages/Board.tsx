@@ -8,7 +8,6 @@ import {
   TICKET_STATUSES,
   TICKET_TITLE_MAX_LENGTH,
 } from "@rakazo/contracts";
-import { isRetryableError, retryDelayMs } from "@rakazo/core";
 import { fetchFresh, writeSaved } from "@rakazo/core/query";
 import {
   Button,
@@ -24,9 +23,10 @@ import {
 } from "@rakazo/ui-web";
 import { skipToken, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ChevronLeft } from "lucide-react";
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { Link } from "react-router-dom";
 import { TicketRuns } from "../components/TicketRuns";
+import { useBoardEvents } from "../lib/board-events";
 import { useSpaceQueries } from "../lib/query";
 import { formatRelativeTime } from "../lib/relative-time";
 import { rpc } from "../lib/rpc";
@@ -52,61 +52,30 @@ export function BoardPage({ embedded = false }: { embedded?: boolean } = {}) {
   /** A read sent after a change, so an older one in flight cannot bring back the old board. */
   const reload = () => fetchFresh(queryClient, ticketsOptions).then(() => undefined);
 
-  useEffect(() => {
-    let currentController: AbortController | undefined;
-    let active = true;
-    // Live events refresh the board and any open ticket's comments.
-    const refreshComments = (ticketId?: string) =>
-      void queryClient.invalidateQueries({
-        queryKey: ticketId
-          ? queries.tickets.comments.queryKey({ input: { ticketId } })
-          : queries.tickets.comments.key(),
-      });
-    let cancelRetry: (() => void) | undefined;
-    void (async () => {
-      while (active) {
-        const controller = new AbortController();
-        currentController = controller;
-        let failure: unknown;
-        try {
-          const stream = await rpc.boards.subscribe(undefined, {
-            signal: controller.signal,
-          });
-          if (!active) return;
-          await fetchFresh(queryClient, ticketsOptions);
-          if (!active) return;
-          refreshComments();
-          setError("");
-          for await (const event of stream) {
-            if (!active) return;
-            refreshComments(event.ticketId);
-            // A ticket change can start or settle its runs.
-            void queryClient.invalidateQueries({ queryKey: queries.runs.key() });
-            await fetchFresh(queryClient, ticketsOptions);
-          }
-        } catch (cause) {
-          failure = cause;
-          if (active) setError(errorText(cause));
-        } finally {
-          controller.abort();
-        }
-        if (!active || !isRetryableError(failure)) return;
-        await new Promise<void>((resolve) => {
-          const timer = setTimeout(resolve, retryDelayMs(failure, 1_000));
-          cancelRetry = () => {
-            clearTimeout(timer);
-            resolve();
-          };
-        });
-        cancelRetry = undefined;
-      }
-    })();
-    return () => {
-      active = false;
-      currentController?.abort();
-      cancelRetry?.();
-    };
-  }, [queries]);
+  // Live events refresh the board and any open ticket's comments.
+  const refreshComments = (ticketId?: string) =>
+    void queryClient.invalidateQueries({
+      queryKey: ticketId
+        ? queries.tickets.comments.queryKey({ input: { ticketId } })
+        : queries.tickets.comments.key(),
+    });
+  useBoardEvents(
+    {
+      async onOpen() {
+        await fetchFresh(queryClient, ticketsOptions);
+        refreshComments();
+        setError("");
+      },
+      async onEvent(event) {
+        refreshComments(event.ticketId);
+        // A ticket change can start or settle its runs.
+        void queryClient.invalidateQueries({ queryKey: queries.runs.key() });
+        await fetchFresh(queryClient, ticketsOptions);
+      },
+      onError: (cause) => setError(errorText(cause)),
+    },
+    queries,
+  );
 
   return (
     <div className="flex h-full min-w-0 flex-col overflow-hidden bg-background text-foreground">

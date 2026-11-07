@@ -2,7 +2,7 @@ import { ORPCError } from "@orpc/server";
 import { commentTicket, createTicket, updateTicket } from "@rakazo/adapters";
 import type { BoardEvent } from "@rakazo/contracts";
 import { parseTicketRef } from "@rakazo/contracts";
-import { escapeSearchWildcards } from "@rakazo/core";
+import { escapeSearchWildcards, TradingError } from "@rakazo/core";
 import type { Board as BoardRow, Prisma, PrismaClient } from "@rakazo/db";
 import {
   ensureBoard,
@@ -185,6 +185,13 @@ export function boardsRoutes(ctx: RouterContext) {
           spaceId: context.actor.spaceId,
           userId: context.actor.userId,
           ownerBotId: input.assigneeBotId,
+        }).catch((error: unknown) => {
+          if (error instanceof TradingError)
+            throw new ORPCError(error.code === "FORBIDDEN" ? "FORBIDDEN" : "BAD_REQUEST", {
+              message: error.message,
+              data: { reason: error.code },
+            });
+          throw error;
         });
         if ("error" in result) throw new ORPCError("BAD_REQUEST", { message: result.error });
         return result.ticket;

@@ -11,6 +11,7 @@ import {
   BusinessCycleStateSchema,
   BusinessImportDataSchema,
   BusinessMarketRuleSchema,
+  BusinessRecoverySchema,
   BusinessSettlementSchema,
   BusinessWorkResultSchema,
   TradingAnalysisSchema,
@@ -324,6 +325,46 @@ export function createBusinessCycleService(
   }
   return {
     get,
+    async recovery(who: BusinessIdentity, ticketId: string) {
+      const work = await prisma.businessCycleWork.findFirst({
+        where: { ticketId, ticket: { spaceId: who.spaceId } },
+        include: { ticket: { include: { assigneeBot: true } } },
+      });
+      tradingAssert(work, "NOT_FOUND", "Business task not found");
+      const { bot } = await ownedCycle(prisma, who, work.cycleId);
+      const assignee = work.ticket.assigneeBot;
+      const canReplace =
+        (!bot || bot.businessSupervisor) && (!assignee || Boolean(assignee.archivedAt));
+      const requiredRole =
+        businessWorkRequirements[BusinessAssignInputSchema.shape.kind.parse(work.kind)].role;
+      const candidates = canReplace
+        ? await prisma.bot.findMany({
+            where: {
+              spaceId: who.spaceId,
+              userId: who.userId,
+              archivedAt: null,
+              tradingRole: requiredRole,
+              businessSupervisor: false,
+            },
+            select: { id: true, name: true },
+            orderBy: [{ name: "asc" }, { id: "asc" }],
+          })
+        : [];
+      return BusinessRecoverySchema.parse({
+        ticketId,
+        cycleId: work.cycleId,
+        requiredRole,
+        canReplace,
+        candidates,
+        assignee: assignee
+          ? {
+              id: assignee.id,
+              name: assignee.name,
+              archivedAt: assignee.archivedAt?.toISOString() ?? null,
+            }
+          : null,
+      });
+    },
     importEvidence,
     settle,
     analyze,

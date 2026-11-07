@@ -544,6 +544,7 @@ export function botsRoutes(ctx: RouterContext) {
             jobs: deps.jobs,
             artifacts: deps.artifacts,
             dataDir: deps.dataDir,
+            onTicketChange: deps.ticketChanges,
           },
           bot,
           computerContext(context.actor, bot.id, "archive"),

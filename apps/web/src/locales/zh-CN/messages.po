@@ -1041,6 +1041,18 @@ msgstr "资产标识"
 msgid "Assign necessary role"
 msgstr "分派所需角色"
 
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee archived"
+msgstr "负责人已归档"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee archived: {name}"
+msgstr "负责人已归档：{name}"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee: {name}"
+msgstr "负责人：{name}"
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -4993,6 +5005,10 @@ msgstr "没有匹配的应用。"
 msgid "No artifacts found."
 msgstr "没有找到产物。"
 
+#: src/pages/BusinessCycle.tsx
+msgid "No assignee"
+msgstr "无负责人"
+
 #: src/pages/PluginsOverlay.tsx
 msgid "No auth"
 msgstr "无认证"
@@ -5021,6 +5037,10 @@ msgstr "此业务范围还没有 Bot。"
 #: src/pages/shell/bot-picker.tsx
 msgid "No bots match"
 msgstr "没有匹配的 Bot"
+
+#: src/pages/BusinessCycle.tsx
+msgid "No eligible Bot for this role yet"
+msgstr "暂无符合该专业的 Bot"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
@@ -6102,6 +6122,10 @@ msgstr "更换推送令牌"
 #: src/components/VaultSettings.tsx
 msgid "Replace value"
 msgstr "替换值"
+
+#: src/pages/BusinessCycle.tsx
+msgid "Replacement"
+msgstr "替代负责人"
 
 #: src/pages/shell/message-hover-actions.tsx
 #: src/pages/shell/quote-selection-button.tsx
@@ -7484,6 +7508,14 @@ msgstr "此 Bot"
 #: src/pages/ExperienceHandoff.tsx
 msgid "This Bot already has something with this name"
 msgstr "此 Bot 已有同名内容"
+
+#: src/pages/BusinessCycle.tsx
+msgid "This Bot can't take over this task"
+msgstr "此 Bot 不能接手该任务"
+
+#: src/pages/BusinessCycle.tsx
+msgid "This Bot is no longer available"
+msgstr "此 Bot 已不可用"
 
 #: src/pages/shell/computer-view.tsx
 msgid "This bot runs on this computer, not a Linux desktop. Shell and files use your home folder."

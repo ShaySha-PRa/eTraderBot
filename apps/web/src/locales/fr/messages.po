@@ -1041,6 +1041,18 @@ msgstr ""
 msgid "Assign necessary role"
 msgstr ""
 
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee archived"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee archived: {name}"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Assignee: {name}"
+msgstr ""
+
 #. placeholder {0}: preset.time
 #: src/lib/cron.ts
 msgid "at {0}"
@@ -4993,6 +5005,10 @@ msgstr "Aucune application ne correspond à votre recherche."
 msgid "No artifacts found."
 msgstr "Aucun artefact trouvé."
 
+#: src/pages/BusinessCycle.tsx
+msgid "No assignee"
+msgstr ""
+
 #: src/pages/PluginsOverlay.tsx
 msgid "No auth"
 msgstr "Pas d'authentification"
@@ -5021,6 +5037,10 @@ msgstr ""
 #: src/pages/shell/bot-picker.tsx
 msgid "No bots match"
 msgstr "Aucun bot ne correspond"
+
+#: src/pages/BusinessCycle.tsx
+msgid "No eligible Bot for this role yet"
+msgstr ""
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "No interfaces configured for this business scope."
@@ -6101,6 +6121,10 @@ msgstr ""
 
 #: src/components/VaultSettings.tsx
 msgid "Replace value"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "Replacement"
 msgstr ""
 
 #: src/pages/shell/message-hover-actions.tsx
@@ -7483,6 +7507,14 @@ msgstr "Ce bot"
 
 #: src/pages/ExperienceHandoff.tsx
 msgid "This Bot already has something with this name"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "This Bot can't take over this task"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "This Bot is no longer available"
 msgstr ""
 
 #: src/pages/shell/computer-view.tsx

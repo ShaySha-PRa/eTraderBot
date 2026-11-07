@@ -11,6 +11,7 @@ export * from "./bot-instructions.js";
 export * from "./bot-update.js";
 export { createBusinessCycleService } from "./business-cycle.js";
 export {
+  archiveBusinessBotWork,
   claimBusinessTicketWake,
   guardBusinessTicketUpdate,
   reconcileBusinessWork,
