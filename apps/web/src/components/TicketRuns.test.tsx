@@ -339,3 +339,66 @@ it("tells apart runs by the same Bot in the same second, in the list, their name
   );
   expect(zhNames[1]).toMatch(/^\[zh-CN\] Run vfad2937, /);
 });
+
+it("groups a resumed run's tool calls by attempt and keeps every earlier status", async () => {
+  // The shape Desktop recovered: the first attempt's write is unknown, the resumed attempt
+  // completes it, and the first attempt's late retry is refused afterwards.
+  const first = "cmw6mdca0000qrgn0jp8idm46";
+  const resumed = "cmw6mdcqp0010rgn0b1qg4jjb";
+  const call = (id: string, attemptId: string, status: string, startedAt: string) => ({
+    id,
+    attemptId,
+    name: "business_cycle",
+    status,
+    startedAt,
+    finishedAt: startedAt,
+    durationMs: 10,
+  });
+  runs.forTicket.mockResolvedValue({ runs: [row()], nextCursor: null });
+  runs.detail.mockResolvedValue(
+    detail({
+      toolTrace: {
+        recorded: true,
+        truncated: false,
+        calls: [
+          call("c1", first, "ambiguous", "2026-11-07T16:30:16.068Z"),
+          call("c2", resumed, "completed", "2026-11-07T16:30:16.571Z"),
+          call("c3", first, "refused", "2026-11-07T16:30:16.658Z"),
+        ] as RunTraceDetail["toolTrace"]["calls"],
+      },
+    }),
+  );
+  const view = await mounted();
+  await view.settled(() => expect(view.button(/Spot desk/)).toBeDefined());
+  await act(async () => view.button(/Spot desk/)!.click());
+  await view.settled(() =>
+    expect(view.container.querySelectorAll('[data-testid="tool-attempt"]')).toHaveLength(2),
+  );
+  const [earlier, later] = view.container.querySelectorAll('[data-testid="tool-attempt"]');
+  expect(earlier!.getAttribute("aria-label")).toBe("Attempt jp8idm46");
+  expect(later!.getAttribute("aria-label")).toBe("Attempt b1qg4jjb");
+  const statuses = (group: Element) =>
+    [...group.querySelectorAll("li")].map((li) => li.textContent);
+  // The late refusal stays with the attempt that made it, after its unknown result.
+  expect(statuses(earlier!)).toEqual([
+    expect.stringContaining("Result unknown"),
+    expect.stringContaining("Refused"),
+  ]);
+  expect(statuses(later!)).toEqual([expect.stringContaining("Done")]);
+  // Each call shows when it started (Shanghai time), so the refusal reads as later.
+  expect(earlier!.querySelectorAll("li")[1]!.querySelector("time")!.textContent).toBe("00:30:16");
+
+  await switchLanguage("zh-CN");
+  expect(earlier!.getAttribute("aria-label")).toBe("[zh-CN] Attempt jp8idm46");
+});
+
+it("keeps one attempt's tool calls as a plain list", async () => {
+  runs.forTicket.mockResolvedValue({ runs: [row()], nextCursor: null });
+  runs.detail.mockResolvedValue(detail());
+  const view = await mounted();
+  await view.settled(() => expect(view.button(/Spot desk/)).toBeDefined());
+  await act(async () => view.button(/Spot desk/)!.click());
+  await view.settled(() => expect(view.text()).toContain("read_evidence"));
+  expect(view.container.querySelector('[data-testid="tool-attempt"]')).toBeNull();
+  expect(view.text()).not.toContain("Attempt");
+});

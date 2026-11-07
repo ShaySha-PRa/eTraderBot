@@ -610,7 +610,9 @@ function createToolCall(
           )
         : Promise.resolve(true),
     finish: async (result) =>
-      (await call.persistEffectResult(result)) ? result : uncertainEffectResult(name, args),
+      (await call.persistEffectResult(result).catch(() => false))
+        ? result
+        : uncertainEffectResult(name, args),
     claimOrReturn: async (from) => {
       if (await claimEffect(deps, ctx.runId, applied!.effect.id, from)) {
         call.claimedEffect = true;

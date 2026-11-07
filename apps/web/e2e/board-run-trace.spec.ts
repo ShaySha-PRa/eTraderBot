@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import type { Bot, RunTraceRow } from "@rakazo/contracts";
+import { createDb } from "../../../packages/db/src/index";
 import { captureScreenshot, completeOnboarding, createNamedBot, rpc, signup } from "./helpers";
 
 test("a ticket lists the runs it started, opens their detail and survives refresh, errors and Chinese at phone width", async ({
@@ -196,6 +197,134 @@ test("runs by the same Bot started close together stay distinguishable in Englis
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
       390,
+    );
+    await page.keyboard.press("Escape");
+  }
+});
+
+test("a resumed run groups its tool history by attempt in English and Chinese at phone width", async ({
+  page,
+}, testInfo) => {
+  const stamp = Date.now();
+  const title = "Resumed contract check";
+  await signup(page, `board-attempts-${stamp}@rakazo.test`, "password12", "Run Attempts");
+  await completeOnboarding(page);
+  await createNamedBot(page, "Planner");
+  await page.goto("/app/board");
+  await page.getByRole("button", { name: "New ticket", exact: true }).click();
+  const created = page.getByRole("dialog", { name: "New ticket" });
+  await created.getByLabel("Title").fill(title);
+  await created.getByLabel("Owner").selectOption({ label: "Planner" });
+  await created.getByRole("button", { name: "Create", exact: true }).click();
+  await expect(created).toBeHidden();
+  const card = page.locator("[data-testid^='board-card-']").filter({ hasText: title });
+  const ticketId = (await card.getAttribute("data-testid"))!.replace("board-card-", "");
+  await expect
+    .poll(
+      async () =>
+        (await rpc<{ runs: RunTraceRow[] }>(page, "runs/forTicket", { ticketId })).runs[0]?.status,
+      { timeout: 60_000 },
+    )
+    .toBe("completed");
+  const [run] = (await rpc<{ runs: RunTraceRow[] }>(page, "runs/forTicket", { ticketId })).runs;
+
+  // Persist the recovered shape Desktop reported on this real run: an earlier attempt whose
+  // write is unknown and whose late retry is refused, and the run's own attempt that completes.
+  const { prisma: db, pool } = createDb(process.env.DATABASE_URL!);
+  let earlierId: string;
+  let resumedId: string;
+  try {
+    const row = await db.run.findUniqueOrThrow({ where: { id: run!.runId } });
+    const resumed = await db.attempt.findFirstOrThrow({ where: { runId: row.id } });
+    const at = (offset: number) => new Date(resumed.startedAt.getTime() + offset);
+    const earlier = await db.attempt.create({
+      data: {
+        runId: row.id,
+        fence: resumed.fence - 1,
+        status: "interrupted",
+        startedAt: at(-2000),
+        finishedAt: at(-1000),
+      },
+    });
+    const call = (attemptId: string, executionId: string, status: string, offset: number) => ({
+      spaceId: row.spaceId,
+      userId: row.userId,
+      runId: row.id,
+      attemptId,
+      executionId,
+      name: "business_cycle",
+      status,
+      startedAt: at(offset),
+      finishedAt: at(offset + 50),
+    });
+    await db.runToolCall.createMany({
+      data: [
+        call(earlier.id, "write-1", "ambiguous", -1500),
+        call(resumed.id, "write-1", "completed", 100),
+        call(earlier.id, "write-1-late", "refused", 300),
+      ],
+    });
+    earlierId = earlier.id;
+    resumedId = resumed.id;
+  } finally {
+    await pool.end();
+  }
+  const earlierCode = earlierId.slice(-8);
+  const resumedCode = resumedId.slice(-8);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const measured = await page.evaluate(() => ({
+    innerWidth,
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    devicePixelRatio,
+  }));
+  await testInfo.attach("narrow-viewport", {
+    body: JSON.stringify(measured),
+    contentType: "application/json",
+  });
+  console.log(`narrow viewport: ${JSON.stringify(measured)}`);
+  expect(measured.innerWidth).toBe(390);
+  expect(measured.clientWidth).toBe(390);
+  expect(measured.scrollWidth).toBeLessThanOrEqual(390);
+
+  for (const [language, words] of [
+    [
+      "English",
+      { attempt: "Attempt", unknown: "Result unknown", done: "Done", refused: "Refused" },
+    ],
+    ["中文", { attempt: "尝试", unknown: "结果未知", done: "完成", refused: "已拒绝" }],
+  ] as const) {
+    await page
+      .getByTestId("language-switcher")
+      .getByRole("button", { name: language, exact: true })
+      .click();
+    await card.click();
+    const runs = page.getByRole("dialog", { name: title }).getByTestId("ticket-runs");
+    await runs.getByRole("button", { name: /Planner/ }).click();
+    const detail = runs.getByTestId("run-detail");
+    await expect(detail).toContainText(run!.runId);
+    const earlierGroup = detail.getByRole("region", { name: `${words.attempt} ${earlierCode}` });
+    const resumedGroup = detail.getByRole("region", { name: `${words.attempt} ${resumedCode}` });
+    await expect(earlierGroup.getByRole("listitem")).toHaveCount(2);
+    await expect(earlierGroup.getByRole("listitem").nth(0)).toContainText(words.unknown);
+    await expect(earlierGroup.getByRole("listitem").nth(1)).toContainText(words.refused);
+    await expect(resumedGroup.getByRole("listitem")).toHaveCount(1);
+    await expect(resumedGroup.getByRole("listitem")).toContainText(words.done);
+    // The earlier attempt is listed first, since its first call came first.
+    const order = await detail
+      .getByTestId("tool-attempt")
+      .evaluateAll((nodes) => nodes.map((node) => node.getAttribute("aria-label")));
+    expect(order).toEqual([`${words.attempt} ${earlierCode}`, `${words.attempt} ${resumedCode}`]);
+    expect(await detail.evaluate((node) => node.scrollWidth <= node.clientWidth)).toBe(true);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(
+      390,
+    );
+    await detail.getByTestId("tool-attempt").last().scrollIntoViewIfNeeded();
+    await captureScreenshot(
+      page,
+      testInfo,
+      `run-attempts-narrow-${language === "中文" ? "zh" : "en"}`,
     );
     await page.keyboard.press("Escape");
   }

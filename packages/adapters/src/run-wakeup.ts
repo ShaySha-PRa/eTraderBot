@@ -16,7 +16,8 @@ import { findRunRecoveryBlockers } from "./run-recovery.js";
 
 const RUN_READY_TOPIC = "runs:ready";
 const INTERACTIVE_QUEUE_WARNING_MS = 30_000;
-const RESUMABLE = ["queued", "waiting_input", "waiting_takeover"];
+// A run waiting for input continues only once an answer has queued it again.
+const RESUMABLE = ["queued", "waiting_takeover"];
 
 /**
  * Starts runs in this process the moment they become due, each as its own task, so no
@@ -370,7 +371,7 @@ export class RunWorkerHost implements JobWorkerHost {
         OR: [
           { status: "queued", AND: [due] },
           { status: { in: ["leased", "running"] }, leaseExpiresAt: { lte: now } },
-          { status: { in: ["waiting_input", "waiting_takeover"] }, wakeAt: { lte: now } },
+          { status: "waiting_takeover", wakeAt: { lte: now } },
         ],
       },
       orderBy: [{ createdAt: "asc" }, { id: "asc" }],

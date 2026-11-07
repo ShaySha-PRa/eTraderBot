@@ -26,11 +26,11 @@ const ACTIVE: ReadonlySet<RunStatus> = new Set([
 const POLL_MS = 5_000;
 
 /**
- * A run's short code: the random tail of its ID, so runs started by the same Bot in the same
+ * A short code for a run or attempt: the random tail of its ID, so ones started in the same
  * second still read differently, and the code never changes with paging or list position.
  */
-export function runCode(runId: string): string {
-  return runId.slice(-8);
+function shortCode(id: string): string {
+  return id.slice(-8);
 }
 
 const poll = (active: boolean, error: unknown) =>
@@ -106,8 +106,8 @@ export function TicketRuns({ ticketId }: { ticketId: string }) {
 function RunRow({ run, onOpen }: { run: RunTraceRow; onOpen: () => void }) {
   const { t, i18n } = useLingui();
   const reason = reasonText(run.reason);
-  const code = runCode(run.runId);
-  const retried = run.retryOfRunId ? runCode(run.retryOfRunId) : null;
+  const code = shortCode(run.runId);
+  const retried = run.retryOfRunId ? shortCode(run.retryOfRunId) : null;
   const botName = run.botName ?? t`Bot not recorded`;
   const status = statusLabel(run.status);
   const startedAt = formatTime(run.createdAt, i18n.locale);
@@ -145,8 +145,8 @@ function RunDetail({ runId, onBack }: { runId: string; onBack: () => void }) {
     }),
   );
   const run = detail.data;
-  const code = runCode(runId);
-  const retried = run?.retryOfRunId ? runCode(run.retryOfRunId) : null;
+  const code = shortCode(runId);
+  const retried = run?.retryOfRunId ? shortCode(run.retryOfRunId) : null;
   return (
     <section data-testid="run-detail" aria-label={t`Run ${code}`} className="space-y-3">
       <Button variant="ghost" size="sm" className="-ms-2" onClick={onBack}>
@@ -226,8 +226,22 @@ function RunDetail({ runId, onBack }: { runId: string; onBack: () => void }) {
   );
 }
 
+type ToolCall = RunTraceDetail["toolTrace"]["calls"][number];
+
+/** Calls grouped by the attempt that made them, attempts in order of their first recorded call. */
+function byAttempt(calls: ToolCall[]): { attemptId: string; calls: ToolCall[] }[] {
+  const groups = new Map<string, ToolCall[]>();
+  for (const call of calls)
+    groups.set(call.attemptId, [...(groups.get(call.attemptId) ?? []), call]);
+  return [...groups].map(([attemptId, calls]) => ({ attemptId, calls }));
+}
+
 function ToolTrace({ trace }: { trace: RunTraceDetail["toolTrace"] }) {
-  const { i18n } = useLingui();
+  const { t } = useLingui();
+  const attempts = byAttempt(trace.calls);
+  // A run resumed in a new attempt keeps the earlier attempt's calls, including late refusals;
+  // grouping shows which attempt each status belongs to instead of one list that reads as final.
+  const grouped = attempts.length > 1;
   return (
     <div className="space-y-1">
       <h4 className="font-medium">
@@ -242,20 +256,25 @@ function ToolTrace({ trace }: { trace: RunTraceDetail["toolTrace"] }) {
           <Trans>No tool calls recorded</Trans>
         </p>
       ) : null}
-      {trace.calls.length > 0 ? (
-        <ul className="space-y-1">
-          {trace.calls.map((call) => (
-            <li key={call.id} className="flex min-w-0 items-center justify-between gap-2">
-              <span className="truncate font-mono text-xs">{call.name}</span>
-              <span className="shrink-0 text-xs text-muted-foreground">
-                <span className={toolTone(call.status)}>{toolStatusText(call.status)}</span>
-                {call.durationMs === null
-                  ? null
-                  : ` · ${formatDuration(call.durationMs, i18n.locale)}`}
-              </span>
-            </li>
-          ))}
-        </ul>
+      {grouped ? (
+        attempts.map((attempt) => {
+          const code = shortCode(attempt.attemptId);
+          return (
+            <section
+              key={attempt.attemptId}
+              data-testid="tool-attempt"
+              aria-label={t`Attempt ${code}`}
+              className="space-y-1 pt-1"
+            >
+              <h5 className="text-xs text-muted-foreground">
+                {t`Attempt`} <span className="font-mono">#{code}</span>
+              </h5>
+              <ToolCalls calls={attempt.calls} timed />
+            </section>
+          );
+        })
+      ) : trace.calls.length > 0 ? (
+        <ToolCalls calls={trace.calls} />
       ) : null}
       {trace.truncated ? (
         <p className="text-muted-foreground">
@@ -263,6 +282,30 @@ function ToolTrace({ trace }: { trace: RunTraceDetail["toolTrace"] }) {
         </p>
       ) : null}
     </div>
+  );
+}
+
+/** With several attempts, each call's start time shows when a late result arrived. */
+function ToolCalls({ calls, timed = false }: { calls: ToolCall[]; timed?: boolean }) {
+  const { i18n } = useLingui();
+  return (
+    <ul className="space-y-1">
+      {calls.map((call) => (
+        <li key={call.id} className="flex min-w-0 items-center justify-between gap-2">
+          <span className="truncate font-mono text-xs">{call.name}</span>
+          <span className="shrink-0 text-xs text-muted-foreground">
+            {timed ? (
+              <>
+                <time dateTime={call.startedAt}>{formatClock(call.startedAt, i18n.locale)}</time>
+                {" · "}
+              </>
+            ) : null}
+            <span className={toolTone(call.status)}>{toolStatusText(call.status)}</span>
+            {call.durationMs === null ? null : ` · ${formatDuration(call.durationMs, i18n.locale)}`}
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -354,6 +397,17 @@ function formatTime(iso: string, locale: string): string {
     minute: "2-digit",
     second: "2-digit",
     timeZoneName: "short",
+  }).format(new Date(iso));
+}
+
+/** Time of day in Shanghai, to the second, for calls within one run. */
+function formatClock(iso: string, locale: string): string {
+  return new Intl.DateTimeFormat(locale, {
+    timeZone: TIME_ZONE,
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hourCycle: "h23",
   }).format(new Date(iso));
 }
 

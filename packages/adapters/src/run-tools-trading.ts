@@ -5,19 +5,23 @@ import {
   createBusinessCycleService,
   createWorkspaceAccessService,
 } from "@rakazo/db";
+import { uncertainEffectResult } from "./approval-effect.js";
 import type { ToolHandlers } from "./run-tool-gate.js";
 
 export const tradingTools = {
   async business_cycle(ctx, call) {
+    const parsed = BusinessCycleCommandSchema.safeParse(call.args);
+    if (!parsed.success) return { error: "Business cycle request failed" };
+    const input = parsed.data;
+    let value: unknown;
     try {
-      const input = BusinessCycleCommandSchema.parse(call.args);
       const who = { spaceId: ctx.run.spaceId, userId: ctx.run.userId, botId: ctx.bot.id };
       const service = createBusinessCycleService(
         ctx.deps.prisma,
         undefined,
         ctx.deps.onTicketChange,
       );
-      const value =
+      value =
         input.operation === "list"
           ? await service.list(who)
           : input.operation === "read"
@@ -34,13 +38,14 @@ export const tradingTools = {
                       input.result,
                       input.expectedResultEvidenceId,
                     );
-      return call.finish(value);
     } catch (error) {
-      return {
-        error: error instanceof TradingError ? error.message : "Business cycle request failed",
-        ...(error instanceof TradingError ? { code: error.code } : {}),
-      };
+      if (error instanceof TradingError) return { error: error.message, code: error.code };
+      // A write lost to an infrastructure failure may still have committed.
+      return input.operation === "list" || input.operation === "read"
+        ? { error: "Business cycle request failed" }
+        : uncertainEffectResult("business_cycle", call.args);
     }
+    return call.finish(value);
   },
   async business_overview(ctx, call) {
     try {

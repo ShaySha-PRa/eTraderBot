@@ -303,7 +303,8 @@ export function createRunExecutor(executorDeps: ExecutorDeps) {
           ...continueRunClaimFence(run),
           AND: [{ OR: [{ wakeAt: null }, { wakeAt: { lte: now } }] }],
           OR: [
-            { status: { in: ["queued", "waiting_input", "waiting_takeover"] } },
+            // waiting_input is left only by an answer, which queues the run first.
+            { status: { in: ["queued", "waiting_takeover"] } },
             {
               status: { in: ["leased", "running"] },
               leaseExpiresAt: { lte: now },
