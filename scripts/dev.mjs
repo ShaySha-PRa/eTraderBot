@@ -1,27 +1,14 @@
 #!/usr/bin/env node
 // `pnpm dev`: start the API, worker, web app, and sandbox supervisor for this checkout.
 //
-// Several checkouts (git worktrees) can run at once. Each gets the first free block of ports,
-// and all of them share one Postgres database unless this branch adds migrations that main
-// does not have; those run against a database of the branch's own on the same server, so
-// unmerged schema changes never reach the shared one.
-//
-// The database is `.env`'s DATABASE_URL when it accepts a connection. Otherwise a local
-// Postgres container (`rakazo-dev-postgres`) is started and reused by every checkout.
-// Setting WEB_PORT or API_PORT, in the shell or `.env`, turns off port selection. A relative
-// DATA_DIR resolves in the main checkout, so checkouts sharing the database share its files.
-// Branch databases, and their copied files, are dropped once the branch is deleted or merged.
+// Each checkout selects free ports and keeps its data target across migration merges.
+// Configured database failures stop startup; managed Postgres is only the unconfigured default.
+// New migration branches copy the base database and files, and refuse an incomplete copy.
+// Ordinary startup never removes databases or files. --existing uses the configured database
+// and absolute DATA_DIR as-is, independent of the checked-out branch.
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import {
-  constants,
-  cpSync,
-  existsSync,
-  readdirSync,
-  readFileSync,
-  rmSync,
-  statSync,
-} from "node:fs";
+import { constants, cpSync, existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { createRequire } from "node:module";
 import net from "node:net";
 import path from "node:path";
@@ -51,6 +38,20 @@ const fileEnv = existsSync(path.join(root, ".env"))
   : {};
 const setting = (name) => process.env[name] ?? fileEnv[name];
 const log = (message) => process.stdout.write(`[dev] ${message}\n`);
+const args = process.argv.slice(2).filter((arg) => arg !== "--");
+if (args.includes("--help")) {
+  process.stdout.write(
+    "Usage: pnpm dev [--existing]\n--existing: use DATABASE_URL and its matching absolute DATA_DIR without branch selection.\nStartup never cleans up databases or files.\n",
+  );
+  process.exit(0);
+}
+if (args.some((arg) => arg !== "--existing"))
+  throw new Error("Unknown startup option. Run pnpm dev --help.");
+const existingTarget = args.includes("--existing");
+if (existingTarget && (!setting("DATABASE_URL") || !path.isAbsolute(setting("DATA_DIR") || "")))
+  throw new Error(
+    "--existing requires DATABASE_URL and an explicit absolute DATA_DIR for its matching files.",
+  );
 
 function run(command, args, options = {}) {
   return execFileSync(command, args, { encoding: "utf8", stdio: "pipe", ...options }).trim();
@@ -90,13 +91,35 @@ function portEnv({ web, api, supervisor }) {
   };
 }
 
-async function connects(url) {
+function databaseTarget(url) {
+  try {
+    const parsed = new URL(url);
+    if (
+      !["postgres:", "postgresql:"].includes(parsed.protocol) ||
+      !parsed.hostname ||
+      parsed.pathname.length < 2
+    )
+      throw new Error("Invalid target");
+    // Match pg's effective connection parameters, including URL query overrides.
+    const { host, port, database } = new Client({ connectionString: url }).connectionParameters;
+    return JSON.stringify({ host, port, database });
+  } catch {
+    throw new Error(
+      "Invalid database configuration. Use a PostgreSQL URL with an explicit database name.",
+    );
+  }
+}
+
+async function requireConnection(url, label) {
+  const target = databaseTarget(url);
   const client = new Client({ connectionString: url, connectionTimeoutMillis: 2000 });
   try {
     await client.connect();
-    return true;
   } catch {
-    return false;
+    // Driver errors can include credentials or URL query parameters.
+    throw new Error(
+      `${label} is unavailable: ${target}. No fallback will be used; check the server and credentials.`,
+    );
   } finally {
     await client.end().catch(() => {});
   }
@@ -104,7 +127,8 @@ async function connects(url) {
 
 function withDatabase(url, database) {
   const parsed = new URL(url);
-  parsed.pathname = `/${database}`;
+  parsed.searchParams.delete("database");
+  parsed.pathname = `/${encodeURIComponent(database)}`;
   return parsed.toString();
 }
 
@@ -112,9 +136,7 @@ async function startManagedPostgres() {
   try {
     run("docker", ["version", "--format", "{{.Server.Version}}"]);
   } catch {
-    throw new Error(
-      "DATABASE_URL in .env does not accept a connection and Docker is not running to start a local Postgres.",
-    );
+    throw new Error("Docker is unavailable for the managed local development database.");
   }
   const state = (() => {
     try {
@@ -166,9 +188,35 @@ async function startManagedPostgres() {
 async function sharedDatabase() {
   const url = setting("DATABASE_URL");
   const migrationUrl = setting("DATABASE_MIGRATION_URL") || url;
-  if (url && (await connects(migrationUrl))) return { url, migrationUrl };
-  if (url) log("DATABASE_URL in .env does not accept a connection; using the local container");
-  return startManagedPostgres();
+  const realtimeUrl = setting("REALTIME_DATABASE_URL");
+  if (!url) {
+    if (migrationUrl || realtimeUrl)
+      throw new Error(
+        "DATABASE_URL is required with migration or realtime database configuration.",
+      );
+    log("No database URL configured; using the managed local development database");
+    try {
+      return await startManagedPostgres();
+    } catch {
+      throw new Error(
+        "Could not start the managed development database. Check Docker and retry; no other database will be used.",
+      );
+    }
+  }
+  const target = databaseTarget(url);
+  if (target !== databaseTarget(migrationUrl))
+    throw new Error(
+      `Runtime and migration URLs must select the same target: ${target} versus ${databaseTarget(migrationUrl)}.`,
+    );
+  if (realtimeUrl && target !== databaseTarget(realtimeUrl))
+    throw new Error(
+      "REALTIME_DATABASE_URL must select the same source server and database as DATABASE_URL.",
+    );
+  log(`Configured database target: ${target}`);
+  // The existing migration command provisions a new runtime login on first startup.
+  // Validate the owner now, then the selected runtime/realtime logins after migration.
+  await requireConnection(migrationUrl, "Migration database");
+  return { url, migrationUrl };
 }
 
 function migrationNames(ref) {
@@ -199,22 +247,6 @@ function checkoutMigrations(checkout) {
 /** Migrations in this checkout that origin/main does not have. */
 function branchOnlyMigrations(onMain) {
   return [...checkoutMigrations(root)].filter((name) => !onMain.has(name));
-}
-
-/** A branch's migrations: its worktree's files when it is checked out, else its commits. */
-function branchMigrations(branch) {
-  const worktrees = run("git", ["worktree", "list", "--porcelain"], { cwd: root }).split("\n\n");
-  for (const entry of worktrees) {
-    const lines = entry.split("\n");
-    if (lines.includes(`branch refs/heads/${branch}`)) {
-      return checkoutMigrations(lines[0].replace(/^worktree /, ""));
-    }
-  }
-  try {
-    return migrationNames(`refs/heads/${branch}`);
-  } catch {
-    return new Set(); // Deleted.
-  }
 }
 
 // Marks a finished branch database and records which repository and branch own it.
@@ -249,10 +281,14 @@ function branchDataDir(sharedDataDir, name) {
   return path.join(path.dirname(sharedDataDir), ".rakazo-dev-branches", name, "data");
 }
 
-async function branchDatabase(shared, sharedDataDir) {
-  const sharedName = new URL(shared.migrationUrl).pathname.slice(1);
+async function branchDatabase(shared, sharedDataDir, create) {
+  const sharedName = JSON.parse(databaseTarget(shared.migrationUrl)).database;
   const branch = currentBranch();
   const name = branchDatabaseName(sharedName, branch);
+  if (/[\\/]/.test(name))
+    throw new Error(
+      "Branch database name cannot map safely to a file directory. Use --existing with an explicit DATA_DIR.",
+    );
   const dataDir = branchDataDir(sharedDataDir, name);
   const owner = new Client({ connectionString: shared.migrationUrl });
   await owner.connect();
@@ -263,37 +299,63 @@ async function branchDatabase(shared, sharedDataDir) {
       `SELECT shobj_description(oid, 'pg_database') AS comment FROM pg_database WHERE datname = $1`,
       [name],
     );
-    if (existing.rowCount && existing.rows[0].comment)
+    if (existing.rowCount) {
+      let marker;
+      try {
+        const comment = existing.rows[0].comment;
+        marker = comment?.startsWith(BRANCH_DATABASE_COMMENT)
+          ? JSON.parse(comment.slice(BRANCH_DATABASE_COMMENT.length))
+          : null;
+      } catch {
+        /* An unknown marker must never authorize replacement. */
+      }
+      if (marker?.repo !== repositoryId() || marker?.branch !== branch)
+        throw new Error(
+          `Existing database ${name} has missing or conflicting ownership metadata. Preserve it and its files; inspect or restore explicitly.`,
+        );
+      if (!existsSync(dataDir) || !statSync(dataDir).isDirectory())
+        throw new Error(
+          `Existing database ${name} is missing its data directory. Restore the matching files before starting.`,
+        );
       return branchConnection(shared, name, dataDir);
-    // No comment means an earlier start stopped partway; begin again.
-    if (existing.rowCount) await owner.query(`DROP DATABASE "${name}"`);
-    rmSync(path.dirname(dataDir), { recursive: true, force: true });
-    let copied = true;
+    }
+    // An orphan directory can be the only surviving copy of attachments.
+    if (existsSync(path.dirname(dataDir)))
+      throw new Error(
+        `Branch files already exist for ${name}, but its database is missing. Preserve the files and restore the matching database.`,
+      );
+    if (!create) return shared;
+    if (!existsSync(sharedDataDir) || !statSync(sharedDataDir).isDirectory())
+      throw new Error(
+        "Source data directory is missing. Restore it, or create it explicitly only if the source has no files.",
+      );
+    const identifier = (value) => `"${value.replaceAll('"', '""')}"`;
     try {
-      // A copy keeps your accounts and bots; it needs no open connections to the source.
-      await owner.query(`CREATE DATABASE "${name}" TEMPLATE "${sharedName}"`);
+      // No source clients may be active during a PostgreSQL template copy.
+      await owner.query(`CREATE DATABASE ${identifier(name)} TEMPLATE ${identifier(sharedName)}`);
     } catch {
-      copied = false;
-      await owner.query(`CREATE DATABASE "${name}"`);
+      throw new Error(
+        `Could not copy the source database to ${name}. Check creation permissions and stop source clients before retrying; no empty replacement was created.`,
+      );
     }
     try {
-      if (copied && existsSync(sharedDataDir)) {
-        // Copy-on-write where the filesystem supports it, so this is cheap even for large homes.
-        cpSync(sharedDataDir, dataDir, { recursive: true, mode: constants.COPYFILE_FICLONE });
-      }
-    } catch (error) {
-      await owner.query(`DROP DATABASE "${name}"`);
-      rmSync(path.dirname(dataDir), { recursive: true, force: true });
-      throw new Error(`Could not copy ${sharedDataDir} for ${name}`, { cause: error });
+      cpSync(sharedDataDir, dataDir, {
+        recursive: true,
+        mode: constants.COPYFILE_FICLONE,
+        force: false,
+        errorOnExist: true,
+      });
+    } catch {
+      // Retain both the database and partial files for operator-led recovery.
+      // Without the completed marker, the next normal startup also refuses reuse.
+      throw new Error(
+        `Could not copy files for ${name}. The incomplete database and files were retained; inspect or restore before retrying.`,
+      );
     }
     await owner.query(
-      `COMMENT ON DATABASE "${name}" IS ${owner.escapeLiteral(branchDatabaseComment(branch))}`,
+      `COMMENT ON DATABASE ${identifier(name)} IS ${owner.escapeLiteral(branchDatabaseComment(branch))}`,
     );
-    log(
-      copied
-        ? `Copied the shared database and files to ${name}`
-        : `Created an empty ${name} (the shared one was in use, so it could not be copied)`,
-    );
+    log(`Copied the shared database and files to ${name}`);
   } finally {
     await owner.end();
   }
@@ -306,49 +368,6 @@ function branchConnection(shared, name, dataDir) {
     migrationUrl: withDatabase(shared.migrationUrl, name),
     dataDir,
   };
-}
-
-/**
- * Drop this repository's branch databases that nothing needs anymore: the branch was deleted, or
- * main now has all of its migrations, counting uncommitted ones in a branch's worktree. `keep`, the
- * branch about to start, and any database another checkout still has open are left alone.
- */
-async function pruneBranchDatabases(shared, sharedDataDir, onMain, keep) {
-  const owner = new Client({ connectionString: shared.migrationUrl });
-  await owner.connect();
-  try {
-    const { rows } = await owner.query(
-      `SELECT d.datname AS name, substr(c.description, $2) AS owner
-         FROM pg_database d JOIN pg_shdescription c ON c.objoid = d.oid
-        WHERE c.description LIKE $1 || '%'`,
-      [BRANCH_DATABASE_COMMENT, BRANCH_DATABASE_COMMENT.length + 1],
-    );
-    const repo = repositoryId();
-    for (const row of rows) {
-      let branch;
-      try {
-        const parsed = JSON.parse(row.owner);
-        if (parsed.repo !== repo) continue;
-        branch = parsed.branch;
-      } catch {
-        continue;
-      }
-      if (branch === keep) continue;
-      if ([...branchMigrations(branch)].some((name) => !onMain.has(name))) continue;
-      try {
-        await owner.query(`DROP DATABASE "${row.name}"`);
-        rmSync(path.dirname(branchDataDir(sharedDataDir, row.name)), {
-          recursive: true,
-          force: true,
-        });
-        log(`Removed ${row.name}; ${branch} no longer needs its own database`);
-      } catch {
-        // Still in use by a running checkout.
-      }
-    }
-  } finally {
-    await owner.end();
-  }
 }
 
 function generateClientIfStale(env) {
@@ -379,16 +398,21 @@ const mainCheckout = path.dirname(
 const sharedDataDir = path.resolve(mainCheckout, setting("DATA_DIR") || "./data");
 
 const shared = { ...(await sharedDatabase()), dataDir: sharedDataDir };
-let database = shared;
-const onMain = mainMigrations();
-const pending = branchOnlyMigrations(onMain);
-await pruneBranchDatabases(shared, sharedDataDir, onMain, pending.length ? currentBranch() : null);
-if (pending.length) {
-  log(`This branch adds ${pending.length} migration(s), so it gets its own database`);
-  database = await branchDatabase(shared, sharedDataDir);
-}
+if (existingTarget && (!existsSync(sharedDataDir) || !statSync(sharedDataDir).isDirectory()))
+  throw new Error("The selected DATA_DIR is missing. Restore the matching files before starting.");
+// A merged migration changes code ownership, not the user's data selection.
+const database = existingTarget
+  ? shared
+  : await branchDatabase(shared, sharedDataDir, branchOnlyMigrations(mainMigrations()).length > 0);
+log(
+  `Selected database target: ${databaseTarget(database.url)}; data directory: ${JSON.stringify(database.dataDir)}`,
+);
 env.DATABASE_URL = database.url;
 env.DATABASE_MIGRATION_URL = database.migrationUrl;
+env.REALTIME_DATABASE_URL = withDatabase(
+  setting("REALTIME_DATABASE_URL") || database.url,
+  JSON.parse(databaseTarget(database.url)).database,
+);
 env.DATA_DIR = database.dataDir;
 
 generateClientIfStale(env);
@@ -402,6 +426,10 @@ try {
 } finally {
   await migrationLock.end();
 }
+
+await requireConnection(database.url, "Selected runtime database");
+if (env.REALTIME_DATABASE_URL !== database.url)
+  await requireConnection(env.REALTIME_DATABASE_URL, "Selected realtime database");
 
 if (ports) log(`Open http://127.0.0.1:${ports.web}`);
 const turbo = spawnPnpm(

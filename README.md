@@ -90,6 +90,8 @@ pnpm dev
 
 `pnpm dev` generates the Prisma client, applies migrations, and starts the API, worker, Web app, and sandbox supervisor. Branches with additional migrations get a separate development database. Use the printed URL, normally [http://localhost:5173/app](http://localhost:5173/app); occupied default ports cause development startup to choose another port block.
 
+Configured database connection failures stop startup instead of switching to another database. Existing branch databases and files remain selected after their migrations merge; ordinary startup never cleans them up. To keep a specific dataset across branches, set its database URLs and matching absolute `DATA_DIR`, then run `pnpm dev --existing`. See [startup and data preservation](./docs/implementation/eTraderBot-foundation-01-startup.md#日常启动和恢复) for selection, first-copy requirements, and recovery.
+
 For host-side development with Docker Desktop, set `SANDBOX_CONTROL_VIA_LOOPBACK=true` in `.env`. In WSL, keep the repository and data directory in the Linux filesystem. See the [source-development guide](./docs/self-host.md#local-source-checkout) for details.
 
 Create an account, connect a compatible model through the application's connection settings, then create a business scope and a bot. Built-in synthetic analysis does not require a company API; bot conversation and model-driven learning require a model connection.
