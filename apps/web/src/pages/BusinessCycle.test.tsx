@@ -14,11 +14,13 @@ const api = vi.hoisted(() => ({
   tickets: { update: vi.fn() },
   trading: { desks: vi.fn(), desk: vi.fn() },
 }));
+/** The business the page opens in; null keeps drafts in memory only. */
+const space = vi.hoisted(() => ({ id: null as string | null }));
 vi.mock("../lib/rpc", () => ({
   rpc: api,
   rpcForSpace: () => api,
   createSpaceRpc: () => api,
-  selectedSpaceId: () => null,
+  selectedSpaceId: () => space.id,
 }));
 /** The interface language; switching it re-renders like the real provider does. */
 const language = vi.hoisted(() => ({ locale: "en", listeners: new Set<() => void>() }));
@@ -130,6 +132,8 @@ let view:
 beforeEach(() => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
   language.locale = "en";
+  space.id = null;
+  localStorage.clear();
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   server = {
     "cycle-1": [task("contract", "contract_coverage"), task("risk", "risk_check")],
@@ -683,4 +687,70 @@ it("keeps the draft's evidence and result version across refreshes until the use
   await act(async () => useLatest.click());
   await submit("contract");
   expect(api.businessCycle.complete.mock.calls[1]![0].expectedResultEvidenceId).toBe("result-2");
+});
+
+it("says access was removed on a real 401, in the interface language, and keeps the draft", async () => {
+  space.id = "space-a";
+  await render();
+  await fill("contract", "Contract");
+  api.businessCycle.complete.mockRejectedValueOnce(
+    Object.assign(new Error("Unauthorized"), { code: "UNAUTHORIZED", status: 401 }),
+  );
+  await submit("contract");
+  await settle();
+  expect(taskAlert("contract")?.textContent).toBe("You no longer have access to this business");
+  expect(view!.container.textContent).not.toContain("Unauthorized");
+  expect(values("contract")).toEqual(draft("Contract"));
+  await switchLanguage("zh-CN");
+  expect(taskAlert("contract")?.textContent).toBe(
+    "[zh-CN] You no longer have access to this business",
+  );
+});
+
+it("restores an unsent draft and its version after a reload, without sending it", async () => {
+  space.id = "space-a";
+  server["cycle-1"]![0] = task("contract", "contract_coverage", "review", "bot", {
+    resultEvidenceId: "result-1",
+  });
+  await render();
+  await fill("contract", "Kept");
+  await view!.cleanup();
+  view = undefined;
+  // The server moved on while the page was gone; the restored draft keeps its starting version.
+  server["cycle-1"]![0] = task("contract", "contract_coverage", "review", "bot", {
+    resultEvidenceId: "result-2",
+  });
+
+  await render();
+  expect(values("contract")).toEqual(draft("Kept"));
+  await settle();
+  expect(api.businessCycle.complete).not.toHaveBeenCalled();
+  await submit("contract");
+  await settle();
+  expect(api.businessCycle.complete.mock.calls[0]![0]).toMatchObject({
+    ticketId: "contract",
+    expectedResultEvidenceId: "result-1",
+  });
+});
+
+it("never shows one business's drafts in another, and forgets a draft once it is sent", async () => {
+  space.id = "space-a";
+  await render();
+  await fill("contract", "Business A");
+  await view!.cleanup();
+  view = undefined;
+
+  space.id = "space-b";
+  await render();
+  expect(values("contract")).toEqual(blank);
+  await view!.cleanup();
+  view = undefined;
+
+  space.id = "space-a";
+  await render();
+  expect(values("contract")).toEqual(draft("Business A"));
+  api.businessCycle.complete.mockResolvedValueOnce(undefined);
+  await submit("contract");
+  await settle();
+  expect(localStorage.getItem("rakazo.businessResultDrafts.space-a")).toBeNull();
 });

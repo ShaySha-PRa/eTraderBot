@@ -3,6 +3,7 @@
 import { act } from "react";
 import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { readBusinessResultDrafts, writeBusinessResultDrafts } from "./business-result-draft";
 import type * as CallSessionModule from "./call-session";
 import { SIGNED_IN_USER_KEY } from "./call-session";
 import {
@@ -38,6 +39,10 @@ beforeEach(() => {
   writeComposerDraft("bot:bot-1", "unsent thought");
   localStorage.setItem(composerDraftBindingsKey("bot:bot-1"), "{}");
   localStorage.setItem(COMPOSER_ENTER_TO_SEND_STORAGE_KEY, "false");
+  writeBusinessResultDrafts("space-1", {
+    drafts: { k: { summary: "unsent result", disagreements: "", unresolved: "", proposal: "" } },
+    bases: { k: { resultEvidenceId: null, evidenceIds: [] } },
+  });
 });
 
 afterEach(() => {
@@ -82,6 +87,7 @@ describe("signOut", () => {
     expect(readComposerDraft("bot:bot-1")).toBe("");
     expect(localStorage.getItem(composerDraftBindingsKey("bot:bot-1"))).toBeNull();
     expect(hasUnsentComposerDraft()).toBe(false);
+    expect(readBusinessResultDrafts("space-1").drafts).toEqual({});
     expect(localStorage.getItem(COMPOSER_ENTER_TO_SEND_STORAGE_KEY)).toBe("false");
   });
 
@@ -126,6 +132,9 @@ describe("signOut", () => {
         signedIn ? "{}" : null,
       );
       expect(hasUnsentComposerDraft()).toBe(signedIn);
+      expect(Object.keys(readBusinessResultDrafts("space-1").drafts)).toHaveLength(
+        signedIn ? 1 : 0,
+      );
       expect(localStorage.getItem(COMPOSER_ENTER_TO_SEND_STORAGE_KEY)).toBe("false");
       // Consume any failure message before the next test.
       mountSignOut("/sign-in").unmount();

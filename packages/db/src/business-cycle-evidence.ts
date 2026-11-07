@@ -48,6 +48,30 @@ export async function businessIdentity(db: CycleDb, identity: BusinessIdentity) 
   );
   return { workspace, bot };
 }
+
+/** After locking the cycle, hold live authority through the result transaction's commit. */
+export async function lockBusinessResultIdentity(
+  db: Prisma.TransactionClient,
+  identity: BusinessIdentity,
+) {
+  // Shared row locks allow other cycles to proceed, but serialize membership removal,
+  // workspace deletion/ownership changes and Bot archival against this write.
+  await db.$queryRaw`
+    SELECT s.id FROM spaces s
+    JOIN space_members m ON m."spaceId" = s.id AND m."userId" = ${identity.userId}
+    JOIN trading_workspaces w ON w."spaceId" = s.id AND w."ownerUserId" = ${identity.userId}
+    WHERE s.id = ${identity.spaceId}
+    FOR SHARE OF s, m, w
+  `;
+  if (identity.botId)
+    await db.$queryRaw`
+      SELECT id FROM bots WHERE id = ${identity.botId}
+      AND "spaceId" = ${identity.spaceId} AND "userId" = ${identity.userId}
+      FOR SHARE
+    `;
+  // ownedCycle's initial authorization may predate a lock wait. Never reuse it.
+  return businessIdentity(db, identity);
+}
 export async function ownedCycle(
   db: CycleDb,
   identity: BusinessIdentity,

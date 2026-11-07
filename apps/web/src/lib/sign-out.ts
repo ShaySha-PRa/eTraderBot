@@ -1,6 +1,7 @@
 import { t } from "@lingui/core/macro";
 import { useEffect, useRef, useState } from "react";
 import { authClient } from "./auth";
+import { clearBusinessResultDrafts } from "./business-result-draft";
 import { endCallBeforeSignOut, forgetSignedInUser, sessionChangedUnderPage } from "./call-session";
 import { clearComposerDrafts } from "./composer-draft";
 import { clearSpaceSelection } from "./rpc";
@@ -27,6 +28,7 @@ export async function signOut(destination: string): Promise<void> {
     forgetSignedInUser();
     clearSpaceSelection();
     clearComposerDrafts();
+    clearBusinessResultDrafts();
     window.location.assign(destination);
   } else {
     try {
@@ -49,7 +51,10 @@ export function syncLogOutFailure(signedIn: boolean): void {
   } catch {
     return;
   }
-  if (!signedIn) clearComposerDrafts();
+  if (!signedIn) {
+    clearComposerDrafts();
+    clearBusinessResultDrafts();
+  }
   logOutFailed = signedIn;
 }
 

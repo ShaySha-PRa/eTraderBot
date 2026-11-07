@@ -19,6 +19,8 @@ const capability = vi.hoisted(() => ({
   session: null as SessionState | null,
   authMounts: 0,
   syncCallIdentity: vi.fn(),
+  leftSpace: false,
+  toastError: vi.fn(),
 }));
 vi.mock("@lingui/react/macro", () => ({
   Trans: ({ children }: { children: ReactNode }) => children,
@@ -50,7 +52,18 @@ vi.mock("./lib/remote-images-preference", () => ({
   subscribeRemoteImages: () => () => {},
 }));
 vi.mock("./lib/performance", () => ({ markOnce: () => {}, markAfterPaint: () => {} }));
-vi.mock("./lib/rpc", () => ({ rpc: { analytics: { screen: capability.screen } } }));
+vi.mock("./lib/rpc", () => ({
+  rpc: { analytics: { screen: capability.screen } },
+  takeLeftUnavailableSpace: () => {
+    const left = capability.leftSpace;
+    capability.leftSpace = false;
+    return left;
+  },
+}));
+vi.mock("@rakazo/ui-web", async (importOriginal) => ({
+  ...(await importOriginal<typeof import("@rakazo/ui-web")>()),
+  toast: { error: capability.toastError },
+}));
 vi.mock("./components/SubscriptionGate", () => ({
   SubscriptionGate: ({ children }: { children: ReactNode }) => children,
 }));
@@ -216,6 +229,36 @@ it("tells the call session who is signed in, without counting an unreachable loo
     expect(capability.syncCallIdentity).toHaveBeenLastCalledWith(null);
   } finally {
     capability.session = null;
+    await act(async () => root.unmount());
+    vi.unstubAllGlobals();
+  }
+});
+
+it("says once that the app left a business the user lost", async () => {
+  vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  const container = document.createElement("div");
+  const root = createRoot(container);
+  const render = () =>
+    act(async () =>
+      root.render(
+        <MemoryRouter initialEntries={["/app"]}>
+          <App />
+        </MemoryRouter>,
+      ),
+    );
+  try {
+    capability.toastError.mockClear();
+    capability.leftSpace = true;
+    await render();
+    await act(async () => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(capability.toastError).toHaveBeenCalledExactlyOnceWith(
+      "You no longer have access to that business",
+      { id: "left-space" },
+    );
+    await render();
+    await act(async () => new Promise((resolve) => setTimeout(resolve, 0)));
+    expect(capability.toastError).toHaveBeenCalledTimes(1);
+  } finally {
     await act(async () => root.unmount());
     vi.unstubAllGlobals();
   }

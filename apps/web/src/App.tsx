@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { LinkFavicons } from "@rakazo/chat-ui/web";
 import { LinkFaviconsContext, RemoteImagesContext } from "@rakazo/chat-ui/web";
 import { analyticsScreen } from "@rakazo/core";
-import { Button } from "@rakazo/ui-web";
+import { Button, toast } from "@rakazo/ui-web";
 import {
   Suspense,
   useEffect,
@@ -28,7 +28,7 @@ import { markAfterPaint, markOnce } from "./lib/performance";
 import { lazyComponent } from "./lib/preload-recovery";
 import { QueryUserProvider, setQueryUser } from "./lib/query";
 import { getRemoteImagesEnabled, subscribeRemoteImages } from "./lib/remote-images-preference";
-import { rpc } from "./lib/rpc";
+import { rpc, takeLeftUnavailableSpace } from "./lib/rpc";
 import {
   holdAnonymousGate,
   holdUnreachableGate,
@@ -110,6 +110,7 @@ const MCP_OAUTH_CALLBACK_PATH = "/mcp/oauth/callback";
 const SLACK_INSTALL_CALLBACK_PATH = "/messaging/slack/callback";
 
 function SessionApp() {
+  const { t } = useLingui();
   const [searchParams] = useSearchParams();
   const next = searchParams.get("next") ?? "";
   // A connector sign-in started on another device lands here signed out; finish it after sign-in.
@@ -156,6 +157,13 @@ function SessionApp() {
     syncCallIdentity(analyticsUserId ?? null);
     syncLogOutFailure(gate === "authenticated");
   }, [gate, analyticsUserId]);
+  useEffect(() => {
+    if (gate !== "authenticated" || !takeLeftUnavailableSpace()) return;
+    // The page reloaded out of a business the user lost; say so once the toaster is listening.
+    setTimeout(() =>
+      toast.error(t`You no longer have access to that business`, { id: "left-space" }),
+    );
+  }, [gate, t]);
   useEffect(() => {
     if (gate === "authenticated" || gate === "anonymous") setQueryUser(analyticsUserId ?? null);
   }, [gate, analyticsUserId]);

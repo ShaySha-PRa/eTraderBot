@@ -7,6 +7,7 @@ import {
   rpcForSpace,
   selectedSpaceId,
   selectSpace,
+  takeLeftUnavailableSpace,
 } from "./rpc.js";
 
 const notify = vi.hoisted(() => vi.fn());
@@ -38,6 +39,12 @@ describe("signed-out responses", () => {
 describe("unavailable space", () => {
   function browser(selected: string, spaces: string[] | null) {
     const items = new Map([["rakazo:space-id", selected]]);
+    const session = new Map<string, string>();
+    vi.stubGlobal("sessionStorage", {
+      getItem: (key: string) => session.get(key) ?? null,
+      setItem: (key: string, value: string) => session.set(key, value),
+      removeItem: (key: string) => session.delete(key),
+    });
     const reload = vi.fn();
     vi.stubGlobal("window", {
       localStorage: {
@@ -74,6 +81,9 @@ describe("unavailable space", () => {
     await leaveUnavailableSpace("space-gone");
     expect(items.has("rakazo:space-id")).toBe(false);
     expect(reload).toHaveBeenCalledOnce();
+    // The fresh page can say why it left, once.
+    expect(takeLeftUnavailableSpace()).toBe(true);
+    expect(takeLeftUnavailableSpace()).toBe(false);
   });
 
   it("recovers from a 401 on the shell's space-bound client", async () => {
@@ -96,6 +106,7 @@ describe("unavailable space", () => {
       await leaveUnavailableSpace("space-a");
       expect(items.get("rakazo:space-id")).toBe("space-a");
       expect(reload).not.toHaveBeenCalled();
+      expect(takeLeftUnavailableSpace()).toBe(false);
     }
   });
 });

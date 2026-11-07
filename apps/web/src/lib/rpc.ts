@@ -111,6 +111,20 @@ export function recheckSessionOnUnauthorized(status: number): void {
 
 let leavingSpace: Promise<void> | null = null;
 
+/** Kept across the reload after leaving a space, so the fresh page can say access was removed. */
+export const LEFT_SPACE_KEY = "rakazo.leftUnavailableSpace";
+
+/** Whether this page load followed leaving a space the user lost; read once. */
+export function takeLeftUnavailableSpace(): boolean {
+  try {
+    if (sessionStorage.getItem(LEFT_SPACE_KEY) === null) return false;
+    sessionStorage.removeItem(LEFT_SPACE_KEY);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * The server answers 401 when the selected space is no longer one of the user's, for instance
  * after they are removed from it, and every request would keep failing. Ask without a space which
@@ -122,6 +136,11 @@ export function leaveUnavailableSpace(spaceId: string): Promise<void> {
       const { spaces } = await rpc.spaces.list(undefined, { context: { spaceId: null } });
       if (spaces.some((space) => space.id === spaceId) || selectedSpaceId() !== spaceId) return;
       clearSpaceSelection();
+      try {
+        sessionStorage.setItem(LEFT_SPACE_KEY, "1");
+      } catch {
+        // No storage: the page still leaves, without saying why.
+      }
       window.location.reload();
     } catch {
       // Signed out or unreachable: leave the selection for the next request to try again.

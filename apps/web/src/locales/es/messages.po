@@ -8364,6 +8364,14 @@ msgstr "Tienes el control"
 msgid "You no longer have access"
 msgstr ""
 
+#: src/App.tsx
+msgid "You no longer have access to that business"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+msgid "You no longer have access to this business"
+msgstr ""
+
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "Your Anthropic"

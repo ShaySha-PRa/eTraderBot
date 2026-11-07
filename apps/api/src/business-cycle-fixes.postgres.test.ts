@@ -244,6 +244,189 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
     };
   }
 
+  it("05: specialist roles remain immutable and human delegation uses its own authority", async () => {
+    const f = await fixture();
+    const task = await f.assign("contract_coverage");
+    const before = await f.state();
+    const result = f.result(before, "contract_coverage");
+    await expect(
+      f.run(() =>
+        db.prisma.bot.update({
+          where: { id: f.bots.mid_long_term },
+          data: { tradingRole: "risk" },
+        }),
+      ),
+    ).rejects.toThrow("Bot role is immutable");
+    const completed = await f.run(() =>
+      f.service.complete(f.identity("mid_long_term"), task.ticketId, result),
+    );
+    expect(completed.tasks.find((t) => t.ticketId === task.ticketId)?.status).toBe("done");
+    await f.run(() =>
+      db.prisma.bot.update({
+        where: { id: f.bots.mid_long_term },
+        data: { archivedAt: now },
+      }),
+    );
+    const revised = await f.client.businessCycle.complete({
+      ticketId: task.ticketId,
+      result: { ...result, summary: "Human revision" },
+      expectedResultEvidenceId: completed.tasks.find((t) => t.ticketId === task.ticketId)!
+        .resultEvidenceId,
+    });
+    expect(revised.evidence.filter((e) => e.kind === "review")).toHaveLength(2);
+    expect(f.jobs).toHaveLength(1);
+  });
+
+  it.each(["archived", "membership_removed", "reassigned"] as const)(
+    "05: %s while a result submission waits for the cycle lock prevents all business writes",
+    async (change) => {
+      const f = await fixture();
+      const task = await f.assign("contract_coverage");
+      const result = f.result(await f.state(), "contract_coverage");
+      const replacement = change === "reassigned" ? await f.addBot("mid_long_term") : null;
+      const persisted = () =>
+        runAsSystem("inspect isolated live authorization fixture", async () => ({
+          evidence: await db.prisma.businessEvidence.findMany({
+            where: { cycleId: f.cycleId },
+            orderBy: { id: "asc" },
+          }),
+          work: await db.prisma.businessCycleWork.findUniqueOrThrow({
+            where: { ticketId: task.ticketId },
+          }),
+          ticket: await db.prisma.ticket.findUniqueOrThrow({ where: { id: task.ticketId } }),
+          comments: await db.prisma.ticketComment.findMany({
+            where: { ticketId: task.ticketId },
+            orderBy: { id: "asc" },
+          }),
+          runs: await db.prisma.run.findMany({
+            where: { spaceId: f.actor.spaceId },
+            orderBy: { id: "asc" },
+          }),
+        }));
+      let release!: () => void, locked!: (pid: number) => void;
+      const released = new Promise<void>((resolve) => {
+        release = resolve;
+      });
+      const ready = new Promise<number>((resolve) => {
+        locked = resolve;
+      });
+      const holder = f.run(() =>
+        db.prisma.$transaction(
+          async (tx) => {
+            await tx.$queryRaw`SELECT id FROM business_cycles WHERE id=${f.cycleId} FOR UPDATE`;
+            const [{ pid }] = await tx.$queryRaw<[{ pid: number }]>`SELECT pg_backend_pid() AS pid`;
+            locked(pid);
+            await released;
+          },
+          { timeout: 10000 },
+        ),
+      );
+      try {
+        const pid = await Promise.race([
+          ready,
+          holder.then(() => {
+            throw new Error("Lock holder exited");
+          }),
+        ]);
+        const pending = Promise.allSettled([
+          f.run(() => f.service.complete(f.identity("mid_long_term"), task.ticketId, result)),
+        ]);
+        let before!: Awaited<ReturnType<typeof persisted>>;
+        try {
+          await expect
+            .poll(
+              () =>
+                f.run(
+                  () => db.prisma.$queryRaw<{ pid: number }[]>`
+            SELECT pid FROM pg_stat_activity WHERE datname=current_database()
+            AND ${pid}::int = ANY(pg_blocking_pids(pid)) AND wait_event_type='Lock'
+            AND query LIKE '%SELECT id FROM business_cycles%FOR UPDATE%'
+          `,
+                ),
+              { timeout: 3000, interval: 20 },
+            )
+            .toHaveLength(1);
+          // This independent transaction commits before the waiting submission can proceed.
+          await runAsSystem("revoke isolated fixture authority during lock wait", async () => {
+            if (change === "archived")
+              await db.prisma.bot.update({
+                where: { id: f.bots.mid_long_term },
+                data: { archivedAt: now },
+              });
+            if (change === "membership_removed")
+              await db.prisma.spaceMember.delete({
+                where: { spaceId_userId: { spaceId: f.actor.spaceId, userId: f.actor.userId } },
+              });
+            if (replacement)
+              await db.prisma.ticket.update({
+                where: { id: task.ticketId },
+                data: { assigneeBotId: replacement.id },
+              });
+          });
+          before = await persisted();
+        } finally {
+          release();
+        }
+        expect(await pending).toMatchObject([
+          { status: "rejected", reason: { code: "FORBIDDEN" } },
+        ]);
+        expect(await persisted()).toEqual(before);
+        expect(f.jobs).toHaveLength(1);
+      } finally {
+        release();
+        await holder;
+      }
+    },
+  );
+
+  it("05: result authority rejects foreign businesses, unassigned Bots and incompatible legacy assignees", async () => {
+    const f = await fixture(),
+      other = await fixture();
+    const task = await f.assign("contract_coverage");
+    const before = await f.state();
+    const result = f.result(before, "contract_coverage");
+    const anotherSpecialist = await f.addBot("mid_long_term");
+    for (const botId of [
+      anotherSpecialist.id,
+      f.bots.risk,
+      f.bots.review,
+      f.supervisor.id,
+      other.bots.mid_long_term,
+    ]) {
+      await expect(
+        f.run(() => f.service.complete({ ...f.actor, botId }, task.ticketId, result)),
+      ).rejects.toMatchObject({ code: "FORBIDDEN" });
+      expect(await f.state()).toEqual(before);
+    }
+    await expect(
+      other.client.businessCycle.complete({ ticketId: task.ticketId, result }),
+    ).rejects.toMatchObject({ code: "NOT_FOUND" });
+    // Seed inconsistent historical assignments without going through today's stricter
+    // reassignment API: a matching ID alone must never authorize a supervisor/wrong role.
+    for (const botId of [f.bots.risk, f.supervisor.id]) {
+      await f.run(() =>
+        db.prisma.ticket.update({ where: { id: task.ticketId }, data: { assigneeBotId: botId } }),
+      );
+      const assigned = await f.state();
+      await expect(
+        f.run(() => f.service.complete({ ...f.actor, botId }, task.ticketId, result)),
+      ).rejects.toMatchObject({ code: "FORBIDDEN" });
+      expect(await f.state()).toEqual(assigned);
+    }
+    await f.run(() =>
+      db.prisma.ticket.update({
+        where: { id: task.ticketId },
+        data: { assigneeBotId: f.bots.mid_long_term },
+      }),
+    );
+    expect(await f.state()).toEqual(before);
+    const completed = await f.run(() =>
+      f.service.complete(f.identity("mid_long_term"), task.ticketId, result),
+    );
+    expect(completed.tasks.find((t) => t.ticketId === task.ticketId)?.status).toBe("done");
+    expect(f.jobs).toHaveLength(1);
+  });
+
   it("02: business dispatch exposes its persisted ticket-to-run association", async () => {
     const f = await fixture();
     const task = await f.assign("contract_coverage");

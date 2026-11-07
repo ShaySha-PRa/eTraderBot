@@ -22,10 +22,13 @@ import {
   Textarea,
 } from "@rakazo/ui-web";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
+import { readBusinessResultDrafts, writeBusinessResultDrafts } from "../lib/business-result-draft";
 import { useSpaceQueries } from "../lib/query";
+import { selectedSpaceId } from "../lib/rpc";
+import { useBoundSpaceId } from "../lib/space-rpc";
 import { useTradingActions } from "../lib/trading-actions";
-import { errorText } from "../lib/user-error";
+import { errorCode, errorText } from "../lib/user-error";
 
 type CycleTask = BusinessCycleState["tasks"][number];
 /** A failed submission, shown inside its task form; `field` is null when no one input is at fault. */
@@ -122,8 +125,16 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
     [dependsOn, setDependsOn] = useState("");
   const [meterEnergy, setMeterEnergy] = useState("80"),
     [meterStatus, setMeterStatus] = useState<"estimated" | "confirmed">("confirmed");
-  const [drafts, setDrafts] = useState<Record<string, TaskDraft>>({});
-  const [draftBases, setDraftBases] = useState<Record<string, DraftBasis>>({});
+  // Unsent results belong to the business this page opened in, and outlive a reload there.
+  const spaceId = useBoundSpaceId() ?? selectedSpaceId();
+  const [draftSpace] = useState(spaceId);
+  const [saved] = useState(() => readBusinessResultDrafts(draftSpace));
+  const [drafts, setDrafts] = useState<Record<string, TaskDraft>>(saved.drafts);
+  const [draftBases, setDraftBases] = useState<Record<string, DraftBasis>>(saved.bases);
+  useEffect(() => {
+    if (spaceId === draftSpace)
+      writeBusinessResultDrafts(draftSpace, { drafts, bases: draftBases });
+  }, [drafts, draftBases, spaceId, draftSpace]);
   const [owners, setOwners] = useState<Record<string, string>>({});
   const [taskErrors, setTaskErrors] = useState<Record<string, TaskError>>({});
   const data = state.data,
@@ -180,6 +191,9 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
     }
     // An unknown refusal code gets generic copy rather than untranslated server text.
     if (error.reason) return refusals[error.reason] ?? t`Could not continue`;
+    // The server no longer resolves this business for the person: access was removed.
+    if (errorCode(error.cause) === "UNAUTHORIZED")
+      return t`You no longer have access to this business`;
     if (error.cause !== undefined) return errorText(error.cause, t`Could not continue`);
     return t`Could not continue`;
   }

@@ -8365,6 +8365,14 @@ msgstr "你已接管"
 msgid "You no longer have access"
 msgstr "你已無權存取"
 
+#: src/App.tsx
+msgid "You no longer have access to that business"
+msgstr "你已無權存取先前的業務"
+
+#: src/pages/BusinessCycle.tsx
+msgid "You no longer have access to this business"
+msgstr "你已無權存取此業務"
+
 #. js-lingui-explicit-id
 #: src/lib/run-error.ts
 msgid "Your Anthropic"

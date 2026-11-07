@@ -37,6 +37,7 @@ import {
   cycleDto,
   cycleEvidence,
   importBusinessEvidence,
+  lockBusinessResultIdentity,
   ownedCycle,
 } from "./business-cycle-evidence.js";
 import type { BusinessTicketNotifier } from "./business-cycle-work.js";
@@ -678,13 +679,18 @@ export function createBusinessCycleService(
       });
       tradingAssert(work, "NOT_FOUND", "Business task not found");
       await prisma.$transaction(async (tx) => {
-        const { bot } = await ownedCycle(tx, who, work.cycleId, true);
+        await ownedCycle(tx, who, work.cycleId, true);
+        const { bot } = await lockBusinessResultIdentity(tx, who);
         const task = await tx.businessCycleWork.findUniqueOrThrow({
           where: { ticketId },
           include: { ticket: true },
         });
+        const kind = BusinessAssignInputSchema.shape.kind.parse(task.kind);
         tradingAssert(
-          !bot || bot.id === task.ticket.assigneeBotId,
+          !bot ||
+            (bot.id === task.ticket.assigneeBotId &&
+              !bot.businessSupervisor &&
+              bot.tradingRole === businessWorkRequirements[kind].role),
           "FORBIDDEN",
           "Only the assigned specialist or human can record this result",
         );
@@ -715,7 +721,6 @@ export function createBusinessCycleService(
           "STALE_DATA",
           "Result references missing, foreign or superseded evidence",
         );
-        const kind = BusinessAssignInputSchema.shape.kind.parse(task.kind);
         const required = result.unresolved.length
           ? businessWorkStartEvidence(kind)
           : businessWorkRequirements[kind].evidence;

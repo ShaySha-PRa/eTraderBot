@@ -335,9 +335,41 @@ describe.skipIf(!enabled).sequential("workspace isolation (PostgreSQL)", () => {
         traceId: "test",
         signal: new AbortController().signal,
       } satisfies AdapterContext;
+      // The tool boundary now requires a persisted active lease and trace Attempt.
+      // Keep using the real database instead of mocking away the new admission checks.
+      const thread = await db.prisma.thread.create({
+        data: { spaceId: general.spaceId, userId: uid, botId: ordinary.id },
+      });
+      const identity = {
+        spaceId: general.spaceId,
+        userId: uid,
+        botId: ordinary.id,
+        threadId: thread.id,
+      };
+      const task = await db.prisma.task.create({
+        data: { ...identity, prompt: "Synthetic isolation check", status: "running" },
+      });
+      const run = await db.prisma.run.create({
+        data: {
+          ...identity,
+          taskId: task.id,
+          status: "running",
+          trigger: "chat",
+          leaseOwner: "synthetic-worker",
+          leaseFence: 1,
+          toolTraceVersion: 1,
+        },
+      });
+      const attempt = await db.prisma.attempt.create({
+        data: { runId: run.id, fence: 1, status: "running" },
+      });
       const ctx = {
         deps: { prisma: db.prisma, trading: createTradingBotService(db.prisma) },
-        run: { ...general, botId: ordinary.id },
+        run,
+        runId: run.id,
+        attempt,
+        workerId: "synthetic-worker",
+        fence: 1,
         bot: { id: ordinary.id },
         context,
         state: {},
@@ -350,7 +382,7 @@ describe.skipIf(!enabled).sequential("workspace isolation (PostgreSQL)", () => {
           { ...ctx, run: { ...ctx.run, spaceId: trade.spaceId } },
           "write_file",
           { path: "rules.md", content: "tamper" },
-          "test",
+          "forged-write",
         ),
       ).rejects.toThrow("unavailable");
       for (const operation of ["scopes", "analyze", "prepare", "execute", "learn", "weather"]) {

@@ -1,42 +1,13 @@
 import type { Locator, Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
-import type { Bot, BusinessCycleState, TradingWorkspace } from "@rakazo/contracts";
+import type { Bot, BusinessCycleState } from "@rakazo/contracts";
 import { captureScreenshot, completeOnboarding, rpc, signup } from "./helpers";
-import { createBusinessScope } from "./trading-business-helpers";
+import { businessTeam, openCycle } from "./trading-business-helpers";
 
 // Inputs sit inside their labels, so a filled value joins the accessible name; match by field id.
 const fields = ["summary", "disagreements", "unresolved", "proposal"] as const;
 type Field = (typeof fields)[number];
 const input = (form: Locator, name: Field) => form.locator(`[id$="-${name}"]`);
-
-/** A business (its own space) with the four specialist Bots and its supervisor. */
-async function businessTeam(page: Page, name: string) {
-  const scope: TradingWorkspace = await createBusinessScope(page, name);
-  for (const role of ["mid_long_term", "spot", "risk", "review"])
-    await rpc<Bot>(page, "bots/create", {
-      name: `${name} ${role}`,
-      tradingRole: role,
-      tradingWorkspaceId: scope.id,
-    });
-  const supervisor = (await rpc<Bot[]>(page, "bots/list", {})).find((b) => b.businessSupervisor)!;
-  return { scope, supervisor };
-}
-
-async function openCycle(page: Page, supervisor: Bot, kinds: string[]) {
-  await page.goto(`/app/${supervisor.id}?workspace=cycle`);
-  const panel = page.getByTestId("business-cycle");
-  await panel.getByRole("button", { name: "Load P25 simulation", exact: true }).click();
-  await expect(panel.getByTestId("evidence-asset")).toBeVisible();
-  for (const [label, kind] of kinds.entries()) {
-    await panel.getByLabel("Requested work").selectOption(kind);
-    await panel.getByRole("button", { name: "Assign necessary role", exact: true }).click();
-    await expect(panel.locator("details > summary", { hasText: /· todo/ })).toHaveCount(label + 1);
-  }
-  const state = await rpc<BusinessCycleState>(page, "businessCycle/get", {
-    cycleId: await panel.getByLabel("Business cycle", { exact: true }).inputValue(),
-  });
-  return { panel, state };
-}
 
 function taskForm(panel: Locator, state: BusinessCycleState, kind: string) {
   return panel.getByTestId(`cycle-task-${state.tasks.find((t) => t.kind === kind)!.ticketId}`);
