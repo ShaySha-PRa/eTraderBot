@@ -28,7 +28,12 @@ export const tradingTools = {
                 ? await service.analyze(who, input)
                 : input.operation === "settle"
                   ? await service.settle(who, input.cycleId)
-                  : await service.complete(who, input.ticketId, input.result);
+                  : await service.complete(
+                      who,
+                      input.ticketId,
+                      input.result,
+                      input.expectedResultEvidenceId,
+                    );
       return call.finish(value);
     } catch (error) {
       return {

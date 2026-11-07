@@ -34,6 +34,11 @@ function dispatchContext(tainted: boolean) {
   return {
     deps: {
       prisma: {
+        runToolCall: {
+          upsert: async () => ({ id: "trace-1" }),
+          updateMany: async () => ({ count: 1 }),
+        },
+        run: { updateMany: async () => ({ count: 1 }) },
         bot: {
           findFirst: async () => ({
             id: "bot-1",
@@ -58,6 +63,7 @@ function dispatchContext(tainted: boolean) {
     bot: { id: "bot-1" },
     source: { ownerStartedRun: true },
     runId: "run-1",
+    attempt: { id: "attempt-1" },
     state: { tainted, handedOff: false, ownerSettingsRefused: false },
     trust: {
       loadAutoReviewPreference: async () => ({ enabled: true, skipApprovals: false }),
@@ -78,6 +84,35 @@ beforeEach(() => {
 });
 
 describe("dispatchTool audit outcomes", () => {
+  it("does not replay a finished tool when persisting its trace outcome fails", async () => {
+    const ctx = dispatchContext(true);
+    ctx.deps.prisma.runToolCall.updateMany = vi.fn(async () => {
+      throw new Error("Synthetic storage failure");
+    });
+    const result = await applyTool(ctx as never, "update_preferences", {}, "call-1");
+    expect(result).toEqual({ timezone: "UTC", marketingEmails: true });
+    expect(audited).toHaveLength(1);
+    expect(ctx.deps.prisma.runToolCall.updateMany).toHaveBeenCalledWith({
+      where: { id: "trace-1", status: "pending" },
+      data: { status: "completed", finishedAt: expect.any(Date) },
+    });
+  });
+
+  it("records thrown dispatch outcomes as ambiguous without storing exception contents", async () => {
+    const ctx = dispatchContext(true);
+    ctx.deps.prisma.user.findUniqueOrThrow = async () => {
+      throw new Error("synthetic-private-error");
+    };
+    ctx.deps.prisma.runToolCall.updateMany = vi.fn(async () => ({ count: 1 }));
+    await expect(applyTool(ctx as never, "update_preferences", {}, "call-1")).rejects.toThrow(
+      "synthetic-private-error",
+    );
+    expect(ctx.deps.prisma.runToolCall.updateMany).toHaveBeenCalledWith({
+      where: { id: "trace-1", status: "pending" },
+      data: { status: "ambiguous", finishedAt: expect.any(Date) },
+    });
+  });
+
   it("records an ordinary successful call as a success", async () => {
     const ctx = dispatchContext(true);
     const result = await applyTool(ctx as never, "update_preferences", {}, "call-1");

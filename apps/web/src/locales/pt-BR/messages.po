@@ -860,8 +860,7 @@ msgstr "Outro assistente"
 msgid "Another item in this import uses the same name"
 msgstr ""
 
-#: src/components/call/IncomingCall.tsx
-msgctxt "incoming call"
+#: src/components/AskCard.tsx
 msgid "Answer"
 msgstr "Resposta"
 
@@ -1748,8 +1747,8 @@ msgstr "Nuvem"
 msgid "Cloud (%)"
 msgstr ""
 
-#: src/pages/Auth.tsx
-msgctxt "email sign-in"
+#: src/components/AskCard.tsx
+#: src/components/ConfirmIdentityDialog.tsx
 msgid "Code"
 msgstr "Código"
 
@@ -3492,8 +3491,8 @@ msgstr ""
 msgid "External push"
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Extra high"
 msgstr "Extra alta"
 
@@ -3816,8 +3815,9 @@ msgstr ""
 msgid "Hide transcript"
 msgstr "Ocultar transcrição"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "High"
 msgstr "Alto"
 
@@ -3912,7 +3912,8 @@ msgstr "Se você ouviu isso, a voz está pronta."
 msgid "Ignore"
 msgstr ""
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "Image input is not configured for this model."
 msgstr "A entrada de imagens não está configurada para este modelo."
 
@@ -4363,8 +4364,9 @@ msgstr "Sair"
 msgid "Looks like it contains a key"
 msgstr "Parece conter uma chave"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Low"
 msgstr "Baixo"
 
@@ -4470,8 +4472,8 @@ msgstr ""
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Max"
 msgstr "Máximo"
 
@@ -4516,8 +4518,8 @@ msgstr "Servidores MCP"
 msgid "MCP tool approval remains separate for each bot."
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Medium"
 msgstr "Médio"
 
@@ -4572,8 +4574,9 @@ msgstr "Menciona recursos do OpenClaw"
 msgid "Mentions: {mentions}"
 msgstr "Menciona: {mentions}"
 
-#. js-lingui-explicit-id
-#: src/lib/browser-notifications.ts
+#: src/pages/shell/chat-shared.ts
+#: src/pages/shell/composer.tsx
+#: src/pages/SpaceSearch.tsx
 msgid "Message"
 msgstr "Mensagem"
 
@@ -4640,8 +4643,8 @@ msgstr ""
 msgid "Migration required"
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Minimal"
 msgstr "Mínimo"
 
@@ -7551,7 +7554,8 @@ msgstr "Esta importação já foi usada. Escolha os arquivos de novo."
 msgid "this Mac"
 msgstr "esse Mac"
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "Este modelo não consegue ler imagens. Escolha um modelo que aceite imagens."
 
@@ -7595,6 +7599,10 @@ msgstr "Este provedor não pode ser testado sem salvar."
 #: src/lib/model-connection-preflight.ts
 msgid "This provider is not connected yet."
 msgstr "Este provedor ainda não está conectado."
+
+#: src/components/AskCard.tsx
+msgid "This question is no longer waiting for an answer"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "This removes the connection from every space."
@@ -7996,6 +8004,11 @@ msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
+msgid "Use latest version"
 msgstr ""
 
 #: src/pages/BusinessInterfaces.tsx

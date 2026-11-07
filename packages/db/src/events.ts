@@ -95,7 +95,7 @@ export function transientRunEventsWhere(): Prisma.EventWhereInput {
 }
 
 export interface ThreadEvents {
-  answerRunInput(input: AnswerRunInput): Promise<boolean>;
+  answerRunInput(input: AnswerRunInput): Promise<boolean | "replayed">;
   append(input: AppendEventInput): Promise<ProductEvent>;
   claimSteering(input: ClaimSteeringInput): Promise<ClaimedSteeringMessage[]>;
   clearThread(input: ClearThreadInput): Promise<ClearThreadResult>;
@@ -792,6 +792,39 @@ async function findPendingAsk(
   return null;
 }
 
+/** Replays acknowledge the accepted card; they never requeue a completed or stopped run. */
+async function answeredInputReplay(tx: Prisma.TransactionClient, input: AnswerRunInput) {
+  const run = await tx.run.findFirst({
+    where: { id: input.runId, spaceId: input.spaceId, threadId: input.threadId },
+    select: { id: true },
+  });
+  if (!run) return false;
+  const message = await tx.message.findFirst({
+    where: { id: input.messageId, threadId: input.threadId, runId: input.runId, role: "bot" },
+  });
+  const blocks = MessageBlockSchema.array().safeParse(message?.blocks).data ?? [];
+  const ask = blocks.find((b) => b.kind === "ask" && b.status === "answered");
+  if (ask?.kind !== "ask" || ask.answeredByUserId !== input.answeredByUserId) return false;
+  if (Boolean(ask.dismissed) !== Boolean(input.dismiss) || ask.remembered !== input.remember)
+    return false;
+  // Secret values are deliberately not retained for comparison. Keep their existing
+  // conservative conflict response; retrying must never save or consume a credential twice.
+  if (isSecretAskBlock(ask)) return false;
+  if (input.fields || input.username !== undefined || input.remember !== undefined) return false;
+  if (ask.instructionUpdate && input.answer.startsWith("{")) {
+    try {
+      const edited = JSON.parse(input.answer);
+      return (
+        Object.keys(edited).length === 1 && edited.instructions === ask.instructionUpdate.after
+      );
+    } catch {
+      return false;
+    }
+  }
+  const value = resolveAskChoice(input.answer, ask.actions)?.id ?? input.answer;
+  return ask.answer === value;
+}
+
 async function commitAnswerRunInput(
   tx: Prisma.TransactionClient,
   input: AnswerRunInput,
@@ -800,6 +833,7 @@ async function commitAnswerRunInput(
   threadId: string;
   seq: number;
   approval?: { decision: string; effectKind: string };
+  replayed?: true;
 } | null> {
   // Thread row first, then run rows — the same order as clearThread and finalizeRun, so a
   // concurrent clear cannot deadlock against this transaction.
@@ -819,7 +853,10 @@ async function commitAnswerRunInput(
       task: { select: { prompt: true } },
     },
   });
-  if (!run) return null;
+  if (!run)
+    return (await answeredInputReplay(tx, input))
+      ? { threadId: input.threadId, seq: -1, replayed: true }
+      : null;
   const message = await tx.message.findFirst({
     where: {
       id: input.messageId,
@@ -833,7 +870,10 @@ async function commitAnswerRunInput(
   const pendingAsk = parsed.data.find(
     (block) => block.kind === "ask" && block.status !== "answered",
   );
-  if (pendingAsk?.kind !== "ask") return null;
+  if (pendingAsk?.kind !== "ask")
+    return (await answeredInputReplay(tx, input))
+      ? { threadId: input.threadId, seq: -1, replayed: true }
+      : null;
   const approvalAsk = isApprovalAskBlock(pendingAsk);
   const secretAsk = isSecretAskBlock(pendingAsk);
   const choiceAsk = !approvalAsk && !secretAsk && Boolean(pendingAsk.actions?.length);
@@ -1054,6 +1094,7 @@ async function commitAnswerRunInput(
           ...block,
           status: "answered" as const,
           answer: recordedAnswer,
+          answeredByUserId: input.answeredByUserId,
           ...(dismissed ? { dismissed: true as const } : {}),
           ...(input.remember === false ? { remembered: false as const } : {}),
           ...(editedInstructions !== undefined && pendingAsk.instructionUpdate
@@ -1091,7 +1132,7 @@ export async function answerRunInput(
   input: AnswerRunInput,
   realtime?: RealtimeFanout,
   runSecretWriter?: RunSecretWriter,
-): Promise<boolean> {
+): Promise<boolean | "replayed"> {
   const commit = (writer = runSecretWriter) =>
     prisma.$transaction(async (tx: Prisma.TransactionClient) =>
       commitAnswerRunInput(tx, input, writer),
@@ -1103,6 +1144,7 @@ export async function answerRunInput(
       : await commit();
 
   if (!committed) return false;
+  if (committed.replayed) return "replayed";
   if (committed.approval) {
     await recordSecurityEvent({
       type: "approval.decided",

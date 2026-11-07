@@ -861,8 +861,7 @@ msgstr "其他助理"
 msgid "Another item in this import uses the same name"
 msgstr "本次匯入中另一項使用了相同名稱"
 
-#: src/components/call/IncomingCall.tsx
-msgctxt "incoming call"
+#: src/components/AskCard.tsx
 msgid "Answer"
 msgstr "回答"
 
@@ -1749,10 +1748,10 @@ msgstr "雲端"
 msgid "Cloud (%)"
 msgstr "雲量（%）"
 
-#: src/pages/Auth.tsx
-msgctxt "email sign-in"
+#: src/components/AskCard.tsx
+#: src/components/ConfirmIdentityDialog.tsx
 msgid "Code"
-msgstr "驗證碼"
+msgstr "程式碼"
 
 #: src/pages/Auth.tsx
 msgctxt "email sign-in"
@@ -3493,8 +3492,8 @@ msgstr "外部記憶無法匯出或匯入"
 msgid "External push"
 msgstr "外部推送"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Extra high"
 msgstr "極高"
 
@@ -3817,8 +3816,9 @@ msgstr "隱藏密碼"
 msgid "Hide transcript"
 msgstr "隱藏文字紀錄"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "High"
 msgstr "高"
 
@@ -3913,7 +3913,8 @@ msgstr "如果聽到了，說明語音已就緒。"
 msgid "Ignore"
 msgstr "忽略"
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "Image input is not configured for this model."
 msgstr "此模型尚未設定圖片輸入。"
 
@@ -4364,8 +4365,9 @@ msgstr "登出"
 msgid "Looks like it contains a key"
 msgstr "似乎包含金鑰"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Low"
 msgstr "低"
 
@@ -4471,8 +4473,8 @@ msgstr ""
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Max"
 msgstr "最大"
 
@@ -4517,8 +4519,8 @@ msgstr "MCP 伺服器"
 msgid "MCP tool approval remains separate for each bot."
 msgstr "每个 Bot 的 MCP 工具权限仍需单独批准。"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Medium"
 msgstr "中"
 
@@ -4573,8 +4575,9 @@ msgstr "提及 OpenClaw 功能"
 msgid "Mentions: {mentions}"
 msgstr "提及：{mentions}"
 
-#. js-lingui-explicit-id
-#: src/lib/browser-notifications.ts
+#: src/pages/shell/chat-shared.ts
+#: src/pages/shell/composer.tsx
+#: src/pages/SpaceSearch.tsx
 msgid "Message"
 msgstr "訊息"
 
@@ -4641,8 +4644,8 @@ msgstr ""
 msgid "Migration required"
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Minimal"
 msgstr "最低"
 
@@ -7552,7 +7555,8 @@ msgstr "此匯入已使用過。請重新選擇檔案。"
 msgid "this Mac"
 msgstr "這臺 Mac"
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "此模型無法讀取圖片。請選擇支援圖片的模型。"
 
@@ -7596,6 +7600,10 @@ msgstr "此供應商必須先儲存才能測試。"
 #: src/lib/model-connection-preflight.ts
 msgid "This provider is not connected yet."
 msgstr "此供應商尚未連線。"
+
+#: src/components/AskCard.tsx
+msgid "This question is no longer waiting for an answer"
+msgstr "此問題已不再等待回答"
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "This removes the connection from every space."
@@ -7998,6 +8006,11 @@ msgstr "使用 eTraderBot 額度"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
+msgid "Use latest version"
+msgstr "使用最新版本"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "Use local weather simulator"

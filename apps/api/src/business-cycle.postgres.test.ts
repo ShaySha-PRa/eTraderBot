@@ -344,6 +344,7 @@ describe.skipIf(!enabled).sequential("business cycle (PostgreSQL)", () => {
         identity("mid_long_term"),
         contract.ticketId,
         resultFor(state, contract.ticketId),
+        state.tasks.find((t) => t.ticketId === contract.ticketId)?.resultEvidenceId,
       ),
     );
     expect(state.tasks[0]?.status).toBe("done");

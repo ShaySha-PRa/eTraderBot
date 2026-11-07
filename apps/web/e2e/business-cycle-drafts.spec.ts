@@ -126,6 +126,8 @@ test("parallel cycle tasks keep separate drafts through failure, refresh, comple
       unresolved: [],
       improvementProposal: "Risk proposal",
     },
+    // The draft was started before any result existed.
+    expectedResultEvidenceId: null,
   });
   await expect(risk.locator("summary")).toContainText("Risk check · done");
   await expect(input(risk, "summary")).toHaveCount(0);
@@ -260,4 +262,90 @@ test("a task whose specialist was deleted can be restored to an eligible Bot", a
   await contract.getByRole("button", { name: "Restore", exact: true }).click();
   await expect(contract.locator("summary")).toContainText(second.name);
   await expect(contract).toContainText("Contract coverage checked against the synthetic forecast.");
+});
+
+test("a result sent from an outdated draft is refused in Chinese at phone width and resent on the latest version", async ({
+  page,
+}, testInfo) => {
+  const stamp = Date.now();
+  await signup(page, `cycle-conflict-${stamp}@rakazo.test`, "password12", "Cycle Conflict");
+  await completeOnboarding(page);
+  const { supervisor } = await businessTeam(page, "Synthetic conflict");
+  const { panel, state } = await openCycle(page, supervisor, ["contract_coverage"]);
+  const contract = taskForm(panel, state, "contract_coverage");
+  await contract.locator("summary").click();
+  await fill(contract, "Mine");
+
+  // Someone else records a result first, from the same starting point as this draft.
+  const ticketId = state.tasks[0]!.ticketId;
+  const evidenceIds = state.evidence.filter((e) => e.streamKey === "contracts").map((e) => e.id);
+  await rpc(page, "businessCycle/complete", {
+    ticketId,
+    result: {
+      summary: "Theirs summary",
+      evidenceIds,
+      disagreements: [],
+      unresolved: ["Theirs unresolved"],
+      improvementProposal: null,
+    },
+    expectedResultEvidenceId: null,
+  });
+
+  await page
+    .getByTestId("language-switcher")
+    .getByRole("button", { name: "中文", exact: true })
+    .click();
+  await expect(panel).toContainText("业务周期");
+  await page.setViewportSize({ width: 390, height: 844 });
+  const measured = await page.evaluate(() => ({
+    innerWidth,
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    devicePixelRatio,
+  }));
+  await testInfo.attach("narrow-viewport", {
+    body: JSON.stringify(measured),
+    contentType: "application/json",
+  });
+  console.log(`narrow viewport: ${JSON.stringify(measured)}`);
+  expect(measured.innerWidth).toBe(390);
+  expect(measured.clientWidth).toBe(390);
+  expect(measured.scrollWidth).toBeLessThanOrEqual(390);
+
+  await contract.getByRole("button", { name: "记录有据结果", exact: true }).click();
+  await expect(contract.getByRole("alert")).toHaveText("证据已更新，请核对最新版本后重新提交");
+  await expectDraft(contract, "Mine");
+  await contract.getByRole("alert").scrollIntoViewIfNeeded();
+  await captureScreenshot(page, testInfo, "business-cycle-result-conflict-narrow-zh");
+  const refused = await rpc<BusinessCycleState>(page, "businessCycle/get", {
+    cycleId: state.cycle.id,
+  });
+  expect(refused.tasks[0]!.result?.summary).toBe("Theirs summary");
+
+  // The refusal re-words with the interface language, then the draft is resent on the latest version.
+  await page
+    .getByTestId("language-switcher")
+    .getByRole("button", { name: "English", exact: true })
+    .click();
+  await expect(contract.getByRole("alert")).toHaveText(
+    "Evidence changed. Check the latest versions and submit again",
+  );
+  await page
+    .getByTestId("language-switcher")
+    .getByRole("button", { name: "中文", exact: true })
+    .click();
+  await contract.getByRole("button", { name: "使用最新版本", exact: true }).click();
+  await expect(contract.getByRole("alert")).toHaveCount(0);
+  await expectDraft(contract, "Mine");
+  await contract.getByRole("button", { name: "记录有据结果", exact: true }).click();
+  await expect
+    .poll(
+      async () =>
+        (await rpc<BusinessCycleState>(page, "businessCycle/get", { cycleId: state.cycle.id }))
+          .tasks[0]!.result?.summary,
+    )
+    .toBe("Mine summary");
+  await expect(contract.getByRole("alert")).toHaveCount(0);
+  await contract.locator("summary").scrollIntoViewIfNeeded();
+  await captureScreenshot(page, testInfo, "business-cycle-result-resent-narrow-zh");
 });

@@ -659,10 +659,11 @@ export function threadsRoutes(ctx: RouterContext) {
             message: "This prompt is no longer awaiting an answer",
           });
         }
-        await deps.jobs.enqueue(runContinueJob(input.runId)).catch((error) => {
-          // The answer and queued run are durable; the reconciler repairs a missed immediate wake.
-          getLogger().error("thread answer enqueue", error);
-        });
+        if (answered !== "replayed")
+          await deps.jobs.enqueue(runContinueJob(input.runId)).catch((error) => {
+            // The answer and queued run are durable; the reconciler repairs a missed immediate wake.
+            getLogger().error("thread answer enqueue", error);
+          });
         return { ok: true as const };
       }),
       markRead: authed.threads.markRead.handler(async ({ context, input }) => {

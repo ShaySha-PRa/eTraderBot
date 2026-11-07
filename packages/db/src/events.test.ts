@@ -1557,6 +1557,7 @@ describe("answerRunInput", () => {
             kind: "ask",
             text: "Which city?",
             status: "answered",
+            answeredByUserId: "user-1",
             answer: "choice-2",
             actions: [
               { id: "choice-1", label: "Berlin" },
@@ -1903,6 +1904,7 @@ describe("answerRunInput", () => {
               kind: "ask",
               text: "Which token?",
               status: "answered",
+              answeredByUserId: "user-1",
               answer: "choice-1",
               actions: [
                 { id: "choice-1", label: "use [redacted]" },
@@ -1996,6 +1998,7 @@ describe("answerRunInput", () => {
             kind: "ask",
             text: "Which city?",
             status: "answered",
+            answeredByUserId: "user-1",
             answer: "Toronto",
             actions: [
               { id: "choice-1", label: "Berlin" },
@@ -2078,6 +2081,7 @@ describe("answerRunInput", () => {
             kind: "ask",
             text: "Which city?",
             status: "answered",
+            answeredByUserId: "user-1",
             answer: "choice-2",
             actions: [
               { id: "choice-1", label: "Berlin" },
@@ -2875,6 +2879,7 @@ describe("answerRunInput", () => {
             purpose: "api_key",
             ...(credential ? { credential } : {}),
             status: "answered",
+            answeredByUserId: "user-1",
             answer: "",
           },
         ],
@@ -3130,7 +3135,17 @@ describe("answerRunInput", () => {
       });
       expect(h.tx.message.update).toHaveBeenCalledWith({
         where: { id: "message-1" },
-        data: { blocks: [{ ...h.block, status: "answered", answer: "", dismissed: true }] },
+        data: {
+          blocks: [
+            {
+              ...h.block,
+              status: "answered",
+              answeredByUserId: "user-1",
+              answer: "",
+              dismissed: true,
+            },
+          ],
+        },
       });
     });
 

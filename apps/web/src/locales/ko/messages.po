@@ -860,8 +860,7 @@ msgstr "다른 어시스턴트"
 msgid "Another item in this import uses the same name"
 msgstr ""
 
-#: src/components/call/IncomingCall.tsx
-msgctxt "incoming call"
+#: src/components/AskCard.tsx
 msgid "Answer"
 msgstr "답변"
 
@@ -1748,10 +1747,10 @@ msgstr "클라우드"
 msgid "Cloud (%)"
 msgstr ""
 
-#: src/pages/Auth.tsx
-msgctxt "email sign-in"
+#: src/components/AskCard.tsx
+#: src/components/ConfirmIdentityDialog.tsx
 msgid "Code"
-msgstr "인증 코드"
+msgstr "코드"
 
 #: src/pages/Auth.tsx
 msgctxt "email sign-in"
@@ -3492,8 +3491,8 @@ msgstr ""
 msgid "External push"
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Extra high"
 msgstr "매우 높음"
 
@@ -3816,8 +3815,9 @@ msgstr "비밀번호 숨기기"
 msgid "Hide transcript"
 msgstr "대화 기록 숨기기"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "High"
 msgstr "높음"
 
@@ -3912,7 +3912,8 @@ msgstr "샘플이 들렸다면 음성 설정이 완료되었습니다."
 msgid "Ignore"
 msgstr ""
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "Image input is not configured for this model."
 msgstr "이 모델에는 이미지 입력이 설정되어 있지 않습니다."
 
@@ -4363,8 +4364,9 @@ msgstr "로그아웃"
 msgid "Looks like it contains a key"
 msgstr "키가 포함된 것 같습니다"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Low"
 msgstr "낮음"
 
@@ -4470,8 +4472,8 @@ msgstr ""
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Max"
 msgstr "최대"
 
@@ -4516,8 +4518,8 @@ msgstr "MCP 서버"
 msgid "MCP tool approval remains separate for each bot."
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Medium"
 msgstr "보통"
 
@@ -4572,8 +4574,9 @@ msgstr "OpenClaw 기능을 언급함"
 msgid "Mentions: {mentions}"
 msgstr "언급: {mentions}"
 
-#. js-lingui-explicit-id
-#: src/lib/browser-notifications.ts
+#: src/pages/shell/chat-shared.ts
+#: src/pages/shell/composer.tsx
+#: src/pages/SpaceSearch.tsx
 msgid "Message"
 msgstr "메시지"
 
@@ -4640,8 +4643,8 @@ msgstr ""
 msgid "Migration required"
 msgstr ""
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Minimal"
 msgstr "최소"
 
@@ -7551,7 +7554,8 @@ msgstr "이미 사용된 가져오기입니다. 파일을 다시 선택하세요
 msgid "this Mac"
 msgstr "이 Mac"
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "이 모델은 이미지를 읽을 수 없습니다. 이미지를 지원하는 모델을 선택하세요."
 
@@ -7595,6 +7599,10 @@ msgstr "이 서비스는 저장하지 않으면 테스트할 수 없습니다."
 #: src/lib/model-connection-preflight.ts
 msgid "This provider is not connected yet."
 msgstr "이 서비스는 아직 연결되지 않았습니다."
+
+#: src/components/AskCard.tsx
+msgid "This question is no longer waiting for an answer"
+msgstr ""
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "This removes the connection from every space."
@@ -7996,6 +8004,11 @@ msgstr ""
 
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
+msgstr ""
+
+#: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
+msgid "Use latest version"
 msgstr ""
 
 #: src/pages/BusinessInterfaces.tsx

@@ -666,7 +666,12 @@ export function createBusinessCycleService(
       await notifyReady(cycle.id, [ticketId]);
       return get(who, cycle.id);
     },
-    async complete(who: BusinessIdentity, ticketId: string, raw: BusinessWorkResult) {
+    async complete(
+      who: BusinessIdentity,
+      ticketId: string,
+      raw: BusinessWorkResult,
+      expectedResultEvidenceId?: string | null,
+    ) {
       const result = BusinessWorkResultSchema.parse(raw);
       const work = await prisma.businessCycleWork.findFirst({
         where: { ticketId, ticket: { spaceId: who.spaceId } },
@@ -733,36 +738,51 @@ export function createBusinessCycleService(
             ...previous.flatMap((r) => (r.resultEvidenceId ? [r.resultEvidenceId] : [])),
           ]),
         ].sort();
-        const sourceRecordId = tradingDigest(tradingCanonical({ ticketId, result, refs }));
         const head = latestBusinessEvidence(evidence).find(
           (r) => r.streamKey === `review:${ticketId}`,
         );
-        const record =
-          head?.sourceRecordId === sourceRecordId
-            ? head
-            : await appendBusinessEvidence(
-                tx,
-                work.cycleId,
-                {
-                  streamKey: `review:${ticketId}`,
-                  kind: "review",
-                  supersedesId: head?.id ?? null,
-                  status: result.unresolved.length ? "estimated" : "confirmed",
-                  origin: "internal_trial",
-                  source: "business-task-result",
-                  sourceRecordId,
-                  references: refs,
-                  data: {
-                    ...result,
-                    ticketId,
-                    authorBotId: who.botId ?? null,
-                    authorUserId: who.userId,
-                    proposalStatus: "not_enabled",
-                  },
-                },
-                clock(),
-                who.botId,
-              );
+        const replay = Boolean(
+          head &&
+            task.resultEvidenceId === head.id &&
+            tradingCanonical(task.result) === tradingCanonical(result) &&
+            tradingCanonical([...head.references].sort()) === tradingCanonical(refs),
+        );
+        tradingAssert(
+          replay || (head?.id ?? null) === (expectedResultEvidenceId ?? null),
+          "STALE_DATA",
+          "A newer work result exists. Read the current findings and unresolved issues before submitting a replacement.",
+        );
+        // A retry acknowledges the stored result; it must not undo a specialist's
+        // subsequent explicit transition back to doing.
+        if (replay) return;
+        // Bind a new receipt to its predecessor: A -> B -> A is a new revision,
+        // while an exact retry above still acknowledges the existing head.
+        const sourceRecordId = tradingDigest(
+          tradingCanonical({ ticketId, result, refs, previousResultEvidenceId: head?.id ?? null }),
+        );
+        const record = await appendBusinessEvidence(
+          tx,
+          work.cycleId,
+          {
+            streamKey: `review:${ticketId}`,
+            kind: "review",
+            supersedesId: head?.id ?? null,
+            status: result.unresolved.length ? "estimated" : "confirmed",
+            origin: "internal_trial",
+            source: "business-task-result",
+            sourceRecordId,
+            references: refs,
+            data: {
+              ...result,
+              ticketId,
+              authorBotId: who.botId ?? null,
+              authorUserId: who.userId,
+              proposalStatus: "not_enabled",
+            },
+          },
+          clock(),
+          who.botId,
+        );
         await tx.businessCycleWork.update({
           where: { ticketId },
           data: { result, resultEvidenceId: record.id },

@@ -10,6 +10,7 @@ import {
 } from "./approval-effect.js";
 import { IMAGE_RETURNING_COMPUTER_TOOLS, MODEL_CANNOT_SEE_MESSAGE } from "./model-vision.js";
 import type { RunContext } from "./run-context.js";
+import { renewRunLease } from "./run-lifecycle.js";
 import type { ToolHandler } from "./run-tool-gate.js";
 import { auditToolCall, gateToolCall } from "./run-tool-gate.js";
 import { prepareToolRequest, resolveToolRequest } from "./run-tool-request.js";
@@ -135,6 +136,16 @@ function toolTraceStatus(result: unknown, dispatched: boolean): RunToolStatus {
   return "completed";
 }
 
+/** Tool admission must not rely on the streaming loop's cached lease check. */
+async function requireActiveToolRun(ctx: RunContext) {
+  ctx.context.signal.throwIfAborted();
+  if (!(await renewRunLease(ctx.deps, ctx.runId, ctx.workerId, ctx.fence))) {
+    ctx.state.lease.valid = false;
+    ctx.abortController.abort();
+    throw new DOMException("Run is no longer active", "AbortError");
+  }
+}
+
 async function dispatchTool(
   ctx: RunContext,
   name: string,
@@ -143,7 +154,7 @@ async function dispatchTool(
   observer: AgentToolExecutionObserver | undefined,
   onDispatch: () => void,
 ) {
-  ctx.context.signal.throwIfAborted();
+  await requireActiveToolRun(ctx);
   const persisted = await requireIsolatedBot(ctx.deps.prisma, {
     spaceId: ctx.run.spaceId,
     userId: ctx.run.userId,
@@ -183,6 +194,8 @@ async function dispatchTool(
   if (refused) return refused;
   const gate = await gateToolCall(ctx, request, observer);
   if ("result" in gate) return gate.result;
+  // Approval/model/provider checks may have waited while the user stopped this run.
+  await requireActiveToolRun(ctx);
   onDispatch();
   if (!gate.call.applied) return toolHandler(gate.call.name)(ctx, gate.call);
   let outcome: "success" | "failure" = "failure";

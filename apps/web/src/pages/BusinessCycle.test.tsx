@@ -20,11 +20,33 @@ vi.mock("../lib/rpc", () => ({
   createSpaceRpc: () => api,
   selectedSpaceId: () => null,
 }));
-vi.mock("@lingui/react/macro", () => {
-  const t = (parts: TemplateStringsArray, ...values: unknown[]) =>
-    parts.reduce((text, part, index) => text + part + String(values[index] ?? ""), "");
-  return { useLingui: () => ({ t }), Trans: ({ children }: { children: ReactNode }) => children };
+/** The interface language; switching it re-renders like the real provider does. */
+const language = vi.hoisted(() => ({ locale: "en", listeners: new Set<() => void>() }));
+vi.mock("@lingui/react/macro", async () => {
+  const { useSyncExternalStore } = await import("react");
+  const subscribe = (listener: () => void) => {
+    language.listeners.add(listener);
+    return () => language.listeners.delete(listener);
+  };
+  return {
+    useLingui: () => {
+      const locale = useSyncExternalStore(subscribe, () => language.locale);
+      // Stand-in translation: other locales mark the source text with their code.
+      const t = (parts: TemplateStringsArray, ...values: unknown[]) =>
+        (locale === "en" ? "" : `[${locale}] `) +
+        parts.reduce((text, part, index) => text + part + String(values[index] ?? ""), "");
+      return { t, i18n: { locale } };
+    },
+    Trans: ({ children }: { children: ReactNode }) => children,
+  };
 });
+
+async function switchLanguage(locale: string) {
+  await act(async () => {
+    language.locale = locale;
+    for (const listener of language.listeners) listener();
+  });
+}
 vi.mock("@rakazo/ui-web", async (importOriginal) => ({
   ...(await importOriginal<typeof UiWeb>()),
   Button: (props: ComponentProps<"button">) => <button {...props} />,
@@ -107,6 +129,7 @@ let view:
 
 beforeEach(() => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  language.locale = "en";
   client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   server = {
     "cycle-1": [task("contract", "contract_coverage"), task("risk", "risk_check")],
@@ -249,6 +272,7 @@ it("keeps the contract and risk drafts apart and sends each with its own ticket 
   expect(api.businessCycle.complete).toHaveBeenCalledTimes(1);
   expect(api.businessCycle.complete.mock.calls[0]![0]).toEqual({
     ticketId: "risk",
+    expectedResultEvidenceId: null,
     result: {
       summary: "Risk summary",
       evidenceIds: ["cycle-1-contracts", "cycle-1-forecast", "cycle-1-asset"],
@@ -299,7 +323,10 @@ it("keeps input after a failed submission and across refetches", async () => {
   expect(values("contract")).toEqual(draft("Contract"));
 });
 
-it("keeps text typed while the submission is in flight", async () => {
+it("keeps text and its evidence basis typed while the submission is in flight", async () => {
+  server["cycle-1"]![0] = task("contract", "contract_coverage", "review", "bot", {
+    resultEvidenceId: "result-1",
+  });
   await render();
   await fill("contract", "Sent");
   let finish!: () => void;
@@ -318,6 +345,14 @@ it("keeps text typed while the submission is in flight", async () => {
   ]);
   // Server kept the task open (unresolved items need review), so the form stays.
   expect(values("contract")).toEqual({ ...blank, unresolved: "Typed later" });
+  server["cycle-1"]![0] = task("contract", "contract_coverage", "review", "bot", {
+    resultEvidenceId: "result-2",
+  });
+  await act(async () => client.invalidateQueries());
+  await settle();
+  await type("contract", "summary", "Still based on the earlier result");
+  await submit("contract");
+  expect(api.businessCycle.complete.mock.calls[1]![0].expectedResultEvidenceId).toBe("result-1");
 });
 
 it("marks a task whose assignee was removed", async () => {
@@ -606,4 +641,46 @@ it("shows coded business refusals in the interface language, not server text", a
   expect(taskAlert("contract")?.textContent).toBe("Could not continue");
   expect(values("contract")).toEqual(draft("Contract"));
   expect(pageAlerts()).toHaveLength(0);
+});
+
+it("keeps the draft's evidence and result version across refreshes until the user reviews the latest result", async () => {
+  server["cycle-1"] = [
+    task("contract", "contract_coverage", "review", "bot", { resultEvidenceId: "result-1" }),
+  ];
+  await render();
+  await fill("contract", "Draft");
+  server["cycle-1"] = [
+    task("contract", "contract_coverage", "review", "bot", {
+      resultEvidenceId: "result-2",
+      result: {
+        summary: "New human findings",
+        unresolved: ["Contract explanation needed"],
+        disagreements: [],
+        evidenceIds: ["cycle-1-contracts"],
+        improvementProposal: null,
+      },
+    }),
+  ];
+  await act(async () => client.invalidateQueries());
+  await settle();
+  api.businessCycle.complete.mockRejectedValueOnce({ data: { reason: "STALE_DATA" } });
+  await submit("contract");
+  await settle();
+  expect(api.businessCycle.complete.mock.calls[0]![0].expectedResultEvidenceId).toBe("result-1");
+  expect(values("contract")).toEqual(draft("Draft"));
+  // The shown conflict follows the interface language.
+  const alertText = () =>
+    view!.container.querySelector('[data-testid="cycle-task-contract"] [role="alert"]')
+      ?.textContent;
+  expect(alertText()).toBe("Evidence changed. Check the latest versions and submit again");
+  await switchLanguage("zh-CN");
+  expect(alertText()).toBe("[zh-CN] Evidence changed. Check the latest versions and submit again");
+  await switchLanguage("en");
+  const useLatest = [...view!.container.querySelectorAll("button")].find(
+    (b) => b.textContent === "Use latest version",
+  )!;
+  expect(useLatest).toBeDefined();
+  await act(async () => useLatest.click());
+  await submit("contract");
+  expect(api.businessCycle.complete.mock.calls[1]![0].expectedResultEvidenceId).toBe("result-2");
 });

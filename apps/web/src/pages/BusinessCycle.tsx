@@ -29,7 +29,16 @@ import { errorText } from "../lib/user-error";
 
 type CycleTask = BusinessCycleState["tasks"][number];
 /** A failed submission, shown inside its task form; `field` is null when no one input is at fault. */
-type TaskError = { field: keyof TaskDraft | null; text: string };
+/** What failed, kept instead of its words so the message follows the interface language. */
+type TaskError = {
+  field: keyof TaskDraft | null;
+  stale?: boolean;
+  /** Set for a field issue: its length limit, or null for any other issue. */
+  limit?: number | null;
+  reason?: string | null;
+  cause?: unknown;
+};
+type DraftBasis = { resultEvidenceId: string | null; evidenceIds: string[] };
 const resultFields: Record<string, keyof TaskDraft> = {
   summary: "summary",
   disagreements: "disagreements",
@@ -114,6 +123,7 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
   const [meterEnergy, setMeterEnergy] = useState("80"),
     [meterStatus, setMeterStatus] = useState<"estimated" | "confirmed">("confirmed");
   const [drafts, setDrafts] = useState<Record<string, TaskDraft>>({});
+  const [draftBases, setDraftBases] = useState<Record<string, DraftBasis>>({});
   const [owners, setOwners] = useState<Record<string, string>>({});
   const [taskErrors, setTaskErrors] = useState<Record<string, TaskError>>({});
   const data = state.data,
@@ -158,15 +168,20 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
   function issueError(issues: unknown): TaskError | null {
     const issue = resultIssue(issues);
     if (!issue) return null;
-    const label = fieldLabels[issue.field],
-      limit = issue.limit;
-    return {
-      field: issue.field,
-      text:
-        limit === null
-          ? `${label}: ${t`Could not continue`}`
-          : t`${label} must be ${limit} characters or fewer`,
-    };
+    return { field: issue.field, limit: issue.limit };
+  }
+  function taskErrorText(error: TaskError) {
+    if (error.field && error.limit !== undefined) {
+      const label = fieldLabels[error.field],
+        limit = error.limit;
+      return limit === null
+        ? `${label}: ${t`Could not continue`}`
+        : t`${label} must be ${limit} characters or fewer`;
+    }
+    // An unknown refusal code gets generic copy rather than untranslated server text.
+    if (error.reason) return refusals[error.reason] ?? t`Could not continue`;
+    if (error.cause !== undefined) return errorText(error.cause, t`Could not continue`);
+    return t`Could not continue`;
   }
   // Completion refusals carry a stable reason code; show copy in the interface language.
   const refusals: Record<string, string> = {
@@ -178,22 +193,32 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
   function setTaskError(key: string, error: TaskError | null) {
     setTaskErrors(({ [key]: _, ...rest }) => (error ? { ...rest, [key]: error } : rest));
   }
-  function editDraft(key: string, field: keyof TaskDraft, value: string) {
+  function basisFor(task: CycleTask): DraftBasis {
+    return {
+      resultEvidenceId: task.resultEvidenceId ?? null,
+      evidenceIds: current
+        .filter((e) => businessWorkRequirements[task.kind].evidence.includes(e.streamKey))
+        .map((e) => e.id),
+    };
+  }
+  function editDraft(key: string, field: keyof TaskDraft, value: string, task: CycleTask) {
+    const hasDraft = Object.values(drafts[key] ?? emptyDraft).some(Boolean);
+    setDraftBases((all) => (hasDraft && key in all ? all : { ...all, [key]: basisFor(task) }));
     setDrafts((all) => ({ ...all, [key]: { ...(all[key] ?? emptyDraft), [field]: value } }));
     // Editing the field at fault, or any field for a general failure, retires the message.
     setTaskErrors((all) => {
       const shown = all[key];
-      if (!shown || (shown.field && shown.field !== field)) return all;
+      if (!shown || shown.stale || (shown.field && shown.field !== field)) return all;
       const { [key]: _, ...rest } = all;
       return rest;
     });
   }
   function completeTask(task: CycleTask) {
-    // Bind cycle, ticket, text and evidence at click time; later edits or refetches cannot move them.
+    // Send the draft's original evidence basis; later edits or refetches cannot move this request.
     const key = draftKey(cycleId, task.ticketId);
     const sent = drafts[key] ?? emptyDraft;
-    const evidence = businessWorkRequirements[task.kind].evidence;
-    const evidenceIds = current.filter((e) => evidence.includes(e.streamKey)).map((e) => e.id);
+    const basis = draftBases[key] ?? basisFor(task);
+    const evidenceIds = basis.evidenceIds;
     const result = {
       summary: sent.summary,
       evidenceIds,
@@ -204,16 +229,17 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
     // The shared contract names the field and limit before a round trip; the server still decides.
     const checked = BusinessWorkResultSchema.safeParse(result);
     if (!checked.success) {
-      setTaskError(
-        key,
-        issueError(checked.error.issues) ?? { field: null, text: t`Could not continue` },
-      );
+      setTaskError(key, issueError(checked.error.issues) ?? { field: null });
       return Promise.resolve();
     }
     setTaskError(key, null);
     return run(async () => {
       try {
-        await api.businessCycle.complete({ ticketId: task.ticketId, result });
+        await api.businessCycle.complete({
+          ticketId: task.ticketId,
+          result,
+          expectedResultEvidenceId: basis.resultEvidenceId,
+        });
       } catch (cause) {
         if (isIdentityConfirmationRequired(cause)) throw cause;
         // Report the failure in this task's form only; the draft stays as typed.
@@ -224,10 +250,8 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
           key,
           issueError(detail.issues) ?? {
             field: null,
-            // An unknown refusal code gets generic copy rather than untranslated server text.
-            text: reason
-              ? (refusals[reason] ?? t`Could not continue`)
-              : errorText(cause, t`Could not continue`),
+            stale: reason === "STALE_DATA",
+            ...(reason ? { reason } : { cause }),
           },
         );
         return;
@@ -702,7 +726,7 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
                             aria-invalid={taskError?.field === "summary" || undefined}
                             aria-describedby={describedBy("summary")}
                             value={draft.summary}
-                            onChange={(e) => editDraft(key, "summary", e.target.value)}
+                            onChange={(e) => editDraft(key, "summary", e.target.value, task)}
                           />
                         </label>
                         <label htmlFor={`${id}-disagreements`}>
@@ -712,7 +736,7 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
                             aria-invalid={taskError?.field === "disagreements" || undefined}
                             aria-describedby={describedBy("disagreements")}
                             value={draft.disagreements}
-                            onChange={(e) => editDraft(key, "disagreements", e.target.value)}
+                            onChange={(e) => editDraft(key, "disagreements", e.target.value, task)}
                           />
                         </label>
                         <label htmlFor={`${id}-unresolved`}>
@@ -722,7 +746,7 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
                             aria-invalid={taskError?.field === "unresolved" || undefined}
                             aria-describedby={describedBy("unresolved")}
                             value={draft.unresolved}
-                            onChange={(e) => editDraft(key, "unresolved", e.target.value)}
+                            onChange={(e) => editDraft(key, "unresolved", e.target.value, task)}
                           />
                         </label>
                         <label htmlFor={`${id}-proposal`}>
@@ -732,13 +756,25 @@ export function BusinessCyclePage({ bot, roster }: { bot: Bot; roster: Bot[] }) 
                             aria-invalid={taskError?.field === "proposal" || undefined}
                             aria-describedby={describedBy("proposal")}
                             value={draft.proposal}
-                            onChange={(e) => editDraft(key, "proposal", e.target.value)}
+                            onChange={(e) => editDraft(key, "proposal", e.target.value, task)}
                           />
                         </label>
                         {taskError ? (
                           <p role="alert" id={`${id}-error`} className="text-sm text-destructive">
-                            {taskError.text}
+                            {taskErrorText(taskError)}
                           </p>
+                        ) : null}
+                        {taskError?.stale ? (
+                          <Button
+                            variant="outline"
+                            disabled={pending}
+                            onClick={() => {
+                              setDraftBases((all) => ({ ...all, [key]: basisFor(task) }));
+                              setTaskError(key, null);
+                            }}
+                          >
+                            <Trans>Use latest version</Trans>
+                          </Button>
                         ) : null}
                         <Button
                           disabled={pending || !draft.summary.trim()}

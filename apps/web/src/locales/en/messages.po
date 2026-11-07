@@ -860,8 +860,7 @@ msgstr "Another assistant"
 msgid "Another item in this import uses the same name"
 msgstr "Another item in this import uses the same name"
 
-#: src/components/call/IncomingCall.tsx
-msgctxt "incoming call"
+#: src/components/AskCard.tsx
 msgid "Answer"
 msgstr "Answer"
 
@@ -1748,8 +1747,8 @@ msgstr "Cloud"
 msgid "Cloud (%)"
 msgstr "Cloud (%)"
 
-#: src/pages/Auth.tsx
-msgctxt "email sign-in"
+#: src/components/AskCard.tsx
+#: src/components/ConfirmIdentityDialog.tsx
 msgid "Code"
 msgstr "Code"
 
@@ -3492,8 +3491,8 @@ msgstr "External memory can't be exported or imported"
 msgid "External push"
 msgstr "External push"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Extra high"
 msgstr "Extra high"
 
@@ -3816,8 +3815,9 @@ msgstr "Hide password"
 msgid "Hide transcript"
 msgstr "Hide transcript"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "High"
 msgstr "High"
 
@@ -3912,7 +3912,8 @@ msgstr "If you heard that, voice is ready."
 msgid "Ignore"
 msgstr "Ignore"
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "Image input is not configured for this model."
 msgstr "Image input is not configured for this model."
 
@@ -4363,8 +4364,9 @@ msgstr "Log out"
 msgid "Looks like it contains a key"
 msgstr "Looks like it contains a key"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/lib/ticket-priority.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Low"
 msgstr "Low"
 
@@ -4470,8 +4472,8 @@ msgstr "Material"
 msgid "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 msgstr "Materials apply only to this scope. Attach chat feedback explicitly; upload text, Markdown, CSV or JSON files up to 64 KB."
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Max"
 msgstr "Max"
 
@@ -4516,8 +4518,8 @@ msgstr "MCP servers"
 msgid "MCP tool approval remains separate for each bot."
 msgstr "MCP tool approval remains separate for each bot."
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Medium"
 msgstr "Medium"
 
@@ -4572,8 +4574,9 @@ msgstr "Mentions OpenClaw features"
 msgid "Mentions: {mentions}"
 msgstr "Mentions: {mentions}"
 
-#. js-lingui-explicit-id
-#: src/lib/browser-notifications.ts
+#: src/pages/shell/chat-shared.ts
+#: src/pages/shell/composer.tsx
+#: src/pages/SpaceSearch.tsx
 msgid "Message"
 msgstr "Message"
 
@@ -4640,8 +4643,8 @@ msgstr "Mid / long term bot"
 msgid "Migration required"
 msgstr "Migration required"
 
-#. js-lingui-explicit-id
-#: src/lib/model-catalog.ts
+#: src/pages/model-settings/compatible-model-fields.tsx
+#: src/pages/Onboarding.tsx
 msgid "Minimal"
 msgstr "Minimal"
 
@@ -7551,7 +7554,8 @@ msgstr "This import was already used. Choose the files again."
 msgid "this Mac"
 msgstr "this Mac"
 
-#: src/lib/user-error.ts
+#. js-lingui-explicit-id
+#: src/lib/run-error.ts
 msgid "This model cannot read images. Choose a model that supports images."
 msgstr "This model cannot read images. Choose a model that supports images."
 
@@ -7595,6 +7599,10 @@ msgstr "This provider cannot be tested without saving."
 #: src/lib/model-connection-preflight.ts
 msgid "This provider is not connected yet."
 msgstr "This provider is not connected yet."
+
+#: src/components/AskCard.tsx
+msgid "This question is no longer waiting for an answer"
+msgstr "This question is no longer waiting for an answer"
 
 #: src/pages/ModelSettingsOverlay.tsx
 msgid "This removes the connection from every space."
@@ -7997,6 +8005,11 @@ msgstr "Use eTraderBot credits"
 #: src/components/integrations/plugin-marketplace.tsx
 msgid "Use in this bot"
 msgstr "Use in this bot"
+
+#: src/pages/BusinessCycle.tsx
+#: src/pages/ExperienceHandoff.tsx
+msgid "Use latest version"
+msgstr "Use latest version"
 
 #: src/pages/BusinessInterfaces.tsx
 msgid "Use local weather simulator"

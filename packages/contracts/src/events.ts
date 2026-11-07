@@ -142,6 +142,8 @@ export const MessageBlock = z.discriminatedUnion("kind", [
     site: z.string().optional(),
     status: z.enum(["pending", "answered"]).optional(),
     answer: z.string().optional(),
+    /** Server-recorded receipt; no secret value or digest is stored here. */
+    answeredByUserId: Id.optional(),
     /** A secret request the user dismissed instead of answering. */
     dismissed: z.literal(true).optional(),
     /** A login the user used for this run only instead of saving it. */

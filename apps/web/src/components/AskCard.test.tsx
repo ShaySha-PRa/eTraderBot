@@ -7,12 +7,26 @@ import type { Root } from "react-dom/client";
 import { createRoot } from "react-dom/client";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 
-vi.mock("@lingui/react/macro", () => ({
-  Trans: ({ children }: { children: ReactNode }) => children,
-  useLingui: () => ({
-    t: (parts: TemplateStringsArray, ...values: unknown[]) => String.raw(parts, ...values),
-  }),
-}));
+/** The interface language; switching it re-renders like the real provider does. */
+const language = vi.hoisted(() => ({ locale: "en", listeners: new Set<() => void>() }));
+vi.mock("@lingui/react/macro", async () => {
+  const { useSyncExternalStore } = await import("react");
+  const subscribe = (listener: () => void) => {
+    language.listeners.add(listener);
+    return () => language.listeners.delete(listener);
+  };
+  return {
+    Trans: ({ children }: { children: ReactNode }) => children,
+    useLingui: () => {
+      const locale = useSyncExternalStore(subscribe, () => language.locale);
+      // Stand-in translation: other locales mark the source text with their code.
+      return {
+        t: (parts: TemplateStringsArray, ...values: unknown[]) =>
+          (locale === "en" ? "" : `[${locale}] `) + String.raw(parts, ...values),
+      };
+    },
+  };
+});
 vi.mock("@rakazo/chat-ui/web", () => ({
   ChatMarkdown: ({ children }: { children: ReactNode }) => <span>{children}</span>,
 }));
@@ -28,6 +42,7 @@ let container: HTMLDivElement;
 
 beforeEach(() => {
   vi.stubGlobal("IS_REACT_ACT_ENVIRONMENT", true);
+  language.locale = "en";
   container = document.createElement("div");
   document.body.append(container);
   root = createRoot(container);
@@ -602,4 +617,103 @@ it("undoes a settings change from chat while it still holds", async () => {
     },
   });
   expect(button("Restored")?.disabled).toBe(true);
+});
+
+it("keeps an ordinary answer after a network failure and retries from the same card", async () => {
+  const send = vi.fn().mockRejectedValueOnce(new Error("offline")).mockResolvedValue(undefined);
+  await render({ kind: "ask", text: "Which city?", status: "pending" }, undefined, send);
+  await act(async () => button("Edit first")!.click());
+  await type("Answer", "Shanghai");
+  await act(async () => button("Send answer")!.click());
+  expect(container.querySelector<HTMLInputElement>('input[aria-label="Answer"]')!.value).toBe(
+    "Shanghai",
+  );
+  // Shown in the interface language, not as the raw failure text.
+  expect(container.textContent).toContain("Could not submit this answer");
+  expect(container.textContent).not.toContain("offline");
+  await act(async () => button("Send answer")!.click());
+  expect(send).toHaveBeenCalledTimes(2);
+  expect(container.querySelector('input[aria-label="Answer"]')).toBeNull();
+  expect(container.textContent).toContain("Shanghai");
+});
+
+async function switchLanguage(locale: string) {
+  await act(async () => {
+    language.locale = locale;
+    for (const listener of language.listeners) listener();
+  });
+}
+
+const question: AskBlock = { kind: "ask", text: "Which city?", status: "pending" };
+const answerInput = () => container.querySelector<HTMLInputElement>('input[aria-label="Answer"]');
+
+async function sendTyped(value: string, send: () => Promise<void>, block = question) {
+  await render(block, undefined, send);
+  await act(async () => button("Edit first")!.click());
+  await type("Answer", value);
+  await act(async () => button("Send answer")!.click());
+}
+
+it("drops a lost response's error once the server shows the answer accepted", async () => {
+  // The server took the answer, but its reply was unreadable (e.g. a proxy's plain-text 502).
+  const send = vi
+    .fn()
+    .mockRejectedValue(
+      new Error("Cannot parse response body, please check the response body and content-type."),
+    );
+  await sendTyped("Shanghai", send);
+  expect(container.textContent).toContain("Could not submit this answer");
+  expect(container.textContent).not.toContain("Cannot parse");
+  expect(answerInput()!.value).toBe("Shanghai");
+
+  // The live update reports the accepted answer: that failure no longer applies.
+  await render({ ...question, status: "answered", answer: "Shanghai" }, undefined, send);
+  expect(container.textContent).not.toContain("Could not submit this answer");
+  expect(answerInput()).toBeNull();
+  expect(container.textContent).toContain("Shanghai");
+});
+
+it("keeps a refused answer's input and error, in the interface language", async () => {
+  const send = vi
+    .fn()
+    .mockRejectedValue(
+      Object.assign(new Error("This prompt is no longer awaiting an answer"), { code: "CONFLICT" }),
+    );
+  await sendTyped("Suzhou", send);
+  expect(container.textContent).toContain("This question is no longer waiting for an answer");
+  expect(container.textContent).not.toContain("no longer awaiting");
+  // A refresh of the same, still pending, question keeps both.
+  await render({ ...question }, undefined, send);
+  expect(answerInput()!.value).toBe("Suzhou");
+  expect(container.textContent).toContain("This question is no longer waiting for an answer");
+
+  await switchLanguage("zh-CN");
+  expect(container.textContent).toContain(
+    "[zh-CN] This question is no longer waiting for an answer",
+  );
+  await switchLanguage("en");
+  expect(container.textContent).not.toContain("[zh-CN]");
+});
+
+it("says the server is unreachable when it is, in the interface language", async () => {
+  const send = vi.fn().mockRejectedValue(new TypeError("Failed to fetch"));
+  await sendTyped("Shanghai", send);
+  expect(container.textContent).toContain("Could not reach the server");
+  await switchLanguage("zh-CN");
+  expect(container.textContent).toContain("[zh-CN] Could not reach the server");
+});
+
+it("keeps a secret card cleared and generic on failure, and clears it once accepted", async () => {
+  const send = vi.fn().mockRejectedValue(new Error("Rejected key sk-test-secret-123"));
+  await render(secretCard, undefined, send);
+  await type("API key", "sk-test-secret-123");
+  await act(async () => button("Save")!.click());
+  expect(send).toHaveBeenCalledWith("sk-test-secret-123", undefined);
+  expect(container.textContent).toContain("Could not submit this answer");
+  expect(container.textContent).not.toContain("sk-test-secret-123");
+  expect(container.querySelector<HTMLInputElement>('input[aria-label="API key"]')!.value).toBe("");
+
+  await render({ ...secretCard, status: "answered", answer: "" }, undefined, send);
+  expect(container.textContent).not.toContain("Could not submit this answer");
+  expect(container.textContent).not.toContain("sk-test-secret-123");
 });

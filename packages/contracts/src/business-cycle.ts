@@ -162,6 +162,8 @@ export const BusinessWorkSchema = z.object({
   blockers: z.array(z.string()),
   startBlockers: z.array(z.string()).optional(),
   result: BusinessWorkResultSchema.nullable(),
+  /** Latest result, including invalidated history; null means no result has ever been recorded. */
+  resultEvidenceId: id.nullable().optional(),
 });
 export const BusinessCycleSchema = z.object({
   id,
@@ -220,7 +222,13 @@ export const businessCycleContract = {
   settle: oc.input(z.strictObject({ cycleId: id })).output(BusinessCycleStateSchema),
   assign: oc.input(BusinessAssignInputSchema).output(BusinessCycleStateSchema),
   complete: oc
-    .input(z.strictObject({ ticketId: id, result: BusinessWorkResultSchema }))
+    .input(
+      z.strictObject({
+        ticketId: id,
+        result: BusinessWorkResultSchema,
+        expectedResultEvidenceId: id.nullable().optional(),
+      }),
+    )
     .output(BusinessCycleStateSchema),
 };
 export const BusinessCycleCommandSchema = z.discriminatedUnion("operation", [
@@ -238,6 +246,7 @@ export const BusinessCycleCommandSchema = z.discriminatedUnion("operation", [
     operation: z.literal("complete"),
     ticketId: id,
     result: BusinessWorkResultSchema,
+    expectedResultEvidenceId: id.nullable().optional(),
   }),
 ]);
 export type BusinessMarketRule = z.infer<typeof BusinessMarketRuleSchema>;

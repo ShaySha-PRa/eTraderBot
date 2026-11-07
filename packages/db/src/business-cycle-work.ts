@@ -5,6 +5,7 @@ import {
   businessWorkRequirements,
   businessWorkStartEvidence,
   currentBusinessEvidence,
+  latestBusinessEvidence,
   tradingAssert,
 } from "@rakazo/core";
 import { businessIdentity, cycleEvidence } from "./business-cycle-evidence.js";
@@ -91,6 +92,9 @@ export async function cycleWorkState(db: Db, cycleId: string, evidence: Business
           ...(!row.ticket.assigneeBotId ? ["assignee:missing"] : []),
         ],
         result: row.result ? BusinessWorkResultSchema.parse(row.result) : null,
+        resultEvidenceId:
+          latestBusinessEvidence(evidence).find((e) => e.streamKey === `review:${row.ticketId}`)
+            ?.id ?? null,
       }),
     ),
   );

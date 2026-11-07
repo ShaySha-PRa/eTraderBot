@@ -62,7 +62,14 @@ export function businessCycleRoutes(ctx: RouterContext) {
         result(() => service.assign(context.actor, input)),
       ),
       complete: ctx.authed.businessCycle.complete.handler(({ context, input }) =>
-        result(() => service.complete(context.actor, input.ticketId, input.result)),
+        result(() =>
+          service.complete(
+            context.actor,
+            input.ticketId,
+            input.result,
+            input.expectedResultEvidenceId,
+          ),
+        ),
       ),
     },
   };

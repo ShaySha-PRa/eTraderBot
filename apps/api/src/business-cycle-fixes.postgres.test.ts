@@ -244,6 +244,21 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
     };
   }
 
+  it("02: business dispatch exposes its persisted ticket-to-run association", async () => {
+    const f = await fixture();
+    const task = await f.assign("contract_coverage");
+    const runs = await f.client.runs.forTicket({ ticketId: task.ticketId });
+    expect(runs.runs).toHaveLength(1);
+    expect(runs.runs[0]).toMatchObject({
+      botId: f.bots.mid_long_term,
+      trigger: "tickets",
+      status: "queued",
+    });
+    const detail = await f.client.runs.detail({ runId: runs.runs[0]!.runId });
+    expect(detail.ticket?.id).toBe(task.ticketId);
+    expect(detail.ticket?.status).toBe(task.status);
+  });
+
   it.each([
     ["mid_long_term", "day_ahead"],
     ["day_ahead", "mid_long_term"],
@@ -522,6 +537,7 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
         f.identity("review"),
         review.ticketId,
         f.result(state, "settlement_review"),
+        state.tasks.find((t) => t.ticketId === review.ticketId)?.resultEvidenceId,
       ),
     );
     expect(state.tasks.find((t) => t.ticketId === review.ticketId)?.status).toBe("done");
@@ -568,7 +584,7 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
     };
     const dispatches = f.jobs.length;
     state = await f.run(() =>
-      f.service.complete(f.identity("mid_long_term"), task.ticketId, nextResult),
+      f.service.complete(f.identity("mid_long_term"), task.ticketId, nextResult, first.id),
     );
     expect(state.tasks.find((t) => t.ticketId === task.ticketId)).toMatchObject({
       status: "review",
@@ -598,7 +614,7 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
       unresolved: [],
     };
     state = await f.run(() =>
-      f.service.complete(f.identity("mid_long_term"), task.ticketId, finalResult),
+      f.service.complete(f.identity("mid_long_term"), task.ticketId, finalResult, second.id),
     );
     expect(state.tasks.find((t) => t.ticketId === task.ticketId)).toMatchObject({
       status: "done",
@@ -667,7 +683,7 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
       unresolved: ["Costs not supplied; energy settlement is not net profit"],
     });
     nextResult.evidenceIds.push(oldReview.id);
-    state = await f.run(() => f.service.complete(who, review.ticketId, nextResult));
+    state = await f.run(() => f.service.complete(who, review.ticketId, nextResult, oldReview.id));
     expect(state.tasks.find((t) => t.ticketId === review.ticketId)).toMatchObject({
       status: "review",
       result: nextResult,
@@ -727,7 +743,9 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
       (e) => e.streamKey === `review:${risk.ticketId}`,
     )!;
     const riskRevision = { ...riskResult, evidenceIds: [...riskResult.evidenceIds, riskReview.id] };
-    state = await f.run(() => f.service.complete(f.identity("risk"), risk.ticketId, riskRevision));
+    state = await f.run(() =>
+      f.service.complete(f.identity("risk"), risk.ticketId, riskRevision, riskReview.id),
+    );
     const latestRisk = currentBusinessEvidence(state.evidence).find(
       (e) => e.streamKey === riskReview.streamKey,
     )!;
@@ -738,6 +756,7 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
     state = await f.client.businessCycle.complete({
       ticketId: contract.ticketId,
       result: { ...contractResult, summary: "Updated contract interpretation" },
+      expectedResultEvidenceId: contractReview.id,
     });
     expect(state.tasks.find((t) => t.ticketId === risk.ticketId)).toMatchObject({
       status: "todo",
@@ -752,6 +771,218 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
     ).rejects.toMatchObject({ code: "BAD_REQUEST", data: { reason: "STALE_DATA" } });
     expect(await f.state()).toEqual(state);
     expect(f.jobs).toHaveLength(3);
+  });
+
+  it("03: a late Bot result cannot overwrite human findings based on the same raw evidence", async () => {
+    const f = await fixture();
+    const task = await f.assign("contract_coverage");
+    const before = await f.state();
+    const staleBotResult = f.result(before, "contract_coverage");
+    const investigation = {
+      ...staleBotResult,
+      summary: "Human findings",
+      unresolved: ["Reconcile the outstanding contract explanation"],
+    };
+    const jobRunId = (f.jobs[0] as { payload: { runId: string } }).payload.runId;
+    // A deterministic in-flight worker fixture; no development Run is touched.
+    await f.run(() =>
+      db.prisma.run.update({
+        where: { id: jobRunId },
+        data: {
+          status: "running",
+          leaseOwner: "synthetic-worker",
+          leaseExpiresAt: new Date("2030-05-01T01:00:00Z"),
+        },
+      }),
+    );
+    const human = await f.client.businessCycle.complete({
+      ticketId: task.ticketId,
+      result: investigation,
+    });
+    expect(
+      (await f.run(() => db.prisma.run.findUniqueOrThrow({ where: { id: jobRunId } }))).status,
+    ).toBe("running");
+    await f.run(() =>
+      updateTicket(
+        { prisma: db.prisma, onTicketChange: f.notify },
+        { ...f.identity("mid_long_term"), id: task.ticketId, status: "doing" },
+      ),
+    );
+    const investigating = await f.state();
+    expect(
+      await f.client.businessCycle.complete({ ticketId: task.ticketId, result: investigation }),
+    ).toEqual(investigating);
+    await expect(
+      f.run(() => f.service.complete(f.identity("mid_long_term"), task.ticketId, staleBotResult)),
+    ).rejects.toMatchObject({ code: "STALE_DATA" });
+    expect(await f.state()).toEqual(investigating);
+    const head = human.tasks.find((t) => t.ticketId === task.ticketId)!.resultEvidenceId!;
+    const replacements = await Promise.allSettled([
+      f.run(() =>
+        f.service.complete(
+          f.identity("mid_long_term"),
+          task.ticketId,
+          { ...staleBotResult, summary: "Specialist investigated the human findings" },
+          head,
+        ),
+      ),
+      f.client.businessCycle.complete({
+        ticketId: task.ticketId,
+        result: { ...staleBotResult, summary: "Competing human update" },
+        expectedResultEvidenceId: head,
+      }),
+    ]);
+    expect(replacements.filter((r) => r.status === "fulfilled")).toHaveLength(1);
+    expect(replacements.filter((r) => r.status === "rejected")).toHaveLength(1);
+    const after = await f.state();
+    expect(after.evidence.filter((e) => e.kind === "review")).toHaveLength(2);
+    expect(after.evidence.find((e) => e.id === head)?.data.unresolved).toEqual(
+      investigation.unresolved,
+    );
+    // An explicitly based new revision may reach an earlier conclusion again;
+    // it is a new historical revision, never reuse of an old evidence row.
+    const reverted = await f.client.businessCycle.complete({
+      ticketId: task.ticketId,
+      result: investigation,
+      expectedResultEvidenceId: after.tasks.find((t) => t.ticketId === task.ticketId)!
+        .resultEvidenceId,
+    });
+    expect(reverted.evidence.filter((e) => e.kind === "review")).toHaveLength(3);
+    expect(reverted.tasks.find((t) => t.ticketId === task.ticketId)?.resultEvidenceId).not.toBe(
+      head,
+    );
+    expect(f.jobs).toHaveLength(1);
+  });
+
+  it("03 supplement: overlapping result transactions append exactly one revision and reject the stale contender", async () => {
+    const f = await fixture();
+    const task = await f.assign("contract_coverage");
+    const initial = f.result(await f.state(), "contract_coverage", {
+      summary: "Original investigation",
+      unresolved: ["Outstanding contract explanation"],
+    });
+    const before = await f.client.businessCycle.complete({
+      ticketId: task.ticketId,
+      result: initial,
+    });
+    const head = before.tasks.find((t) => t.ticketId === task.ticketId)!.resultEvidenceId!;
+    const proposals = [
+      {
+        ...initial,
+        summary: "Specialist competing revision",
+        unresolved: [...initial.unresolved, "Specialist follow-up"],
+      },
+      {
+        ...initial,
+        summary: "Human competing revision",
+        unresolved: [...initial.unresolved, "Human follow-up"],
+      },
+    ];
+    const counts = () =>
+      f.run(async () => ({
+        tasks: await db.prisma.task.count({ where: { spaceId: f.actor.spaceId } }),
+        runs: await db.prisma.run.count({ where: { spaceId: f.actor.spaceId } }),
+        comments: await db.prisma.ticketComment.count({ where: { ticketId: task.ticketId } }),
+        jobs: f.jobs.length,
+      }));
+    const beforeCounts = await counts();
+    let release!: () => void, locked!: (pid: number) => void;
+    const released = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const ready = new Promise<number>((resolve) => {
+      locked = resolve;
+    });
+    // An independent real transaction holds the same row lock as ownedCycle(..., true).
+    // No production hook or mocked transaction changes the result/CAS implementation.
+    const holder = f.run(() =>
+      db.prisma.$transaction(
+        async (tx) => {
+          const rows = await tx.$queryRaw<
+            { id: string }[]
+          >`SELECT id FROM business_cycles WHERE id=${f.cycleId} FOR UPDATE`;
+          expect(rows).toEqual([{ id: f.cycleId }]);
+          const [{ pid }] = await tx.$queryRaw<[{ pid: number }]>`SELECT pg_backend_pid() AS pid`;
+          locked(pid);
+          await released;
+        },
+        { timeout: 10_000 },
+      ),
+    );
+    let outcomes: PromiseSettledResult<BusinessCycleState>[] = [];
+    try {
+      const holderPid = await Promise.race([
+        ready,
+        holder.then(() => {
+          throw new Error("Lock holder exited before barrier");
+        }),
+      ]);
+      const competing = Promise.allSettled([
+        f.run(() =>
+          f.service.complete(f.identity("mid_long_term"), task.ticketId, proposals[0]!, head),
+        ),
+        f.client.businessCycle.complete({
+          ticketId: task.ticketId,
+          result: proposals[1]!,
+          expectedResultEvidenceId: head,
+        }),
+      ]);
+      try {
+        // Follow both hard and soft blockers: the second waiter can wait behind the first.
+        // Release only after PostgreSQL proves two distinct completion transactions overlap.
+        await expect
+          .poll(
+            async () =>
+              f.run(
+                () => db.prisma.$queryRaw<{ pid: number }[]>`
+          WITH RECURSIVE waiting(pid) AS (
+            SELECT pid FROM pg_stat_activity
+            WHERE datname=current_database() AND ${holderPid}::int = ANY(pg_blocking_pids(pid))
+            UNION
+            SELECT a.pid FROM pg_stat_activity a JOIN waiting w ON w.pid = ANY(pg_blocking_pids(a.pid))
+            WHERE a.datname=current_database()
+          )
+          SELECT a.pid FROM waiting w JOIN pg_stat_activity a ON a.pid=w.pid
+          WHERE a.wait_event_type='Lock' AND a.query LIKE '%SELECT id FROM business_cycles%FOR UPDATE%'
+        `,
+              ),
+            { timeout: 3000, interval: 20 },
+          )
+          .toHaveLength(2);
+        expect(await f.state()).toEqual(before);
+        expect(await counts()).toEqual(beforeCounts);
+      } finally {
+        release();
+        outcomes = await competing;
+      }
+    } finally {
+      release();
+      await holder;
+    }
+    expect(outcomes.filter((o) => o.status === "fulfilled")).toHaveLength(1);
+    expect(outcomes.filter((o) => o.status === "rejected")).toHaveLength(1);
+    const winner = outcomes.findIndex((o) => o.status === "fulfilled");
+    const loser = outcomes[1 - winner]!;
+    expect(loser).toMatchObject({
+      status: "rejected",
+      reason:
+        winner === 0
+          ? { code: "BAD_REQUEST", data: { reason: "STALE_DATA" } }
+          : { code: "STALE_DATA" },
+    });
+    const after = await f.state();
+    expect(after.evidence).toEqual(expect.arrayContaining(before.evidence));
+    const reviews = after.evidence.filter((e) => e.streamKey === `review:${task.ticketId}`);
+    expect(reviews).toHaveLength(2);
+    const added = reviews.find((e) => e.id !== head)!;
+    expect(added).toMatchObject({ supersedesId: head, revision: 2, data: proposals[winner] });
+    expect(after.tasks.find((t) => t.ticketId === task.ticketId)).toMatchObject({
+      status: "review",
+      resultEvidenceId: added.id,
+      result: proposals[winner],
+    });
+    expect(reviews.find((e) => e.id === head)?.data.unresolved).toEqual(initial.unresolved);
+    expect(await counts()).toEqual({ ...beforeCounts, comments: beforeCounts.comments + 1 });
   });
 
   it("O1: settlement preserves human review until the assigned Bot explicitly resumes investigation", async () => {
@@ -797,7 +1028,14 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
       summary: "Synthetic human investigation after metering correction",
       unresolved: ["Await the 82 MWh settlement check"],
     });
-    state = await f.run(() => f.service.complete(f.actor, review.ticketId, investigation));
+    state = await f.run(() =>
+      f.service.complete(
+        f.actor,
+        review.ticketId,
+        investigation,
+        state.tasks.find((t) => t.ticketId === review.ticketId)?.resultEvidenceId,
+      ),
+    );
     expect(state.tasks.find((t) => t.ticketId === review.ticketId)?.status).toBe("review");
     const reviewEvidence = state.evidence.filter(
       (e) => e.streamKey === `review:${review.ticketId}`,
@@ -907,6 +1145,7 @@ describe.skipIf(!enabled).sequential("business cycle review regressions (Postgre
         f.identity("review"),
         review.ticketId,
         f.result(state, "settlement_review"),
+        state.tasks.find((t) => t.ticketId === review.ticketId)?.resultEvidenceId,
       ),
     );
     expect(state.tasks.find((t) => t.ticketId === review.ticketId)?.status).toBe("done");

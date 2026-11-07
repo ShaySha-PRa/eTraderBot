@@ -11,6 +11,7 @@ import {
 import {
   isApprovalAskBlock,
   isSecretAskBlock,
+  isServerUnreachable,
   resolveAskChoice,
   selectedAskActionLabel,
 } from "@rakazo/core";
@@ -18,7 +19,7 @@ import { Button, Input, Label, Switch, Textarea } from "@rakazo/ui-web";
 import { Check } from "lucide-react";
 import { useEffect, useId, useState } from "react";
 import { rpc } from "../lib/rpc";
-import { errorText } from "../lib/user-error";
+import { errorCode, errorText } from "../lib/user-error";
 import { BuiCard } from "./ai/primitives";
 import { LoginFieldValue } from "./LoginFields";
 import { OptionRow, optionLetter } from "./OptionRow";
@@ -104,9 +105,29 @@ export function AskCard({
   const [secretField, setSecretField] = useState<HTMLInputElement | null>(null);
   const [pastedLines, setPastedLines] = useState(false);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  // The failure is kept, not its words, so the message follows the interface language.
+  const [failure, setFailure] = useState<{
+    action: "answer" | "dismiss" | "undo";
+    cause: unknown;
+  } | null>(null);
   const submitting = pendingAction !== null;
   const answered = block.status === "answered" || acceptedAnswer !== undefined || dismissed;
+  // An answer the server accepted (seen through a live update) outlives a lost response: that
+  // answer's or dismissal's failure no longer applies. Other failures stay until retried.
+  const error =
+    !failure || (failure.action !== "undo" && block.status === "answered")
+      ? null
+      : failure.action === "undo"
+        ? errorText(failure.cause)
+        : // A secret answer's failure may echo the secret, so never show its message.
+          answerFailureText(failure.action, failure.cause);
+  function answerFailureText(action: "answer" | "dismiss", cause: unknown) {
+    if (action === "dismiss" || isSecretAskBlock(block)) return t`Could not submit this answer`;
+    if (isServerUnreachable(cause)) return t`Could not reach the server`;
+    if (errorCode(cause) === "CONFLICT") return t`This question is no longer waiting for an answer`;
+    // Client and server detail (such as an unreadable response) is not shown untranslated.
+    return t`Could not submit this answer`;
+  }
   const displayedAnswer = block.status === "answered" ? block.answer : acceptedAnswer;
   const displayedDismissed = block.status === "answered" ? block.dismissed : dismissed;
   const displayedRemembered = block.status === "answered" ? block.remembered : acceptedRemembered;
@@ -169,7 +190,7 @@ export function AskCard({
     if (fields ? !loginReady : secretInput ? value.length === 0 : !value.trim()) return;
     const submitValue = secretInput ? value : value.trim();
     setPendingAction(secretInput ? "submit" : submitValue);
-    setError(null);
+    setFailure(null);
     if (secretInput) {
       setAnswer("");
       setLogin(emptyLogin());
@@ -181,12 +202,7 @@ export function AskCard({
       if (fields && !remember) setAcceptedRemembered(false);
       setAcceptedAnswer(secretInput ? "" : submitValue);
     } catch (err) {
-      // A secret answer's failure may echo the secret, so never show its message.
-      setError(
-        secretInput
-          ? t`Could not submit this answer`
-          : errorText(err, t`Could not submit this answer`),
-      );
+      setFailure({ action: "answer", cause: err });
     } finally {
       setPendingAction(null);
     }
@@ -195,15 +211,15 @@ export function AskCard({
   async function dismissSecret() {
     if (submitting) return;
     setPendingAction("dismiss");
-    setError(null);
+    setFailure(null);
     setAnswer("");
     setLogin(emptyLogin());
     setPastedLines(false);
     try {
       await onDismiss();
       setDismissed(true);
-    } catch {
-      setError(t`Could not submit this answer`);
+    } catch (err) {
+      setFailure({ action: "dismiss", cause: err });
     } finally {
       setPendingAction(null);
     }
@@ -242,12 +258,12 @@ export function AskCard({
             disabled={undone || submitting}
             onClick={async () => {
               setPendingAction("undo");
-              setError(null);
+              setFailure(null);
               try {
                 await undo.run();
                 setUndone(true);
               } catch (err) {
-                setError(errorText(err));
+                setFailure({ action: "undo", cause: err });
               } finally {
                 setPendingAction(null);
               }
