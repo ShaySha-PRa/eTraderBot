@@ -3318,10 +3318,6 @@ msgstr ""
 msgid "Engage when... Ignore..."
 msgstr "Reageren wanneer... Negeren..."
 
-#: src/components/GitHubStarPrompt.tsx
-msgid "Enjoying eTraderBot?"
-msgstr ""
-
 #: src/lib/user-error.ts
 msgid "Enter a password"
 msgstr "Voer een wachtwoord in"
@@ -5243,7 +5239,6 @@ msgstr "Niet in de catalogus van eTraderBot"
 msgid "Not in the plugin catalog"
 msgstr "Niet in de plugincatalogus"
 
-#: src/components/GitHubStarPrompt.tsx
 #: src/pages/shell/message-cards.tsx
 msgid "Not now"
 msgstr "Niet nu"
@@ -7191,10 +7186,6 @@ msgstr ""
 #: src/lib/user-error.ts
 msgid "SSO is temporarily unavailable. Try again."
 msgstr "SSO is tijdelijk niet beschikbaar. Probeer het opnieuw."
-
-#: src/components/GitHubStarPrompt.tsx
-msgid "Star on GitHub"
-msgstr ""
 
 #: src/pages/shell/computer-overlay.tsx
 msgid "Start"
